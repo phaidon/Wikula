@@ -1,0 +1,1946 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: wikula\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-08-05 18:13+0200\n"
+"PO-Revision-Date: 2010-08-05 18:30+0100\n"
+"Last-Translator: Fabian Wuertz <xadras@sidux.com>\n"
+"Language-Team: phaidon\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+
+#: pninit.php:25
+#: pninit.php:45
+#: pninit.php:57
+msgid "Error! Table creation failed."
+msgstr ""
+
+#: pninit.php:35
+#: pninit.php:51
+#: pninit.php:63
+msgid "Error! Index creation failed."
+msgstr ""
+
+#: pninit.php:75
+msgid "PROBLEM IMPORTING DATA"
+msgstr ""
+
+#: pninit.php:79
+msgid "PROBLEM INSERT DEFAULT DATA"
+msgstr ""
+
+#: pninit.php:143
+#: pninit.php:414
+msgid "WikiHelp"
+msgstr ""
+
+#: pninit.php:144
+#: pninit.php:410
+msgid "ReleaseNotes"
+msgstr ""
+
+#: pninit.php:147
+msgid "Error! Table update failed."
+msgstr ""
+
+#: pninit.php:191
+#: pninit.php:195
+#: pninit.php:199
+msgid "Error! Table deletion failed."
+msgstr ""
+
+#: pninit.php:219
+#: pninit.php:236
+#: pninit.php:319
+#: pninit.php:346
+#: pnadmin.php:22
+#: pnadmin.php:41
+#: pnadmin.php:89
+#: pnadmin.php:169
+#: pnadmin.php:191
+#: pnuser.php:31
+#: pnuser.php:306
+#: pnuser.php:332
+msgid "Sorry! No authorization to access this module."
+msgstr ""
+
+#: pninit.php:225
+#: pninit.php:242
+#: pninit.php:325
+msgid "Sorry! This module cannot be accessed directly."
+msgstr ""
+
+#: pninit.php:251
+msgid "Must fill the root Page"
+msgstr ""
+
+#: pninit.php:255
+#: pninit.php:361
+msgid "HomePage"
+msgstr ""
+
+#: pninit.php:305
+#: pnadmin.php:105
+#: pnadmin.php:173
+#: pnadmin.php:199
+#: pnadmin.php:237
+msgid "Invalid 'authkey':  this probably means that you pressed the 'Back' button, or that the page 'authkey' expired. Please refresh the page and try again."
+msgstr ""
+
+#: pninit.php:370
+msgid ""
+"=====Welcome to your Wiki!=====\n"
+"Thanks for install **[[http://code.zikula.org/wikula/ Wikula]]**! The Wiki module for Zikula based on [[http://wikkawiki.org WikkaWiki]].\n"
+"This site is running on version {{wikkaversion}} (see the [[ReleaseNotes release notes]] to learn what's new in this release).\n"
+"\n"
+">>==Contribute==\n"
+"You can report bugs or file feature requests\n"
+"on the [[http://code.zikula.org/wikula Wikula development website]]!\n"
+">>====Getting started====\n"
+"If you are not sure how a wiki works, you can check out the [[WikiHelp Help page]] to get started or click or the &quot;edit page&quot; link at the bottom.\n"
+"\n"
+"====Some useful pages====\n"
+"~-[[FormattingRules Formatting guide]]\n"
+"~-[[WikiHelp Help page]]\n"
+"~-[[RecentChanges Recently modified pages]]\n"
+"\n"
+"You will find more useful pages in the [[CategoryWiki Wiki category]] or in the [[PageIndex Page index]].\n"
+"\n"
+"Enjoy!"
+msgstr ""
+
+#: pninit.php:392
+msgid "Initial Insert"
+msgstr ""
+
+#: pninit.php:396
+#: pninit.php:889
+msgid "Failed filling Database: "
+msgstr ""
+
+#: pninit.php:403
+msgid "RecentChanges"
+msgstr ""
+
+#: pninit.php:403
+msgid ""
+"{{RecentChanges}}\n"
+"----\n"
+"[[CategoryWiki Wiki category]]"
+msgstr ""
+
+#: pninit.php:406
+#: pnactionapi/pageindex.php:27
+#: pnactionapi/pageindex.php:31
+#: pnactionapi/countpages.php:43
+msgid "PageIndex"
+msgstr ""
+
+#: pninit.php:406
+msgid ""
+"{{PageIndex}}\n"
+"\n"
+"----\n"
+"[[CategoryWiki Wiki category]]"
+msgstr ""
+
+#: pninit.php:410
+msgid ""
+"{{WikkaChanges}}\n"
+"\n"
+"----\n"
+"[[CategoryWiki Wiki category]]"
+msgstr ""
+
+#: pninit.php:414
+msgid ""
+"=====Useful pages=====\n"
+"  * FormattingRules: learn how to format the contents in this wiki\n"
+"  * SandBox: play with your formatting skills\n"
+"\n"
+"  * PageIndex: index of the available pages on the wiki\n"
+"  * WantedPages: check out the pages pending for creation\n"
+"  * OrphanedPages: list of orphaned pages\n"
+"  * TextSearch: search something of your interest in the wiki\n"
+"  * TextSearchExpanded: fine grained search if you haven't found anything in the normal search\n"
+"\n"
+"  * WikiCategory: learn how works the categorization system of this wiki\n"
+"  * CategoryWiki: list of pages related to the Wiki\n"
+"  * InterWiki: check the allowed interwiki links\n"
+"\n"
+"  * RecentChanges: check which pages that were changed recently\n"
+"  * HighScores: check who had contributed more to the wiki\n"
+"  * OwnedPages: check out how many pages you own on the wiki\n"
+"  * MyChanges: list of changes that you have done\n"
+"  * MyPages: list of pages that you own on this wiki\n"
+"\n"
+"You will find more useful pages in the [[WikiCategory Wiki category]] or in the [[PageIndex Page index]].\n"
+"\n"
+"=====Wikka Documentation=====\n"
+"Comprehensive and up-to-date documentation can be found on the [[http://docs.wikkawiki.org/WikkaDocumentation Wikka Documentation server]].\n"
+"\n"
+"----\n"
+"[[CategoryWiki Wiki category]]"
+msgstr ""
+
+#: pninit.php:441
+msgid "WantedPages"
+msgstr ""
+
+#: pninit.php:441
+msgid ""
+"{{wantedpages}}\n"
+"\n"
+"----\n"
+"[[CategoryWiki Wiki category]]"
+msgstr ""
+
+#: pninit.php:445
+msgid "OrphanedPages"
+msgstr ""
+
+#: pninit.php:445
+msgid ""
+"{{orphanedpages}}\n"
+"\n"
+"----\n"
+"[[CategoryWiki Wiki category]]"
+msgstr ""
+
+#: pninit.php:449
+#: pntemplates/plugins/function.textsearchlink.php:18
+msgid "TextSearch"
+msgstr ""
+
+#: pninit.php:449
+msgid ""
+"{{textsearch}}\n"
+"\n"
+"----\n"
+"[[CategoryWiki Wiki category]]"
+msgstr ""
+
+#: pninit.php:453
+#: pnactionapi/textsearch.php:58
+#: pnactionapi/textsearchexpanded.php:65
+msgid "TextSearchExpanded"
+msgstr ""
+
+#: pninit.php:453
+msgid ""
+"{{textsearchexpanded}}\n"
+"\n"
+"----\n"
+"[[CategoryWiki Wiki category]]"
+msgstr ""
+
+#: pninit.php:457
+msgid "MyPages"
+msgstr ""
+
+#: pninit.php:457
+msgid ""
+"{{mypages}}\n"
+"\n"
+"----\n"
+"[[CategoryWiki Wiki category]]"
+msgstr ""
+
+#: pninit.php:461
+msgid "MyChanges"
+msgstr ""
+
+#: pninit.php:461
+msgid ""
+"{{mychanges}}\n"
+"\n"
+"----\n"
+"[[CategoryWiki Wiki category]]"
+msgstr ""
+
+#: pninit.php:465
+msgid "InterWiki"
+msgstr ""
+
+#: pninit.php:465
+msgid ""
+"{{interwikilist}}\n"
+"\n"
+"----\n"
+"[[CategoryWiki Wiki category]]"
+msgstr ""
+
+#: pninit.php:469
+msgid "WikiCategory"
+msgstr ""
+
+#: pninit.php:469
+msgid ""
+"===Categorization system===\n"
+"This wiki is using a very flexible but simple categorizing system to keep everything properly organized\n"
+"\n"
+"{{Category page=\"CategoryCategory\" col=\"3\" full=\"1\"}}\n"
+"==Here's how it works:==\n"
+"~- The master list of the categories is **\"\"CategoryCategory\"\"** which will automatically list all known main categories, and should never be edited. This list is easily accessed from the Wiki's top navigation bar. (Categories).\n"
+"~- Pages can belong to zero or more categories. Including a page in a category is done by simply linking to the \"\"CategoryName\"\" on the page (by convention at the very end of the page). To mention a category on a page when the page does not belong to it, write its name in double double quote in order to unwikify it. To link to a category on a page when the page does not belong to it, link it using full URL like \"\"[[http://yoursite.com/CategoryXy CategoryXy]]\"\".\n"
+"~- The system allows to build hierarchies of categories by referring to the parent category in the subcategory page. The parent category page will then automatically include the subcategory page in its list.\n"
+"~- A special kind of category is **\"\"CategoryUsers\"\"** to group the userpages, so your Wiki homepage should include it at the end to be included in the category-driven userlist.\n"
+"~- New categories can be created (think very hard before doing this though, you don't need too much of them) by creating a \"\"CategoryName\"\" page, including \"\"{{Category}}\"\" in it and placing it in the **\"\"CategoryCategory\"\"** category (for a main category or another parent category in case you want to create a subcategory).\n"
+"\n"
+"{{sidenote type=\"warning\" title=\"Please\" text=\"help to keep this place organized by including the relevant categories in new and existing pages!\" width=\"100%\" side=\"none\"}}\n"
+"**Notes:**\n"
+"~- The above bold items were coded using double doublequote in order to unwikify them to prevent this page from showing up in the mentioned categories. This page only belongs in CategoryWiki (which can be safely mentioned) after all !\n"
+"~- In order to avoid accidental miscategorization you should unwikify all camelcased non-related \"\"CategoryName\"\" on a page. This is a side-effect of how the categorizing system works: it's based on a backlinking and is not restricted to the footer convention.\n"
+"~- Don't be put of by the name of this page (WikiCategory) which is a logical name (it's about the Wiki and explains Category) but doesn't have any special role in the Categorizing system.\n"
+"~- To end with this is the **standard convention** to include the categories (both the wiki code and the result):\n"
+"%%==Categories==\n"
+"CategoryWiki\n"
+"\n"
+"or\n"
+"==Categories==\n"
+"[[CategoryWiki Wiki category]]%%\n"
+"\n"
+"----\n"
+"==Categories==\n"
+"[[CategoryWiki Wiki category]]"
+msgstr ""
+
+#: pninit.php:496
+msgid "CategoryWiki"
+msgstr ""
+
+#: pninit.php:496
+msgid ""
+"===Wiki Related Category===\n"
+"This Category will contain links to pages talking about Wikis and Wikis specific topics. When creating such pages, be sure to include CategoryWiki at the bottom of each page, so that page shows listed.\n"
+"----\n"
+"{{Category col=\"3\" full=\"1\" notitle=\"1\"}}\n"
+"----\n"
+"[[CategoryCategory List of all categories]]"
+msgstr ""
+
+#: pninit.php:502
+#: pnactionapi/category.php:40
+msgid "CategoryCategory"
+msgstr ""
+
+#: pninit.php:502
+msgid ""
+"===List of All Categories===\n"
+"Below is the list of all Categories existing on this Wiki, granted that users did things right when they created their pages or new Categories. See WikiCategory for how the system works.\n"
+"----\n"
+"{{Category compact=\"1\" notitle=\"1\"}}"
+msgstr ""
+
+#: pninit.php:506
+msgid "FormattingRules"
+msgstr ""
+
+#: pninit.php:506
+msgid ""
+"======Wikka Formatting Guide======\n"
+"<<**Note:** Anything between 2 sets of double-quotes is not formatted.\n"
+"<<::c::Once you have read through this, test your formatting skills in the SandBox.\n"
+"----\n"
+"===1. Text Formatting===\n"
+"\n"
+"<<\n"
+"~##\"\"**I'm bold**\"\"##\n"
+"~**I'm bold **\n"
+"<<::c::\n"
+"<<\n"
+"~##\"\"//I'm italic text!//\"\"##\n"
+"~//I'm italic text!//\n"
+"<<::c::\n"
+"<<\n"
+"~##\"\"And I'm __underlined__!\"\"##\n"
+"~And I'm __underlined__!\n"
+"<<::c::\n"
+"<<\n"
+"~##\"\"##monospace text##\"\"##\n"
+"~##monospace text##\n"
+"<<::c::\n"
+"<<\n"
+"~##\"\"''highlight text''\"\"## (using 2 single-quotes)\n"
+"~''highlight text''\n"
+"<<::c::\n"
+"<<\n"
+"~##\"\"++Strike through text++\"\"##\n"
+"~++Strike through text++\n"
+"<<::c::\n"
+"<<\n"
+"~##\"\"&pound;&pound;Text insertion&pound;&pound;\"\"##\n"
+"~ &pound;&pound;Text insertion&pound;&pound;\n"
+"<<::c::\n"
+"<<\n"
+"~##\"\"&yen;&yen;Text deletion&yen;&yen;\"\"##\n"
+"~ &yen;&yen;Text deletion&yen;&yen;\n"
+"<<::c::\n"
+"<<\n"
+"~##\"\"Press #%ANY KEY#%\"\"##\n"
+"~Press #%ANY KEY#%\n"
+"<<::c::\n"
+"<<\n"
+"~##\"\"@@Center text@@\"\"##\n"
+"~@@Center text@@\n"
+"<<::c::\n"
+"<<\n"
+"~##\"\"/* Elided content (eliminates trailing ws */\"\"##\n"
+"~Elides (hides) content from displaying.  Eliminates trailing whitespace so there are no unsightly gaps in output. Useful for commenting Wikka markup.\n"
+"<<::c::\n"
+"<<\n"
+"~##\"\"`` Elided content (preserves trailing ws ``\"\"##\n"
+"~Elides (hides) content from displaying.  Preserves trailing whitespace.\n"
+"<<::c::\n"
+"\n"
+"===2. Headers===\n"
+"\n"
+"Use between six ##=## (for the biggest header) and two ##=## (for the smallest header) on both sides of a text to render it as a header.\n"
+"\n"
+"<<\n"
+"~##\"\"====== Really big header ======\"\"##\n"
+"~====== Really big header ======\n"
+"<<::c::\n"
+"<<\n"
+"~##\"\"===== Rather big header =====\"\"##\n"
+"~===== Rather big header =====\n"
+"<<::c::\n"
+"<<\n"
+"~##\"\"==== Medium header ====\"\"##\n"
+"~==== Medium header ====\n"
+"<<::c::\n"
+"<<\n"
+"~##\"\"=== Not-so-big header ===\"\"##\n"
+"~=== Not-so-big header ===\n"
+"<<::c::\n"
+"<<\n"
+"~##\"\"== Smallish header ==\"\"##\n"
+"~== Smallish header ==\n"
+"<<::c::\n"
+"\n"
+"===3. Horizontal separator===\n"
+"\n"
+"~##\"\"----\"\"##\n"
+"----\n"
+"\n"
+"===4. Forced line break===\n"
+"\n"
+"~##\"\"---\"\"##\n"
+"---\n"
+"\n"
+"===5. Lists and indents===\n"
+"\n"
+"You can indent text using a **~**, a **tab** or **2 spaces**.\n"
+"\n"
+"<<##\"\"~This text is indented<br />~~This text is double-indented<br />&nbsp;&nbsp;This text is also indented\"\"##\n"
+"<<::c::\n"
+"<<\n"
+"~This text is indented\n"
+"~~This text is double-indented\n"
+"~This text is also indented\n"
+"<<::c::\n"
+"\n"
+"To create bulleted/ordered lists, use the following markup (you can always use 4 spaces instead of a ##**~**##):\n"
+"\n"
+"**Bulleted lists**\n"
+"<<##\"\"~- Line one\"\"##\n"
+"##\"\"~- Line two\"\"##\n"
+"<<::c::\n"
+"<<\n"
+"~- Line one\n"
+"~- Line two\n"
+"<<::c::\n"
+"\n"
+"**Numbered lists**\n"
+"<<##\"\"~1) Line one\"\"##\n"
+"##\"\"~1) Line two\"\"##\n"
+"<<::c::\n"
+"<<\n"
+"~1) Line one\n"
+"~1) Line two\n"
+"<<::c::\n"
+"\n"
+"**Ordered lists using uppercase characters**\n"
+"<<##\"\"~A) Line one\"\"##\n"
+"##\"\"~A) Line two\"\"##\n"
+"<<::c::\n"
+"<<\n"
+"~A) Line one\n"
+"~A) Line two\n"
+"<<::c::\n"
+"\n"
+"**Ordered lists using lowercase characters**\n"
+"<<##\"\"~a) Line one\"\"##\n"
+"##\"\"~a) Line two\"\"##\n"
+"<<::c::\n"
+"<<\n"
+"~a) Line one\n"
+"~a) Line two\n"
+"<<::c::\n"
+"\n"
+"**Ordered lists using roman numerals**\n"
+"<<##\"\"~I) Line one\"\"##\n"
+"##\"\"~I) Line two\"\"##\n"
+"<<::c::\n"
+"<<\n"
+"~I) Line one\n"
+"~I) Line two\n"
+"<<::c::\n"
+"\n"
+"**Ordered lists using lowercase roman numerals**\n"
+"<<##\"\"~i) Line one\"\"##\n"
+"##\"\"~i) Line two\"\"##\n"
+"<<::c::\n"
+"<<\n"
+"~i) Line one\n"
+"~i) Line two\n"
+"<<::c::\n"
+"\n"
+"===6. Inline comments===\n"
+"\n"
+"To format some text as an inline comment, use an indent ( **~**, a **tab** or **2 spaces**) followed by a **\"\"&amp;\"\"**.\n"
+"\n"
+"<<\n"
+"##\"\"~&amp; Comment\"\"##\n"
+"##\"\"~~&amp; Subcomment\"\"##\n"
+"##\"\"~~~&amp; Subsubcomment\"\"##\n"
+"<<::c::\n"
+"<<\n"
+"~& Comment\n"
+"~~& Subcomment\n"
+"~~~& Subsubcomment\n"
+"<<::c::\n"
+"\n"
+"===7. Images===\n"
+"\n"
+"To place images on a Wiki page, you can use the ##image## action.\n"
+"\n"
+"<<\n"
+"~##\"\"{{image class=\"center\" alt=\"DVD logo\" title=\"An Image Link\" url=\"images/dvdvideo.gif\" link=\"RecentChanges\"}}\"\"##\n"
+"~{{image class=\"center\" alt=\"dvd logo\" title=\"An Image Link\" url=\"modules/Wikula/pnimages/dvdvideo.gif\" link=\"RecentChanges\"}}\n"
+"<<::c::\n"
+"\n"
+"Links can be external, or internal Wiki links. You don't need to enter a link at all, and in that case just an image will be inserted. You can use the optional classes ##left## and ##right## to float images left and right. You don't need to use all those attributes, only ##url## is required while ##alt## is recommended for accessibility.\n"
+"\n"
+"===8. Links===\n"
+"\n"
+"To create a **link to a wiki page** you can use any of the following options:\n"
+"---\n"
+"~1) type a ##\"\"WikiName\"\"##: --- --- ##\"\"FormattingRules\"\"## --- FormattingRules --- ---\n"
+"~1) add a forced link surrounding the page name by ##\"\"[[\"\"## and ##\"\"]]\"\"## (everything after the first space will be shown as description): --- --- ##\"\"[[SandBox Test your formatting skills]]\"\"## --- [[SandBox Test your formatting skills]] --- --- ##\"\"[[SandBox &#27801;&#31665;]]\"\"## --- [[SandBox &#27801;&#31665;]] --- ---\n"
+"~1) add an image with a link (see instructions above).\n"
+"\n"
+"To **link to external pages**, you can do any of the following:\n"
+"---\n"
+"~1) type a URL inside the page: --- --- ##\"\"http://www.example.com\"\"## --- http://www.example.com --- --- \n"
+"~1) add a forced link surrounding the URL by ##\"\"[[\"\"## and ##\"\"]]\"\"## (everything after the first space will be shown as description): --- --- ##\"\"[[http://example.com/jenna/ Jenna's Home Page]]\"\"## --- [[http://example.com/jenna/ Jenna's Home Page]] --- --- ##\"\"[[mail@example.com Write me!]]\"\"## --- [[mail@example.com Write me!]] --- ---\n"
+"~1) add an image with a link (see instructions above); --- ---\n"
+"~1) add an interwiki link (browse the [[InterWiki list of available interwiki tags]]): --- --- ##\"\"WikiPedia:WikkaWiki\"\"## --- WikiPedia:WikkaWiki --- --- ##\"\"Google:CSS\"\"## --- Google:CSS --- --- ##\"\"Thesaurus:Happy\"\"## --- Thesaurus:Happy --- ---\n"
+"\n"
+"===9. Tables===\n"
+"\n"
+"To create a table, you can use the ##table## action.\n"
+"\n"
+"<<\n"
+"~##\"\"{{table columns=\"3\" cellpadding=\"1\" cells=\"BIG;GREEN;FROGS;yes;yes;no;no;no;###\"}}\"\"##\n"
+"~{{table columns=\"3\" cellpadding=\"1\" cells=\"BIG;GREEN;FROGS;yes;yes;no;no;no;###\"}}\n"
+"<<::c::Note that ##\"\"###\"\"## must be used to indicate an empty cell.\n"
+"Complex tables can also be created by embedding HTML code in a wiki page (see instructions below).\n"
+"\n"
+"===10. Colored Text===\n"
+"\n"
+"Colored text can be created using the ##color## action:\n"
+"\n"
+"<<\n"
+"~##\"\"{{color c=\"blue\" text=\"This is a test.\"}}\"\"##\n"
+"~{{color c=\"blue\" text=\"This is a test.\"}}\n"
+"<<::c::You can also use hex values:\n"
+"\n"
+"<<\n"
+"~##\"\"{{color hex=\"#DD0000\" text=\"This is another test.\"}}\"\"##\n"
+"~{{color hex=\"#DD0000\" text=\"This is another test.\"}}\n"
+"<<::c::Alternatively, you can specify a foreground and background color using the ##fg## and ##bg## parameters (they accept both named and hex values):\n"
+"\n"
+"<<\n"
+"~##\"\"{{color fg=\"#FF0000\" bg=\"#000000\" text=\"This is colored text on colored background\"}}\"\"##\n"
+"~{{color fg=\"#FF0000\" bg=\"#000000\" text=\"This is colored text on colored background\"}}\n"
+"<<::c::\n"
+"<<\n"
+"~##\"\"{{color fg=\"yellow\" bg=\"black\" text=\"This is colored text on colored background\"}}\"\"##\n"
+"~{{color fg=\"yellow\" bg=\"black\" text=\"This is colored text on colored background\"}}\n"
+"<<::c::\n"
+"\n"
+"===11. Floats===\n"
+"\n"
+"To create a **left floated box**, use two ##<## characters before and after the block.\n"
+"\n"
+"**Example:**\n"
+"\n"
+"~##\"\"&lt;&lt;Some text in a left-floated box hanging around&lt;&lt; Some more text as a filler. Some more text as a filler. Some more text as a filler. Some more text as a filler. Some more text as a filler. Some more text as a filler. Some more text as a filler. Some more text as a filler.\"\"##\n"
+"\n"
+"<<Some text in a left-floated box hanging around<<Some more text as a filler. Some more text as a filler. Some more text as a filler. Some more text as a filler. Some more text as a filler. Some more text as a filler. Some more text as a filler. Some more text as a filler.\n"
+"\n"
+"::c::To create a **right floated box**, use two ##>## characters before and after the block.\n"
+"\n"
+"**Example:**\n"
+"\n"
+"~##\"\">>Some text in a right-floated box hanging around>> Some more text as a filler. Some more text as a filler. Some more text as a filler. Some more text as a filler. Some more text as a filler. Some more text as a filler. Some more text as a filler. Some more text as a filler.\"\"##\n"
+"\n"
+"   >>Some text in a right-floated box hanging around>>Some more text as a filler. Some more text as a filler. Some more text as a filler. Some more text as a filler. Some more text as a filler. Some more text as a filler. Some more text as a filler. Some more text as a filler.\n"
+"\n"
+"::c:: Use ##\"\"::c::\"\"##  to clear floated blocks.\n"
+"\n"
+"===12. Code formatters===\n"
+"\n"
+"You can easily embed code blocks in a wiki page using a simple markup. Anything within a code block is displayed literally. \n"
+"To create a **generic code block** you can use the following markup:\n"
+"\n"
+"~##\"\"%% This is a code block %%\"\"##. \n"
+"\n"
+"%% This is a code block %%\n"
+"\n"
+"To create a **code block with syntax highlighting**, you need to specify a //code formatter// (see below for a list of available code formatters). \n"
+"\n"
+"~##\"\"%%(\"\"{{color c=\"red\" text=\"php\"}}\"\")<br />&lt;?php<br />echo \"Hello, World!\";<br />?&gt;<br />%%\"\"##\n"
+"\n"
+"%%(php)\n"
+"<?php\n"
+"echo \"Hello, World!\";\n"
+"?>\n"
+"%%\n"
+"\n"
+"You can also specify an optional //starting line// number.\n"
+"\n"
+"~##\"\"%%(php;\"\"{{color c=\"red\" text=\"15\"}}\"\")<br />&lt;?php<br />echo \"Hello, World!\";<br />?&gt;<br />%%\"\"##\n"
+"\n"
+"%%(php;15)\n"
+"<?php\n"
+"echo \"Hello, World!\";\n"
+"?>\n"
+"%%\n"
+"\n"
+"If you specify a //filename//, this will be used for downloading the code.\n"
+"\n"
+"~##\"\"%%(php;15;\"\"{{color c=\"red\" text=\"test.php\"}}\"\")<br />&lt;?php<br />echo \"Hello, World!\";<br />?&gt;<br />%%\"\"##\n"
+"\n"
+"%%(php;15;test.php)\n"
+"<?php\n"
+"echo \"Hello, World!\";\n"
+"?>\n"
+"%%\n"
+"\n"
+"|?|List of available code formatters||\n"
+"||\n"
+"|=|Language|=|Formatter|=|Language|=|Formatter|=|Language|=|Formatter||\n"
+"|#|\n"
+"|=|Actionscript||##actionscript##|=|ABAP||##abap##|=|ADA||##ada##||\n"
+"|=|Apache Log||##apache##|=|\"\"AppleScript\"\"||##applescript##|=|ASM||##asm##||\n"
+"|=|ASP||##asp##|=|\"\"AutoIT\"\"||##autoit##|=|Bash||##bash##||\n"
+"|=|\"\"BlitzBasic\"\"||##blitzbasic##|=|\"\"Basic4GL\"\"||##basic4gl##|=|bnf||##bnf##||\n"
+"|=|C||##c##|=|C for Macs||##c_mac##|=|C#||##csharp##||\n"
+"|=|C\"\"++\"\"||##cpp##|=|C\"\"++\"\" (+QT)||##cpp-qt##|=|CAD DCL||##caddcl##||\n"
+"|=|\"\"CadLisp\"\"||##cadlisp##|=|CFDG||##cfdg##|=|\"\"ColdFusion\"\"||##cfm##||\n"
+"|=|CSS||##css##|=|D||##d##|=|Delphi||##delphi##||\n"
+"|=|Diff-Output||##diff##|=|DIV||##div##|=|DOS||##dos##||\n"
+"|=|Dot||##dot##|=|Eiffel||##eiffel##|=|Fortran||##fortran##||\n"
+"|=|\"\"FreeBasic\"\"||##freebasic##|=|FOURJ's Genero 4GL||##genero##|=|GML||##gml##||\n"
+"|=|Groovy||##groovy##|=|Haskell||##haskell##|=|HTML||##html4strict##||\n"
+"|=|INI||##ini##|=|Inno Script||##inno##|=|Io||##io##||\n"
+"|=|Java 5||##java5##|=|Java||##java##|=|Javascript||##javascript##||\n"
+"|=|\"\"LaTeX\"\"||##latex##|=|Lisp||##lisp##|=|Lua||##lua##||\n"
+"|=|Matlab||##matlab##|=|mIRC Scripting||##mirc##|=|Microchip Assembler||##mpasm##||\n"
+"|=|Microsoft Registry||##reg##|=|Motorola 68k Assembler||##m68k##|=|\"\"MySQL\"\"||##mysql##||\n"
+"|=|NSIS||##nsis##|=|Objective C||##objc##|=|\"\"OpenOffice\"\" BASIC||##oobas##||\n"
+"|=|Objective Caml||##ocaml##|=|Objective Caml (brief)||##ocaml-brief##|=|Oracle 8||##oracle8##||\n"
+"|=|Pascal||##pascal##|=|Per (FOURJ's Genero 4GL)||##per##|=|Perl||##perl##||\n"
+"|=|PHP||##php##|=|PHP (brief)||##php-brief##|=|PL/SQL||##plsql##||\n"
+"|=|Python||##phyton##|=|Q(uick)BASIC||##qbasic##|=|robots.txt||##robots##||\n"
+"|=|Ruby on Rails||##rails##|=|Ruby||##ruby##|=|SAS||##sas##||\n"
+"|=|Scheme||##scheme##|=|sdlBasic||##sdlbasic##|=|Smarty||##smarty##||\n"
+"|=|SQL||##sql##|=|TCL/iTCL||##tcl##|=|T-SQL||##tsql##||\n"
+"|=|Text||##text##|=|thinBasic||##thinbasic##|=|Unoidl||##idl##||\n"
+"|=|VB.NET||##vbnet##|=|VHDL||##vhdl##|=|Visual BASIC||##vb##||\n"
+"|=|Visual Fox Pro||##visualfoxpro##|=|\"\"WinBatch\"\"||##winbatch##|=|XML||##xml##||\n"
+"|=|X\"\"++\"\"||##xpp##|=|\"\"ZiLOG\"\" Z80 Assembler||##z80##|=| ||\n"
+"\n"
+"\n"
+"===13. Mindmaps===\n"
+"\n"
+"Wikka has native support for [[Wikka:FreeMind mindmaps]]. There are two options for embedding a mindmap in a wiki page.\n"
+"\n"
+"**Option 1:** Upload a \"\"FreeMind\"\" file to a webserver, and then place a link to it on a wikka page:\n"
+"  ##\"\"http://yourdomain.com/freemind/freemind.mm\"\"##\n"
+"No special formatting is necessary.\n"
+"\n"
+"**Option 2:** Paste the \"\"FreeMind\"\" data directly into a wikka page:\n"
+"~- Open a \"\"FreeMind\"\" file with a text editor.\n"
+"~- Select all, and copy the data.\n"
+"~- Browse to your Wikka site and paste the Freemind data into a page. \n"
+"\n"
+"===14. Embedded HTML===\n"
+"\n"
+"You can easily paste HTML in a wiki page by wrapping it into two sets of doublequotes. \n"
+"\n"
+"~##&quot;&quot;[html code]&quot;&quot;##\n"
+"\n"
+"<<\n"
+"~##&quot;&quot;y = x<sup>n+1</sup>&quot;&quot;##\n"
+"~\"\"y = x<sup>n+1</sup>\"\"\n"
+"<<::c::\n"
+"<<\n"
+"~##&quot;&quot;<acronym title=\"Cascade Style Sheet\">CSS</acronym>&quot;&quot;##\n"
+"~\"\"<acronym title=\"Cascade Style Sheet\">CSS</acronym>\"\"\n"
+"<<::c::By default, some HTML tags are removed by the \"\"SafeHTML\"\" parser to protect against potentially dangerous code.  The list of tags that are stripped can be found on the Wikka:SafeHTML page.\n"
+"\n"
+"It is possible to allow //all// HTML tags to be used, see Wikka:UsingHTML for more information.\n"
+"\n"
+"----\n"
+"[[CategoryWiki Wiki category]]"
+msgstr ""
+
+#: pninit.php:864
+msgid "HighScores"
+msgstr ""
+
+#: pninit.php:864
+msgid ""
+"{{highscores full=\"1\"}}\n"
+"\n"
+"----\n"
+"[[CategoryWiki Wiki category]]"
+msgstr ""
+
+#: pninit.php:868
+msgid "OwnedPages"
+msgstr ""
+
+#: pninit.php:868
+msgid ""
+"{{ownedpages}}\n"
+"\n"
+"These numbers merely reflect how many pages you have created, not how much content you have contributed or the quality of your contributions. To see how you rank with other members, you may be interested in checking out the HighScores.\n"
+"----\n"
+"CategoryWiki"
+msgstr ""
+
+#: pninit.php:873
+#: pnuserapi.php:40
+#: pnblocks/random.php:76
+msgid "SandBox"
+msgstr ""
+
+#: pninit.php:873
+msgid ""
+"Test your formatting skills here.\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"----\n"
+"[[CategoryWiki Wiki category]]"
+msgstr ""
+
+#: pnactionapi/lastedit.php:47
+#: pnactionapi/mychanges.php:64
+#: pnactionapi/recentchanges.php:38
+#: pnuser.php:378
+#: pnblocks/wkrecentchanges.php:80
+msgid "D, d M Y"
+msgstr ""
+
+#: pnactionapi/lastedit.php:48
+#: pnactionapi/mychanges.php:79
+#: pnactionapi/recentchanges.php:42
+msgid "H:i T"
+msgstr ""
+
+#: pnactionapi/feedback.php:27
+msgid "The Mailer module is unavailable!"
+msgstr ""
+
+#: pnactionapi/wikkachanges.php:24
+msgid ""
+"=====Wikka Release Notes=====\n"
+"This site is running Wikula -the Wiki module for Zikula- version **{{wikkaversion}}**.\n"
+"The release notes are described on the [[http://code.zikula.org/wikula development website]].\n"
+msgstr ""
+
+#: pnactionapi/mychanges.php:26
+msgid "You are not logged in, the list of pages you've edited couldn't be retrieved."
+msgstr ""
+
+#: pnactionapi/pageindex.php:45
+#: pnactionapi/mypages.php:33
+msgid "No pages found!"
+msgstr ""
+
+#: pnactionapi/wantedpages.php:36
+#, php-format
+msgid "No pages linking to %s"
+msgstr ""
+
+#: pnactionapi/wantedpages.php:43
+msgid "No wanted pages"
+msgstr ""
+
+#: pnactionapi/ownedpages.php:33
+#: pnuser.php:312
+#: pnuser.php:340
+msgid "Error during element fetching !"
+msgstr ""
+
+#: pnactionapi/lastezcomments.php:24
+msgid "EZComments unavailable"
+msgstr ""
+
+#: pnactionapi/lastezcomments.php:28
+msgid "Not hooked!"
+msgstr ""
+
+#: pnactionapi/lastezcomments.php:37
+#: pntemplates/action/lastezcomments.tpl:18
+msgid "No comments yet..."
+msgstr ""
+
+#: pnactionapi/countpages.php:43
+#: pntemplates/wikula_user_menu.tpl:25
+#: pntemplates/wikula_user_menu.tpl:27
+msgid "Page index"
+msgstr ""
+
+#: pnactionapi/include.php:32
+msgid "Circular reference detected"
+msgstr ""
+
+#: pnactionapi/include.php:37
+msgid "Page missing"
+msgstr ""
+
+#: pnactionapi/backlinks.php:27
+#: pnuser.php:227
+#: pnuser.php:440
+#: pnuser.php:465
+#, php-format
+msgid "Missing argument [%s]"
+msgstr ""
+
+#: pnactionapi/rss.php:39
+msgid "Sorry! The <strong>Feeds</strong> module is not available."
+msgstr ""
+
+#: pnactionapi/mypages.php:24
+msgid "You are not logged in, the list of pages you own couldn't be retrieved."
+msgstr ""
+
+#: pnactionapi/interwikilist.php:24
+msgid "File interwiki.conf not found!"
+msgstr ""
+
+#: pnactionapi/contact.php:40
+msgid "Send us your feedback"
+msgstr ""
+
+#: pnactionapi/contact.php:40
+msgid "Contact"
+msgstr ""
+
+#: pnactionapi/recentchanges.php:29
+#: pnblocks/wkrecentchanges.php:71
+#: pntemplates/action/recentchanges.tpl:30
+#: pntemplates/wikula_block_wkrecentchanges.tpl:22
+msgid "There are no recent changes"
+msgstr ""
+
+#: pnactionapi/recentchanges.php:45
+#: pnblocks/wkrecentchanges.php:85
+msgid "anonymous user"
+msgstr ""
+
+#: pnactionapi/mindmap.php:24
+msgid "Invalid MindMap action syntax.<br />Proper usage: {{mindmap http://domain.com/MapName/mindmap.mm}} or {{mindmap url=\"http://domain.com/MapName/mindmap.mm\"}}"
+msgstr ""
+
+#: pnactionapi/mindmap.php:63
+#, php-format
+msgid "<a href=\"%1$s\">Download this mind map</a> :: Use <a href=\"http://freemind.sourceforge.net/\">Freemind</a> to edit it :: <a href=\"%2$s\" onclick=\"return popup(this, 'fullmindmap')\">Open fullscreen</a>"
+msgstr ""
+
+#: pnadmin.php:157
+msgid "Done! Module configuration updated."
+msgstr ""
+
+#: pnuserapi.php:60
+#: pnuserapi.php:115
+#: pnuserapi.php:149
+#: pnuserapi.php:220
+#: pnuserapi.php:246
+#: pnuserapi.php:1337
+msgid "You do not have the authorization to read this page!"
+msgstr ""
+
+#: pnuserapi.php:122
+msgid "Error! Getting the this page by id failed."
+msgstr ""
+
+#: pnuserapi.php:231
+#: pnuserapi.php:1348
+msgid "Error! Getting the links for this page failed."
+msgstr ""
+
+#: pnuserapi.php:257
+msgid "Error! Count the links for this page failed."
+msgstr ""
+
+#: pnuserapi.php:301
+msgid "Error! Getting revisions failed."
+msgstr ""
+
+#: pnuserapi.php:339
+msgid "Error! Getting all pages failed."
+msgstr ""
+
+#: pnuserapi.php:388
+msgid "Error! Getting all pages by user failed."
+msgstr ""
+
+#: pnuserapi.php:526
+#: pnuserapi.php:548
+#: pnuserapi.php:616
+#: pnuserapi.php:675
+#: pnuserapi.php:732
+msgid "Getting matches for this page failed!"
+msgstr ""
+
+#: pnuserapi.php:620
+msgid "No items found."
+msgstr ""
+
+#: pnuserapi.php:764
+msgid "You do not have the right to delete this page!"
+msgstr ""
+
+#: pnuserapi.php:772
+msgid "Error! Deleting this page failed."
+msgstr ""
+
+#: pnuserapi.php:778
+msgid "Error! Deleting links for this page failed."
+msgstr ""
+
+#: pnuserapi.php:784
+msgid "Error! Deleting ACLS for this page failed."
+msgstr ""
+
+#: pnuserapi.php:790
+msgid "Error! Deleting referers for this page failed."
+msgstr ""
+
+#: pnuserapi.php:793
+msgid "Done! Page deleted with success."
+msgstr ""
+
+#: pnuserapi.php:803
+msgid "You do not have the authorization to add a page!"
+msgstr ""
+
+#: pnuserapi.php:817
+msgid "The content of the page to save is the same of the current revision. New page not saved."
+msgstr ""
+
+#: pnuserapi.php:834
+msgid "Setting last revision failed!"
+msgstr ""
+
+#: pnuserapi.php:851
+msgid "Saving revision failed!"
+msgstr ""
+
+#: pnuserapi.php:862
+msgid "New page created!"
+msgstr ""
+
+#: pnuserapi.php:864
+msgid "New revision saved!"
+msgstr ""
+
+#: pnuserapi.php:924
+msgid "Adding InterWiki failed due to missing arguments!"
+msgstr ""
+
+#: pnuserapi.php:938
+msgid "Adding interwiki failed!"
+msgstr ""
+
+#: pnuserapi.php:941
+msgid "Interwiki added with success!"
+msgstr ""
+
+#: pnuserapi.php:951
+#: pnuserapi.php:1153
+msgid "Error! Invalid arguments."
+msgstr ""
+
+#: pnuserapi.php:1128
+msgid "Inserting link failed!"
+msgstr ""
+
+#: pnuserapi.php:1199
+msgid "Inserting Referer failed!"
+msgstr ""
+
+#: pnuserapi.php:1285
+msgid "Error! Get page failed."
+msgstr ""
+
+#: pnuserapi.php:1440
+msgid "Action argument missing!"
+msgstr ""
+
+#: pnuserapi.php:1468
+#: pnuserapi.php:1473
+#, php-format
+msgid "Unknown action %s; the action name must not contain special characters"
+msgstr ""
+
+#: pnuserapi.php:1515
+msgid "Error! Happened during element fetching."
+msgstr ""
+
+#: pnuserapi.php:2180
+msgid "Grab code"
+msgstr ""
+
+#: pnversion.php:13
+msgid "Wikula"
+msgstr "Wikula"
+
+#: pnversion.php:15
+msgid "The Wikula module provides a wiki to your website."
+msgstr ""
+
+#. !module name that appears in URL
+#: pnversion.php:16
+msgid "wikula"
+msgstr "wikula"
+
+#: pnuser.php:62
+#: pnuser.php:474
+msgid "The page you requested doesn't exists"
+msgstr ""
+
+#: pnuser.php:74
+msgid "The page does not exist yet! do you want to create it?"
+msgstr ""
+
+#: pnuser.php:74
+msgid "Feel free to participate and be the first who creates content for this page!"
+msgstr ""
+
+#: pnuser.php:119
+#: pnuser.php:470
+#: pnuser.php:506
+msgid "You do not have the authorization to edit this page!"
+msgstr ""
+
+#: pnuser.php:126
+#: pnuser.php:484
+#: pntemplates/wikula_user_clone.tpl:34
+#: pntemplates/wikula_init_delete.tpl:15
+#: pntemplates/wikula_user_edit.tpl:35
+#: pntemplates/wikula_admin_deletepages.tpl:42
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: pnuser.php:129
+#: pnuser.php:164
+#: pntemplates/wikula_user_edit.tpl:33
+msgid "Store"
+msgstr "Speichern"
+
+#: pnuser.php:129
+#: pntemplates/wikula_user_edit.tpl:34
+msgid "Preview"
+msgstr "Vorschau"
+
+#: pnuser.php:142
+msgid "The revision ID does not exist for the requested page"
+msgstr ""
+
+#: pnuser.php:169
+msgid "OVERWRITE ALERT: This page was modified by someone else while you were editing it.<br />Please copy your changes and re-edit this page."
+msgstr ""
+
+#: pnuser.php:236
+#, php-format
+msgid "No %s found."
+msgstr ""
+
+#: pnuser.php:359
+#: pntemplates/action/recentchanges.tpl:5
+#: pntemplates/action/recentchanges.tpl:7
+msgid "Recent Changes"
+msgstr ""
+
+#: pnuser.php:390
+msgid "Revision time: "
+msgstr ""
+
+#: pnuser.php:394
+msgid "Author: "
+msgstr "Author:"
+
+#: pnuser.php:397
+msgid "View History"
+msgstr ""
+
+#: pnuser.php:410
+msgid "Author"
+msgstr "Author"
+
+#: pnuser.php:479
+#, php-format
+msgid "Cloned from %s"
+msgstr ""
+
+#: pnuser.php:487
+#: pntemplates/wikula_user_clone.tpl:33
+#: pntemplates/wikula_init_step2.tpl:94
+#: pntemplates/action/feedback.tpl:31
+#: pntemplates/wikula_admin_pageadmin.tpl:22
+msgid "Submit"
+msgstr ""
+
+#: pnuser.php:495
+msgid "That page name is not valid"
+msgstr ""
+
+#: pnuser.php:501
+msgid "This page does already exist"
+msgstr ""
+
+#: pnuser.php:524
+msgid "Clone created successfully"
+msgstr ""
+
+#: pnuser.php:548
+msgid "You must be logged in to be able to view referrers - Anti botspam"
+msgstr ""
+
+#: pnadminapi.php:26
+msgid "Main"
+msgstr ""
+
+#: pnadminapi.php:27
+#: pntemplates/wikula_admin_main.tpl:10
+msgid "Pages"
+msgstr ""
+
+#: pnadminapi.php:28
+#: pntemplates/wikula_admin_modifyconfig.tpl:4
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: pnadminapi.php:42
+msgid "Error! Get owners failed."
+msgstr ""
+
+#: pnadminapi.php:136
+msgid "Error! Clearing referers failed."
+msgstr ""
+
+#: pnadminapi.php:246
+msgid "Error! Count the revisions for this page failed."
+msgstr ""
+
+#: pnadminapi.php:267
+msgid "Error! Deleting the revision failed."
+msgstr ""
+
+#: pnadminapi.php:297
+msgid "Error! Setting the latest page failed."
+msgstr ""
+
+#: pntemplates/wikula_user_clone.tpl:10
+#, php-format
+msgid "Clone <a href=\"%1$s\">%1$s</a>"
+msgstr ""
+
+#: pntemplates/wikula_user_clone.tpl:14
+msgid "Please fill in a valid target page name and an (optional) edit note."
+msgstr ""
+
+#: pntemplates/wikula_user_clone.tpl:16
+msgid "Clone as"
+msgstr ""
+
+#: pntemplates/wikula_user_clone.tpl:20
+#: pntemplates/wikula_admin_deletepages.tpl:22
+#: pntemplates/wikula_admin_deletepages.tpl:58
+#: pntemplates/wikula_admin_pageadmin.tpl:45
+msgid "Note"
+msgstr ""
+
+#: pntemplates/wikula_user_clone.tpl:27
+msgid "Edit after creation"
+msgstr ""
+
+#: pntemplates/action/googleform.tpl:3
+msgid "http://www.google.com/search"
+msgstr ""
+
+#: pntemplates/wikula_user_show.tpl:9
+#, php-format
+msgid "Revision [%s]"
+msgstr ""
+
+#: pntemplates/wikula_user_show.tpl:10
+#, php-format
+msgid "This is a past revision of <a href=\"%2$s\">%1$s</a> made by %3$s on <a class=\"datetime\" href=\"%4$s\">%5$s</a>"
+msgstr ""
+
+#: pntemplates/wikula_user_show.tpl:14
+msgid "Show Source"
+msgstr ""
+
+#: pntemplates/wikula_user_show.tpl:19
+msgid "Edit Revision"
+msgstr ""
+
+#: pntemplates/wikula_user_show.tpl:40
+#: pntemplates/wikula_user_referrers.tpl:103
+msgid "Edit page"
+msgstr ""
+
+#: pntemplates/wikula_user_show.tpl:43
+#: pntemplates/wikula_user_backlinks.tpl:19
+#: pntemplates/action/pageauthors.tpl:34
+#: pntemplates/wikula_user_referrers.tpl:106
+msgid "Page history"
+msgstr ""
+
+#: pntemplates/wikula_user_show.tpl:45
+msgid "Revisions of \"%tag%\" Feed"
+msgstr ""
+
+#: pntemplates/wikula_user_show.tpl:48
+#: pntemplates/wikula_user_backlinks.tpl:24
+#: pntemplates/wikula_admin_deletepages.tpl:19
+#: pntemplates/wikula_admin_deletepages.tpl:55
+#: pntemplates/action/pageindex.tpl:37
+#: pntemplates/wikula_admin_pageadmin.tpl:42
+#: pntemplates/wikula_user_referrers.tpl:111
+#: pntemplates/wikula_user_history.tpl:70
+msgid "Owner"
+msgstr ""
+
+#: pntemplates/wikula_user_show.tpl:52
+#: pntemplates/wikula_admin_pageadmin.tpl:50
+#: pntemplates/wikula_user_referrers.tpl:63
+#: pntemplates/wikula_user_referrers.tpl:115
+msgid "Referrers"
+msgstr ""
+
+#: pntemplates/wikula_user_show.tpl:55
+#: pntemplates/action/textsearchexpanded.tpl:5
+#: pntemplates/wikula_user_backlinks.tpl:26
+#: pntemplates/action/textsearch.tpl:5
+#: pntemplates/wikula_user_referrers.tpl:118
+msgid "Search for"
+msgstr ""
+
+#: pntemplates/action/mypages.tpl:5
+#, php-format
+msgid "This is the list of pages you own. (%1$s on %2$s)"
+msgstr ""
+
+#: pntemplates/action/mypages.tpl:9
+#: pntemplates/action/mychanges.tpl:7
+#: pntemplates/action/mychanges.tpl:9
+#: pntemplates/action/mychanges.tpl:15
+msgid "This is a list of pages you"
+msgstr ""
+
+#: pntemplates/action/mypages.tpl:33
+msgid "You don't own any pages"
+msgstr ""
+
+#: pntemplates/action/backlinks.tpl:4
+#: pntemplates/wikula_admin_pageadmin.tpl:49
+msgid "Backlinks"
+msgstr ""
+
+#: pntemplates/wikula_init_delete.tpl:5
+#: pntemplates/wikula_init_delete.tpl:6
+msgid "Deinstallation of Wikula"
+msgstr ""
+
+#: pntemplates/wikula_init_delete.tpl:8
+msgid "Thank you for trying Wikula.<br />All the module tables will be removed now!"
+msgstr ""
+
+#: pntemplates/wikula_init_delete.tpl:10
+#: pntemplates/wikula_init_step2.tpl:90
+#: pntemplates/wikula_init_step3.tpl:11
+msgid "wizard"
+msgstr ""
+
+#: pntemplates/wikula_init_delete.tpl:14
+#: pntemplates/wikula_init_interactive.tpl:15
+#: pntemplates/wikula_init_step3.tpl:52
+msgid "Continue"
+msgstr ""
+
+#: pntemplates/wikula_init_delete.tpl:14
+#: pntemplates/wikula_init_step3.tpl:51
+msgid "or"
+msgstr ""
+
+#: pntemplates/wikula_user_menu.tpl:17
+#: pntemplates/wikula_user_menu.tpl:19
+msgid "Categories"
+msgstr ""
+
+#: pntemplates/wikula_user_menu.tpl:33
+#: pntemplates/wikula_user_menu.tpl:35
+#: pntemplates/action/textsearchexpanded.tpl:7
+#: pntemplates/action/textsearch.tpl:7
+msgid "Search"
+msgstr "Suchen"
+
+#: pntemplates/wikula_user_menu.tpl:41
+#: pntemplates/wikula_user_menu.tpl:43
+msgid "Help"
+msgstr ""
+
+#: pntemplates/wikula_user_menu.tpl:50
+msgid "Log in"
+msgstr ""
+
+#: pntemplates/wikula_user_menu.tpl:55
+#: pntemplates/wikula_user_menu.tpl:57
+msgid "Recent changes"
+msgstr ""
+
+#: pntemplates/wikula_user_menu.tpl:59
+#: pntemplates/action/recentchanges.tpl:7
+msgid "Recent changes Feed"
+msgstr "Zuletzt geänderte Seiten"
+
+#: pntemplates/wikula_user_menu.tpl:59
+#: pntemplates/action/recentchanges.tpl:7
+#: pntemplates/wikula_block_wkrecentchanges.tpl:6
+msgid "RSS"
+msgstr ""
+
+#: pntemplates/wikula_user_edit.tpl:9
+msgid "Go to the edit form"
+msgstr ""
+
+#: pntemplates/wikula_user_edit.tpl:28
+msgid "Please add a note with details of your submission"
+msgstr "Bitte geben Sie einen Kommentar zu Ihrer Bearbeitung an"
+
+#: pntemplates/wikula_user_edit.tpl:37
+msgid "Go to the preview"
+msgstr ""
+
+#: pntemplates/action/recentchanges.tpl:22
+msgid "Recent Changes Revisions"
+msgstr ""
+
+#: pntemplates/action/recentchanges.tpl:23
+#: pntemplates/action/mychanges.tpl:28
+msgid "History"
+msgstr "Versionsgeschichte"
+
+#: pntemplates/action/textsearchexpanded.tpl:13
+msgid "Search result: <strong>%matches% matches</strong> for <strong>%phrase%</strong>"
+msgstr ""
+
+#: pntemplates/action/textsearchexpanded.tpl:28
+#: pntemplates/action/textsearch.tpl:26
+msgid "Search string not found"
+msgstr ""
+
+#: pntemplates/action/textsearchexpanded.tpl:32
+msgid "Click here to create a new page named \"%tag%\""
+msgstr ""
+
+#: pntemplates/action/textsearchexpanded.tpl:39
+#: pntemplates/action/textsearch.tpl:37
+msgid "<strong>Search Tips:</strong><br /><br /><div class=\"indent\">apple banana</div>Find pages that contain at least one of the two words. <br /><br /><div class=\"indent\">+apple +juice</div>Find pages that contain both words. <br /><br /><div class=\"indent\">+apple -macintosh</div>Find pages that contain the word <q>apple</q> but not <q>macintosh</q>. <br /><br /><div class=\"indent\">apple*</div>Find pages that contain words such as apple, apples, applesauce, or applet. <br /><br /><div class=\"indent\">&quot;some words&quot;</div>Find pages that contain the exact phrase <q>some words</q> (for example, pages that contain <q>some words of wisdom</q> <br />but not <q>some noise words</q>). "
+msgstr ""
+
+#: pntemplates/wikula_admin_pages.tpl:4
+#: pntemplates/action/pageindex.tpl:5
+msgid "Page Index"
+msgstr ""
+
+#: pntemplates/wikula_admin_pages.tpl:11
+#: pntemplates/action/pageindex.tpl:16
+msgid "All"
+msgstr "Alle"
+
+#: pntemplates/wikula_admin_pages.tpl:30
+msgid "Owner:"
+msgstr ""
+
+#: pntemplates/wikula_admin_pages.tpl:38
+#: pntemplates/action/pageindex.tpl:10
+msgid "Items marked with a * indicate pages that you own."
+msgstr ""
+
+#: pntemplates/wikula_admin_pages.tpl:40
+msgid "No page found"
+msgstr ""
+
+#: pntemplates/wikula_user_backlinks.tpl:7
+#, php-format
+msgid "Pages linking to <a href=\"%1$s\">%2$s</a>"
+msgstr ""
+
+#: pntemplates/wikula_user_backlinks.tpl:11
+msgid "There are no backlinks to this page"
+msgstr ""
+
+#: pntemplates/wikula_user_backlinks.tpl:21
+#: pntemplates/wikula_user_referrers.tpl:108
+#, php-format
+msgid "Revisions of \"%s\" Feed"
+msgstr ""
+
+#: pntemplates/wikula_admin_deletepages.tpl:4
+#: pntemplates/wikula_admin_pageadmin.tpl:4
+msgid "Page Administration"
+msgstr ""
+
+#: pntemplates/wikula_admin_deletepages.tpl:18
+#: pntemplates/wikula_admin_deletepages.tpl:54
+#: pntemplates/wikula_admin_pageadmin.tpl:40
+msgid "Page name"
+msgstr ""
+
+#: pntemplates/wikula_admin_deletepages.tpl:20
+#: pntemplates/wikula_admin_deletepages.tpl:56
+#: pntemplates/wikula_admin_pageadmin.tpl:43
+#: pntemplates/wikula_user_history.tpl:69
+msgid "Latest author"
+msgstr ""
+
+#: pntemplates/wikula_admin_deletepages.tpl:21
+#: pntemplates/wikula_admin_deletepages.tpl:57
+#: pntemplates/wikula_admin_pageadmin.tpl:44
+#: pntemplates/wikula_user_history.tpl:23
+#: pntemplates/wikula_user_history.tpl:68
+msgid "Last edit"
+msgstr "Letzte Veränderung"
+
+#: pntemplates/wikula_admin_deletepages.tpl:59
+#: pntemplates/wikula_admin_pageadmin.tpl:51
+msgid "Actions"
+msgstr ""
+
+#: pntemplates/wikula_block_wkrecentchanges_modify.tpl:4
+msgid "Number of items"
+msgstr ""
+
+#: pntemplates/action/categorycategory.tpl:11
+#: pntemplates/action/categorycategory.tpl:43
+msgid "Pages that belong to this category "
+msgstr ""
+
+#: pntemplates/action/categorycategory.tpl:54
+msgid "No pages found in this category!"
+msgstr ""
+
+#: pntemplates/wikula_init_step2.tpl:5
+#: pntemplates/wikula_init_interactive.tpl:5
+#: pntemplates/wikula_init_interactive.tpl:6
+#: pntemplates/wikula_init_step3.tpl:3
+msgid "Wikula Installation"
+msgstr ""
+
+#: pntemplates/wikula_init_step2.tpl:19
+msgid "Wikula needs some information in order to proceed with the installation"
+msgstr ""
+
+#: pntemplates/wikula_init_step2.tpl:22
+#: pntemplates/wikula_admin_modifyconfig.tpl:13
+#: pntemplates/wikula_init_step3.tpl:16
+msgid "Root Page"
+msgstr ""
+
+#: pntemplates/wikula_init_step2.tpl:24
+msgid "Choose a WikiWord (also known as CamelCase) that will be the tag of your Wikula home page. (default: HomePage)"
+msgstr ""
+
+#: pntemplates/wikula_init_step2.tpl:29
+#: pntemplates/wikula_admin_pageadmin.tpl:16
+#: pntemplates/wikula_admin_modifyconfig.tpl:43
+#: pntemplates/wikula_init_step3.tpl:20
+msgid "Items per page"
+msgstr ""
+
+#: pntemplates/wikula_init_step2.tpl:35
+msgid "Receive notifications when a new Page/Revision is saved?"
+msgstr ""
+
+#: pntemplates/wikula_init_step2.tpl:41
+#: pntemplates/wikula_admin_modifyconfig.tpl:38
+msgid "Log Referers - Note: If the Zikula HTTPReferers module is available, it will use the exclusions setting.)"
+msgstr ""
+
+#: pntemplates/wikula_init_step2.tpl:48
+msgid "Wikula detected the EZComments module, do you want to activate the EZComments Hook for Wikula?"
+msgstr ""
+
+#: pntemplates/wikula_init_step2.tpl:56
+msgid "Wikula did not detect a stand alone Wikkawiki installation. If you have one, please provide the table prefix (default: wikka)"
+msgstr ""
+
+#: pntemplates/wikula_init_step2.tpl:64
+msgid "Select yes if you want Wikula to attempt to import the pages content"
+msgstr ""
+
+#: pntemplates/wikula_init_step2.tpl:66
+msgid "Wikula detected a Stand alone WikkaWiki installation, would you like to import the pages into Wikula?"
+msgstr ""
+
+#: pntemplates/wikula_init_step2.tpl:69
+#: pntemplates/wikula_init_step3.tpl:25
+#: pntemplates/wikula_init_step3.tpl:29
+#: pntemplates/wikula_init_step3.tpl:33
+#: pntemplates/wikula_init_step3.tpl:37
+#: pntemplates/wikula_init_step3.tpl:45
+msgid "No"
+msgstr "Nein"
+
+#: pntemplates/wikula_init_step2.tpl:70
+#: pntemplates/wikula_init_step3.tpl:25
+#: pntemplates/wikula_init_step3.tpl:29
+#: pntemplates/wikula_init_step3.tpl:33
+#: pntemplates/wikula_init_step3.tpl:37
+#: pntemplates/wikula_init_step3.tpl:45
+msgid "Yes"
+msgstr "Ja"
+
+#: pntemplates/wikula_init_step2.tpl:76
+msgid "In which category would you like to place Wikula?"
+msgstr ""
+
+#: pntemplates/wikula_init_step2.tpl:84
+msgid "Activate module after installation?"
+msgstr ""
+
+#: pntemplates/wikula_admin_main.tpl:4
+msgid "Wikula Statistics"
+msgstr ""
+
+#: pntemplates/wikula_admin_main.tpl:12
+msgid "Owners"
+msgstr ""
+
+#: pntemplates/wikula_admin_main.tpl:13
+msgid "Total"
+msgstr "Total"
+
+#: pntemplates/action/highscores.tpl:4
+msgid "Highscores"
+msgstr ""
+
+#: pntemplates/action/highscores.tpl:8
+msgid "Rank"
+msgstr "Rang"
+
+#: pntemplates/action/highscores.tpl:9
+msgid "User"
+msgstr "Benutzer"
+
+#: pntemplates/action/highscores.tpl:10
+msgid "Page Count"
+msgstr ""
+
+#: pntemplates/action/highscores.tpl:11
+msgid "Percentage"
+msgstr "Prozent"
+
+#: pntemplates/action/pageindex.tpl:8
+msgid "This is an alphabetical list of pages you can read on this server."
+msgstr ""
+
+#: pntemplates/action/textsearch.tpl:13
+#, php-format
+msgid "Search result: <strong>%1$s matches</strong> for <strong>%2$s</strong>"
+msgstr ""
+
+#: pntemplates/action/textsearch.tpl:21
+#, php-format
+msgid "Not sure which page to choose?<br />Try the <a href=\"%s\" title=\"Expanded Text Search\">Expanded Text Search</a> which shows surrounding text."
+msgstr ""
+
+#: pntemplates/action/textsearch.tpl:30
+#, php-format
+msgid "Click here to create a new page named \"%s\""
+msgstr ""
+
+#: pntemplates/action/feedback.tpl:5
+msgid "Thank you! Message sent."
+msgstr ""
+
+#: pntemplates/action/feedback.tpl:8
+msgid "Please Enter a name!"
+msgstr ""
+
+#: pntemplates/action/feedback.tpl:10
+msgid "Please enter a valid e-mail address!"
+msgstr ""
+
+#: pntemplates/action/feedback.tpl:12
+msgid "Please enter a comment!"
+msgstr ""
+
+#: pntemplates/action/feedback.tpl:14
+msgid "Fill in the form below to send us your comments:"
+msgstr ""
+
+#: pntemplates/action/feedback.tpl:19
+#: pntemplates/action/rss.tpl:17
+msgid "Name"
+msgstr "Name"
+
+#: pntemplates/action/feedback.tpl:23
+msgid "E-mail address"
+msgstr "E-Mail Adress"
+
+#: pntemplates/action/feedback.tpl:27
+msgid "Your comments"
+msgstr ""
+
+#: pntemplates/wikula_admin_pageadmin.tpl:12
+msgid "Filter view:"
+msgstr ""
+
+#: pntemplates/wikula_admin_pageadmin.tpl:14
+msgid "Show"
+msgstr "Anzeigen"
+
+#: pntemplates/wikula_admin_pageadmin.tpl:17
+msgid "Apply"
+msgstr "Anwenden"
+
+#: pntemplates/wikula_admin_pageadmin.tpl:20
+msgid "Search page:"
+msgstr ""
+
+#: pntemplates/wikula_admin_pageadmin.tpl:21
+msgid "Enter search string:"
+msgstr ""
+
+#: pntemplates/wikula_admin_pageadmin.tpl:25
+msgid "Records"
+msgstr ""
+
+#: pntemplates/wikula_admin_pageadmin.tpl:26
+msgid "Sorted by:"
+msgstr "Sortieren nach:"
+
+#: pntemplates/wikula_admin_pageadmin.tpl:46
+#: pntemplates/wikula_user_referrers.tpl:62
+msgid "Hits"
+msgstr ""
+
+#: pntemplates/wikula_admin_pageadmin.tpl:47
+#: pntemplates/action/mychanges.tpl:27
+msgid "Revisions"
+msgstr ""
+
+#: pntemplates/wikula_admin_pageadmin.tpl:48
+msgid "Comments"
+msgstr ""
+
+#: pntemplates/wikula_admin_pageadmin.tpl:73
+#: pntemplates/wikula_user_history.tpl:27
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: pntemplates/wikula_admin_pageadmin.tpl:74
+msgid "Delete"
+msgstr "Lösche"
+
+#: pntemplates/wikula_admin_pageadmin.tpl:75
+msgid "Info"
+msgstr ""
+
+#: pntemplates/wikula_block_random_modify.tpl:4
+msgid "Maximum Characters"
+msgstr ""
+
+#: pntemplates/wikula_admin_modifyconfig.tpl:18
+msgid "Receive an email when a new revision is saved"
+msgstr ""
+
+#: pntemplates/wikula_admin_modifyconfig.tpl:23
+msgid "Do not include page history info box into wiki pages"
+msgstr ""
+
+#: pntemplates/wikula_admin_modifyconfig.tpl:28
+msgid "Page tags, separated with comma, that should always be displayed without page history info box"
+msgstr ""
+
+#: pntemplates/wikula_admin_modifyconfig.tpl:33
+msgid "Do not show the editor help bar (wiki-edit) above an articled that gets edited"
+msgstr ""
+
+#: pntemplates/wikula_admin_modifyconfig.tpl:52
+msgid "Update Configuration"
+msgstr ""
+
+#: pntemplates/action/mychanges.tpl:7
+msgid "order by date"
+msgstr ""
+
+#: pntemplates/action/mychanges.tpl:9
+msgid "order alphabetically"
+msgstr ""
+
+#: pntemplates/action/pageauthors.tpl:4
+msgid "Site creator"
+msgstr ""
+
+#: pntemplates/action/pageauthors.tpl:19
+msgid "Last authors"
+msgstr ""
+
+#: pntemplates/wikula_xml_revisions.tpl:7
+#, php-format
+msgid "Revisions of %s"
+msgstr ""
+
+#: pntemplates/wikula_xml_revisions.tpl:9
+#: pntemplates/wikula_xml_recentchanges.tpl:9
+#, php-format
+msgid "Recent changes of %s"
+msgstr ""
+
+#: pntemplates/wikula_xml_revisions.tpl:24
+#: pntemplates/wikula_xml_recentchanges.tpl:24
+msgid "(No note added)"
+msgstr ""
+
+#: pntemplates/wikula_xml_revisions.tpl:24
+#: pntemplates/wikula_xml_recentchanges.tpl:24
+#, php-format
+msgid "\"%1$s\" by %2$s on %3$s"
+msgstr ""
+
+#: pntemplates/wikula_xml_revisions.tpl:29
+#: pntemplates/wikula_xml_recentchanges.tpl:29
+msgid "Error"
+msgstr ""
+
+#: pntemplates/wikula_xml_revisions.tpl:31
+#: pntemplates/wikula_xml_recentchanges.tpl:31
+msgid "No items available yet or you're not allowed to access this information"
+msgstr ""
+
+#: pntemplates/action/lastedit.tpl:5
+msgid "Last edited by "
+msgstr ""
+
+#: pntemplates/wikula_init_interactive.tpl:9
+msgid "Welcome to the Wikula Installation Script."
+msgstr ""
+
+#: pntemplates/wikula_init_interactive.tpl:11
+msgid "If you have any trouble with the installation of Wikula,<br />please refer to <a href=\"http://code.zikula.org/wikula\" title=\"Wikula at Cozi\">Wikula@Cozi</a> for support and documentation."
+msgstr ""
+
+#: pntemplates/wikula_init_interactive.tpl:13
+msgid "wikkawizard"
+msgstr ""
+
+#: pntemplates/action/rss.tpl:19
+msgid "URL"
+msgstr ""
+
+#: pntemplates/action/rss.tpl:31
+#, php-format
+msgid "Feeds by %s"
+msgstr ""
+
+#: pntemplates/action/rss.tpl:38
+msgid "Read more"
+msgstr ""
+
+#: pntemplates/wikula_init_step3.tpl:6
+msgid "Final step of installation"
+msgstr ""
+
+#: pntemplates/wikula_init_step3.tpl:9
+msgid "Thank you for using Wikula! the Wiki module for Zikula"
+msgstr ""
+
+#: pntemplates/wikula_init_step3.tpl:14
+msgid "Installation Summary"
+msgstr ""
+
+#: pntemplates/wikula_init_step3.tpl:24
+msgid "Save Warning"
+msgstr ""
+
+#: pntemplates/wikula_init_step3.tpl:28
+msgid "Log Referers"
+msgstr ""
+
+#: pntemplates/wikula_init_step3.tpl:32
+msgid "Activate EZComments hook"
+msgstr ""
+
+#: pntemplates/wikula_init_step3.tpl:36
+msgid "Import pages from a Wikkawiki?"
+msgstr ""
+
+#: pntemplates/wikula_init_step3.tpl:40
+msgid "Admin Category"
+msgstr ""
+
+#: pntemplates/wikula_init_step3.tpl:44
+msgid "Activate module"
+msgstr ""
+
+#: pntemplates/wikula_init_step3.tpl:50
+msgid "Back"
+msgstr "Zurück"
+
+#: pntemplates/action/lastezcomments.tpl:13
+msgid "Comment by"
+msgstr "Kommentiert von"
+
+#: pntemplates/action/orphanedpages.tpl:5
+msgid "Orphaned Pages"
+msgstr ""
+
+#: pntemplates/action/orphanedpages.tpl:7
+msgid "The following list shows those pages held in the Wiki that are not linked to on any other pages."
+msgstr ""
+
+#: pntemplates/action/orphanedpages.tpl:15
+msgid "No orphaned pages! Good!"
+msgstr ""
+
+#: pntemplates/action/wantedpages.tpl:9
+#, php-format
+msgid "Pages linking to: %s"
+msgstr ""
+
+#: pntemplates/action/wantedpages.tpl:18
+msgid "Wanted Pages"
+msgstr ""
+
+#: pntemplates/action/wantedpages.tpl:22
+msgid "Source page"
+msgstr ""
+
+#: pntemplates/action/wantedpages.tpl:24
+msgid "Targetted inexistent page"
+msgstr ""
+
+#: pntemplates/wikula_user_referrers.tpl:8
+msgid "Filtered result"
+msgstr ""
+
+#: pntemplates/wikula_user_referrers.tpl:8
+#: pntemplates/wikula_user_referrers.tpl:11
+#: pntemplates/wikula_user_referrers.tpl:88
+msgid "Referrers to"
+msgstr ""
+
+#: pntemplates/wikula_user_referrers.tpl:12
+#: pntemplates/wikula_user_referrers.tpl:89
+msgid "Domains linking to %thispage%"
+msgstr ""
+
+#: pntemplates/wikula_user_referrers.tpl:12
+#, php-format
+msgid "Domains linking to %s"
+msgstr ""
+
+#: pntemplates/wikula_user_referrers.tpl:13
+#: pntemplates/wikula_user_referrers.tpl:90
+msgid "Referrers to this wiki"
+msgstr ""
+
+#: pntemplates/wikula_user_referrers.tpl:14
+#: pntemplates/wikula_user_referrers.tpl:91
+msgid "Domains linking to this wiki"
+msgstr ""
+
+#: pntemplates/wikula_user_referrers.tpl:24
+msgid "Filter view"
+msgstr ""
+
+#: pntemplates/wikula_user_referrers.tpl:27
+msgid "containing"
+msgstr ""
+
+#: pntemplates/wikula_user_referrers.tpl:28
+msgid "not containing"
+msgstr ""
+
+#: pntemplates/wikula_user_referrers.tpl:30
+msgid "string"
+msgstr ""
+
+#: pntemplates/wikula_user_referrers.tpl:32
+msgid "Filter"
+msgstr "Filter"
+
+#: pntemplates/wikula_user_referrers.tpl:34
+msgid "at least"
+msgstr ""
+
+#: pntemplates/wikula_user_referrers.tpl:35
+msgid "no more than"
+msgstr ""
+
+#: pntemplates/wikula_user_referrers.tpl:38
+msgid "hits"
+msgstr ""
+
+#: pntemplates/wikula_user_referrers.tpl:39
+msgid "Period"
+msgstr ""
+
+#: pntemplates/wikula_user_referrers.tpl:53
+msgid "days"
+msgstr "Tage"
+
+#: pntemplates/wikula_block_wkrecentchanges.tpl:16
+#: pntemplates/wikula_user_history.tpl:30
+#: pntemplates/wikula_user_history.tpl:59
+msgid "by"
+msgstr "von"
+
+#: pntemplates/wikula_user_history.tpl:37
+msgid "Additions"
+msgstr ""
+
+#: pntemplates/wikula_user_history.tpl:42
+msgid "Deletions"
+msgstr ""
+
+#: pntemplates/wikula_user_history.tpl:58
+msgid "Oldest known version of this page was edited on"
+msgstr ""
+

@@ -1,0 +1,25 @@
+/**
+ * Wikula
+ *
+ * @copyright  (c) Wikula Development Team
+ * @link       http://code.zikula.org/wikula/
+ * @version    $Id: pnuserapi.php 25226 2008-12-28 23:11:15Z gf $
+ * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
+ */
+
+V1.1       mateo    Ported mostly of the stuff to the Zikula API and DBUtil
+                    Actions are now runing fine under the Zikula supported actionapi
+                    Updates and fixes to the actions code
+                    InterWiki links fixed (needs update)
+                    Default pages fixed and overhauled
+                    Extensive language files rework
+                    Templates and styles rework
+                    E_ALL, code and format fixes
+                    Improved interactive installation process 
+                    Copyright header update
+                    Some features and updates of the Wikka 1.1.6.6! :-D
+
+V1.0       quan     integrate history in wiki pages and created admin
+                    configuration option for enabling / disabling this feature
+
+2007-10-02  Hraban  made admin templates translatable, fixed German translation (changed everything to polite form)
