@@ -13,7 +13,8 @@
 
 function smarty_function_wakka($params, &$smarty)
 {
-    return pnModAPIFunc('wikula', 'user', 'wakka',
-                        array('text'   => $params['text'],
-                              'method' => isset($params['method']) ? $params['method'] : null));
+    return ModUtil::apiFunc('Wikula', 'user', 'wakka', array(
+        'text'   => $params['text'],
+        'method' => isset($params['method']) ? $params['method'] : null)
+    );
 }

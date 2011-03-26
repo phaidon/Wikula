@@ -60,12 +60,12 @@ class Wikula_Controller_User extends Zikula_Controller
         }
 
         //if ($modvars['logreferers']) {
-        //    ModUtil::apiFunc('wikula', 'user', 'LogReferer', array('tag' => $tag));
+        //    ModUtil::apiFunc('Wikula', 'user', 'LogReferer', array('tag' => $tag));
         //}
 
 
         // Get the page
-        $page = ModUtil::apiFunc('wikula', 'user', 'LoadPage', array(
+        $page = ModUtil::apiFunc('Wikula', 'user', 'LoadPage', array(
             'tag'  => $tag,
             'time' => $time)
         );
@@ -80,7 +80,7 @@ class Wikula_Controller_User extends Zikula_Controller
         if (empty($time)) {
             $latest = $page;
         } else {
-            $latest = ModUtil::apiFunc('wikula', 'user', 'LoadPage', array('tag' => $tag));
+            $latest = ModUtil::apiFunc('Wikula', 'user', 'LoadPage', array('tag' => $tag));
         }
 
         // Check if this tag doesn't exists
@@ -89,7 +89,7 @@ class Wikula_Controller_User extends Zikula_Controller
             System::redirect(ModUtil::url('wikula', 'user', 'edit', array('tag' => $tag)));
         }
 
-        $canedit = ModUtil::apiFunc('wikula', 'user', 'isAllowedToEdit', array('tag' => $tag));
+        $canedit = ModUtil::apiFunc('Wikula', 'user', 'isAllowedToEdit', array('tag' => $tag));
 
         // Resetting session access and previous
         SessionUtil::delVar('wikula_access');
@@ -132,7 +132,7 @@ class Wikula_Controller_User extends Zikula_Controller
             return LogUtil::registerError(__('You do not have the authorization to edit this page!'), null, ModUtil::url('wikula', 'user', 'main', array('tag' => $tag)));
         }
 
-        $latestid = ModUtil::apiFunc('wikula', 'user', 'PageExists', array('tag' => $tag));
+        $latestid = ModUtil::apiFunc('Wikula', 'user', 'PageExists', array('tag' => $tag));
         $submit   = FormUtil::getPassedValue('submit');
 
         // process the submit request
@@ -147,7 +147,7 @@ class Wikula_Controller_User extends Zikula_Controller
         // or get the data of the requested page to edit
         } else {
             if (!empty($id)) {
-                $page = ModUtil::apiFunc('wikula', 'user', 'LoadPagebyId',
+                $page = ModUtil::apiFunc('Wikula', 'user', 'LoadPagebyId',
                                      array('id'  => $id));
 
                 // check that the id matches with the tag
@@ -156,7 +156,7 @@ class Wikula_Controller_User extends Zikula_Controller
                 }
 
             } else {
-                $page = ModUtil::apiFunc('wikula', 'user', 'LoadPage',
+                $page = ModUtil::apiFunc('Wikula', 'user', 'LoadPage',
                                      array('tag'  => $tag,
                                            'time' => $time));
                 // If the page does not exist we want to open the edit form to allow the creation of a new page with the submitted tag
@@ -189,7 +189,7 @@ class Wikula_Controller_User extends Zikula_Controller
                 SessionUtil::setVar('linktracking', 1);
                 SessionUtil::setVar('wikula_previous', $previous);
 
-                $store = ModUtil::apiFunc('wikula', 'user', 'SavePage',
+                $store = ModUtil::apiFunc('Wikula', 'user', 'SavePage',
                                       array('tag'      => $tag,
                                             'body'     => $body,
                                             'note'     => $note,
@@ -203,7 +203,7 @@ class Wikula_Controller_User extends Zikula_Controller
             }
         }
 
-        $canedit = ModUtil::apiFunc('wikula', 'user', 'isAllowedToEdit', array('tag' => $tag));
+        $canedit = ModUtil::apiFunc('Wikula', 'user', 'isAllowedToEdit', array('tag' => $tag));
 
         $hideeditbar = (int)pnModGetVar('wikula', 'hideeditbar');
 
@@ -242,7 +242,7 @@ class Wikula_Controller_User extends Zikula_Controller
                                           ModUtil::url('wikula', 'user', 'main'));
         }
 
-        $pages = ModUtil::apiFunc('wikula', 'user', 'LoadRevisions',
+        $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadRevisions',
                               array('tag' => $tag));
 
         if (!$pages) {
@@ -319,7 +319,7 @@ class Wikula_Controller_User extends Zikula_Controller
             return LogUtil::registerError(__('Sorry! No authorization to access this module.'), null, ModUtil::url('wikula', 'user', 'main'));
         }
 
-        $pages = ModUtil::apiFunc('wikula', 'user', 'LoadRecentlyChanged');
+        $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadRecentlyChanged');
 
         if (!$pages) {
             return LogUtil::registerError(__('Error during element fetching !'));
@@ -347,7 +347,7 @@ class Wikula_Controller_User extends Zikula_Controller
 
         $tag = FormUtil::getPassedValue('tag');
 
-        $pages = ModUtil::apiFunc('wikula', 'user', 'LoadRevisions', array('tag' => $tag));
+        $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadRevisions', array('tag' => $tag));
 
         if (!$pages) {
             return LogUtil::registerError(__('Error during element fetching !'));
@@ -372,7 +372,7 @@ class Wikula_Controller_User extends Zikula_Controller
         .'  <node text="'.__('Recent Changes').'">'.$cr
         .'    <node text="Date" position="right">'.$cr;
 
-        $pages = ModUtil::apiFunc('wikula', 'user', 'LoadRecentlyChanged', array());
+        $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadRecentlyChanged', array());
 
         $users  = array();
         $curday = '';
@@ -454,8 +454,8 @@ class Wikula_Controller_User extends Zikula_Controller
         }
 
         // Get the variables
-        $page  = ModUtil::apiFunc('wikula', 'user', 'LoadPage', array('tag' => $linkedtag));
-        $pages = ModUtil::apiFunc('wikula', 'user', 'LoadPagesLinkingTo', array('tag' => $linkedtag));
+        $page  = ModUtil::apiFunc('Wikula', 'user', 'LoadPage', array('tag' => $linkedtag));
+        $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadPagesLinkingTo', array('tag' => $linkedtag));
 
         
         $this->view->assign('tag',       $linkedtag);
@@ -482,7 +482,7 @@ class Wikula_Controller_User extends Zikula_Controller
             return LogUtil::registerError(__('You do not have the authorization to edit this page!'), null, ModUtil::url('wikula', 'user', 'main'));
         }
 
-        if (!ModUtil::apiFunc('wikula', 'user', 'PageExists', array('tag' => $tag))) {
+        if (!ModUtil::apiFunc('Wikula', 'user', 'PageExists', array('tag' => $tag))) {
             return LogUtil::registerError(__("The page you requested doesn't exists"), null, ModUtil::url('wikula', 'user', 'main'));
         }
 
@@ -503,13 +503,13 @@ class Wikula_Controller_User extends Zikula_Controller
 
             // Validate the choosen pagename
             $validationerror = false;
-            if (!ModUtil::apiFunc('wikula', 'user', 'isValidPagename', array('tag' => $to))) {
+            if (!ModUtil::apiFunc('Wikula', 'user', 'isValidPagename', array('tag' => $to))) {
                 LogUtil::registerError(__('That page name is not valid'));
                 $validationerror = true;
             }
 
             // check if the page already exists
-            if (!$validationerror && ModUtil::apiFunc('wikula', 'user', 'PageExists', array('tag' => $to))) {
+            if (!$validationerror && ModUtil::apiFunc('Wikula', 'user', 'PageExists', array('tag' => $to))) {
                 return LogUtil::registerError(__('This page does already exist'), null, ModUtil::url('wikula', 'user', 'main'));
             }
 
@@ -521,14 +521,14 @@ class Wikula_Controller_User extends Zikula_Controller
             // if valid request
             if (!$validationerror) {
                 // proceed to page cloning
-                $page = ModUtil::apiFunc('wikula', 'user', 'LoadPage', array('tag' => $tag));
+                $page = ModUtil::apiFunc('Wikula', 'user', 'LoadPage', array('tag' => $tag));
                 $newpage = array(
                     'tag'  => $to,
                     'body' => $page['body'],
                     'note' => $note
                 );
 
-                if (ModUtil::apiFunc('wikula', 'user', 'SavePage', $newpage)) {
+                if (ModUtil::apiFunc('Wikula', 'user', 'SavePage', $newpage)) {
                     // redirect
                     if ($edit) {
                         pnRedirect(ModUtil::url('wikula', 'user', 'edit', array('tag' => $to)));
@@ -596,7 +596,7 @@ class Wikula_Controller_User extends Zikula_Controller
             $submit = true;
         }
 
-        $referrers = ModUtil::apiFunc('wikula', 'user', 'LoadReferrers',
+        $referrers = ModUtil::apiFunc('Wikula', 'user', 'LoadReferrers',
                                   array('tag'    => $tag,
                                         'global' => $global,
                                         'sites'  => $sites,
@@ -612,7 +612,7 @@ class Wikula_Controller_User extends Zikula_Controller
         }
 
         // load the wiki page for output purposes
-        $page = ModUtil::apiFunc('wikula', 'user', 'LoadPage',
+        $page = ModUtil::apiFunc('Wikula', 'user', 'LoadPage',
                              array('tag' => $tag));
 
         

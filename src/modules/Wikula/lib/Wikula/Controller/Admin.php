@@ -30,8 +30,8 @@ class Wikula_Controller_Admin extends Zikula_Controller
             return LogUtil::registerError(__('Sorry! No authorization to access this module.'), 403);
         }
 
-        $pagecount = ModUtil::apiFunc('wikula', 'user', 'CountAllPages');
-        $owners    = ModUtil::apiFunc('wikula', 'admin', 'GetOwners');
+        $pagecount = ModUtil::apiFunc('Wikula', 'user', 'CountAllPages');
+        $owners    = ModUtil::apiFunc('Wikula', 'admin', 'GetOwners');
 
         $this->view->assign('pagecount', $pagecount);
         $this->view->assign($owners);
@@ -60,13 +60,13 @@ class Wikula_Controller_Admin extends Zikula_Controller
             $startnum = 1;
         }
 
-        $items = ModUtil::apiFunc('wikula', 'admin', 'getall', array('sort'     => $sort,
+        $items = ModUtil::apiFunc('Wikula', 'admin', 'getall', array('sort'     => $sort,
                                                                   'order'    => $order,
                                                                   'startnum' => $startnum,
                                                                   'numitems' => $itemsperpage,
                                                                   'q'        => $q));
 
-        $total = ModUtil::apiFunc('wikula', 'user', 'CountAllPages');
+        $total = ModUtil::apiFunc('Wikula', 'user', 'CountAllPages');
 
 
 
@@ -173,7 +173,7 @@ class Wikula_Controller_Admin extends Zikula_Controller
         $tag    = FormUtil::getPassedValue('tag');
         $global = FormUtil::getPassedValue('global');
 
-        $result = ModUtil::apiFunc('wikula', 'admin', 'ClearReferrers',
+        $result = ModUtil::apiFunc('Wikula', 'admin', 'ClearReferrers',
                                array('tag'    => $tag,
                                      'global' => $global));
 
@@ -205,13 +205,13 @@ class Wikula_Controller_Admin extends Zikula_Controller
             $ids = array_keys($revids);
 
             foreach($ids as $id) {
-                $revisions[] = ModUtil::apiFunc('wikula', 'user', 'LoadPagebyId', array('id' => $id));
+                $revisions[] = ModUtil::apiFunc('Wikula', 'user', 'LoadPagebyId', array('id' => $id));
                 //echo $page['tag'] . ' - '. $page['time'] . ' - '. $page['note'] . '<br />';
             }
 
         } else {
 
-            $revisions = ModUtil::apiFunc('wikula', 'user', 'LoadRevisions', array('tag' => $tag));
+            $revisions = ModUtil::apiFunc('Wikula', 'user', 'LoadRevisions', array('tag' => $tag));
 
         }
 
@@ -244,17 +244,17 @@ class Wikula_Controller_Admin extends Zikula_Controller
         $revisions = array_keys($revids);
 
         foreach ($revisions as $revision) {
-            $action = ModUtil::apiFunc('wikula', 'admin', 'deletepageid', array('id' => $revision));
+            $action = ModUtil::apiFunc('Wikula', 'admin', 'deletepageid', array('id' => $revision));
             if ($action === false) {
                 return pnRedirect(pnModURL('wikula', 'admin', 'pages'));
             }
         }
 
         // Set the latest
-        $pages = ModUtil::apiFunc('wikula', 'user', 'LoadRevisions', array('tag' => $tag));
+        $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadRevisions', array('tag' => $tag));
 
         if ($pages) {
-            $setlatest = ModUtil::apiFunc('wikula', 'admin', 'setlatest', array('pages' => $pages));
+            $setlatest = ModUtil::apiFunc('Wikula', 'admin', 'setlatest', array('pages' => $pages));
         }
 
         LogUtil::registerStatus('Pages deleted');
@@ -276,7 +276,7 @@ class Wikula_Controller_Admin extends Zikula_Controller
         echo 'Please confirm you want to delete these revisions (The most recent revision left will be set as "Latest")<br />';
         echo 'If there is no revision left, the page will be completly deleted.<br /><br />';
         foreach($revisions as $revision) {
-            $page = ModUtil::apiFunc('wikula', 'user', 'LoadPagebyId', array('id' => $revision));
+            $page = ModUtil::apiFunc('Wikula', 'user', 'LoadPagebyId', array('id' => $revision));
             echo $page['tag'] . ' - '. $page['time'] . ' - '. $page['note'] . '<br />';
         }
 

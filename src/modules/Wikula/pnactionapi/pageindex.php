@@ -21,25 +21,27 @@
  */
 function wikula_actionapi_pageindex($args)
 {
+    print_r('hallo');
+    
     $dom = ZLanguage::getModuleDomain('wikula');
     $letter      = (isset($args['letter'])) ? $args['letter'] : FormUtil::getPassedValue('letter');
-    $username    = (pnUserLoggedIn()) ? pnUserGetVar('uname') : '';
+    $username    = (UserUtil::isLoggedIn()) ? UserUtil::getVar('uname') : '';
     $currentpage = FormUtil::getPassedValue('tag', __('PageIndex', $dom));
 
     // Check if we are in Wikula edit mode, and reset to the default PageIndex page
-    if (pnModGetName() == 'wikula' && FormUtil::getPassedValue('func') == 'edit') {
+    if (ModUtil::getName() == 'Wikula' && FormUtil::getPassedValue('func') == 'edit') {
         $currentpage = __('PageIndex', $dom);
     }
 
     // Check if this view is cached
-    $render = pnRender::getInstance('wikula');
+    $render = pnRender::getInstance('Wikula');
     $render->cacheid = $username.$currentpage.$letter;
     if ($render->is_cached('action/pageindex.tpl')) {
        return $render->fetch('action/pageindex.tpl');
     }
 
     // If not, build it
-    $pages = pnModAPIFunc('wikula', 'user', 'LoadAllPages');
+    $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadAllPages');
 
     if (!$pages) {
         return __('No pages found!', $dom);

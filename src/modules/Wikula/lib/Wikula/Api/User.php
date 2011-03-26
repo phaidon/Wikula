@@ -485,7 +485,7 @@ class Wikula_Api_User extends Zikula_Api
             $result['pages'] = $pages;
             $result['count'] = count($pages);
         }
-        $result['total'] = ModUtil::apiFunc('wikula', 'user', 'CountAllPages');
+        $result['total'] = ModUtil::apiFunc('Wikula', 'user', 'CountAllPages');
 
         return $result;
     }
@@ -509,7 +509,7 @@ class Wikula_Api_User extends Zikula_Api
         $phrase = DataUtil::formatForStore($phrase);
 
         $boolean = '';
-        if (ModUtil::apiFunc('wikula', 'user', 'CheckMySQLVersion', array('major' => '4', 'minor' => '00', 'subminor' => '01'))) {
+        if (ModUtil::apiFunc('Wikula', 'user', 'CheckMySQLVersion', array('major' => '4', 'minor' => '00', 'subminor' => '01'))) {
             $boolean = ' IN BOOLEAN MODE';
         }
 
@@ -822,7 +822,7 @@ class Wikula_Api_User extends Zikula_Api
         $user = UserUtil::getVar('uname');
 
         // Check if page is new
-        $oldpage = ModUtil::apiFunc('wikula', 'user', 'LoadPage', array('tag' => $tag));
+        $oldpage = ModUtil::apiFunc('Wikula', 'user', 'LoadPage', array('tag' => $tag));
 
         // only save if new body differs from old body
         if ($oldpage && $oldpage['body'] == $body) {
@@ -865,7 +865,7 @@ class Wikula_Api_User extends Zikula_Api
     /*
         if ((isset($args['tracking']) && $args['tracking'] ) || SessionUtil::getVar('tracking')) {
             SessionUtil::setVar('wikula_previous', $tag);
-            ModUtil::apiFunc('wikula', 'user', 'wakka', array('text' => $body));
+            ModUtil::apiFunc('Wikula', 'user', 'wakka', array('text' => $body));
         }
     */
         // TODO: Wikka Ping feature here
@@ -963,7 +963,7 @@ class Wikula_Api_User extends Zikula_Api
             return LogUtil::registerError(__('Error! Invalid arguments.'));
         }
 
-        $interwiki = ModUtil::apiFunc('wikula', 'user', 'ReadInterWikiConfig');
+        $interwiki = ModUtil::apiFunc('Wikula', 'user', 'ReadInterWikiConfig');
 
         if (!$interwiki || !is_array($interwiki)) {
             return 'http://'.$tag;
@@ -1001,7 +1001,7 @@ class Wikula_Api_User extends Zikula_Api
         // is this an interwiki link?
         if (preg_match('/^([A-Z][A-Z,a-z]+)[:]([A-Z,a-z,0-9]*)$/s', $args['tag'], $matches)) {
 
-            $link = ModUtil::apiFunc('wikula', 'user', 'GetInterWikiUrl',
+            $link = ModUtil::apiFunc('Wikula', 'user', 'GetInterWikiUrl',
                                 array('name' => $matches[1],
                                     'tag'  => isset($matches[2]) ? $matches[2] : ''));
 
@@ -1045,7 +1045,7 @@ class Wikula_Api_User extends Zikula_Api
 
         } else {
             // it's a Wiki link!
-            $pageid = ModUtil::apiFunc('wikula', 'user', 'PageExists',
+            $pageid = ModUtil::apiFunc('Wikula', 'user', 'PageExists',
                                 array('tag' => $args['tag']));
 
             $linktable = SessionUtil::getVar('linktable');
@@ -1120,7 +1120,7 @@ class Wikula_Api_User extends Zikula_Api
         $where   = $columns['from_tag'].' = "'.DataUtil::formatForStore($args['tag']).'"';
         DBUtil::deleteWhere('wikula_links', $where);
 
-        $linktable = ModUtil::apiFunc('wikula', 'user', 'GetLinkTable');
+        $linktable = ModUtil::apiFunc('Wikula', 'user', 'GetLinkTable');
 
         if (is_array($linktable)) {
             $from_tag = DataUtil::formatForStore($args['tag']);
@@ -1246,7 +1246,7 @@ class Wikula_Api_User extends Zikula_Api
         }
 
         $boolean = '';
-        if (ModUtil::apiFunc('wikula', 'user', 'CheckMySQLVersion', array('major' => '4', 'minor' => '00', 'subminor' => '01'))) {
+        if (ModUtil::apiFunc('Wikula', 'user', 'CheckMySQLVersion', array('major' => '4', 'minor' => '00', 'subminor' => '01'))) {
             $boolean = ' IN BOOLEAN MODE';
         }
 
@@ -1489,7 +1489,7 @@ class Wikula_Api_User extends Zikula_Api
 
 
         // return the Action result
-        return ModUtil::apiFunc('wikula', 'action', strtolower($action), $vars);
+        return ModUtil::apiFunc('Wikula', 'action', strtolower($action), $vars);
     }
 
     public function FullCategoryTextSearch($args)
@@ -1506,7 +1506,7 @@ class Wikula_Api_User extends Zikula_Api
         $col     =& $table['wikula_pages_column'];
 
         $boolean = '';
-        if (ModUtil::apiFunc('wikula', 'user', 'CheckMySQLVersion', array('major' => '4', 'minor' => '00', 'subminor' => '01'))) {
+        if (ModUtil::apiFunc('Wikula', 'user', 'CheckMySQLVersion', array('major' => '4', 'minor' => '00', 'subminor' => '01'))) {
             $boolean = ' IN BOOLEAN MODE';
         }
 
@@ -1644,7 +1644,7 @@ class Wikula_Api_User extends Zikula_Api
         $linktracking = SessionUtil::getVar('linktracking');
 
         if ($linktracking) {
-        ModUtil::apiFunc('wikula', 'user', 'ClearLinkTable');
+        ModUtil::apiFunc('Wikula', 'user', 'ClearLinkTable');
         }
 
         $args['text'] = preg_replace_callback(
@@ -1689,7 +1689,7 @@ class Wikula_Api_User extends Zikula_Api
         $args['text'] = preg_replace('/<br \/>$/', '', $args['text']);
     /*
         if ($linktracking && ($previous = SessionUtil::getVar('wikula_previous'))) {
-            ModUtil::apiFunc('wikula', 'user', 'WriteLinkTable',
+            ModUtil::apiFunc('Wikula', 'user', 'WriteLinkTable',
                         array('tag' => $previous));
         }
     */
@@ -2023,12 +2023,12 @@ class Wikula_Api_User extends Zikula_Api
             } else {
                 // Mind Mapping Mod
                 if (preg_match('/^(.*)\.(mm)/si', $url)) {
-                    return ModUtil::apiFunc('wikula', 'user', 'Action',
+                    return ModUtil::apiFunc('Wikula', 'user', 'Action',
                                         array('action' => 'mindmap',
                                             'url'    => $url));
                 } else {
                     $matches[2] = (isset($matches[2]) ? $matches[2] : '');
-                    return ModUtil::apiFunc('wikula', 'user', 'Link',
+                    return ModUtil::apiFunc('Wikula', 'user', 'Link',
                                         array('tag'    => $url,
                                             'method' => '',
                                             'text'   => $matches[2])).$matches[2];
@@ -2165,7 +2165,7 @@ class Wikula_Api_User extends Zikula_Api
                     $output .= '</div>'.$cr;
                 }
                 // use GeSHi for hilighting
-                $output = ModUtil::apiFunc('wikula', 'user', 'GeSHi_Highlight',
+                $output = ModUtil::apiFunc('Wikula', 'user', 'GeSHi_Highlight',
                                     array('sourcecode' => $code,
                                             'language'   => $language,
                                             'start'      => $start));
@@ -2213,7 +2213,7 @@ class Wikula_Api_User extends Zikula_Api
                 }*/
                 $text = isset($matches[3]) ? $matches[3] : $url;
                 //$text = preg_replace('/@@|&pound;&pound;|\[\[/', '', $text);
-                return $result.ModUtil::apiFunc('wikula', 'user', 'Link',
+                return $result.ModUtil::apiFunc('Wikula', 'user', 'Link',
                                             array('tag'  => $url,
                                                 'text' => $text));
             } else {
@@ -2360,7 +2360,7 @@ class Wikula_Api_User extends Zikula_Api
         // Actions
         } else if (preg_match('/^\{\{(.*?)\}\}$/s', $thing, $matches)) {
             if (isset($matches[1]) && !empty($matches[1])) {
-                return ModUtil::apiFunc('wikula', 'user', 'Action',
+                return ModUtil::apiFunc('Wikula', 'user', 'Action',
                                     array('action' => $matches[1]));
             } else {
                 return '{{}}';
@@ -2368,7 +2368,7 @@ class Wikula_Api_User extends Zikula_Api
 
         // InterWiki links!
         } else if (preg_match("/^[A-Z���][A-Za-z�������]+[:]\S*$/s", $thing)) {
-            return ModUtil::apiFunc('wikula', 'user', 'Link',
+            return ModUtil::apiFunc('Wikula', 'user', 'Link',
                                 array('tag' => $thing));
 
         // CamelWords unparsed
@@ -2377,12 +2377,12 @@ class Wikula_Api_User extends Zikula_Api
             if ($thing[0] == '!') {
                 return DataUtil::formatForDisplay(substr($thing, 1));
             } else {
-                return ModUtil::apiFunc('wikula', 'user', 'Link', array('tag' => $thing));
+                return ModUtil::apiFunc('Wikula', 'user', 'Link', array('tag' => $thing));
             }
 
         // wiki links!
         } elseif (preg_match('/^[A-Z���]+[a-z����]+[A-Z0-9���][A-Za-z0-9�������]*$/s', $thing)) {
-            return ModUtil::apiFunc('wikula', 'user', 'Link',
+            return ModUtil::apiFunc('Wikula', 'user', 'Link',
                                 array('tag'  => $thing));
 
         // separators
@@ -2398,11 +2398,11 @@ class Wikula_Api_User extends Zikula_Api
             $mapcounter++;
             //return pnGetBaseUrl();
             //$mapurl =  ModUtil::url('wikula', 'user', 'mindmap');
-            //return ModUtil::apiFunc('wikula', 'user', 'Action', array('action' => 'mindmap', 'url' => 'index.php?module=wikula&ampfunc=mindmap&amp;tag='.$tag.'&amp;mapcounter='.$maptemp));
-            //return ModUtil::apiFunc('wikula', 'user', 'Action', array('action' => 'mindmap', 'url' => $mapurl));
+            //return ModUtil::apiFunc('Wikula', 'user', 'Action', array('action' => 'mindmap', 'url' => 'index.php?module=wikula&ampfunc=mindmap&amp;tag='.$tag.'&amp;mapcounter='.$maptemp));
+            //return ModUtil::apiFunc('Wikula', 'user', 'Action', array('action' => 'mindmap', 'url' => $mapurl));
             //SessionUtil::setVar('wikula_map', base64_encode($thing));
             //return 'tada !';
-            //return ModUtil::apiFunc('wikula', 'user', 'Action', array('action' => 'mindmap', 'url' =>  ModUtil::url('wikula', 'user', 'mindmap')));
+            //return ModUtil::apiFunc('Wikula', 'user', 'Action', array('action' => 'mindmap', 'url' =>  ModUtil::url('wikula', 'user', 'mindmap')));
             return 'Instant Map coming soon!';
 
         } elseif ($thing[0] == '&') {
