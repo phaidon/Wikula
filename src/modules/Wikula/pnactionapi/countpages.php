@@ -22,24 +22,27 @@
  */
 function wikula_actionapi_countpages($args)
 {
-    $dom = ZLanguage::getModuleDomain('wikula');
+    $dom = ZLanguage::getModuleDomain('Wikula');
     $nolink   = (isset($args['nolink']) && $args['nolink']) ? true : false;
     $nopublic = (isset($args['nopublic']) && $args['nopublic']) ? true : false;
 
-    $pntable = &pnDBGetTables();
-    $columns = &$pntable['wikula_pages_column'];
+    $q = Doctrine_Query::create()->from('Wikula_Model_Pages t');
+    $q->where('latest = ?', array('Y'));
 
-    $where = $columns['latest'].' = \'Y\'';
-
+    
     if ($nopublic) {
-        $where .= ' AND '.$columns['owner'].' != "(Public)"';
+        $q->addWhere('owner != ?', array('(Public)'));
     }
 
-    $count = (int)DBUtil::selectObjectCount('wikula_pages', $where);
+    $result = $q->execute();
+
+    $count = $result->count();
 
     if ($nolink) {
         return $count;
     } else {
-        return '<a href="'.pnModUrl('wikula', 'user', 'main', array('tag' => __('PageIndex', $dom))).'" title="'.__('Page index', $dom).'">'.$count.'</a>';
+        return '<a href="'
+            .ModUtil::url('Wikula', 'user', 'main', array('tag' => __('PageIndex', $dom)))
+            .'" title="'.__('Page index', $dom).'">'.$count.'</a>';
     }
 }

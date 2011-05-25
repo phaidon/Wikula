@@ -21,7 +21,7 @@ function wikula_actionapi_OrphanedPages($args)
 {
     SessionUtil::setVar('linktracking', 0);
 
-    $items = pnModAPIFunc('wikula', 'user', 'LoadOrphanedPages');
+    $items = ModUtil::apiFunc('wikula', 'user', 'LoadOrphanedPages');
 
     $render = pnRender::getInstance('wikula', false);
     $render->assign('items', $items);

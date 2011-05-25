@@ -1,8 +1,7 @@
-{* $Id: wikula_user_referrers.tpl 56 2008-11-14 13:32:55Z quan $ *}
 {include file='user/menu.tpl' tag=$tag}
 
-{pnsecauthaction realm='0' comp='wikula::' inst='.*' level='ACCESS_ADMIN' assign='accessadmin'}
-{pnsecauthaction realm='0' comp='wikula::' inst="page::$tag" level='ACCESS_ADMIN' assign='accessedit'}
+{checkpermission realm='0' component='Wikula::' instance ='.*'         level='ACCESS_ADMIN' assign='accessadmin'}
+{checkpermission realm='0' component='Wikula::' instance ="page::$tag" level='ACCESS_ADMIN' assign='accessedit'}
 <div id="wikula">
   <div class="page">
     <h4 id="hn_result">{gt text='Filtered result'}: {$total} {gt text='Referrers to'} {$tag}</h4>
@@ -76,7 +75,6 @@
     <div>
       <form action="{modurl modname='wikula' type='admin' func='ClearReferrers' tag=$tag}" method="post" enctype="application/x-www-form-urlencoded" id="form_clearrefform">
       <div>
-        <input type="hidden" name="authid" value="{pnsecgenauthkey module='wikula'}" />
         <input type="hidden" name="global" value="{$global}" />
         <input type="submit" value="Clear Referers" />
       </div>
@@ -108,7 +106,7 @@
         {gt text='Revisions of "%s" Feed' tag1=$tag assign='altrssfeed'}
         <a href="{modurl modname='wikula' tag=$tag|urlencode time=$page.time|urlencode}" class="datetime">{$page.time|safehtml}</a> <a href="{modurl modname='wikula' func='RevisionsXML' tag=$tag|urlencode theme='rss'}" title="{$altrssfeed}">{img src='rss.png' alt=$altrssfeed modname='wikula'}</a>
         <span class="text_separator">::</span>
-        {gt text='Owner'}: {$page.owner|userprofilelink}
+        {gt text='Owner'}: {$page.owner|profilelinkbyuname}
         <span class="text_separator">::</span>
         {pnuserloggedin assign='islogged'}
         {if $islogged}

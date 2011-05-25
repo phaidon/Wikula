@@ -55,7 +55,7 @@ function wikula_actionapi_rss($args)
     $rssfeed = array();
 
     // fetch the feed
-    $feed = pnModAPIFunc('Feeds', 'user', 'getfeed',
+    $feed = ModUtil::apiFunc('Feeds', 'user', 'getfeed',
                          array('furl' => $args['url']));
 
     // assign the output variables

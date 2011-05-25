@@ -21,13 +21,13 @@
 function wikula_actionapi_backlinks($args)
 {
     $dom = ZLanguage::getModuleDomain('wikula');
-    $tag = FormUtil::getPassedValue('tag', pnModGetVar('wikula', 'root_page'));
+    $tag = FormUtil::getPassedValue('tag', ModUtil::getVar('wikula', 'root_page'));
 
     if (empty($tag)) {
         return __f('Missing argument [%s]', 'tag');
     }
 
-    $pages = pnModAPIFunc('wikula', 'user', 'LoadPagesLinkingTo',
+    $pages = ModUtil::apiFunc('wikula', 'user', 'LoadPagesLinkingTo',
                           array('tag' => $tag));
 
     if (!$pages) {

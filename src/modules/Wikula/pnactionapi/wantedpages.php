@@ -21,7 +21,7 @@
  */
 function wikula_actionapi_wantedpages($args)
 {
-    $dom = ZLanguage::getModuleDomain('wikula');
+    $dom = ZLanguage::getModuleDomain('Wikula');
     // default
     $linkingto = (isset($args['linkingto']) && !empty($args['linkingto'])) ? $args['linkingto'] : '';
 
@@ -29,7 +29,7 @@ function wikula_actionapi_wantedpages($args)
     $items  = array();
 
     if (!empty($linkingto)) {
-        $items = pnModAPIFunc('wikula', 'user', 'LoadPagesLinkingTo',
+        $items = ModUtil::apiFunc('Wikula', 'user', 'LoadPagesLinkingTo',
                               array('tag' => $linkingto));
 
         if (!$items) {
@@ -37,7 +37,7 @@ function wikula_actionapi_wantedpages($args)
         }
 
     } else {
-        $pages = pnModAPIFunc('wikula', 'user', 'LoadWantedPages');
+        $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadWantedPages');
 
         if (!$pages) {
             return __('No wanted pages', $dom);
@@ -52,7 +52,7 @@ function wikula_actionapi_wantedpages($args)
         unset($pages);
     }
 
-    $render = pnRender::getInstance('wikula');
+    $render = pnRender::getInstance('Wikula');
     $render->assign('items', $items);
     $render->assign('linkingto', $linkingto);
     return $render->fetch('action/wantedpages.tpl');

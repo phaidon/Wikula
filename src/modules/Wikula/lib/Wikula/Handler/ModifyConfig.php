@@ -14,13 +14,22 @@
  * information regarding copyright and licensing.
  */
 
-class Wikula_Handler_ModifyConfig  extends Zikula_Form_Handler
+class Wikula_Handler_ModifyConfig  extends Zikula_Form_AbstractHandler
 {
 
     function initialize(Zikula_Form_View $view)
     {
         $this->view->caching = false;
         $this->view->assign($this->getVars());
+        $editors[] = array(
+            'text' => $this->__('Simple'),
+            'value' => 'simple'
+        );
+        $editors[] = array(
+            'text' => $this->__('Advanced'),
+            'value' => 'advanced'
+        );
+        $this->view->assign('editors', $editors);
         return true;
     }
 
@@ -31,6 +40,7 @@ class Wikula_Handler_ModifyConfig  extends Zikula_Form_Handler
             $url = ModUtil::url('Wikula', 'admin', 'modifyconfig' );
             return $view->redirect($url);
         }
+        
         
         // check for valid form
         if (!$view->isValid()) {

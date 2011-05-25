@@ -11,7 +11,7 @@
  * @subpackage Wikula
  */
 
-class Wikula_Block_Random extends Zikula_Controller_Block
+class Wikula_Block_Random extends Zikula_Controller_AbstractBlock
 {
     /**
      * initialise block
@@ -69,7 +69,7 @@ class Wikula_Block_Random extends Zikula_Controller_Block
             PageUtil::AddVar('stylesheet', ThemeUtil::getModuleStylesheet('wikula'));
 
             // get random article
-            $pages = pnModAPIFunc('wikula', 'user', 'LoadAllPages');
+            $pages = ModUtil::apiFunc('wikula', 'user', 'LoadAllPages');
             $id = rand(1,(count($pages)+1))-1;
             $page = $pages[$id];
 

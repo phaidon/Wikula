@@ -1,6 +1,3 @@
-{* $Id: action/categorycategory.tpl 41 2008-10-09 18:29:16Z quan $ *}
-{* include file='user/menu.tpl' tag=$tag *}
-
 {if $action_cc.pages}
   {if $action_cc.compact eq 0}
     <table{if $action_cc.full} width="100%"{/if}>

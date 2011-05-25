@@ -19,7 +19,6 @@
  */
 function wikula_actionapi_wikkaversion()
 {
-    $modinfo = pnModGetInfo(pnModGetIDFromName('wikula'));
-
+    $modinfo = ModUtil::getInfoFromName('Wikula');
     return $modinfo['version'];
 }

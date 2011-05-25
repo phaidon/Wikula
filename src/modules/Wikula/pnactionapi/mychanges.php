@@ -1,33 +1,20 @@
 <?php
-/**
- * Wikula
- *
- * @copyright  (c) Wikula Development Team
- * @link       http://code.zikula.org/wikula/
- * @version    $Id: mychanges.php 137 2010-03-02 13:42:20Z gilles $
- * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
- * category    Zikula_3rdParty_Modules
- * @subpackage Wiki
- * @subpackage Wikula
+
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
  */
 
-/**
- * Print changes made by X user
- *
- * @author Mateo Tibaquirá
- * @author Frank Chestnut
- * @author Carlo Zottman
- * @todo clean the output array to not polute
- */
-function wikula_actionapi_mychanges($args)
+
+function wikula_actionapi_mychanges()
 {
-    $dom = ZLanguage::getModuleDomain('wikula');
-    if (!pnUserLoggedIn()) {
+    $dom = ZLanguage::getModuleDomain('Wikula');
+    if (!UserUtil::isLoggedIn()) {
         return __("You are not logged in, the list of pages you've edited couldn't be retrieved.", $dom);
     }
 
-    $tag   = FormUtil::getPassedValue('tag', pnModGetVar('wikula', 'root_page'));
-    $uname = (isset($args['uname']) && !empty($args['uname'])) ? $args['uname'] : pnUserGetVar('uname');
+    $tag   = FormUtil::getPassedValue('tag', ModUtil::getVar('Wikula', 'root_page'));
+    $uname = (isset($args['uname']) && !empty($args['uname'])) ? $args['uname'] : UserUtil::getVar('uname');
     $alpha = (isset($args['alpha']) && is_numeric($args['alpha']) && $args['alpha']) ? true : (bool)FormUtil::getPassedValue('alpha');
 
     // initialize the output parameter
@@ -38,9 +25,10 @@ function wikula_actionapi_mychanges($args)
     );
 
     // TODO: distinct parameter needed when alpha=1?
-    $pages = pnModAPIFunc('wikula', 'user', 'LoadAllPagesEditedByUser',
-                          array('alpha' => $alpha,
-                                'uname' => $uname));
+    $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadAllPagesEditedByUser', array(
+        'alpha' => $alpha,
+        'uname' => $uname
+    ));
 
     $my_edits_count = 0;
     $pagelist = array();
@@ -89,7 +77,9 @@ function wikula_actionapi_mychanges($args)
     $output['editcount'] = $my_edits_count;
     $output['pagelist']  = $pagelist;
 
-    $render = pnRender::getInstance('wikula', false);
+    $render = pnRender::getInstance('Wikula', false);
     $render->assign($output);
     return $render->fetch('action/mychanges.tpl', $uname.$alpha);
 }
+    
+?>

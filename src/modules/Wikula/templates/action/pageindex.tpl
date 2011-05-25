@@ -1,8 +1,4 @@
-{* $Id: action/pageindex.tpl 58 2008-11-14 21:10:52Z arg $ *}
-
 <div class="action_pageindex">
-
-<h3>{gt text='Page Index'}</h3>
 
 <div class="floatl">
 {gt text='This is an alphabetical list of pages you can read on this server.'}
@@ -29,7 +25,7 @@
     <br />
   {/if}
   {foreach from=$pagesinletter item='page'}
-    &nbsp;&nbsp;&nbsp;<a href="{modurl modname='wikula' tag=$page.tag|urlencode}" title="{$page.tag}">{getTitleByTag tag=$page.tag body=$page.body}</a>
+    &nbsp;&nbsp;&nbsp;<a href="{modurl modname='wikula' tag=$page.tag|urlencode}" title="{$page.tag}">{$page.title}</a>
     {if $page.owner neq '(Public)' and $page.owner neq ''}
       {if $page.owner eq $username}
         *

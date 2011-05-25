@@ -14,6 +14,6 @@
 function smarty_function_textsearchlink($params, &$smarty)
 {
     return ModUtil::url('Wikula', 'user', 'main', array(
-        'tag' => __('TextSearch')
+        'tag' => __('Search')
     ));
 }

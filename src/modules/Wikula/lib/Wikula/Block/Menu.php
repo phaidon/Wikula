@@ -7,7 +7,7 @@
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  */
 
-class Wikula_Block_Menu extends Zikula_Controller_Block
+class Wikula_Block_Menu extends Zikula_Controller_AbstractBlock
 {
 
     /**
@@ -18,7 +18,7 @@ class Wikula_Block_Menu extends Zikula_Controller_Block
     public function init()
     {
         // Security
-        SecurityUtil::registerPermissionSchema('wikula:menublock:', 'Block title::');
+        SecurityUtil::registerPermissionSchema('Wikula:menublock:', 'Block title::');
     }
 
     /**
@@ -29,8 +29,9 @@ class Wikula_Block_Menu extends Zikula_Controller_Block
      */
     public function info()
     {
-        return array('text_type'      => 'menu',
-            'module'         => 'wikula',
+        return array(
+            'text_type'      => 'menu',
+            'module'         => 'Wikula',
             'text_type_long' => 'Show wikula menu page',
             'allow_multiple' => true,
             'form_content'   => false,
@@ -48,26 +49,26 @@ class Wikula_Block_Menu extends Zikula_Controller_Block
      */
     public function display($blockinfo)
     {
-        if (!SecurityUtil::checkPermission('wikula:menublock', $blockinfo['title'].'::', ACCESS_READ)) {
+        if (!SecurityUtil::checkPermission('Wikula:menublock', $blockinfo['title'].'::', ACCESS_READ)) {
             return;
         }
 
         // Get variables from content block
-        $vars = pnBlockVarsFromContent($blockinfo['content']);
+        $vars = BlockUtil::varsFromContent($blockinfo['content']);
 
         // Defaults
         if (empty($vars['menupages'])) {
-            $vars['menupages'] = 'HomePage';
+            $vars['menupages'] = $this->__('HomePage');
         }
 
         // Check if the wikula module is available. 
-        if (!pnModAvailable('wikula')) {
+        if (!ModUtil::available('Wikula')) {
             return false;
         }
 
 
 
-        $render = pnRender::getInstance('wikula');
+        $render = pnRender::getInstance('Wikula');
 
         $render->assign('pages', explode(",", $vars['menupages']));
 
@@ -75,7 +76,7 @@ class Wikula_Block_Menu extends Zikula_Controller_Block
 
         // Populate block info and pass to theme
         $blockinfo['content'] = $content;
-        return themesideblock($blockinfo);
+        return BlockUtil::themesideblock($blockinfo);
     }
 
     /**
@@ -88,7 +89,7 @@ class Wikula_Block_Menu extends Zikula_Controller_Block
     public function modify($blockinfo)
     {
         // Get current content
-        $vars = pnBlockVarsFromContent($blockinfo['content']);
+        $vars = BlockUtil::varsFromContent($blockinfo['content']);
 
         // Defaults
         if (empty($vars['menupages'])) {
@@ -97,7 +98,7 @@ class Wikula_Block_Menu extends Zikula_Controller_Block
 
         // Create output object
         // As Admin output changes often, we do not want caching.
-        $render = pnRender::getInstance('wikula', false);
+        $render = pnRender::getInstance('Wikula', false);
 
         // assign the approriate values
         $render->assign('menupages', $vars['menupages']);
@@ -115,16 +116,16 @@ class Wikula_Block_Menu extends Zikula_Controller_Block
     public function update($blockinfo)
     {
         // Get current content
-        $vars = pnBlockVarsFromContent($blockinfo['content']);
+        $vars = BlockUtil::varsFromContent($blockinfo['content']);
 
-            // alter the corresponding variable
+        // alter the corresponding variable
         $vars['menupages'] = FormUtil::getPassedValue('menupages');
 
             // write back the new contents
-        $blockinfo['content'] = pnBlockVarsToContent($vars);
+        $blockinfo['content'] = BlockUtil::varsToContent($vars);
 
         // clear the block cache
-        $render = pnRender::getInstance('wikula');
+        $render = pnRender::getInstance('Wikula');
         $render->clear_cache('block/menu.tpl');
 
         return $blockinfo;

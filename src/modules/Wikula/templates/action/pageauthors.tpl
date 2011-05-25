@@ -10,7 +10,7 @@
     {else}
       <img src="images/avatar/{$avatar|safehtml}" width="50" />
     {/if}
-    {$first_writer.uname|userprofilelink}<br />
+    {$first_writer.uname|profilelinkbyuname}<br />
     {$first_writer.time|date_format}
     <br class="clear" />
   </div>
@@ -25,7 +25,7 @@
       {else}
         <img src="images/avatar/{$avatar|safehtml}" width="25" />
       {/if}
-      {$author.uname|userprofilelink}<br />
+      {$author.uname|profilelinkbyuname}<br />
       {$author.time|date_format}
       <br style="clear: both" />
     {/foreach}

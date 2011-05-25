@@ -1,5 +1,3 @@
-/* $Id: wikula.css 83 2008-12-17 04:04:58Z mateo $ */
-
 #wikula {
   font-family: "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Verdana, sans-serif;
 }
@@ -526,7 +524,7 @@
 }
 
 #wikula .page td {
-  /*background-color: #FFF;*/-
+  /*background-color: #FFF;*/
   padding: 3px;
   text-align: left; /* override this for specific centered columns */
 }

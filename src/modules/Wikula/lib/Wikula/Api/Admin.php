@@ -14,9 +14,8 @@
  * information regarding copyright and licensing.
  */
 
-class Wikula_Api_Admin extends Zikula_Api
+class Wikula_Api_Admin extends Zikula_AbstractApi
 {
-
     /**
      * get available admin panel links
      *
@@ -49,11 +48,10 @@ class Wikula_Api_Admin extends Zikula_Api
 
     public function GetOwners()
     {
-        
+        $q = Doctrine_Query::create()->from('Wikula_Model_Pages t');
+        $result = $q->execute();
+        $result = $result->toKeyValueArray('owner', 'owner');
 
-        $pntable =& pnDBGetTables();
-        $col     =& $pntable['wikula_pages_column'];
-        $result  = DBUtil::selectFieldArray('wikula_pages', $col['owner'], '', $col['owner'], true);
         if ($result === false) {
             return LogUtil::registerError(__('Error! Get owners failed.'));
         }
@@ -72,12 +70,12 @@ class Wikula_Api_Admin extends Zikula_Api
     public function PageIndex()
     {
         
-        $pages = pnModAPIFunc('wikula', 'user', 'LoadAllPages');
+        $pages = ModUtil::apiFunc('wikula', 'user', 'LoadAllPages');
 
         $requested_letter = FormUtil::getPassedValue('letter');
         $currentpage      = FormUtil::getPassedValue('tag');
 
-        if (pnUserLoggedIn()) {
+        if (UserUtil::isLoggedIn()) {
             $cached_username = pnUserGetVar('uname');
         } else {
             $cached_username = '';
@@ -139,17 +137,13 @@ class Wikula_Api_Admin extends Zikula_Api
             $tag = $args['tag'];
         }
 
-        $pntable =& pnDBGetTables();
-        $col     =& $pntable['wikula_referrers_column'];
 
         if (isset($args['global']) && $args['global'] == 1) {
+            // TODO delete all
             $where = '';
         } else {
-            $where = 'WHERE '.$col['page_tag'].' = "'.DataUtil::formatForStore($tag).'"';
-        }
-
-        if (!DBUtil::deleteWhere('wikula_referrers', $where)) {
-            return LogUtil::registerError(__('Error! Clearing referers failed.'));
+            $referrer = Doctrine_Core::getTable('Wikula_Model_Referrers')->findBy('page_tag', $tag);
+            $referrer->delete();
         }
 
         return true;
@@ -161,15 +155,19 @@ class Wikula_Api_Admin extends Zikula_Api
         extract($args);
         unset($args);
 
+        $qy = Doctrine_Query::create()->from('Wikula_Model_Pages t');
+
+        
         if (!isset($startnum) || !is_numeric($startnum)) {
             $startnum = 1;
         }
         if (!isset($numitems) || !is_numeric($numitems)) {
             $numitems = -1;
         }
+        
+        $qy->offset($startnum-1);
+        $qy->limit($numitems);
 
-        $pntable =& pnDBGetTables();
-        $col     =& $pntable['wikula_pages_column'];
 
         if ($sort == 'revisions' ||
             $sort == 'comments'  ||
@@ -194,19 +192,22 @@ class Wikula_Api_Admin extends Zikula_Api
                 $order = 'DESC';
             }
         }
+        
+        $qy->orderBy($sortby.' '.$order);
+
+        $qy->where('latest = ?', array('Y'));
 
         $search  = '';
         $boolean = '';
+        print_r($q);
         if (isset($q) && !empty($q)) {
-            if (pnModAPIFunc('wikula', 'user', 'CheckMySQLVersion', array('major' => '4', 'minor' => '00', 'subminor' => '01'))) {
-                $boolean = ' IN BOOLEAN MODE';
-            }
-            $search = ' AND MATCH('.$col['tag'].') AGAINST("'.DataUtil::formatForStore($q).'"'.$boolean.')';
+            $qy->addWhere('tag LIKE ?', array('%'.$q.'%'));
         }
 
-        $where   = 'WHERE '.$col['latest'].' = "Y" '.$search;
-        $orderby = 'ORDER BY '.$col[$sortby].' '.$order;
-        $permission = array();
+
+        
+        // TODO permission
+        /*$permission = array();
         $permission[] = array('realm' => 0,
                               'component_left'   => 'wikula',
                               'component_middle' => '',
@@ -215,21 +216,26 @@ class Wikula_Api_Admin extends Zikula_Api
                               'instance_middle'  => '',
                               'instance_right'   => 'tag',
                               'level'            => ACCESS_READ);
-        $pages   = DBUtil::selectObjectArray('wikula_pages', $where, $orderby, $startnum-1, $numitems);
+         * 
+         */
+        $pages = $qy->execute();
+        $pages = $pages->toArray();
+        
 
-        $modvars = pnModGetVar('wikula');
-        $logref  = $modvars['logreferers'];
-        $ezhook  = false;
-        if (pnModAvailable('EZComments') && pnModIsHooked('EZComments', 'wikula')) {
+        $logref  = $this->getVar('logreferers');
+        //$ezhook  = false;
+        // TODO Hook
+        /*if (pnModAvailable('EZComments') && pnModIsHooked('EZComments', 'wikula')) {
             $ezhook = true;
-        }
+        }*/
 
         foreach ($pages as $pageID => $pageTab) {
-            $pages[$pageID]['revisions'] = pnModAPIFunc('wikula', 'admin', 'CountRevisions', array('tag' => $pageTab['tag']));
-            $pages[$pageID]['comments']  = (($ezhook == true) ? pnModAPIFunc('EZComments', 'user',  'countitems', array('mod' => 'wikula', 'objectid' => $pageTab['tag'])) : 0);
-            $pages[$pageID]['backlinks'] = pnModAPIFunc('wikula', 'user', 'CountBackLinks', array('tag' => $pageTab['tag']));
-            $pages[$pageID]['referrers'] = (($logref == 1) ? pnModAPIFunc('wikula', 'user', 'CountReferers', array('tag' => $pageTab['tag'])) : 0);
+            $pages[$pageID]['revisions'] = ModUtil::apiFunc('Wikula', 'admin', 'CountRevisions', array('tag' => $pageTab['tag']));
+            //$pages[$pageID]['comments']  = (($ezhook == true) ? ModUtil::apiFunc('EZComments', 'user',  'countitems', array('mod' => 'wikula', 'objectid' => $pageTab['tag'])) : 0);
+            $pages[$pageID]['backlinks'] = ModUtil::apiFunc('Wikula', 'user', 'CountBackLinks', array('tag' => $pageTab['tag']));
+            $pages[$pageID]['referrers'] = (($logref == 1) ? ModUtil::apiFunc('Wikula', 'user', 'CountReferers', array('tag' => $pageTab['tag'])) : 0);
         }
+
 
         if ($sort == 'revisions' ||
             $sort == 'comments'  ||
@@ -251,12 +257,10 @@ class Wikula_Api_Admin extends Zikula_Api
             return false;
         }
 
-        $pntable   =& pnDBGetTables();
-        $col       =& $pntable['wikula_pages_column'];
-
-        $where     = 'WHERE '.$col['tag'].' = "'.DataUtil::formatForStore($args['tag']).'"';
-
-        $pagecount = DBUtil::selectObjectCount('wikula_pages', $where);
+        $q = Doctrine_Query::create()->from('Wikula_Model_Pages t');
+        $q->where('tag = ?', array($args['tag']));
+        $result = $q->execute();
+        $pagecount = $result->count();
 
         if ($pagecount === false) {
             return LogUtil::registerError(__('Error! Count the revisions for this page failed.'));
@@ -267,22 +271,15 @@ class Wikula_Api_Admin extends Zikula_Api
 
     public function deletepageid($args)
     {
-        
         $id  = $args['id'];
 
         if (empty($id) || !is_numeric($id)) {
             return false;
         }
-
-        $pntable =& pnDBGetTables();
-        $col     =& $pntable['wikula_pages_column'];
-
-        $where   = 'WHERE '.$col['id'].' = "'.DataUtil::formatForStore($id).'"';
-
-        if (!DBUtil::deleteWhere('wikula_pages', $where)) {
-            return LogUtil::registerError(__('Error! Deleting the revision failed.'));
-        }
-
+              
+        $page = Doctrine_Core::getTable('Wikula_Model_Pages')->find($id);
+        $page->delete();
+        
         return true;
     }
 
@@ -295,8 +292,6 @@ class Wikula_Api_Admin extends Zikula_Api
             return false;
         }
 
-        $pntable =& pnDBGetTables();
-        $col     =& $pntable['wikula_pages_column'];
         $count   = 1;
 
         foreach ($pages as $page) {
@@ -306,16 +301,20 @@ class Wikula_Api_Admin extends Zikula_Api
                 $value = 'N';
             }
 
-            $updates[$col['latest']] = DataUtil::formatForStore($value);
-            $where = 'WHERE '.$col['id'].' = "'.DataUtil::formatForStore($page['id']).'"';
+            $updates['latest'] = DataUtil::formatForStore($value);
 
-            if (!DBUtil::updateObject($updates, 'wikula_pages', $where)) {
-                return LogUtil::registerError(__('Error! Setting the latest page failed.'));
-            }
+            
+            $page = Doctrine_Core::getTable('Wikula_Model_Pages')->find($page['id']); 
+            $page->merge($updates);
+            $page->save();
+            
 
             $count++;
         }
 
         return true;
+        
+       
+        
     }
 }

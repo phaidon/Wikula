@@ -1,8 +1,5 @@
-{* $Id: action/recentchanges.tpl 83 2008-12-17 04:04:58Z mateo $ *}
-
 <div class="action_recentchanges">
 
-<h3>{gt text='Recent Changes'}</h3>
 <p style="float: right;">
   <a href="{modurl modname='wikula' func='recentchangesxml' theme='rss'}" title="{gt text='Recent Changes'}">{img modname='wikula' src='rss.png' __title='Recent changes Feed'  __alt='RSS'}</a>
 </p>

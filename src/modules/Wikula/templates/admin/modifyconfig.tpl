@@ -1,7 +1,6 @@
-{include file='admin/header.tpl'}
 {gt text='Modify configuration' assign=templatetitle}
-<div class="z-adminpageicon">{icon type="view" size="large"}</div>
-<h2>{$templatetitle}</h2>
+{gt text='config' assign=templateicon}
+{include file='admin/header.tpl'}
 
 {form cssClass="z-form"}
 {formvalidationsummary}
@@ -14,8 +13,8 @@
     </div>
 
     <div class="z-formrow">
-        {formlabel for="warning" __text='Receive an email when a new revision is saved'}
-        {formcheckbox id="warning"}
+        {formlabel for="subscription" __text='Enable subscribtions'}
+        {formcheckbox id="subscription"}
     </div>
 
     <div class="z-formrow">
@@ -32,6 +31,8 @@
         {formlabel for="hideeditbar" __text='Do not show the editor help bar (wiki-edit) above an articled that gets edited'}
         {formcheckbox id="hideeditbar"}
     </div>
+
+
     <div class="z-formrow">
         {formlabel for="logreferers" __text='Log Referers - Note: If the Zikula HTTPReferers module is available, it will use the exclusions setting.)'}
         {formcheckbox id="logreferers"}

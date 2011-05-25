@@ -29,7 +29,7 @@
       <tr>
         <td><a href="{modurl modname='wikula' func='main' tag=$item.from_tag|urlencode}" title="{$item.from_tag|safehtml}">{$item.from_tag|safehtml}</a></td>
         <td>&rArr;</td>
-        <td>{pnmodapifunc modname='wikula' type='user' func='Link' tag=$item.to_tag}</td>
+        <td>{ModUtil::apiFunc modname='wikula' type='user' func='Link' tag=$item.to_tag}</td>
       </tr>
       {/foreach}
     </tbody>

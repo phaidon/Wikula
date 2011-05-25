@@ -1,8 +1,22 @@
-{* $Id: wikula_user_footer.tpl 41 2008-10-09 18:29:16Z quan $ *}
-<!--
-<div class="smallprint">
-  <a href="http://validator.w3.org/check/referer">Valid XHTML</a><span class='exttail'>&#8734;</span> ::
-  <a href="http://jigsaw.w3.org/css-validator/check/referer">Valid CSS</a><span class='exttail'>&#8734;</span> ::
-  Powered by <a class="ext" href="http://code.zikula.org/wikula">Wikula</a><span class='exttail'>&#8734;</span> (A wiki fork from <a class="ext" href="http://wikkawiki.org/">WikkaWiki</a><span class='exttail'>&#8734;</span>)
+{if $modvars.Wikula.showFooter|default:false}
+
+<div class="wiki_footer">
+    <div style="text-align:left; padding:4px;">
+        <form action="{textsearchlink}" method="post" enctype="application/x-www-form-urlencoded">
+            <div>
+                <a href="{modurl modname='wikula' func='history' tag=$tag|urlencode}" title="{gt text='Page history'}">{gt text='Page history'}</a>
+                <span class="text_separator">::</span>
+                {gt text='Revisions of "%s" Feed' tag1=$tag assign='altrssfeed'}
+                <a href="{modurl modname='wikula' tag=$tag|urlencode time=$backpage.time|urlencode}" class="datetime">{$backpage.time|safehtml}</a> <a href="{modurl modname='wikula' func='RevisionsXML' tag=$tag|urlencode theme='rss'}" title="{$altrssfeed}">{img src='rss.png' alt=$altrssfeed modname='wikula'}</a>
+                <span class="text_separator">::</span>
+                {gt text='Owner'}: {$backpage.owner|profilelinkbyuname}
+                <span class="text_separator">::</span>
+                <label for="wikula_phrase">{gt text='Search for'}
+                <input id="wikula_phrase" name="phrase" size="12" class="searchbox" />
+                </label>
+            </div>
+        </form>
+    </div>
 </div>
--->
+
+{/if}

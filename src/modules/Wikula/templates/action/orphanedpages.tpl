@@ -1,5 +1,3 @@
-{* $Id: action/orphanedpages.tpl 41 2008-10-09 18:29:16Z quan $ *}
-
 <div class="action_pageindex">
 
 <h3>{gt text='Orphaned Pages'}</h3>

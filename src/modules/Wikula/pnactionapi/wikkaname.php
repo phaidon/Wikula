@@ -14,13 +14,12 @@
 /**
  * Returns the name of the module in a link
  * 
- * @author Mateo Tibaquirá
+ * @author Mateo Tibaquirï¿½
  * @author Frank Chestnut
  * @author Wikka Dev Team
  */
 function wikula_actionapi_wikkaname()
 {
-    $modinfo = pnModGetInfo(pnModGetIDFromName('wikula'));
-
-    return '<a href="'.pnModUrl('wikula').'" title="'.$modinfo['displayname'].'">'.$modinfo['displayname'].'</a>';
+    $modinfo = ModUtil::getInfoFromName('Wikula');
+    return '<a href="'.ModUtil::url('Wikula').'" title="'.$modinfo['displayname'].'">'.$modinfo['displayname'].'</a>';
 }

@@ -26,7 +26,7 @@
  */
 function wikula_actionapi_lastedit($args)
 {
-    $tag    = FormUtil::getPassedValue('tag', pnModGetVar('wikula', 'root_page'));
+    $tag    = FormUtil::getPassedValue('tag', ModUtil::getVar('Wikula', 'root_page'));
     $show   = (isset($args['show']) && is_numeric($args['show'])) ? $args['show'] : 1;
 
     // initialize the output array
@@ -35,7 +35,7 @@ function wikula_actionapi_lastedit($args)
         'show' => $show
     );
 
-    $output['page'] = pnModAPIFunc('wikula', 'user', 'LoadPage',
+    $output['page'] = ModUtil::apiFunc('wikula', 'user', 'LoadPage',
                                    array('tag' => $tag));
 
     if (!$output['page']) {

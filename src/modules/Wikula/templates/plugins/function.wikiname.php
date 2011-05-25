@@ -13,7 +13,6 @@
 
 function smarty_function_wikiname($params, &$smarty)
 {
-    $id   = pnModGetIDFromName(pnModGetName());
-    $info = pnModGetInfo($id);
+    $info   = ModUtil::getInfoFromName('Wikula');
     return $info['displayname'];
 }

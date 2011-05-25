@@ -18,11 +18,15 @@
  * @author Wikka Dev Team
  */
 function wikula_actionapi_wikkachanges()
-{
-    $dom = ZLanguage::getModuleDomain('wikula');
-    return pnModAPIFunc('wikula', 'user', 'wakka',
-                        array('text' => __('=====Wikka Release Notes=====
-This site is running Wikula -the Wiki module for Zikula- version **{{wikkaversion}}**.
-The release notes are described on the [[http://code.zikula.org/wikula development website]].
-', $dom)));
+{    
+    $dom = ZLanguage::getModuleDomain('Wikula');
+    
+    $version = ModUtil::apiFunc('Wikula', 'action', 'wikkaversion'); 
+        
+    return  __('Wikka Release Notes
+
+This site is running Wikula -the Wiki module for Zikula- version **'.$version.'**.
+The release notes are described on the [[http://code.zikula.org/wikula|development website]].
+', $dom);
+    
 }

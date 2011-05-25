@@ -20,11 +20,11 @@
  */
 function wikula_actionapi_pageauthors($args)
 {
-    $tag  = (isset($args['tag'])) ? $args['tag'] : FormUtil::getPassedValue('tag', pnModGetVar('wikula', 'root_page'));
+    $tag  = (isset($args['tag'])) ? $args['tag'] : FormUtil::getPassedValue('tag', ModUtil::getVar('Wikula', 'root_page'));
     $page = (isset($args['page'])) ? $args['page'] : null;
 
     if (empty($page)) {
-        $page = pnModAPIFunc('wikula', 'user', 'LoadPage', array('tag'  => $tag));
+        $page = ModUtil::apiFunc('Wikula', 'user', 'LoadPage', array('tag'  => $tag));
     }
 
     if ($page['owner'] == '(Public)') {
@@ -32,7 +32,7 @@ function wikula_actionapi_pageauthors($args)
     }
 
     // Check if this view is cached
-    $render = pnRender::getInstance('wikula');
+    $render = pnRender::getInstance('Wikula');
     $render->cacheid = $tag.'|'.pnUserGetVar('uid').'|'.$numitems;
     if ($render->is_cached('action/pageauthors.tpl')) {
        return $render->fetch('action/pageauthors.tpl');
@@ -42,7 +42,7 @@ function wikula_actionapi_pageauthors($args)
 
     // must check for exlusion rules
     // check for spaces before the comma
-    $excludes = explode(',', pnModGetVar('wikula', 'excludefromhistory', ''));
+    $excludes = explode(',', ModUtil::getVar('Wikula', 'excludefromhistory', ''));
     if (!empty($excludes)) {
         foreach ($excludes as $exclusion) {
             if (strtolower(trim($exclusion)) == strtolower($tag)) {
@@ -50,13 +50,13 @@ function wikula_actionapi_pageauthors($args)
             }
         }
     }
-    $pages = pnModAPIFunc('wikula', 'user', 'LoadRevisions',
+    $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadRevisions',
                           array('tag' => $tag,
                                 'numitems' => 5));
     // check if we need to load the oldes revision
     if ($numitems == count($pages)) {
         // not sure if all are here, so get the oldest
-        $oldest = pnModAPIFunc('wikula', 'user', 'LoadRevisions',
+        $oldest = ModUtil::apiFunc('Wikula', 'user', 'LoadRevisions',
                                array('tag' => $tag,
                                      'getoldest' => true));
     } else {

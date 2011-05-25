@@ -27,9 +27,9 @@ function wikula_actionapi_lastezcomments($args)
     if (!pnModIsHooked('EZComments', 'wikula')) {
         return __('Not hooked!', $dom);
     }
-    $itemsperpage = pnModGetVar('wikula', 'itemsperpage');
+    $itemsperpage = ModUtil::getVar('wikula', 'itemsperpage');
 
-    $items = pnModAPIFunc('EZComments', 'user', 'getall',
+    $items = ModUtil::apiFunc('EZComments', 'user', 'getall',
                           array('mod'          => 'wikula',
                                 'itemsperpage' => $itemsperpage));
 

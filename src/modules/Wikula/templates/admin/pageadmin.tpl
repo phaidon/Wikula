@@ -1,7 +1,7 @@
-{include file='admin/header.tpl'}
 {gt text='Page Administration' assign=templatetitle}
-<div class="z-adminpageicon">{icon type="view" size="large"}</div>
-<h2>{$templatetitle}</h2>
+{gt text='view' assign=templateicon}
+{include file='admin/header.tpl'}
+
 
 <div id="wikkaadmin">
   <form action="{modurl modname='Wikula' type='admin' func='pages'}" class="z-form" method="post" enctype="application/x-www-form-urlencoded">

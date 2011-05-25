@@ -32,7 +32,7 @@ function wikula_actionapi_TextSearchExpanded()
     if (!empty($phrase)) {
         $phrase = trim($phrase);
 
-        $result = pnModAPIFunc('wikula', 'user', 'FullTextSearch',
+        $result = ModUtil::apiFunc('wikula', 'user', 'FullTextSearch',
                                array('phrase' => $phrase));
 
         if (empty($result)) {
@@ -43,7 +43,7 @@ function wikula_actionapi_TextSearchExpanded()
             foreach ($result as $i => $item) {
                 preg_match("/(.{0,120}$search.{0,120})/is", $item['page_body'], $matchString);
 
-                $text = pnModAPIFunc('wikula', 'user', 'htmlspecialchars_ent',
+                $text = ModUtil::apiFunc('Wikula', 'user', 'htmlspecialchars_ent',
                                      array('text' => isset($matchString[0]) ? $matchString[0] : ''));
 
                 $result[$i]['matchtext'] = preg_replace("/($search)/i",

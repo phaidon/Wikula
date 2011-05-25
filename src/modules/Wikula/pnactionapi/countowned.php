@@ -14,20 +14,20 @@
 /**
  * Print number of pages owned by the current user
  *
- * @author Mateo Tibaquirá 
+ * @author Mateo Tibaquir
  * @author Frank Chestnut
  * @author Wikka Dev Team
  * @param string $args['uname'] username to get his/her owned pages (default = current user)
  */
 function wikula_actionapi_countowned($args)
 {
-    $uname = (isset($args['uname']) && !empty($args['uname'])) ? $args['uname'] : pnUserGetVar('uname');
+    $uname = (isset($args['uname']) && !empty($args['uname'])) ? $args['uname'] : UserUtil::getVar('uname');
 
-    $pntable = &pnDBGetTables();
-    $columns = &$pntable['wikula_pages_column'];
-    
-    $where = $columns['owner'].' = \''.DataUtil::formatForStore($uname).'\' AND '.
-             $columns['latest'].' = \'Y\'';
+    $q = Doctrine_Query::create()->from('Wikula_Model_Pages t');
+    $q->where('latest = ? and owner = ?', array('Y', $uname));
 
-    return DBUtil::selectObjectCount('wikula_pages', $where);
+
+    $result = $q->execute();
+    return $result->count();
+   
 }

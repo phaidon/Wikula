@@ -1,14 +1,13 @@
-{include file='admin/header.tpl'}
 {gt text='Page Index' assign=templatetitle}
-<div class="z-adminpageicon">{icon type="view" size="large"}</div>
-<h2>{$templatetitle}</h2>
+{gt text='view' assign=templateicon}
+{include file='admin/header.tpl'}
 
 
 <div>
 {if $pagelist}
-  <strong><a href="{modurl modname='wikula' type='admin' func='pages'}" title="{gt text='All'}">{gt text='All'}</a></strong>&nbsp;&nbsp;
+  <strong><a href="{modurl modname='Wikula' type='admin' func='pages'}" title="{gt text='All'}">{gt text='All'}</a></strong>&nbsp;&nbsp;
   {foreach item='letter' from=$headerletters}
-    <strong><a href="{modurl modname='wikula' type='admin' func='pages' letter=$letter}" title="{$letter}">{$letter}</a></strong>
+    <strong><a href="{modurl modname='Wikula' type='admin' func='pages' letter=$letter}" title="{$letter}">{$letter}</a></strong>
   {/foreach}
   <br />
   {assign var='currentchar' value=''}
@@ -20,7 +19,7 @@
       <br /><strong>{$firstchar}</strong><br />
     {/if}
     {foreach item='page' from=$letter}
-      &nbsp;&nbsp;&nbsp;<a href="{modurl modname='wikula' tag=$page.tag|urlencode}" title="{$page.tag}">{$page.tag}</a>
+      &nbsp;&nbsp;&nbsp;<a href="{modurl modname='Wikula' tag=$page.tag|urlencode}" title="{$page.tag}">{$page.tag}</a>
       {if $page.owner neq '(Public)' and $page.owner neq ''}
         {if $page.owner eq $username}
           *

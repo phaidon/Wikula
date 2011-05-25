@@ -14,12 +14,12 @@
 /**
  * Returns the count of Zikula users
  * 
- * @author Mateo Tibaquirá
+ * @author Mateo Tibaquirï¿½
  * @author Frank Chestnut
  * @author Wikka Dev Team
  * @todo Count relative to page owned
  */
 function wikula_actionapi_countusers()
 {
-    return DBUtil::selectObjectCount('users');
+    return ModUtil::apiFunc('Users','user','countItems');
 }

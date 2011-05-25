@@ -26,22 +26,27 @@
  */
 function wikula_actionapi_category($args)
 {
-    $dom = ZLanguage::getModuleDomain('wikula');
+    $dom = ZLanguage::getModuleDomain('Wikula');
     // Defaults
-    $tag     = (isset($args['page']) && !empty($args['page'])) ? $args['page'] : FormUtil::getPassedValue('tag', pnModGetVar('wikula', 'root_page'));
+    $tag     = (isset($args['page']) && !empty($args['page'])) ? $args['page'] : FormUtil::getPassedValue('tag', ModUtil::getVar('wikula', 'root_page'));
     $col     = (isset($args['col']) && !empty($args['col'])) ? $args['col'] : 1;
     $full    = (isset($args['full']) && !empty($args['full'])) ? 1 : 0;
     $compact = (isset($args['compact']) && !empty($args['compact'])) ? 1 : 0;
     $notitle = (isset($args['notitle']) && !empty($args['notitle'])) ? 1 : 0;
 
+    
     // if page is empty
-    if (empty($tag)) {
+    if (empty($tag) or $tag = __('AllCategories', $dom)) {
         // CategoryCategory page as default
         $tag = __('CategoryCategory', $dom);
     }
+    
 
-    $pages = pnModAPIFunc('wikula', 'user', 'FullCategoryTextSearch',
+    $pages = ModUtil::apiFunc('Wikula', 'user', 'FullCategoryTextSearch',
                           array('phrase' => $tag));
+    
+    
+
 
     if (!$pages) {
         return false;
@@ -49,7 +54,7 @@ function wikula_actionapi_category($args)
 
     // Delete the not authorized pages or the page itself
     foreach ($pages as $key => $page) {
-        if ($page['page_tag'] == $tag || !SecurityUtil::checkPermission('wikula::', 'page::'.$page['page_tag'], ACCESS_READ)) {
+        if ($page['page_tag'] == $tag || !SecurityUtil::checkPermission('Wikula::', 'page::'.$page['page_tag'], ACCESS_READ)) {
             unset($pages[$key]);
         }
     }
@@ -62,7 +67,7 @@ function wikula_actionapi_category($args)
     $endcell = $col - ($total - ($int * $col));
 
     // build the output
-    $render = pnRender::getInstance('wikula');
+    $render = pnRender::getInstance('Wikula');
 
     $render->assign('action_cc', array('pages'   => $pages,
                                        'tag'     => $tag,

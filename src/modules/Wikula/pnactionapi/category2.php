@@ -13,7 +13,7 @@
 
 function wikula_actionapi_category2($args)
 {
-    return pnModAPIFunc('wikula', 'user', 'Action',
+    return ModUtil::apiFunc('wikula', 'user', 'Action',
                         array('action' => 'category',
                               'args'   => $args));
 }
@@ -75,7 +75,7 @@ function wikula_actionapi_category2($args)
  * @author      {@link http://wikka.jsnx.com/JsnX JsnX}
  * @author      {@link http://wikka.jsnx.com/NilsLindenberg NilsLindenberg} (separation into subcategories and pages)
  * @author      {@link http://wikka.jsnx.com/JavaWoman JavaWoman} (complete rewrite, filtering, table-less columns and 'related pages' functionality)
- * @copyright   Copyright © 2005, Marjolein Katsma
+ * @copyright   Copyright ï¿½ 2005, Marjolein Katsma
  * @license     http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  * @since       Wikka 1.0.0
  * @version     2.5beta
@@ -200,7 +200,7 @@ if (!function_exists('buildPageList'))
 // constants
 $aShow      = array('all','categories','pages','members');
 $aType      = array('cols','list','related');
-if (!defined('PAT_PAGENAME_CHARS'))     define('PAT_PAGENAME_CHARS','A-Za-z0-9ÄÖÜßäöü');    # NOT within [] so we can use if for a negative class as well
+if (!defined('PAT_PAGENAME_CHARS'))     define('PAT_PAGENAME_CHARS','A-Za-z0-9ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');    # NOT within [] so we can use if for a negative class as well
 
 // set defaults
 $lCat       = NULL;         # no predefined default

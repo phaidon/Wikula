@@ -1,5 +1,3 @@
-{* $Id: action/mypages.tpl 41 2008-10-09 18:29:16Z quan $ *}
-
 <div class="action_mypages">
 
 <div class="floatl">{gt text='This is the list of pages you own. (%1$s on %2$s)' tag1=$count tag2=$total}</div>

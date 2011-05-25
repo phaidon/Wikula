@@ -21,48 +21,15 @@
     </div>
   {/if}
 
-  <div class="page">
-	{if $modvars.Wikula.hidehistory neq true}
-	  {* invokes the pagehistory directly *}
-	  {*modapifunc modname='wikula' type='action' func='pageauthors' tag=$showpage.tag page=$showpage.page*}
-	{/if}
+<div id="wikula">
 
-    {* $body is the variable containing the stuff *}
-    {$showpage.body|wakka}{*pnmodcallhooks:'wikula'*}
+  <div class="page" style="text-align:left">
+    {$showpage.body|transform}
   </div>
 
-  <div class="wiki_footer">
-    <div style="text-align:left; padding:4px;">
-      <form action="{textsearchlink}" method="post" enctype="application/x-www-form-urlencoded">
-      <div>
-        {if $canedit eq true}
-        <a href="{modurl modname='wikula' func='edit' previous=$showpage.id|urlencode tag=$tag|urlencode}" title="{gt text='Edit page'}">{gt text='Edit page'}</a>
-        <span class="text_separator">::</span>
-        {/if}
-        <a href="{modurl modname='wikula' func='history' tag=$tag|urlencode}" title="{gt text='Page history'}">{gt text='Page history'}</a>
-        <span class="text_separator">::</span>
-        {gt text='Revisions of "%tag%" Feed' tag=$tag assign='altrssfeed'}
-        <a href="{modurl modname='wikula' tag=$tag|urlencode time=$showpage.time|urlencode}" class="datetime">{$showpage.time|date_format}</a> <a href="{modurl modname='wikula' func='RevisionsXML' tag=$tag|urlencode theme='rss'}" title="{$altrssfeed}">{img src='rss.png' alt=$altrssfeed modname='wikula'}</a>
-        <span class="text_separator">::</span>
-        {gt text='Owner'}: {$showpage.owner|userprofilelink}
-        <span class="text_separator">::</span>
-        {pnuserloggedin assign='islogged'}
-        {if $islogged}
-        <a href="{modurl modname='wikula' func='referrers' tag=$tag|urlencode}" title="{gt text='Referrers'}">{gt text='Referrers'}</a>
-        <span class="text_separator">::</span>
-        {/if}
-        <label for="wikula_phrase">{gt text='Search for'}
-        <input id="wikula_phrase" name="phrase" size="12" class="searchbox" />
-        </label>
-      </div>
-      </form>
-    </div>
-  </div>
 </div>
 
-<div class="clear"></div>
-<div>
-  {* the next code is to display any hooks (e.g. comments, ratings) *}
-  {modurl modname='wikula' func='display' tag=$tag assign='returnurl'}
-  {*modcallhooks hookobject='item' hookaction='display' hookid=$tag module='wikula' returnurl=$returnurl*}
-</div>
+{notifydisplayhooks eventname='wikula.hook.pages.ui.view' area='modulehook_area.wikula.pages' subject=$tag id=$showpage.id assign='hooks' caller="Wikula"}
+{foreach from=$hooks key='provider_area' item='hook'}
+{$hook}
+{/foreach}

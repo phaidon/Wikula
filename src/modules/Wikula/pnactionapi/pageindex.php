@@ -21,9 +21,8 @@
  */
 function wikula_actionapi_pageindex($args)
 {
-    print_r('hallo');
     
-    $dom = ZLanguage::getModuleDomain('wikula');
+    $dom = ZLanguage::getModuleDomain('Wikula');
     $letter      = (isset($args['letter'])) ? $args['letter'] : FormUtil::getPassedValue('letter');
     $username    = (UserUtil::isLoggedIn()) ? UserUtil::getVar('uname') : '';
     $currentpage = FormUtil::getPassedValue('tag', __('PageIndex', $dom));
@@ -34,10 +33,10 @@ function wikula_actionapi_pageindex($args)
     }
 
     // Check if this view is cached
-    $render = pnRender::getInstance('Wikula');
-    $render->cacheid = $username.$currentpage.$letter;
-    if ($render->is_cached('action/pageindex.tpl')) {
-       return $render->fetch('action/pageindex.tpl');
+    $renderer = Zikula_View::getInstance('Wikula');
+    $renderer->cacheid = $username.$currentpage.$letter;
+    if ($renderer->is_cached('action/pageindex.tpl')) {
+       return $renderer->fetch('action/pageindex.tpl');
     }
 
     // If not, build it
@@ -51,7 +50,7 @@ function wikula_actionapi_pageindex($args)
     $user_owns_pages   = false;
     $headerletters     = array();
     $pagelist          = array();
-
+    
     foreach ($pages as $page) {
         $value = '';
         if (preg_match("`(=){3,5}([^=\n]+)(=){3,5}`", $page['body'], $value)) {
@@ -60,6 +59,7 @@ function wikula_actionapi_pageindex($args)
         } else {
             $value = $page['tag'];
         }
+        $page['title'] = $value;
 
         $firstChar = strtoupper(substr($value, 0, 1));
         if (!preg_match('/[A-Za-z]/', $firstChar)) {
@@ -80,16 +80,39 @@ function wikula_actionapi_pageindex($args)
         }
 
     }
+    
+     $specialPages = ModUtil::apiFunc('Wikula', 'user', 'getSpecialPages');
+     foreach( $specialPages as $tag => $value) {
+
+        $page = array(
+            'tag'   => $tag,
+            'owner' => __('(Public)', $dom),
+            'title' => $value['title']
+
+        );
+        
+        $firstChar = strtoupper(substr($tag, 0, 1));
+        if (!preg_match('/[A-Za-z]/', $firstChar)) {
+            $firstChar = '#';
+        }
+        if ($firstChar != $currentChar) {
+            $headerletters[] = $firstChar;
+            $currentChar     = $firstChar;
+        }
+        
+        $pagelist[$firstChar][] = $page;
+     }
 
     $headerletters = array_unique($headerletters);
     sort($headerletters);
+    
     ksort($pagelist);
 
-    $render->assign('currentpage',   $currentpage);
-    $render->assign('headerletters', $headerletters);
-    $render->assign('pagelist',      $pagelist);
-    $render->assign('username',      $username);
-    $render->assign('userownspages', $user_owns_pages);
+    $renderer->assign('currentpage',   $currentpage);
+    $renderer->assign('headerletters', $headerletters);
+    $renderer->assign('pagelist',      $pagelist);
+    $renderer->assign('username',      $username);
+    $renderer->assign('userownspages', $user_owns_pages);
 
-    return $render->fetch('action/pageindex.tpl');
+    return $renderer->fetch('action/pageindex.tpl');
 }

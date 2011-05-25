@@ -12,8 +12,8 @@
  */
 
 // load the system tags defines if exists
-$syslang  = pnConfigGetVar('language');
-$wikulang = pnModGetVar('wikula', 'langinstall', $syslang);
+$syslang  = System::getVar('language');
+$wikulang = ModUtil::getVar('wikula', 'langinstall', $syslang);
 Loader::loadFile('pagetags.php', 'modules/Wikula/pnlang/'.$wikulang, false);
 
 // patterns definitions
@@ -95,7 +95,7 @@ if (!defined('ID_LENGTH')) define('ID_LENGTH', 10); // @@@ maybe make length con
 function GetPageTag() { return FormUtil::getPassedValue('tag'); }
 //function GetPageTime() { return $this->page['time']; }
 function GetMethod() { return FormUtil::getPassedValue('method'); }
-function GetConfigValue($name) { return pnModGetVar('wikula', $name); }
-function GetWakkaName() { return pnModGetVar('wikula', 'waka_name'); }
-function GetWakkaVersion() { return pnModGetVar('wikula', WAKA_VERSION); }
+function GetConfigValue($name) { return ModUtil::getVar('wikula', $name); }
+function GetWakkaName() { return ModUtil::getVar('wikula', 'waka_name'); }
+function GetWakkaVersion() { return ModUtil::getVar('wikula', WAKA_VERSION); }
 */

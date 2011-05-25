@@ -20,9 +20,9 @@
  */
 function wikula_actionapi_RecentChanges()
 {
-    $dom = ZLanguage::getModuleDomain('wikula');
-    $max   = (int)pnModGetVar('wikula', 'itemsperpage', 50);
-    $pages = pnModAPIFunc('wikula', 'user', 'LoadRecentlyChanged',
+    $dom = ZLanguage::getModuleDomain('Wikula');
+    $max   = (int)ModUtil::getVar('Wikula', 'itemsperpage', 50);
+    $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadRecentlyChanged',
                           array('numitems' => $max));
 
     if (!$pages) {
@@ -41,7 +41,7 @@ function wikula_actionapi_RecentChanges()
 
         $page['timeformatted'] = date(__('H:i T', $dom), strtotime($page['time']));
 
-        if ($page['user'] == pnConfigGetVar('anonymous')) {
+        if ($page['user'] == System::getVar('anonymous')) {
             $page['user'] .= ' ('.__('anonymous user', $dom).')'; // anonymous user
         }
 
@@ -49,7 +49,7 @@ function wikula_actionapi_RecentChanges()
     }
     unset($pages);
 
-    $render = pnRender::getInstance('wikula', false);
+    $render = pnRender::getInstance('Wikula', false);
     $render->assign('pagelist', $pagelist);
     return $render->fetch('action/recentchanges.tpl');
 }

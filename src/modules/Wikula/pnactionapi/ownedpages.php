@@ -20,20 +20,21 @@
  */
 function wikula_actionapi_ownedpages($args)
 {
-    $dom = ZLanguage::getModuleDomain('wikula');
-    if (!pnUserLoggedIn()) {
+    $dom = ZLanguage::getModuleDomain('Wikula');
+    if (!UserUtil::isLoggedIn()) {
         return;
     }
 
-    $result = pnModAPIFunc('wikula', 'user', 'LoadAllPagesOwnedByUser',
-                           array('uname'     => pnUserGetVar('uname'),
-                                 'justcount' => true));
+    $result = ModUtil::apiFunc('Wikula', 'user', 'LoadAllPagesOwnedByUser', array(
+        'uname'     => UserUtil::getVar('uname'),
+        'justcount' => true)
+    );
 
     if (!$result) {
         return __('Error during element fetching !', $dom);
     }
 
-    $render = pnRender::getInstance('wikula'/*, false*/);
+    $render = pnRender::getInstance('Wikula');
 
     $render->assign($result);
     $render->assign('percent', round(($result['count']/$result['total'])*100, 2));

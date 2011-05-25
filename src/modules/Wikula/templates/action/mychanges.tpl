@@ -1,5 +1,3 @@
-{* $Id: action/mychanges.tpl 41 2008-10-09 18:29:16Z quan $ *}
-
 <div class="action_mychanges">
 
 <div class="floatl">
