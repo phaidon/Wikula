@@ -24,7 +24,7 @@
 <div id="wikula">
 
   <div class="page" style="text-align:left">
-    {$showpage.body|transform}
+    {$showpage.body|notifyfilters:'wikula.filter_hooks.body.filter'}
   </div>
 
 </div>

@@ -19,7 +19,7 @@
 
     <!-- We need to escape ALL entity refs before display so we display them _as_ entities instead of interpreting them
     // hence htmlspecialchars() instead of htmlspecialchars_ent() which UNescapes entities! -->
-    {editor}
+    {notifydisplayhooks eventname='wikula.ui_hooks.editor.display_view' id='wikula_body'}	
     <textarea id="wikula_body" name="body" cols="10" rows="10" style="width:98%;height:500px">{$body|htmlspecialchars}</textarea>
 
 

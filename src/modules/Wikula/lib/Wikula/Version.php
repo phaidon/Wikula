@@ -22,6 +22,7 @@ class Wikula_Version extends Zikula_AbstractVersion
         $meta['help']           = 'docs/install.txt';
         $meta['changelog']      = 'docs/changelog.txt';
         $meta['license']        = 'docs/license.txt';
+        $meta['core_min'] = '1.3.0'; // requires minimum 1.3.0 or later
 
         $meta['official']       = false;
 
@@ -33,20 +34,29 @@ class Wikula_Version extends Zikula_AbstractVersion
             'Wikula::' => 'page::Page Tag'
         );
         $meta['capabilities']   = array(HookUtil::SUBSCRIBER_CAPABLE => array('enabled' => true));
-        $meta['dependencies']   = array(
+       /* $meta['dependencies']   = array(
                                       array('modname'    => 'LuMicuLa', 
                                             'minversion' => '0.0.1', 
                                             'maxversion' => '', 
                                             'status'     => ModUtil::DEPENDENCY_REQUIRED) 
-                                     );
+                                     );*/
 
         return $meta;
     }
     protected function setupHookBundles()
     {
-        $bundle = new Zikula_Version_HookSubscriberBundle('modulehook_area.wikula.pages', $this->__('Wiki Pages Hooks'));
+      /*  $bundle = new Zikula_Version_HookSubscriberBundle('modulehook_area.wikula.pages', $this->__('Wiki Pages Hooks'));
         $bundle->addType('ui.view', 'wikula.hook.pages.ui.view');
+        $this->registerHookSubscriberBundle($bundle);*/
+        
+        $bundle = new Zikula_HookManager_SubscriberBundle($this->name, 'subscriber.wikula.ui_hooks.editor', 'ui_hooks', $this->__('Wikula editor'));
+        $bundle->addEvent('display_view', 'wikula.ui_hooks.editor.display_view');
         $this->registerHookSubscriberBundle($bundle);
+        
+        $bundle = new Zikula_HookManager_SubscriberBundle($this->name, 'subscriber.wikula.filter_hooks.body', 'filter_hooks', $this->__('Wikula Filters'));
+        $bundle->addEvent('filter', 'wikula.filter_hooks.body.filter');
+        $this->registerHookSubscriberBundle($bundle);
+        
 
     }
 }

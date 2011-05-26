@@ -33,7 +33,8 @@ class Wikula_Installer extends Zikula_AbstractInstaller
 
         $this->defaultdata();
 
-        HookUtil::registerHookSubscriberBundles($this->version);
+        HookUtil::registerSubscriberBundles($this->version->getHookSubscriberBundles());
+
 
         return true;
     }
@@ -117,6 +118,8 @@ class Wikula_Installer extends Zikula_AbstractInstaller
         DoctrineUtil::dropTable('wikula_referrers');
         DoctrineUtil::dropTable('wikula_subscriptions');
 
+        HookUtil::unregisterSubscriberBundles($this->version->getHookSubscriberBundles());
+        
         // Delete the module vars
         $this->delVars();
 
