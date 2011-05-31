@@ -9,9 +9,9 @@
 <div class="clear"></div>
 <br />
 
-<strong><a href="{modurl modname='wikula' tag=$currentpage|urlencode}" title="{gt text='All'}">{gt text='All'}</a></strong>
+<strong><a href="{modurl modname='Wikula' type='user' func='main' tag=$currentpage|urlencode}" title="{gt text='All'}">{gt text='All'}</a></strong>
 {foreach item='letter' from=$headerletters}
-  &nbsp;&nbsp;<strong><a href="{modurl modname='wikula' letter=$letter tag=$currentpage|urlencode}" title="{$letter}">{$letter}</a></strong>
+  &nbsp;&nbsp;<strong><a href="{modurl modname='Wikula' type='user' func='main' letter=$letter tag=$currentpage|urlencode}" title="{$letter}">{$letter}</a></strong>
 {/foreach}
 <br /><br />
 
@@ -25,7 +25,7 @@
     <br />
   {/if}
   {foreach from=$pagesinletter item='page'}
-    &nbsp;&nbsp;&nbsp;<a href="{modurl modname='wikula' tag=$page.tag|urlencode}" title="{$page.tag}">{$page.title}</a>
+    &nbsp;&nbsp;&nbsp;<a href="{modurl modname='Wikula' type='user' func='main' tag=$page.tag|urlencode}" title="{$page.tag}">{$page.title}</a>
     {if $page.owner neq '(Public)' and $page.owner neq ''}
       {if $page.owner eq $username}
         *

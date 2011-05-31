@@ -63,7 +63,6 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
     }
 
     /**
-     * @todo REWORK! not possible to have outoutin an API func!
      *
      * @return unknown
      */
@@ -223,15 +222,9 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         
 
         $logref  = $this->getVar('logreferers');
-        //$ezhook  = false;
-        // TODO Hook
-        /*if (pnModAvailable('EZComments') && pnModIsHooked('EZComments', 'wikula')) {
-            $ezhook = true;
-        }*/
 
         foreach ($pages as $pageID => $pageTab) {
             $pages[$pageID]['revisions'] = ModUtil::apiFunc('Wikula', 'admin', 'CountRevisions', array('tag' => $pageTab['tag']));
-            //$pages[$pageID]['comments']  = (($ezhook == true) ? ModUtil::apiFunc('EZComments', 'user',  'countitems', array('mod' => 'wikula', 'objectid' => $pageTab['tag'])) : 0);
             $pages[$pageID]['backlinks'] = ModUtil::apiFunc('Wikula', 'user', 'CountBackLinks', array('tag' => $pageTab['tag']));
             $pages[$pageID]['referrers'] = (($logref == 1) ? ModUtil::apiFunc('Wikula', 'user', 'CountReferers', array('tag' => $pageTab['tag'])) : 0);
         }

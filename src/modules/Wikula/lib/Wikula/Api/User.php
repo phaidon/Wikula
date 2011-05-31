@@ -102,7 +102,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
             return LogUtil::registerArgsError();
         }
         
-        $specialPages = ModUtil::apiFunc($this->name, 'user', 'getSpecialPages');
+        $specialPages = ModUtil::apiFunc($this->name, 'SpecialPage', 'listpages');
         if(array_key_exists($args['tag'], $specialPages)) {
             return true;
         }
@@ -268,84 +268,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
     }
 
-    public function getSpecialPages()
-    {
-        return array(
-            $this->__('PageIndex')          => array(
-                'action' => 'pageindex',
-                'title'  => $this->__('Page index')
-            ),
-            $this->__('MyPages')            => array(
-                'action' => 'mypages',
-                'title'  => $this->__('My pages')
-            ),
-            $this->__('OwnedPages')         => array(
-                'action' => 'ownedpages',
-                'title'  => $this->__('Owned pages')
-            ),
-            $this->__('RecentChanges')      => array(
-                'action' => 'recentchanges',
-                'title'  => $this->__('Recent changes')
-            ),
-            $this->__('HighScores')         => array(
-                'action' => 'highscores',
-                'title'  => $this->__('High scores')
-            ),
-            $this->__('MyChanges')          => array(
-                'action' => 'mychanges',
-                'title'  => $this->__('My changes')
-            ),
-            $this->__('Search')             => array(
-                'action' => 'search',
-                'title'  => $this->__('Search')
-            ),
-            $this->__('TextSearchExpanded') => array(
-                'action' => 'textsearchexpanded',
-                'title'  => $this->__('TextSearchExpanded')
-            ),
-            $this->__('WantedPages')        => array(
-                'action' => 'wantedpages',
-                'title'  => $this->__('Wanted pages')
-            ),
-            $this->__('OrphanedPages')      => array(
-                'action' => 'orphanedpages',
-                'title'  => $this->__('Orphaned pages')
-            ),
-            $this->__('Help')               => array(
-                'action' => 'help',
-                'title'  => $this->__('Help')
-            ),
-            $this->__('AllCategories')      => array(
-                'action' => 'allcategories',
-                'title'  => $this->__('All categories')
-            ),
-        );
-    }
     
- 
-    
-    public function getSpecialPage($args)
-    {
-        extract($args);
-        if($action == 'help') {
-            $renderer = Zikula_View::getInstance('Wikula');
-            return $renderer->fetch('user/help.tpl');
-        } else if ($action == 'allcategories') {
-            $renderer = Zikula_View::getInstance('Wikula');
-            $categories = ModUtil::apiFunc('Wikula', 'action', 'category', array(
-                'compact' => 1,
-                'notitle' => 1
-            ));
-            return $renderer->assign('categories', $categories)
-                            ->fetch('action/allcategories.tpl');
-        }
-        
-        $body  = '<h2>'.$title.'</h2><br />';
-        $body .= ModUtil::apiFunc($this->name, 'action', $action);
-        return $body;
-    }
-    
-
 
     public function CountBackLinks($args = array())
     {
@@ -593,7 +516,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
             $result['pages'] = $pages;
             $result['count'] = count($pages);
         }
-        $result['total'] = ModUtil::apiFunc('Wikula', 'user', 'CountAllPages');
+        $result['total'] =  ModUtil::apiFunc($this->name, 'user', 'CountAllPages');
 
         return $result;
     }
@@ -678,7 +601,6 @@ class Wikula_Api_User extends Zikula_AbstractApi
         $q->orderBy('s.from_tag ASC, s.to_tag ASC');
         $result = $q->execute();
         $result = $result->toArray();
-        print_r($result);
         return;
 
 
@@ -894,7 +816,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
         $user = UserUtil::getVar('uname');
 
         // Check if page is new
-        $oldpage = ModUtil::apiFunc('Wikula', 'user', 'LoadPage', array('tag' => $tag));
+        $oldpage =  ModUtil::apiFunc($this->name, 'user', 'LoadPage', array('tag' => $tag));
 
         // only save if new body differs from old body
         if ($oldpage && $oldpage['body'] == $body) {
@@ -942,16 +864,16 @@ class Wikula_Api_User extends Zikula_AbstractApi
         }
     */
 
-        ModUtil::apiFunc('Wikula', 'user', 'WriteLinkTable', array('tag' => $tag));
+         ModUtil::apiFunc($this->name, 'user', 'WriteLinkTable', array('tag' => $tag));
 
         // TODO: Wikka Ping feature here
 
         if (!$oldpage) {
             LogUtil::registerStatus(__('New page created!'));
-            ModUtil::apiFunc('Wikula', 'user', 'NotificateNewPage', $tag);
+             ModUtil::apiFunc($this->name, 'user', 'NotificateNewPage', $tag);
         } else {
             LogUtil::registerStatus(__('New revision saved!'));
-            ModUtil::apiFunc('Wikula', 'user', 'NotificateNewRevsion', $tag);
+             ModUtil::apiFunc($this->name, 'user', 'NotificateNewRevsion', $tag);
         }
 
         return true;
@@ -1135,7 +1057,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
             return LogUtil::registerError(__('Error! Invalid arguments.'));
         }
 
-        $interwiki = ModUtil::apiFunc('Wikula', 'user', 'ReadInterWikiConfig');
+        $interwiki =  ModUtil::apiFunc($this->name, 'user', 'ReadInterWikiConfig');
 
         if (!$interwiki || !is_array($interwiki)) {
             return 'http://'.$tag;
@@ -1173,7 +1095,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
         // is this an interwiki link?
         if (preg_match('/^([A-Z][A-Z,a-z]+)[:]([A-Z,a-z,0-9]*)$/s', $args['tag'], $matches)) {
 
-            $link = ModUtil::apiFunc('Wikula', 'user', 'GetInterWikiUrl',
+            $link =  ModUtil::apiFunc($this->name, 'user', 'GetInterWikiUrl',
                                 array('name' => $matches[1],
                                     'tag'  => isset($matches[2]) ? $matches[2] : ''));
 
@@ -1217,7 +1139,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
         } else {
             // it's a Wiki link!
-            $pageid = ModUtil::apiFunc('Wikula', 'user', 'PageExists',
+            $pageid =  ModUtil::apiFunc($this->name, 'user', 'PageExists',
                                 array('tag' => $args['tag']));
 
             $linktable = SessionUtil::getVar('linktable');
@@ -1293,7 +1215,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
         $links = Doctrine_Core::getTable('Wikula_Model_Links')->findBy('from_tag', $args['tag']);
         $links->delete();
 
-        $linktable = ModUtil::apiFunc('Wikula', 'user', 'GetLinkTable');
+        $linktable =  ModUtil::apiFunc($this->name, 'user', 'GetLinkTable');
 
         if (is_array($linktable)) {
             $from_tag = DataUtil::formatForStore($args['tag']);
@@ -1654,7 +1576,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
 
         // return the Action result
-        return ModUtil::apiFunc('Wikula', 'action', strtolower($action), $vars);
+        return  ModUtil::apiFunc($this->name, 'action', strtolower($action), $vars);
     }
 
     public function FullCategoryTextSearch($args)

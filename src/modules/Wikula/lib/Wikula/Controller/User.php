@@ -55,10 +55,10 @@ class Wikula_Controller_User extends Zikula_AbstractController
             $time = null;
         }
         
-        $specialPages = ModUtil::apiFunc($this->name, 'user', 'getSpecialPages');
+        $specialPages = ModUtil::apiFunc($this->name, 'SpecialPage', 'listpages');
         
         if( array_key_exists($tag, $specialPages)) {
-            $content = ModUtil::apiFunc($this->name, 'user', 'getSpecialPage', $specialPages[$tag]);
+            $content = ModUtil::apiFunc($this->name, 'SpecialPage', 'get', $specialPages[$tag]);
             return $this->view->assign('content', $content)
                               ->assign('tag',     $tag)
                               ->fetch('user/specialPage.tpl');
@@ -126,8 +126,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
         $previous = FormUtil::getPassedValue('previous');
 
         
-        $specialPages = ModUtil::apiFunc($this->name, 'user', 'getSpecialPages');
-        
+        $specialPages = ModUtil::apiFunc($this->name, 'SpecialPage', 'listpages');
         if( array_key_exists($tag, $specialPages)) {
             return $this->redirect(ModUtil::url('Wikula', 'user', 'main', array('tag' => $tag)));
         }

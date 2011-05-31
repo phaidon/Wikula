@@ -43,7 +43,6 @@ class Wikula_Block_Menu extends Zikula_Controller_AbstractBlock
     /**
      * display block
      * 
-     * @TODO: OPTIMIZE!
      * @param        array       $blockinfo     a blockinfo structure
      * @return       output      the rendered bock
      */

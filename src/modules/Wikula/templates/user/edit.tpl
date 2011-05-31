@@ -7,7 +7,7 @@
     <div id="wikula_editpreview">
       [ <a href="#wikula_editform">{gt text='Go to the edit form'}</a> ]
       <br /><br />
-      {$body|transform}
+      {$body|notifyfilters:'wikula.filter_hooks.body.filter'}
     </div>
     {/if}
 
