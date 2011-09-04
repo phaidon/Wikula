@@ -1,6 +1,9 @@
-{gt text='Statistics' assign=templatetitle}
-{gt text='home' assign=templateicon}
-{include file='admin/header.tpl'}
+{adminheader}
+<div class="z-admin-content-pagetitle">
+    {icon type="info" size="small"}
+    <h3>{gt text="Statistics"}</h3>
+</div>
+
 
 <dl>
     <dt>{gt text='Pages'}:</dt>
@@ -17,4 +20,4 @@
 
 </div>
 
-{include file='admin/footer.tpl'}
+{adminfooter}

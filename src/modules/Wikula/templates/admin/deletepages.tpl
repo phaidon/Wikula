@@ -1,8 +1,9 @@
-{include file='admin/header.tpl'}
-{gt text='Wikula Statistics' assign=templatetitle}
-<div class="z-adminpageicon">{icon type="view" size="large"}</div>
+{adminheader}
+<div class="z-admin-content-pagetitle">
+    {icon type="view" size="small"}
+    <h3>{gt text="Page Administration"}</h3>
+</div>
 
-<h4 style="text-align:center;">{gt text="Page Administration"}</h4>
 
 <div id="wikkaadmin">
 {if $submit}
@@ -83,6 +84,6 @@
   </div>
   </form>
 {/if}
+</div>
 
-
-{include file='admin/footer.tpl'}
+{adminfooter}

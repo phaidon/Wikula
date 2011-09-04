@@ -1,6 +1,9 @@
-{gt text='Modify configuration' assign=templatetitle}
-{gt text='config' assign=templateicon}
-{include file='admin/header.tpl'}
+{adminheader}
+<div class="z-admin-content-pagetitle">
+    {icon type="config" size="small"}
+    <h3>{gt text="Modify configuration"}</h3>
+</div>
+
 
 {form cssClass="z-form"}
 {formvalidationsummary}
@@ -52,4 +55,4 @@
 </fieldset>
 {/form}
 
-{include file='admin/footer.tpl'}
+{adminfooter}

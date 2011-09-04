@@ -1,6 +1,9 @@
-{gt text='Page Index' assign=templatetitle}
-{gt text='view' assign=templateicon}
-{include file='admin/header.tpl'}
+{adminheader}
+<div class="z-admin-content-pagetitle">
+    {icon type="info" size="small"}
+    <h3>{gt text="Page Index"}</h3>
+</div>
+
 
 
 <div>
@@ -39,3 +42,5 @@
 </div>
 
 </div>
+
+{adminfooter}

@@ -1,6 +1,9 @@
-{gt text='Page Administration' assign=templatetitle}
-{gt text='view' assign=templateicon}
-{include file='admin/header.tpl'}
+{adminheader}
+<div class="z-admin-content-pagetitle">
+    {icon type="view" size="small"}
+    <h3>{gt text="Page Administration"}</h3>
+</div>
+
 
 
 <div id="wikkaadmin">
