@@ -224,7 +224,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
     public function RecentChangesXML()
     {
         
-        if (!SecurityUtil::checkPermission('wikula::', 'xml::recentchanges', ACCESS_OVERVIEW)) {
+        if (!SecurityUtil::checkPermission('wikula::', 'xml::recentchanges', ACCESS_READ)) {
             return LogUtil::registerError(__('Sorry! No authorization to access this module.'), null, ModUtil::url('Wikula', 'user', 'main'));
         }
 
@@ -250,7 +250,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
     public function RevisionsXML()
     {
         
-        if (!SecurityUtil::checkPermission('wikula::', 'xml::revisions', ACCESS_OVERVIEW)) {
+        if (!SecurityUtil::checkPermission('wikula::', 'xml::revisions', ACCESS_READ)) {
             return LogUtil::registerError(__('Sorry! No authorization to access this module.'), null, ModUtil::url('Wikula', 'user', 'main'));
         }
 
