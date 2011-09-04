@@ -3,7 +3,7 @@
 }
 
 #wikula textarea,
-#wikula input#wikula_note {
+#wikula input {
   border: 1px solid #aaa;
   font-size: 14px;
   margin-bottom: 0.7em;
@@ -43,9 +43,7 @@
   border: 0px;
 }
 #wikula .avatar,
-#wikula .bbsmile {
-  vertical-align: middle;
-}
+
 #wikula img.centre, #wikula img.center {
   display: block; 
   text-align: center; 

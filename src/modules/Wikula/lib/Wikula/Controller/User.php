@@ -24,6 +24,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
 
     /**
      * Main function
+     * 
      * Displays a wiki page
      *
      * @param string $args['tag'] Tag of the wiki page to show
@@ -117,118 +118,9 @@ class Wikula_Controller_User extends Zikula_AbstractController
      */
     public function edit()
     {
-        
-        $id       = FormUtil::getPassedValue('id');
-        $tag      = FormUtil::getPassedValue('tag');
-        $newtag   = FormUtil::getPassedValue('newtag');
-        $time     = FormUtil::getPassedValue('time');
-        $note     = FormUtil::getPassedValue('note');
-        $previous = FormUtil::getPassedValue('previous');
+        $form = FormUtil::newForm('Wikula', $this);
+        return $form->execute('user/edit.tpl', new Wikula_Handler_Page());
 
-        
-        $specialPages = ModUtil::apiFunc($this->name, 'SpecialPage', 'listpages');
-        if( array_key_exists($tag, $specialPages)) {
-            return $this->redirect(ModUtil::url('Wikula', 'user', 'main', array('tag' => $tag)));
-        }
-        
-        if (!empty($newtag)) {
-            return System::redirect(ModUtil::url('Wikula', 'user', 'edit', array('tag' => $newtag)));
-        }
-
-        // Permission check
-        if (!SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_COMMENT)) {
-            return LogUtil::registerError(__('You do not have the authorization to edit this page!'), null, ModUtil::url('Wikula', 'user', 'main', array('tag' => $tag)));
-        }
-
-        $latestid = ModUtil::apiFunc('Wikula', 'user', 'PageExists', array('tag' => $tag));
-        $submit   = FormUtil::getPassedValue('submit');
-
-        // process the submit request
-        if ($submit == $this->__('Cancel')) {
-            return System::redirect(ModUtil::url('Wikula', 'user', 'main', array('tag' => $tag)));
-
-        } elseif ($submit == $this->__('Store') || $submit == $this->__('Preview')) {
-            $body = FormUtil::getPassedValue('body');
-            // strip CRLF line endings down to LF to achieve consistency ... plus it saves database space.
-            $body = str_replace("\r\n", "\n", $body);
-
-        // or get the data of the requested page to edit
-        } else {
-            if (!empty($id)) {
-                $page = ModUtil::apiFunc('Wikula', 'user', 'LoadPagebyId',
-                                     array('id'  => $id));
-
-                // check that the id matches with the tag
-                if (!$page || $page['tag'] != $tag) {
-                    return LogUtil::registerError(__('The revision ID does not exist for the requested page'));
-                }
-
-            } else {
-                $page = ModUtil::apiFunc('Wikula', 'user', 'LoadPage', array(
-                    'tag'  => $tag,
-                    'time' => $time
-                ));
-                // If the page does not exist we want to open the edit form to allow the creation of a new page with the submitted tag
-            }
-
-            // update the previous value if it's an old revision
-            //if (!empty($id) || !empty($time)) {
-            // update the previous value if there's one
-            if ($latestid) {
-                $previous = $latestid;
-            }
-
-            // update the body if was retrieved
-            $body = isset($page['body']) ? $page['body'] : '';
-        }
-
-        // only if saving
-        if ($submit == $this->__('Store')) {
-            $valid = true;
-            
-            // check for overwriting
-            if ($latestid && $latestid != $previous) {
-                LogUtil::registerError($this->__('OVERWRITE ALERT: This page was modified by someone else while you were editing it.<br />Please copy your changes and re-edit this page.'));
-                $valid = false;
-            }
-
-            if ($valid) {
-                // LinkTracking
-                // Writing all wiki links that is on this page
-                SessionUtil::setVar('linktracking', 1);
-                SessionUtil::setVar('wikula_previous', $previous);
-
-                $store = ModUtil::apiFunc('Wikula', 'user', 'SavePage', array(
-                    'tag'      => $tag,
-                    'body'     => $body,
-                    'note'     => $note,
-                    'tracking' => true
-                ));
-                
-                SessionUtil::setVar('linktracking', false);
-
-                if ($store) {
-                    return System::redirect(ModUtil::url('Wikula', 'user', 'main', array('tag' => $tag)));
-                }
-            }
-        }
-
-        $canedit = ModUtil::apiFunc('Wikula', 'user', 'isAllowedToEdit', array('tag' => $tag));
-
-        $hideeditbar = (int)$this->getVar('hideeditbar');
-
-        // build the output
-        
-
-        $this->view->assign('hideeditbar',  $hideeditbar);
-        $this->view->assign('previous',     $previous);
-        $this->view->assign('note',         $note);
-        $this->view->assign('canedit',      $canedit);
-        $this->view->assign('submit',       $submit);
-        $this->view->assign('tag',          $tag);
-        $this->view->assign('body',         $body);
-
-        return $this->view->fetch('user/edit.tpl');
     }
 
     /**
