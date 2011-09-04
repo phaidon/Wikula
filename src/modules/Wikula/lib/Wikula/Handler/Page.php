@@ -104,6 +104,7 @@ class Wikula_Handler_Page  extends Zikula_Form_AbstractHandler
                 $this->__('OVERWRITE ALERT: This page was modified by someone else while you were editing it.<br />Please copy your changes and re-edit this page.')
             );
         }
+        unset($data['id']);
         $store = ModUtil::apiFunc('Wikula', 'user', 'SavePage', array(
             'tag'      => $this->_tag,
             'body'     => $data['body'],
