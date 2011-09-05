@@ -275,7 +275,7 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         
         $pages = $args['pages'];
 
-        if (empty($pages)) {
+        if (empty($pages) or !is_array($pages)) {
             return false;
         }
 
