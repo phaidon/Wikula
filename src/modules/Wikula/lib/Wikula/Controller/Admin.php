@@ -108,7 +108,6 @@ class Wikula_Controller_Admin extends Zikula_AbstractController
         $hidehistory  = FormUtil::getPassedValue('hidehistory');
         $itemsperpage = FormUtil::getPassedValue('itemsperpage');
         $hideeditbar  = FormUtil::getPassedValue('hideeditbar');
-        $logreferers  = FormUtil::getPassedValue('logreferers');
         $excludefromhistory = FormUtil::getPassedValue('excludefromhistory');
 
         // Initialize the modvars array
@@ -131,10 +130,7 @@ class Wikula_Controller_Admin extends Zikula_AbstractController
         }
         $modvars['hidehistory'] = (bool)$hidehistory;
 
-        if (empty($logreferers)) {
-            $logreferers = false;
-        }
-        $modvars['logreferers'] = (bool)$logreferers;
+
 
         if (empty($itemsperpage) || !is_numeric($itemsperpage) || (int)$itemsperpage < 1) {
             $itemsperpage = 25;
@@ -158,24 +154,6 @@ class Wikula_Controller_Admin extends Zikula_AbstractController
         return $this->redirect(ModUtil::url($this->name, 'admin', 'modifyconfig'));
     }
 
-    public function ClearReferrers()
-    {
-
-        // Permission check
-        $this->throwForbiddenUnless(
-            SecurityUtil::checkPermission('Wikula::', '::', ACCESS_ADMIN),
-            LogUtil::getErrorMsgPermission()
-        );
-
-        $tag    = FormUtil::getPassedValue('tag');
-        $global = FormUtil::getPassedValue('global');
-
-        $result = ModUtil::apiFunc($this->name, 'admin', 'ClearReferrers',
-                               array('tag'    => $tag,
-                                     'global' => $global));
-
-        return pnRedirect(ModUtil::url($this->name, 'user', 'referrers', array('tag' => $tag)));
-    }
 
     public function delete()
     {

@@ -65,9 +65,6 @@ class Wikula_Controller_User extends Zikula_AbstractController
                               ->fetch('user/specialPage.tpl');
         }
 
-        //if ($modvars['logreferers']) {
-        //    ModUtil::apiFunc($this->name, 'user', 'LogReferer', array('tag' => $tag));
-        //}
 
 
         // Get the page
@@ -457,84 +454,6 @@ class Wikula_Controller_User extends Zikula_AbstractController
         $this->view->assign('edit', $edit);
 
         return $this->view->fetch('user/clone.tpl');
-    }
-
-    /**
-     * Display the Referrers to a page
-     */
-    public function Referrers()
-    {
-        // Permission check
-        $this->throwForbiddenUnless(
-            SecurityUtil::checkPermission('Wikula::', '::', ACCESS_READ)
-        );
-        
-        if (!UserUtil::isLoggedIn()) {
-            return LogUtil::registerError(__('You must be logged in to be able to view referrers - Anti botspam'), null, ModUtil::url($this->name, 'user', 'main'));
-        }
-
-        $tag    = FormUtil::getPassedValue('tag');
-        $global = FormUtil::getPassedValue('global');
-        $sites  = FormUtil::getPassedValue('sites');
-        $q      = FormUtil::getPassedValue('q');
-        $qo     = FormUtil::getPassedValue('qo');
-        $h      = FormUtil::getPassedValue('h');
-        $ho     = FormUtil::getPassedValue('ho');
-        $days   = FormUtil::getPassedValue('days');
-        $submit = FormUtil::getPassedValue('submit');
-
-        if (empty($sites) || !is_numeric($sites)) {
-            $sites = 0;
-        }
-        if (empty($global) || !is_numeric($global)) {
-            $global = 0;
-        }
-
-        if (empty($h) || !is_numeric($h)) {
-            $h = 1;
-        }
-        if (!empty($ho) || !is_numeric($ho)) {
-            $ho = 1;
-        }
-        if (!empty($days) || !is_numeric($days)) {
-            $days = 1;
-        }
-
-        if (!empty($submit)) {
-            $submit = true;
-        }
-
-        $referrers = ModUtil::apiFunc($this->name, 'user', 'LoadReferrers', array(
-            'tag'    => $tag,
-            'global' => $global,
-            'sites'  => $sites,
-            'q'      => $q,
-            'qo'     => $qo,
-            'h'      => $h,
-            'ho'     => $ho,
-            'days'   => $days,
-            'submit' => $submit)
-        );
-
-        if (!$referrers) {
-            //return 'No Referrers';
-        }
-
-        // load the wiki page for output purposes
-        $page = ModUtil::apiFunc($this->name, 'user', 'LoadPage', array('tag' => $tag));
-
-        
-
-        $this->view->assign('tag',       $tag);
-        $this->view->assign('page',      $page);
-        $this->view->assign('q',         $q);
-        $this->view->assign('h',         $h);
-        $this->view->assign('sites',     $sites);
-        $this->view->assign('global',    $global);
-        $this->view->assign('referrers', $referrers);
-        $this->view->assign('total',     count($referrers));
-
-        return $this->view->fetch('user/referrers.tpl');
     }
     
     public function grabcode()

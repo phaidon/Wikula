@@ -127,26 +127,6 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         return $render->fetch('wikula_admin_pages.tpl', $tag.$letter);
     }
 
-    public function ClearReferrers($args)
-    {
-        
-        $tag    = '';
-
-        if (isset($args['tag'])) {
-            $tag = $args['tag'];
-        }
-
-
-        if (isset($args['global']) && $args['global'] == 1) {
-            // TODO delete all
-            $where = '';
-        } else {
-            $referrer = Doctrine_Core::getTable('Wikula_Model_Referrers')->findBy('page_tag', $tag);
-            $referrer->delete();
-        }
-
-        return true;
-    }
 
     public function getall($args)
     {
@@ -170,8 +150,7 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
 
         if ($sort == 'revisions' ||
             $sort == 'comments'  ||
-            $sort == 'backlinks' ||
-            $sort == 'referrers') {
+            $sort == 'backlinks') {
             $sortby = 'id';
         }
 
@@ -206,12 +185,10 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         $pages = $pages->toArray();
         
 
-        $logref  = $this->getVar('logreferers');
 
         foreach ($pages as $pageID => $pageTab) {
             $pages[$pageID]['revisions'] = ModUtil::apiFunc($this->name, 'admin', 'CountRevisions', array('tag' => $pageTab['tag']));
             $pages[$pageID]['backlinks'] = ModUtil::apiFunc($this->name, 'user',  'CountBackLinks', $pageTab['tag']);
-            $pages[$pageID]['referrers'] = (($logref == 1) ? ModUtil::apiFunc('Wikula', 'user', 'CountReferers', array('tag' => $pageTab['tag'])) : 0);
             if( ModUtil::available('EZComments')) {
                 $commentsCount = ModUtil::apiFunc('EZComments', 'user', 'countitems', array(
                     'mod' => $this->name,
@@ -226,8 +203,7 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
 
         if ($sort == 'revisions' ||
             $sort == 'comments'  ||
-            $sort == 'backlinks' ||
-            $sort == 'referrers') {
+            $sort == 'backlinks') {
             $sortAarr = array();
             foreach($pages as $res) {
                 $sortAarr[] = $res[$sort];

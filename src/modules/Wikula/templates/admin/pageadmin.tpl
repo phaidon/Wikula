@@ -57,10 +57,6 @@
                     <a href="{modurl modname='Wikula' type='admin' func='pages' sort='backlinks' order=$neworder}" title="Sort by number of backlinks">
                     {img src='stock_link.png' __alt='Backlinks'}</a>
                 </th>
-                <th class="number  c5" title="Referrers">
-                    <a href="{modurl modname='Wikula' type='admin' func='pages' sort='referrers' order=$neworder}" title="Sort by number of Referers">
-                    {img src='stock_internet.png' __alt='Referrers'}</a>
-                </th>
                 <th class="z-nowrap z-right">{gt text='Actions'}</th>
             </tr>
         </thead>
@@ -93,10 +89,6 @@
                 {*modapifunc modname='Wikula' type='user' func='CountBackLinks' tag=$item.tag assign='blcount'*}
                 <td class="number  c4">
                     <a href="{modurl modname='Wikula' func='backlinks' tag=$item.tag|urlencode}" title="Display pages linking to {$item.tag} ({$item.backlinks})">{$item.backlinks}</a>
-                </td>
-                {*modapifunc modname='Wikula' type='user' func='CountReferers' tag=$item.tag assign='refcount'*}
-                <td class="number  c5">
-                    <a href="{modurl modname='Wikula' func='Referrers' tag=$item.tag|urlencode}" title="Display external sites linking to {$item.tag} ({$item.referrers})">{$item.referrers}</a>
                 </td>
                 <td class="z-nowrap z-right">
                     <a href="{modurl modname='Wikula' func='edit' tag=$item.tag|urlencode}" title="Edit {$item.tag}">{icon type="xedit" size="extrasmall"}</a>

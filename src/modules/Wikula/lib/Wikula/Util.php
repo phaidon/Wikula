@@ -14,7 +14,6 @@ class Wikula_Util
         $defaults = array(
             'root_page'               => __('HomePage', $dom),
             //'savewarning'             => (bool)$wikulainit['savewarning'],
-            //'logreferers'             => (bool)$wikulainit['logreferers'],
             //'excludefromhistory'      => $wikulainit['root_page'],
             'modulestylesheet'        => 'style.css',
             'hideeditbar'             => false,

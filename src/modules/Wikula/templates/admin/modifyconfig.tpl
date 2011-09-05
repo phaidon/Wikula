@@ -40,11 +40,6 @@
     </div>
 
     <div class="z-formrow">
-        {formlabel for="logreferers" __text='Log Referers - Note: If the Zikula HTTPReferers module is available, it will use the exclusions setting.)'}
-        {formcheckbox id="logreferers"}
-    </div>
-
-    <div class="z-formrow">
         {formlabel for="itemsperpage" __text='Items per page'}
         {formintinput id="itemsperpage" size="3"}
     </div>
