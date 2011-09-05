@@ -19,13 +19,17 @@ class Wikula_Api_Account extends Zikula_AbstractApi
 	public function getall($args)
 	{
 	    $items = array();
-	    if (SecurityUtil::checkPermission('Wikula::', '::', ACCESS_OVERVIEW)) {
+	    if (
+                UserUtil::isLoggedIn() and
+                SecurityUtil::checkPermission('Wikula::', '::', ACCESS_READ) and 
+                $this->getVar('subscription', false)
+            ) {
 		// Create an array of links to return
 		$items[] = array('url'     => ModUtil::url('Wikula', 'user', 'settings'),
-				'module'  => 'Wikula',
+				'module'  => $this->name,
 				'set'     => '',
 				'title'   => 'Wiki settings',
-				'icon'    => 'settings.png');
+				'icon'    => 'admin.png');
 	    }
 	    // Return the items
 	    return $items;

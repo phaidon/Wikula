@@ -22,5 +22,3 @@
 </div>
 
 {/form}
-
-{include file='admin/footer.tpl'}

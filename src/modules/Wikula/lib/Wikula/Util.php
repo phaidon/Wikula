@@ -26,7 +26,7 @@ class Wikula_Util
             'geshi_header'            => '',
             'geshi_line_numbers'      => '1',
             'grabcode_button'         => true,
-            'subscriptions'           => true,
+            'subscription'            => false,
             'mandatorycomment'        => false
         );
     
