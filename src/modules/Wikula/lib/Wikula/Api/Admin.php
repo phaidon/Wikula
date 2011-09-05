@@ -276,8 +276,5 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         }
 
         return true;
-        
-       
-        
     }
 }

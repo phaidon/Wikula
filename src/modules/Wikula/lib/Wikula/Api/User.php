@@ -416,10 +416,9 @@ class Wikula_Api_User extends Zikula_AbstractApi
     */
     public function CountAllPages()
     {     
-        $q = Doctrine_Query::create()->from('Wikula_Model_Pages t');
-        $q->where('latest = ?', array('Y'));
-        $result = $q->execute();
-        return $result->count();
+        return Doctrine_Query::create()->from('Wikula_Model_Pages t')
+            ->where('latest = ?', array('Y'))
+            ->count();
     }
 
     /**
@@ -516,7 +515,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
         $boolean = '';
        
-            $boolean = ' IN BOOLEAN MODE';
+        $boolean = ' IN BOOLEAN MODE';
   
 
         $q->where('latest = ?', array('Y'));
@@ -829,11 +828,6 @@ class Wikula_Api_User extends Zikula_AbstractApi
         if ($res === false) {
             return LogUtil::registerError(__('Saving revision failed!'));
         }
-    /*
-        if ((isset($args['tracking']) && $args['tracking'] ) || SessionUtil::getVar('tracking')) {
-            SessionUtil::setVar('wikula_previous', $tag);
-        }
-    */
 
         // add links to other page into the link table
         $oldlinks = Doctrine_Core::getTable('Wikula_Model_Links')->findBy('from_tag', $tag);
@@ -1155,88 +1149,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
 
 
-    public function ReturnSafeHTML($args)
-    {
-        extract($args);
-        unset($args);
-
-        if (!isset($html)) {
-            return LogUtil::registerArgsError();
-        }
-    /*
-        require_once('pnincludes/safehtml/classes/safehtml.php');
-
-        // Instantiate the handler
-        $safehtml =& new safehtml();
-
-        $filtered_output = $safehtml->parse($html);
-
-        return $filtered_output; */
-        return $html;
-
-    }
-
-
-    public function GeSHi_Highlight($args)
-    {
-        extract($args);
-        unset($args);
-
-        if (!isset($sourcecode) || !isset($language)) {
-            return LogUtil::registerArgsError();
-        }
-
-        if (empty($start)) $start = 0;
-
-        // create GeSHi object
-        if (!class_exists('GeSHi')) {
-            include_once('modules/Wikula/pnincludes/geshi/geshi.php');
-        }
-
-        // create object by reference
-        $geshi = new GeSHi($sourcecode, $language, 'modules/Wikula/pnincludes/geshi/geshi');
-
-        $geshi->enable_classes();               // use classes for highlighting (must be first after creating object)
-        $geshi->set_overall_class('code');      // enables using a single stylesheet for multiple code fragments
-
-        // configure user-defined behavior
-        $geshi->set_header_type(GESHI_HEADER_DIV); // set default
-        $geshi_header = $this->getVar('geshi_header');
-        if (!empty($geshi_header)) {
-            if ('pre' == $geshi_header) {
-                $geshi->set_header_type(GESHI_HEADER_PRE);
-            }
-        }
-
-        // set default
-        $geshi->enable_line_numbers(GESHI_NO_LINE_NUMBERS);
-        // line number > 0 _enables_ numbering
-        if ($start > 0) {
-            // effect only if enabled in configuration
-            $geshi_line_numbers = $this->getVar('geshi_line_numbers', '1');
-            if (!empty($geshi_line_numbers)) {
-                if ('1' == $geshi_line_numbers) {
-                    $geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
-                } elseif ('2' == $geshi_line_numbers) {
-                    $geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS);
-                }
-                if ($start > 1) {
-                    $geshi->start_line_numbers_at($start);
-                }
-            }
-        }
-
-        // GeSHi override (default is 8)
-        $geshi_tab_width = $this->getVar('geshi_tab_width', 4);
-        if ($geshi_tab_width) {
-            $geshi->set_tab_width($geshi_tab_width);
-        }
-
-        // parse and return highlighted code
-        // comments added to make GeSHi-highlighted block visible in code JW/20070220
-        return '<!--start GeSHi-->'."\n".$geshi->parse_code()."\n".'<!--end GeSHi-->'."\n";
-    }
-
+   
     public function Action($args)
     {
         
@@ -1313,8 +1226,5 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
         return $pages;
     }
-
-
-        
+  
 }
-
