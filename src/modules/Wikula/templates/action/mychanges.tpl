@@ -1,13 +1,12 @@
 <div class="action_mychanges">
 
-<div class="floatl">
+<div class="floatl z-clearfix">
 {if $alpha eq 1}
     {gt text='This is a list of pages you'}(<a href="{modurl modname='wikula' tag=$tag|urlencode}" title="{gt text='order by date'}">{gt text='order by date'}</a>).
 {else}
     {gt text='This is a list of pages you'}(<a href="{modurl modname='wikula' tag=$tag|urlencode alpha=1}" title="{gt text='order alphabetically'}">{gt text='order alphabetically'}</a>).
 {/if}
 </div>
-<div class="clear">&nbsp;</div>
 
 {if $editcount eq 0}
     <em>{gt text='This is a list of pages you'}</em>

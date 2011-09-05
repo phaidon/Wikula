@@ -1,12 +1,11 @@
 <div class="action_pageindex">
 
-<div class="floatl">
+<div class="floatl z-clearfix">
 {gt text='This is an alphabetical list of pages you can read on this server.'}
 {if $userownspages}
 {gt text='Items marked with a * indicate pages that you own.'}
 {/if}
 </div>
-<div class="clear"></div>
 <br />
 
 <strong><a href="{modurl modname='Wikula' type='user' func='main' tag=$currentpage|urlencode}" title="{gt text='All'}">{gt text='All'}</a></strong>

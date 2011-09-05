@@ -1,461 +1,541 @@
 #wikula {
-  font-family: "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Verdana, sans-serif;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Verdana, sans-serif;
 }
 
 #wikula textarea,
 #wikula input {
-  border: 1px solid #aaa;
-  font-size: 14px;
-  margin-bottom: 0.7em;
-  padding: 5px;
+    border: 1px solid #aaa;
+    font-size: 14px;
+    margin-bottom: 0.7em;
+    padding: 5px;
 }
 
 #wikula a {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 #wikula a:visited {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 #wikula a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 #wikula a:active {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 #wikula ul, #wikula ol {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  padding-top: 0px;
-  padding-bottom: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
 
-/*#wikula form, #wikula h1, #wikula h2, #wikula h3, #wikula h4, #wikula h5,*/
 #wikulaheader h2 {
-  margin: 0px;
-  padding: 0px;
+    margin: 0px;
+    padding: 0px;
 }
 
 #wikula img {
-  border: 0px;
+    border: 0px;
 }
-#wikula .avatar,
-
-#wikula img.centre, #wikula img.center {
-  display: block; 
-  text-align: center; 
-  margin: 5px auto;
-}
-#wikula img.left {margin: 0; float: left;}
-#wikula img.right {margin: 0; float: right;}
-#wikula .left {float: left;}
-#wikula .right {float: right;}
 
 #wikula .indent {
-  margin-left: 40px;
+    margin-left: 40px;
 }
 
 #wikula .error {
-  color: #C33; font-weight: bold;
+    color: #C33;
+    font-weight: bold;
 }
 
 #wikulaheader .header {
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 2px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 2px;
 }
+
 #wikulaheader .header h2 a:hover {
-  text-decoration: none;
-}
-#wikulaheader .pn-menu {
-  color: #000;
-  padding: 3px 0;
-  text-align: left;
-}
-#wikulaheader .pn-menu a {
-  padding: 3px;
-}
-#wikulaheader .pn-menu img {
-  vertical-align: middle;
+    text-decoration: none;
 }
 
 #wikulaheader .text_separator,
 #wikula .text_separator {
-  color: #aaa;
+    color: #aaa;
 }
 
 #wikula .page {
-  border: none;
-  padding: 12px 0 20px;
+    border: none;
+    padding: 12px 0 20px;
 }
 
 #wikula .inforevision {
-  /*float: right;*/
-  position: relative;
-  /*font-size: 0.85em;*/
-  font-size: 0.85em;
-  /*text-align:right;*/
+    position: relative;
+    font-size: 0.85em;
 }
 
 #wikula .page a {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 #wikula .page a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 #wikula .missingpage {
-  /*background: #cff;*/
-  text-decoration: none;
-  border-bottom-width: 1px;
-  border-bottom-color: #AAA; /*#933;*/
-  border-bottom-style: dashed;
-}
-
-#wikula .footer {
-  clear: both;
-  background-color: #ddd;
-  padding: 5px 10px;
-  border: 1px inset;
-  border-top: none;
-  border-top: 1px solid #ccc;
+    text-decoration: none;
+    border-bottom-width: 1px;
+    border-bottom-color: #AAA;
+    border-bottom-style: dashed;
 }
 
 #wikula .wiki_footer {
-  /*clear: both;*/
-  background-color: #eee;
-  border: 1px solid #ccc;
-  padding: 2px 5px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    padding: 2px 5px;
 }
 
 #wikula .notes {
-  color: #880;
+    color: #880;
 }
 
 #wikula .revisioninfo {
-  color: #000000;
-  background-color: #E9F9E9;
-  border: 1px solid #ACA;
-  margin-top: 0.5em;
-  padding: 5px 10px;
-  /*font-size: 90%;*/
+    color: #000000;
+    background-color: #E9F9E9;
+    border: 1px solid #ACA;
+    margin-top: 0.5em;
+    padding: 5px 10px;
 }
+
 #wikula .revisioninfo p {
-  margin: 1em 0;
+    margin: 1em 0;
 }
 
 #wikula .history_revisioninfo {
-  float: left;
-  text-align: left;
-  padding: 4px;
-  background: #EEE;
-  border: 1px solid #CCC; 		
+    float: left;
+    text-align: left;
+    padding: 4px;
+    background: #EEE;
+    border: 1px solid #CCC;
 }
 
 #wikula .copyright {
-  font-size: 11px;
-  color: #aaaaaa;
-  text-align: right;
+    font-size: 11px;
+    color: #aaaaaa;
+    text-align: right;
 }
 
 #wikula .copyright #wikula a {
-  color: #aaaaaa;
+    color: #aaaaaa;
 }
 
 #wikula .lastedit {
-  border:dotted 1px;
-  padding:3pt;
-  margin:10px;
-  color:#888;
-  font-size:8pt;
-  width:30%;
+    border: dotted 1px;
+    padding: 3pt;
+    margin: 10px;
+    color: #888;
+    font-size: 8pt;
+    width: 30%;
 }
 
 #wikula a.ext {
-  color: #339;
+    color: #339;
 }
 
 #wikula a.ext:hover {
-  color: #933;
+    color: #933;
 }
 
 .exttail,
 #wikula .exttail {
-  color: #999;
-  position: relative;
-  bottom: 0.5ex;
+    color: #999;
+    position: relative;
+    bottom: 0.5ex;
 }
 
 #wikula .searchbox {
-  /* border: none; */
-  border: 1px solid #cca;
-  padding: 4px;
-  margin: 0px;
+    border: 1px solid #cca;
+    padding: 4px;
+    margin: 0px;
 }
+
 #wikula .wiki_footer .searchbox {
-  padding: 0px;
+    padding: 0;
 }
 
 /* WikiEdit toolbar */
-#wikula .toolbar #wikula tr { background: ButtonFace; }
-#wikula .toolbar .btn-, .toolbar  .btn-hover,  .toolbar .btn-active,
-#wikula .toolbar .btn-pressed {
-  background: ButtonFace;
-  color: ButtonText;
-  border: 1px solid ButtonFace;
-  padding: 1px;
-  margin: 0px;
-  cursor: pointer;
+#wikula .toolbar #wikula tr {
+    background: ButtonFace;
 }
-#wikula .toolbar .btn- #wikula img  { width: 20px; height: 20px; }
-#wikula .toolbar .btn-hover { border-color: ButtonHighlight ButtonShadow ButtonShadow ButtonHighlight; }
+
+#wikula .toolbar .btn-, .toolbar  .btn-hover, .toolbar .btn-active,
+#wikula .toolbar .btn-pressed {
+    background: ButtonFace;
+    color: ButtonText;
+    border: 1px solid ButtonFace;
+    padding: 1px;
+    margin: 0px;
+    cursor: pointer;
+}
+
+#wikula .toolbar .btn- #wikula img {
+    width: 20px;
+    height: 20px;
+}
+
+#wikula .toolbar .btn-hover {
+    border-color: ButtonHighlight ButtonShadow ButtonShadow ButtonHighlight;
+}
+
 #wikula .toolbar .btn-active,
-#wikula .toolbar .btn-pressed { border-color: ButtonShadow ButtonHighlight ButtonHighlight ButtonShadow; }
-#wikula .toolbar .btn-pressed { background: ButtonHighlight; }
-#wikula .editornamecss { background-color:#CCF; font-size: 18px; padding: 0 10px; }
+#wikula .toolbar .btn-pressed {
+    border-color: ButtonShadow ButtonHighlight ButtonHighlight ButtonShadow;
+}
+
+#wikula .toolbar .btn-pressed {
+    background: ButtonHighlight;
+}
+
+#wikula .editornamecss {
+    background-color: #CCF;
+    font-size: 18px;
+    padding: 0 10px;
+}
 
 #wikula_editpreview {
-  border: 1px dashed #ccc;
-  margin: 10px 0 20px;
-  padding: 10px;
+    border: 1px dashed #ccc;
+    margin: 10px 0 20px;
+    padding: 10px;
 }
 
 #wikula ul.thread {
-  list-style-type: none;
-  border-left: 2px #666 solid;
-  padding-left: 10px;
-  margin: 5px 0px;
+    list-style-type: none;
+    border-left: 2px #666 solid;
+    padding-left: 10px;
+    margin: 5px 0px;
 }
 
 #wikula ul.thread li {
-  color: #333;
-  font-size: 11px;
+    color: #333;
+    font-size: 11px;
 }
 
 /*---Specific Styles ---*/
 
-#wikula .clear {clear:both;}
-
-#wikula .comments {display: none;}
+#wikula .comments {
+    display: none;
+}
 
 #wikula .floatl {
-  float: left;
-  text-align: left;
-  margin-right: 15px;
-  max-width: 99%;
-  min-width: 46%;
-  overflow: hidden;
-  padding: 4px;
-  background: #EEE;
-  border: 1px solid #CCC; 		
+    float: left;
+    text-align: left;
+    margin-right: 15px;
+    max-width: 99%;
+    min-width: 46%;
+    overflow: hidden;
+    padding: 4px;
+    background: #EEE;
+    border: 1px solid #CCC;
 }
 
 #wikula .floatr {
-  float: right;
-  text-align: left;
-  margin-left: 15px;
-  max-width: 99%;
-  min-width: 46%;
-  overflow: hidden;
-  padding: 4px;
-  background: #EEE;
-  border: 1px solid #CCC; 		
+    float: right;
+    text-align: left;
+    margin-left: 15px;
+    max-width: 99%;
+    min-width: 46%;
+    overflow: hidden;
+    padding: 4px;
+    background: #EEE;
+    border: 1px solid #CCC;
 }
 
 #wikula .datetime {
-  color: #666666;
-  font-family: "Lucida Console",Monaco,monospace;
-  font-size: 80%;
+    color: #666666;
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 80%;
 }
 
 #wikula .previewhead {
-  margin: auto;
-  z-index:20;
-  position:fixed;
-  top: 40px;
-  left: 10px;
-  color: red;
-  font-size: xx-large;
-  font-weight: bold;
-  padding: 5px;
+    margin: auto;
+    z-index: 20;
+    position: fixed;
+    top: 40px;
+    left: 10px;
+    color: red;
+    font-size: xx-large;
+    font-weight: bold;
+    padding: 5px;
 }
 
-#wikula .highlight {color: red; background: #FFFFD0;}
-
-#wikula .strikethrough {color: #888; text-decoration: line-through;}
-
-#wikula .additions {background-color: #cfc;}
-
-#wikula .deletions {color: #876; background-color: #FC9;}
-
-#wikula .underline {text-decoration: underline;}
-
-#wikula .recentchanges, #wikula .mychanges, #wikula .changenote {font-size: 0.9em;}
-
-#wikula .pagenote {color: #888;}
-
-/*#wikula .centre {text-align: center;}*/
-#wikula .center {
-  /*border:1px #eee dashed;*/
-  text-align: center;
+#wikula .highlight {
+    color: red;
+    background: #FFFFD0;
 }
 
-#wikula .center, #wikula .center p {text-align: center;}
+#wikula .strikethrough {
+    color: #888;
+    text-decoration: line-through;
+}
 
-.smallprint {font-size: 8pt; color: #777; padding-right: 0.5%; text-align: right;}
+#wikula .additions {
+    background-color: #cfc;
+}
+
+#wikula .deletions {
+    color: #876;
+    background-color: #FC9;
+}
+
+#wikula .underline {
+    text-decoration: underline;
+}
+
+#wikula .recentchanges, #wikula .mychanges, #wikula .changenote {
+    font-size: 0.9em;
+}
+
+#wikula .pagenote {
+    color: #888;
+}
+
+.smallprint {
+    font-size: 8pt;
+    color: #777;
+    padding-right: 0.5%;
+    text-align: right;
+}
 
 .smallprint a {
-  /*font-size: 0.8em;*/
-  font-size: 8pt;
-  color: #987;
+    /*font-size: 0.8em;*/
+    font-size: 8pt;
+    color: #987;
 }
 
 /* code blocks */
 
 #wikula .code_header {
-  color: #336;	
-  background-color: #D0E0F0;
-  border-top: 1px solid #AAC;
-  border-right: 1px solid #AAC;
-  border-left: 1px solid #AAC;
-  border-bottom: none;
-  font-family: Verdana, Arial, sans-serif;
-  font-size: 100%;
-  padding: 0 3px;
-  margin: 5px auto 0 auto;
-  text-align: left;
-  line-height: 1.5em;
+    color: #336;
+    background-color: #D0E0F0;
+    border-top: 1px solid #AAC;
+    border-right: 1px solid #AAC;
+    border-left: 1px solid #AAC;
+    border-bottom: none;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 100%;
+    padding: 0 3px;
+    margin: 5px auto 0 auto;
+    text-align: left;
+    line-height: 1.5em;
 }
 
 #wikula .code {
-  /*color: black;*/
-  background: #F3F3FF;
-  border: 1px solid #AAC;
-  font-size: 11px;
-  font-family: "Lucida Console", Monaco, monospace;
-  margin: auto;
-  padding: 6px 5px 13px 5px;	/* padding-bottom solves hor. scrollbar hiding single line of code in IE6 but causes vert. scrollbar... */
-  text-align: left;			/* override justify on body */
-  overflow: auto;				/* allow scroll bar in case of long lines - goes together with white-space: nowrap! */
-  white-space: nowrap;		/* prevent line wrapping */
+    /*color: black;*/
+    background: #F3F3FF;
+    border: 1px solid #AAC;
+    font-size: 11px;
+    font-family: "Lucida Console", Monaco, monospace;
+    margin: auto;
+    padding: 6px 5px 13px 5px; /* padding-bottom solves hor. scrollbar hiding single line of code in IE6 but causes vert. scrollbar... */
+    text-align: left; /* override justify on body */
+    overflow: auto; /* allow scroll bar in case of long lines - goes together with white-space: nowrap! */
+    white-space: nowrap; /* prevent line wrapping */
 }
 
 #wikula .code pre {
-  margin-top: 6px;
-  margin-bottom: 6px;			/* prevent vertical scroll bar in case of overflow */
-  font-size: 11px;
-  font-family: "Lucida Console", Monaco, monospace;
+    margin-top: 6px;
+    margin-bottom: 6px; /* prevent vertical scroll bar in case of overflow */
+    font-size: 11px;
+    font-family: "Lucida Console", Monaco, monospace;
 }
-
 
 /* syntax highlighting code - GeSHi */
 #wikula .code ol {
-  margin-top: 6px;
-  margin-bottom: 6px;     /* prevent vertical scroll bar in case of overflow */
+    margin-top: 6px;
+    margin-bottom: 6px; /* prevent vertical scroll bar in case of overflow */
 }
+
 #wikula .code li {
-  font-size: 11px;
-  /*font-family: "Lucida Console", Monaco, monospace;*/
-  font-family: "Courier New", "Lucida Console", monospace;
+    font-size: 11px;
+    /*font-family: "Lucida Console", Monaco, monospace;*/
+    font-family: "Courier New", "Lucida Console", monospace;
 }
-#wikula .code .br0  { color: #66cc66; }
-#wikula .code .co1  { color: #808080; font-style: italic; }
-#wikula .code .co2  { color: #808080; font-style: italic; }
-#wikula .code .coMULTI  { color: #808080; font-style: italic; }
-#wikula .code .es0  { color: #000099; font-weight: bold; }
-#wikula .code .kw1  { color: #b1b100; }
-#wikula .code .kw2  { color: #000000; font-weight: bold; }
-#wikula .code .kw3  { color: #000066; }
-#wikula .code .kw4  { color: #993333; }
-#wikula .code .kw5  { color: #0000ff; }
-#wikula .code .me0  { color: #006600; }
-#wikula .code .nu0  { color: #cc66cc; }
-#wikula .code .re0  { color: #0000ff; }
-#wikula .code .re1  { color: #0000ff; }
-#wikula .code .re2  { color: #0000ff; }
-#wikula .code .re4  { color: #009999; }
-#wikula .code .sc0  { color: #00bbdd; }
-#wikula .code .sc1  { color: #ddbb00; }
-#wikula .code .sc2  { color: #009900; }
-#wikula .code .st0  { color: #ff0000; }
+
+#wikula .code .br0 {
+    color: #66cc66;
+}
+
+#wikula .code .co1 {
+    color: #808080;
+    font-style: italic;
+}
+
+#wikula .code .co2 {
+    color: #808080;
+    font-style: italic;
+}
+
+#wikula .code .coMULTI {
+    color: #808080;
+    font-style: italic;
+}
+
+#wikula .code .es0 {
+    color: #000099;
+    font-weight: bold;
+}
+
+#wikula .code .kw1 {
+    color: #b1b100;
+}
+
+#wikula .code .kw2 {
+    color: #000000;
+    font-weight: bold;
+}
+
+#wikula .code .kw3 {
+    color: #000066;
+}
+
+#wikula .code .kw4 {
+    color: #993333;
+}
+
+#wikula .code .kw5 {
+    color: #0000ff;
+}
+
+#wikula .code .me0 {
+    color: #006600;
+}
+
+#wikula .code .nu0 {
+    color: #cc66cc;
+}
+
+#wikula .code .re0 {
+    color: #0000ff;
+}
+
+#wikula .code .re1 {
+    color: #0000ff;
+}
+
+#wikula .code .re2 {
+    color: #0000ff;
+}
+
+#wikula .code .re4 {
+    color: #009999;
+}
+
+#wikula .code .sc0 {
+    color: #00bbdd;
+}
+
+#wikula .code .sc1 {
+    color: #ddbb00;
+}
+
+#wikula .code .sc2 {
+    color: #009900;
+}
+
+#wikula .code .st0 {
+    color: #ff0000;
+}
 
 /* Calendar styling - 2004-12-01 */
 /* general styling */
 #wikula table.calendar {
-  color: #000;
-  background-color: #CCC;        /* comment out to have space between cells same color as page background */
-  /*border-collapse: collapse;*/      /* would make single-width borders, ignoring cell-spacing */
+    color: #000;
+    background-color: #CCC; /* comment out to have space between cells same color as page background */
+    /*border-collapse: collapse;*/
+    /* would make single-width borders, ignoring cell-spacing */
 }
+
 #wikula table.calendar caption {
-  background-color: #CCC;
-  font-weight: bold;
-  line-height: 1.6em;
+    background-color: #CCC;
+    font-weight: bold;
+    line-height: 1.6em;
 }
+
 #wikula table.calendar thead {
-  background-color: #CCC;
+    background-color: #CCC;
 }
+
 #wikula table.calendar tbody.face {
-  background-color: #CCC;
+    background-color: #CCC;
 }
+
 #wikula table.calendar tbody.calnav {
-  background-color: #CCC;
+    background-color: #CCC;
 }
+
 /* styling for some specific elements */
 #wikula table.calendar thead th {
-  /*border: 1px solid #000;*/      /* uncomment to have border around day name headers (will be page background if table background is undefined) */
-  padding: 1px;
-  text-align: center;
-  font-size: 85%;
-  width: 26px;
+    padding: 1px;
+    text-align: center;
+    font-size: 85%;
+    width: 26px;
 }
+
 #wikula table.calendar tbody.face td {
-  border: 1px solid #000;
-  text-align: right;
+    border: 1px solid #000;
+    text-align: right;
 }
+
 #wikula table.calendar td.currentday {
-  color: #933;
-  background-color: #aaa;
-  font-weight: bold;
+    color: #933;
+    background-color: #aaa;
+    font-weight: bold;
 }
+
 /* styling of calendar navigation */
 #wikula table.calendar tbody.calnav {
-  font-weight: bold;
+    font-weight: bold;
 }
+
 #wikula table.calendar td.prevmonth {
-  text-align: left;
-  font-size: 85%;
+    text-align: left;
+    font-size: 85%;
 }
+
 #wikula table.calendar td.curmonth {
-  text-align: center;
+    text-align: center;
 }
+
 #wikula table.calendar td.nextmonth {
-  text-align: right;
-  font-size: 85%;
+    text-align: right;
+    font-size: 85%;
 }
+
 #wikula table.calendar a:link {
-  color: #933;
-  text-decoration: none;
+    color: #933;
+    text-decoration: none;
 }
+
 #wikula table.calendar a:visited {
-  color: #933;
-  text-decoration: none;
+    color: #933;
+    text-decoration: none;
 }
+
 #wikula table.calendar a:hover {
-  color: #933;
+    color: #933;
 }
+
 #wikula table.calendar a:active {
-  color: #933;
-  text-decoration: none;
+    color: #933;
+    text-decoration: none;
 }
 
 /*
 #wikula .toolbar #wikula tr { background: ButtonFace; }
 #wikula .toolbar #wikula .btn-, #wikula .toolbar #wikula .btn-hover, #wikula .toolbar #wikula .btn-active,
 #wikula .toolbar #wikula .btn-pressed {  background: ButtonFace; color: ButtonText;
-  border: 1px solid ButtonFace; padding: 1px;  margin: 0px; cursor: pointer; cursor: hand; }
+border: 1px solid ButtonFace; padding: 1px;  margin: 0px; cursor: pointer; cursor: hand; }
 #wikula .toolbar #wikula .btns- img  { width: 20px; height: 20px; }
 #wikula .toolbar #wikula .btn-hover { border-color: ButtonHighlight ButtonShadow ButtonShadow ButtonHighlight; }
 #wikula .toolbar #wikula .btn-active,
@@ -469,15 +549,30 @@
 #wikula h3,
 #wikula h4,
 #wikula h5 {
-  color: #000;
-  font-family: Georgia, "DejaVu Serif", Times, serif;
-  font-weight: normal;
+    color: #000;
+    font-family: Georgia, "DejaVu Serif", Times, serif;
+    font-weight: normal;
 }
-#wikula h5 { font-size: 12pt; }
-#wikula h4 { font-size: 14pt; }
-#wikula h3 { font-size: 16pt; }
-#wikula h2 { font-size: 18pt; }
-#wikula h1 { font-size: 20pt; }
+
+#wikula h5 {
+    font-size: 12pt;
+}
+
+#wikula h4 {
+    font-size: 14pt;
+}
+
+#wikula h3 {
+    font-size: 16pt;
+}
+
+#wikula h2 {
+    font-size: 18pt;
+}
+
+#wikula h1 {
+    font-size: 20pt;
+}
 
 #wikula .page h1:hover:after,
 #wikula .page h2:hover:after,
@@ -485,344 +580,317 @@
 #wikula .page h4:hover:after,
 #wikula .page h5:hover:after,
 #wikula .page h6:hover:after {
-  color: #aaa; content: "\0020\0020\00b6";
+    color: #aaa;
+    content: "\0020\0020\00b6";
 }
 
 #wikula a.heading {
-  color: #000;
+    color: #000;
 }
 
 #wikula a.heading:hover {
-  color: #000;
-  text-decoration: none;
+    color: #000;
+    text-decoration: none;
 }
 
 #wikula .page table {
-  border-collapse: collapse; /* use 'separate' to get spacing between the cells ad their borders */
-  border-spacing: 0px; /* used only with border-collapse: collapse */
-  margin: 0 0 0.5em;
-  padding: 0px;
+    border-collapse: collapse; /* use 'separate' to get spacing between the cells ad their borders */
+    border-spacing: 0px; /* used only with border-collapse: collapse */
+    margin: 0 0 0.5em;
+    padding: 0px;
 }
 
 #wikula .page td {
-  /*background-color: #FFF;*/
-  padding: 3px;
-  text-align: left; /* override this for specific centered columns */
+    padding: 3px;
+    text-align: left; /* override this for specific centered columns */
 }
 
 #wikula .page th {
-  text-align: left;
-  border: 1px solid #AAA;
-  padding: 3px;
+    text-align: left;
+    border: 1px solid #AAA;
+    padding: 3px;
 }
 
 #wikula .page th {
-  padding: 3px;
-  font-weight: bold;
-  text-align: left;     /* override this for specific centered columns */
+    padding: 3px;
+    font-weight: bold;
+    text-align: left; /* override this for specific centered columns */
 }
 
 #wikula .page th.center, td.center {
-  text-align: center;
+    text-align: center;
 }
 
 #wikula .refmenu {
-  margin: 0;
-  padding: 0;
-  margin-top: 1em;
+    margin: 0;
+    padding: 0;
+    margin-top: 1em;
 }
+
 #wikula .refmenu .menu {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
+
 #wikula .refmenu .menu li {
-  list-style: none;
-  float: left;
-  margin-right: 3px;        /* margin-right goes together with float left (or vice versa) */
-  padding: 1px 2px;
-  font-size: 85%;
-  line-height: 1.2em;
-}
-#wikula br.clear {
-  clear: both;
+    list-style: none;
+    float: left;
+    margin-right: 3px; /* margin-right goes together with float left (or vice versa) */
+    padding: 1px 2px;
+    font-size: 85%;
+    line-height: 1.2em;
 }
 
 #wikula #reflist {
-  border: none;
-  margin-bottom: 1em;
-  margin-top: 1em;
-  width: 100%;
+    border: none;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    width: 100%;
 }
+
 #wikula #reflist .hits {
-  width: 3em;
-  padding-right: 5px;
-  text-align: right;
-  vertical-align: middle;
+    width: 3em;
+    padding-right: 5px;
+    text-align: right;
+    vertical-align: middle;
 }
+
 #wikula #reflist .action {
-  width: 5em;
-  padding-left: 5px;
-  padding-right: 5px;
-  text-align: center;
-  vertical-align: middle;
+    width: 5em;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
+    vertical-align: middle;
 }
+
 #wikula #reflist .refs {
-  padding-left: 5px;
-  text-align: left;
-  vertical-align: middle;
+    padding-left: 5px;
+    text-align: left;
+    vertical-align: middle;
 }
 
 /***********************/
 /* --- row & column color --- */
 
-#wikkaadmin th {
-  text-align: left;
-  border: 1px solid #AAA;
-  color: #000;
-  padding: 3px;
-  background-color: #DDD;
-  font-weight: bold;
-  font-size: 1em;
-}
-
-#wikkaadmin td {
-  text-align: left;     /* override this for specific centered columns */
-  vertical-align: top;    /* override with class for specific purposes */
-  background-color: #FFF;
-  padding: 3px;
-  border: 1px solid #AAA;
-}
 #wikkaadmin th.c1 {
-  background-color: #CDD;
+    background-color: #CDD;
 }
 
 #wikkaadmin th.c2 {
-  background-color: #DCC;
+    background-color: #DCC;
 }
 
 #wikkaadmin th.c3 {
-  background-color: #DDC;
+    background-color: #DDC;
 }
 
 #wikkaadmin th.c4 {
-  background-color: #CDC;
+    background-color: #CDC;
 }
 
 #wikkaadmin th.c5 {
-  background-color: #CCD;
+    background-color: #CCD;
 }
 
 #wikkaadmin th.c6 {
-  background-color: #DCD;
+    background-color: #DCD;
 }
 
 #wikkaadmin tr.alt td {
-  background-color: #EEE;
+    background-color: #EEE;
 }
 
 #wikkaadmin td.c1 {
-  background-color: #EFF;
+    background-color: #EFF;
 }
 
 #wikkaadmin td.c2 {
-  background-color: #FEE;
+    background-color: #FEE;
 }
 
 #wikkaadmin td.c3 {
-  background-color: #FFE;
+    background-color: #FFE;
 }
 
 #wikkaadmin td.c4 {
-  background-color: #EFE;
+    background-color: #EFE;
 }
 
 #wikkaadmin td.c5 {
-  background-color: #EEF;
+    background-color: #EEF;
 }
 
 #wikkaadmin td.c6 {
-  background-color: #FEF;
+    background-color: #FEF;
 }
 
 #wikkaadmin tr.alt td.c1 {
-  background-color: #DEE;
+    background-color: #DEE;
 }
 
 #wikkaadmin tr.alt td.c2 {
-  background-color: #EDD;
+    background-color: #EDD;
 }
 
 #wikkaadmin tr.alt td.c3 {
-  background-color: #EED;
+    background-color: #EED;
 }
 
 #wikkaadmin tr.alt td.c4 {
-  background-color: #DED;
+    background-color: #DED;
 }
 
 #wikkaadmin tr.alt td.c5 {
-  background-color: #DDE;
+    background-color: #DDE;
 }
 
 #wikkaadmin tr.alt td.c6 {
-  background-color: #EDE;
+    background-color: #EDE;
 }
 
 #wikkaadmin th.check, td.check {
-  width: 5%;
-  text-align: center;
-  vertical-align: middle;
+    width: 5%;
+    text-align: center;
+    vertical-align: middle;
 }
+
 #wikkaadmin th.number {
-  text-align:center;
+    text-align: center;
 }
+
 #wikkaadmin td.number {
-  text-align: right;
+    text-align: right;
 }
 
 #wikkaadmin th.time, td.time {
-  width: 5%;
-  text-align: center;
-  vertical-align: top;
-  white-space: nowrap;
+    width: 5%;
+    text-align: center;
+    vertical-align: top;
+    white-space: nowrap;
 }
 
 #wikkaadmin td.time {
-  font-size: 0.85em;
-}
-
-
-
-#wikkaadmin table {
-  margin: 1em 0.3em;
-  padding: 0px;
-  border-spacing: 0px;      /* used only with border-collapse: collapse */
-  border-collapse: collapse;    /* use 'separate' to get spacing between the cells ad their borders */
+    font-size: 0.85em;
 }
 
 #wikkaadmin a {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 #wikkaadmin a:hover {
-  color: #993333;
-  text-decoration: underline;
+    color: #993333;
+    text-decoration: underline;
 }
 
-
 #wikkaadmin .center {
-  /*border:1px #eee dashed;*/
-  text-align: center;
+    text-align: center;
 }
 
 #wikula input.grabcode {
-  float: right;
-  margin-right: 20px;
-  margin-top: 0px;
-  font-size: 90%;
+    float: right;
+    margin-right: 20px;
+    margin-top: 0px;
+    font-size: 90%;
 }
 
 #wiki_authorbox {
-  float: right; 
-  margin-top: 1px;
-  text-align: right;
-  width: 190px;
+    float: right;
+    margin-top: 1px;
+    text-align: right;
+    width: 190px;
 }
 
 #wiki_authorbox img {
-  float: right;
-  padding: 0 5px;
+    float: right;
+    padding: 0 5px;
 }
 
 .wiki_authorboxelement {
-  border-bottom: 1px solid #eee;
-  border-left: 1px solid #eee;
-  padding: 5px;
+    border-bottom: 1px solid #eee;
+    border-left: 1px solid #eee;
+    padding: 5px;
 }
 
-
 /**
- * Actions styles
- */
-
+* Actions styles
+*/
 
 /* include */
 .action_include {
-  border: 1px #eee dashed;
-  padding: 5px;
+    border: 1px #eee dashed;
+    padding: 5px;
 }
-
 
 /* sidenote */
 /* postit note-style information box */
 div.action_sidenote {
-  background-color: #FFF;
-  border: 1px solid #EEE;
-  clear: both;
-  font-size: 10pt;
-  margin: 0px;
-  padding: 0px;
-  text-align: justify;
-  vertical-align: top;
+    background-color: #FFF;
+    border: 1px solid #EEE;
+    clear: both;
+    font-size: 10pt;
+    margin: 0px;
+    padding: 0px;
+    text-align: justify;
+    vertical-align: top;
 }
 
 div.action_sidenote hr {
-  border-bottom: 1px solid #AAA;
-  height: 1px;
-  width: 100%;
+    border-bottom: 1px solid #AAA;
+    height: 1px;
+    width: 100%;
 }
 
 div.action_sidenote .sidenote_title {
-  background-color: #EEE800;
-  border-bottom: 1px solid #EEE;
-  color: #333;
-  font-weight: bold;
-  padding: 2px;
-  text-align: center;
+    background-color: #EEE800;
+    border-bottom: 1px solid #EEE;
+    color: #333;
+    font-weight: bold;
+    padding: 2px;
+    text-align: center;
 }
 
 div.action_sidenote .sidenote_text {
-  color: #222;
-  padding: 5px;
+    color: #222;
+    padding: 5px;
 }
 
 /* Specific for (yellow) tips. */
 div.sidenote_tip {
-  background-color: #FFFF88;
-  border-color: #FFF8BF;
+    background-color: #FFFF88;
+    border-color: #FFF8BF;
 }
 
 div.sidenote_tip .sidenote_title {
-  background-color: #eee800;
-  background-image: url(../../../images/icons/extrasmall/idea.gif);
-  background-position: center right;
-  background-repeat: no-repeat;
-  border-color: #FFF8BF;
+    background-color: #eee800;
+    background-image: url(../../../images/icons/extrasmall/idea.gif);
+    background-position: center right;
+    background-repeat: no-repeat;
+    border-color: #FFF8BF;
 }
 
 /* Specific for (white) notes. */
 div.sidenote_note {
-  background-color: #fff;
+    background-color: #fff;
 }
 
 div.sidenote_note .sidenote_title {
-  background-color: #efefef;
-  background-image: url(../../../images/icons/extrasmall/reminders.gif);
-  background-position: center right;
-  background-repeat: no-repeat;
+    background-color: #efefef;
+    background-image: url(../../../images/icons/extrasmall/reminders.gif);
+    background-position: center right;
+    background-repeat: no-repeat;
 }
 
 /* Specific for (orange) warnings. */
 div.sidenote_warning {
-  background-color: #FFF8BF;
-  border-color: #FFD324;
+    background-color: #FFF8BF;
+    border-color: #FFD324;
 }
 
 div.sidenote_warning .sidenote_title {
-  background-color: #FFD324;
-  background-image: url(../../../images/icons/extrasmall/status_unknown.gif);
-  background-position: center right;
-  background-repeat: no-repeat;
-  border-color: #FFD324;
-  color: #BB330C;
+    background-color: #FFD324;
+    background-image: url(../../../images/icons/extrasmall/status_unknown.gif);
+    background-position: center right;
+    background-repeat: no-repeat;
+    border-color: #FFD324;
+    color: #BB330C;
 }

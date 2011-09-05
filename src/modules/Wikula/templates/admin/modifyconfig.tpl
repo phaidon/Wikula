@@ -4,12 +4,11 @@
     <h3>{gt text="Modify configuration"}</h3>
 </div>
 
-
 {form cssClass="z-form"}
 {formvalidationsummary}
 
 <fieldset>
-       
+    <legend>{gt text='Settings'}</legend>
     <div class="z-formrow">
         {formlabel for="root_page" __text='Root Page'}
         {formtextinput id="root_page" size="20" maxLength="64"}
@@ -40,24 +39,23 @@
         {formcheckbox id="mandatorycomment" }
     </div>
 
-
     <div class="z-formrow">
         {formlabel for="logreferers" __text='Log Referers - Note: If the Zikula HTTPReferers module is available, it will use the exclusions setting.)'}
         {formcheckbox id="logreferers"}
     </div>
-    <div style="clear:both"></div>
+
     <div class="z-formrow">
         {formlabel for="itemsperpage" __text='Items per page'}
         {formintinput id="itemsperpage" size="3"}
     </div>
 
-
-    <div class="z-formbuttons z-buttons">
-          {formbutton class="z-bt-ok" commandName="save" __text="Save"}
-          {formbutton class="z-bt-cancel" commandName="cancel" __text="Cancel"}
-    </div>
-
 </fieldset>
+
+<div class="z-formbuttons z-buttons">
+    {formbutton class="z-bt-ok" commandName="save" __text="Save"}
+    {formbutton class="z-bt-cancel" commandName="cancel" __text="Cancel"}
+</div>
+
 {/form}
 
 {adminfooter}
