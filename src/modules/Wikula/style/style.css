@@ -894,3 +894,7 @@ div.sidenote_warning .sidenote_title {
     border-color: #FFD324;
     color: #BB330C;
 }
+
+.z-menulinks img {
+    vertical-align: middle;
+}

@@ -1,8 +1,5 @@
 {include file='user/menu.tpl' tag=$tag}
 
-</br>
-
-
 {form cssClass="z-form"}
 {formvalidationsummary}
 
@@ -16,15 +13,12 @@
     </div>
     {/if}
 
-
-
     <!-- We need to escape ALL entity refs before display so we display them _as_ entities instead of interpreting them
     // hence htmlspecialchars() instead of htmlspecialchars_ent() which UNescapes entities! -->
     {notifydisplayhooks eventname='wikula.ui_hooks.editor.display_view' id='body'}	
     {formtextinput id="body" textMode="multiline" rows=4 cols=100 style="width:98%;height:500px;"}
 
     {formtextinput id="id" hidden="true" size="11" maxLength="11"}
-
 
     <!-- note add Edit
     // We need to escape ALL entity refs before display so we display them _as_ entities instead of interpreting them
@@ -37,9 +31,11 @@
     <br />
     <!--//finish-->
     
+    <div class="z-formbuttons z-buttons">
     {formbutton class="z-bt-ok"     commandName="save"    __text="Save"}
     {formbutton class="z-bt-ok"     commandName="preview" __text="Preview"}
     {formbutton class="z-bt-cancel" commandName="cancel"  __text="Cancel"}
+</div>
 
 </div>
 
