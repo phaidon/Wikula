@@ -29,7 +29,8 @@
 
 </div>
 
-{notifydisplayhooks eventname='wikula.hook.pages.ui.view' area='modulehook_area.wikula.pages' subject=$tag id=$showpage.id assign='hooks' caller="Wikula"}
+
+{notifydisplayhooks eventname='wikula.ui_hooks.bottom.display_view' id=$showpage.tag assign='hooks' caller="Wikula"}
 {foreach from=$hooks key='provider_area' item='hook'}
 {$hook}
 {/foreach}

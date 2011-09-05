@@ -36,10 +36,10 @@ class Wikula_Handler_Page  extends Zikula_Form_AbstractHandler
         
         $specialPages = ModUtil::apiFunc($this->name, 'SpecialPage', 'listpages');
         if( array_key_exists($this->_tag, $specialPages)) {
-            return $this->redirect(ModUtil::url('Wikula', 'user', 'main', array('tag' => $this->_tag)));
+            return $this->redirect(ModUtil::url($this->name, 'user', 'main', array('tag' => $this->_tag)));
         }
         
-        $page = ModUtil::apiFunc('Wikula', 'user', 'LoadPage', array(
+        $page = ModUtil::apiFunc($this->name, 'user', 'LoadPage', array(
             'tag'  => $this->_tag,
         ));
         if($page) {
@@ -66,7 +66,7 @@ class Wikula_Handler_Page  extends Zikula_Form_AbstractHandler
         //--------------------------
         if ($args['commandName'] == 'cancel') {
             $url = ModUtil::url(
-                'Wikula',
+                $this->name,
                 'user',
                 'main',
                 array('tag' => $this->_tag) 
@@ -97,7 +97,7 @@ class Wikula_Handler_Page  extends Zikula_Form_AbstractHandler
         // store
         //--------------------------
         // check for overwriting
-        $previousid = ModUtil::apiFunc('Wikula', 'user', 'PageExists', array('tag' => $this->_tag));
+        $previousid = ModUtil::apiFunc($this->name, 'user', 'PageExists', array('tag' => $this->_tag));
         
         
         if ($previousid && $previousid != $data['id']) {
@@ -106,14 +106,14 @@ class Wikula_Handler_Page  extends Zikula_Form_AbstractHandler
             );
         }
         unset($data['id']);
-        $store = ModUtil::apiFunc('Wikula', 'user', 'SavePage', array(
+        $store = ModUtil::apiFunc($this->name, 'user', 'SavePage', array(
             'tag'      => $this->_tag,
             'body'     => $data['body'],
             'note'     => $data['note'],
             'tracking' => true
         ));
         
-        $url = ModUtil::url('Wikula', 'user', 'main', array('tag' => $this->_tag));
+        $url = ModUtil::url($this->name, 'user', 'main', array('tag' => $this->_tag));
         return $view->redirect($url);            
 
     }

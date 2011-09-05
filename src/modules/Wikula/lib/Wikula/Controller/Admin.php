@@ -82,6 +82,7 @@ class Wikula_Controller_Admin extends Zikula_AbstractController
         $this->view->assign('itemsperpage', $itemsperpage);
         $this->view->assign('pageroptions', array(5, 10, 20, 30, 40, 50, 100, 200, 300, 400, 500));
 
+
         $this->view->assign('pager', array('numitems'     => $total,
                                        'itemsperpage' => $itemsperpage));
 

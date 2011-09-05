@@ -45,10 +45,9 @@ class Wikula_Version extends Zikula_AbstractVersion
     }
     protected function setupHookBundles()
     {
-        // TODO add comment area
-      /*  $bundle = new Zikula_Version_HookSubscriberBundle('modulehook_area.wikula.pages', $this->__('Wiki Pages Hooks'));
-        $bundle->addType('ui.view', 'wikula.hook.pages.ui.view');
-        $this->registerHookSubscriberBundle($bundle);*/
+        $bundle = new Zikula_HookManager_SubscriberBundle($this->name, 'subscriber.wikula.ui_hooks.bottom', 'ui_hooks', $this->__('Wikula bottom area'));
+        $bundle->addEvent('display_view', 'wikula.ui_hooks.bottom.display_view');
+        $this->registerHookSubscriberBundle($bundle);
         
         $bundle = new Zikula_HookManager_SubscriberBundle($this->name, 'subscriber.wikula.ui_hooks.editor', 'ui_hooks', $this->__('Wikula editor'));
         $bundle->addEvent('display_view', 'wikula.ui_hooks.editor.display_view');

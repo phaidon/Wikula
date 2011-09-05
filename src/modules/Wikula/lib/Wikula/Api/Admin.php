@@ -181,7 +181,7 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
             $sortby  = $sort;
         }
 
-        if (!array_key_exists($sortby, $col)) {
+        if (isset($col) and !array_key_exists($sortby, $col)) {
             $sortby  = 'time';
         }
         if ($order <> 'ASC' && $order <> 'DESC') {
@@ -198,25 +198,10 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
 
         $search  = '';
         $boolean = '';
-        print_r($q);
         if (isset($q) && !empty($q)) {
             $qy->addWhere('tag LIKE ?', array('%'.$q.'%'));
         }
 
-
-        
-        // TODO permission
-        /*$permission = array();
-        $permission[] = array('realm' => 0,
-                              'component_left'   => 'wikula',
-                              'component_middle' => '',
-                              'component_right'  => '',
-                              'instance_left'    => '',
-                              'instance_middle'  => '',
-                              'instance_right'   => 'tag',
-                              'level'            => ACCESS_READ);
-         * 
-         */
         $pages = $qy->execute();
         $pages = $pages->toArray();
         
@@ -224,9 +209,18 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         $logref  = $this->getVar('logreferers');
 
         foreach ($pages as $pageID => $pageTab) {
-            $pages[$pageID]['revisions'] = ModUtil::apiFunc('Wikula', 'admin', 'CountRevisions', array('tag' => $pageTab['tag']));
-            $pages[$pageID]['backlinks'] = ModUtil::apiFunc('Wikula', 'user', 'CountBackLinks', array('tag' => $pageTab['tag']));
+            $pages[$pageID]['revisions'] = ModUtil::apiFunc($this->name, 'admin', 'CountRevisions', array('tag' => $pageTab['tag']));
+            $pages[$pageID]['backlinks'] = ModUtil::apiFunc($this->name, 'user',  'CountBackLinks', array('tag' => $pageTab['tag']));
             $pages[$pageID]['referrers'] = (($logref == 1) ? ModUtil::apiFunc('Wikula', 'user', 'CountReferers', array('tag' => $pageTab['tag'])) : 0);
+            if( ModUtil::available('EZComments')) {
+                $commentsCount = ModUtil::apiFunc('EZComments', 'user', 'countitems', array(
+                    'mod' => $this->name,
+                    'objectid' => $pageTab['tag']
+                ));
+            } else {
+                $commentsCount = 0;
+            }
+            $pages[$pageID]['comments'] = $commentsCount;
         }
 
 
