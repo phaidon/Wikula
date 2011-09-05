@@ -53,6 +53,7 @@ class Wikula_Handler_Page  extends Zikula_Form_AbstractHandler
      
         // build the output 
         $this->view->assign($page);
+        $this->view->assign('mandatorycomment', $this->getVar('mandatorycomment', false));
         
         
         return true;

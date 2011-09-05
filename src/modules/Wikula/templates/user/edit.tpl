@@ -1,46 +1,46 @@
 {include file='user/menu.tpl' tag=$tag}
 
-<div id="wikula">
-  <div class="page">
+</br>
 
-    {if $submit eq $smarty.const.Preview}
+
+{form cssClass="z-form"}
+{formvalidationsummary}
+
+<div id="wikula">
+
+    {if isset($preview)}
     <div id="wikula_editpreview">
       [ <a href="#wikula_editform">{gt text='Go to the edit form'}</a> ]
       <br /><br />
-      {$body|notifyfilters:'wikula.filter_hooks.body.filter'}
+      {$preview|notifyfilters:'wikula.filter_hooks.body.filter'}
     </div>
     {/if}
 
-    <form name="editform" action="{modurl modname='Wikula' type='user' func='edit' fqurl=true}" method="post" enctype="application/x-www-form-urlencoded">
-    
 
-    <input type="hidden" name="previous" value="{$previous|safehtml}" />
-    <input type="hidden" name="tag" value="{$tag|safehtml}" />
 
     <!-- We need to escape ALL entity refs before display so we display them _as_ entities instead of interpreting them
     // hence htmlspecialchars() instead of htmlspecialchars_ent() which UNescapes entities! -->
-    {notifydisplayhooks eventname='wikula.ui_hooks.editor.display_view' id='wikula_body'}	
-    <textarea id="wikula_body" name="body" cols="10" rows="10" style="width:98%;height:500px">{$body|htmlspecialchars}</textarea>
+    {notifydisplayhooks eventname='wikula.ui_hooks.editor.display_view' id='body'}	
+    {formtextinput id="body" textMode="multiline" rows=4 cols=100 style="width:98%;height:500px;"}
 
+    {formtextinput id="id" hidden="true" size="11" maxLength="11"}
 
 
     <!-- note add Edit
     // We need to escape ALL entity refs before display so we display them _as_ entities instead of interpreting them
     // so we use htmlspecialchars on the edit note (as on the body)-->
     {gt text='Please add a note with details of your submission'}:<br />
-    <input id="wikula_note" name="note" size="40" type="text" value="{$note|htmlspecialchars}" style="width: 98%;" />
+    <div class="z-formrow">
+        {formtextinput id="note" size="40" maxLength="40" style="width: 98%;" mandatory="$mandatorycomment"}
+    </div>
+
     <br />
     <!--//finish-->
+    
+    {formbutton class="z-bt-ok"     commandName="save"    __text="Save"}
+    {formbutton class="z-bt-ok"     commandName="preview" __text="Preview"}
+    {formbutton class="z-bt-cancel" commandName="cancel"  __text="Cancel"}
 
-    {if $canedit eq true}<input name="submit" type="submit" value="{gt text='Store'}" accesskey="s" />&nbsp;{/if}
-    <input name="submit" type="submit" value="{gt text='Preview'}" accesskey="p" />&nbsp;
-    <input name="submit" type="submit" value="{gt text='Cancel'}" accesskey="c" />
-    {if $submit eq $smarty.const.Preview}
-    &nbsp;[ <a href="#wikula_editpreview">{gt text='Go to the preview'}</a> ]
-    {/if}
-
-    </form>
-  </div>
-
-   
 </div>
+
+{/form}

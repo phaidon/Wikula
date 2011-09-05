@@ -46,7 +46,7 @@
 
     <span class="text_separator">::</span>
 
-    {pnuserloggedin assign='islogged'}
+    {userloggedin assign='islogged'}
     {if $islogged eq false}
       <a href="{modurl modname='Users' func='loginscreen'}" title="">{gt text='Log in'}</a>
       <span class="text_separator">::</span>

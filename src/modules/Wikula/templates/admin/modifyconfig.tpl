@@ -35,6 +35,11 @@
         {formcheckbox id="hideeditbar"}
     </div>
 
+    <div class="z-formrow">
+        {formlabel for="mandatorycomment" __text='Page edit comments are mandatory.'}
+        {formcheckbox id="mandatorycomment" }
+    </div>
+
 
     <div class="z-formrow">
         {formlabel for="logreferers" __text='Log Referers - Note: If the Zikula HTTPReferers module is available, it will use the exclusions setting.)'}
