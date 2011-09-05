@@ -12,8 +12,8 @@
 
   {foreach name='object' item='object' from=$objects}
 
-    {pnusergetidfromname uname=$object.EditedByUser assign='uid'}
-    {pnusergetvar uid=$uid name='_YOURAVATAR' assign='avatar'}
+    {usergetidfromname uname=$object.EditedByUser assign='uid'}
+    {usergetvar uid=$uid name='_YOURAVATAR' assign='avatar'}
 
     {if $avatar eq '' OR $avatar eq 'blank.gif'}
       {img modname='wikula' src='avatar_male.gif' width='20' class='avatar'}
@@ -38,19 +38,19 @@
 
     {if $object.added neq ''}
       <strong>{gt text='Additions'}</strong><br />
-      <span class="additions">{$object.newcontent|transform}</span>
+      <span class="additions">{$object.newcontent|notifyfilters:'wikula.filter_hooks.body.filter'}</span>
       <br /><br />
     {/if}
     {if $object.deleted neq ''}
       <strong>{gt text='Deletions'}</strong><br />
-      <span class="deletions">{$object.oldcontent|transform}</span>
+      <span class="deletions">{$object.oldcontent|notifyfilters:'wikula.filter_hooks.body.filter'}</span>
       <br /><br />
     {/if}
     <hr />
   {/foreach}
 
-  {pnusergetidfromname uname=$oldest.user assign='uid'}
-  {pnusergetvar uid=$uid name='_YOURAVATAR' assign='avatar'}
+  {usergetidfromname uname=$oldest.user assign='uid'}
+  {usergetvar uid=$uid name='_YOURAVATAR' assign='avatar'}
 
   {if $avatar eq '' OR $avatar eq 'blank.gif'}
     {img modname='wikula' src='avatar_male.gif' width='20' class='avatar'}
@@ -64,7 +64,7 @@
 
   {* $oldest.body is the variable containing the stuff *}
   <br /><br />
-  {$oldest.body|transform}
+  {$oldest.body|notifyfilters:'wikula.filter_hooks.body.filter'}
   </div>
 
   <div class="wiki_footer">
