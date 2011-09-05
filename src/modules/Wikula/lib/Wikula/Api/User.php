@@ -235,16 +235,8 @@ class Wikula_Api_User extends Zikula_AbstractApi
         return $result;
     }
 
-    public function LoadPagesLinkingTo($args)
+    public function LoadPagesLinkingTo($tag)
     {
-        
-        extract($args);
-        unset($args);
-
-        if (!isset($tag)) {
-            return LogUtil::registerArgsError();
-        }
-
         // Permission check
         $this->throwForbiddenUnless(
             SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_READ),
@@ -259,43 +251,27 @@ class Wikula_Api_User extends Zikula_AbstractApi
         if( array_key_exists($tag, $links) ) {
             unset($links['$tag']);
         }
+        
 
         if ($links === false) {
             return LogUtil::registerError(__('Error! Getting the links for this page failed.'));
         }
 
         return $links;
-
     }
-
     
 
-    public function CountBackLinks($args = array())
+    public function CountBackLinks($tag)
     {
-        
-        if (!isset($args['tag'])) {
-            return LogUtil::registerArgsError();
-        }
-
         // Permission check
         $this->throwForbiddenUnless(
-            SecurityUtil::checkPermission('Wikula::', 'page::'.$args['tag'], ACCESS_READ),
+            SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_READ),
             LogUtil::getErrorMsgPermission()
         );
 
-
-        $q = Doctrine_Query::create()->from('Wikula_Model_Links t');
-        $q->where('to_tag = ?', array($args['tag']));
-        $links = $q->execute();
-        $links = $links->toKeyValueArray('from_tag', 'from_tag');
-
-
-
-        if ($links === false) {
-            return LogUtil::registerError(__('Error! Count the links for this page failed.'));
-        }
-
-        return count($links);
+        return Doctrine_Query::create()->from('Wikula_Model_Links t')
+            ->where('to_tag = ?', array($tag))
+            ->count();
 
     }
 
@@ -840,9 +816,10 @@ class Wikula_Api_User extends Zikula_AbstractApi
             return LogUtil::registerError(__('Setting last revision failed!'));
         }
 
+        $tag = DataUtil::formatForStore($tag);
         // add new revision
         $newrev = array(
-            'tag'    => DataUtil::formatForStore($tag),
+            'tag'    => $tag,
             'body'   => $body,
             'note'   => DataUtil::formatForStore($note),
             'time'   => DateUtil::getDatetime(),
@@ -864,7 +841,26 @@ class Wikula_Api_User extends Zikula_AbstractApi
         }
     */
 
-         ModUtil::apiFunc($this->name, 'user', 'WriteLinkTable', array('tag' => $tag));
+        // add links to other page into the link table
+        $oldlinks = Doctrine_Core::getTable('Wikula_Model_Links')->findBy('from_tag', $tag);
+        $oldlinks->delete();
+                
+        $pagelinks = ModUtil::apiFunc(
+            'LuMicuLa',
+            'Transform',
+            'get_pagelinks',
+            array(
+                'content' => $body,
+                'tag'     => $tag,
+                'modname' => $this->name
+            )
+        );
+        foreach($pagelinks as $pagelink) {
+            $d = new Wikula_Model_Links();
+            $d->merge($pagelink);
+            $d->save();
+        }
+        
 
         // TODO: Wikka Ping feature here
 
@@ -1163,88 +1159,6 @@ class Wikula_Api_User extends Zikula_AbstractApi
         return !empty($args['tag']) ? '<a title="'.$args['text'].'" href="'.$args['tag'].'">'.$args['text'].'</a>'.$external_link_tail : $args['text']; //// ?????
     }
 
-    public function TrackLinkTo($tag)
-    {
-        $linktable = SessionUtil::getVar('linktable');
-
-        if (!$linktable || !is_array($linktable)) {
-            $linktable = array();
-        }
-
-        $count = count($linktable);
-        $linktable[$count] = $tag;
-
-        SessionUtil::setVar('linktable', $linktable);
-    }
-    
-    
-
-    public function GetLinkTable()
-    {
-        return unserialize(SessionUtil::getVar('linktable'));
-    }
-
-    public function ClearLinkTable()
-    {
-        return SessionUtil::delVar('linktable');
-    }
-
-    public function StartLinkTracking()
-    {
-        SessionUtil::setVar('linktracking', 1);
-    }
-
-    public function StopLinkTracking()
-    {
-        SessionUtil::setVar('linktracking', 0);
-    }
-
-    public function WriteLinkTable($args)
-    {
-
-
-        if (!isset($args['tag'])) {
-            return LogUtil::registerArgsError();
-        }
-
-        if (empty($args['tag'])) {
-            return true;
-        }
-
-        // delete old link table
-        $links = Doctrine_Core::getTable('Wikula_Model_Links')->findBy('from_tag', $args['tag']);
-        $links->delete();
-
-        $linktable =  ModUtil::apiFunc($this->name, 'user', 'GetLinkTable');
-
-        if (is_array($linktable)) {
-            $from_tag = DataUtil::formatForStore($args['tag']);
-            $written  = array();
-
-            foreach ($linktable as $to_tag) {
-                $lower_to_tag = strtolower($to_tag);
-
-                if (!isset($written[$lower_to_tag])) {
-                    $record = array(
-                        'from_tag' => $from_tag,
-                        'to_tag'   => DataUtil::formatForStore($to_tag)
-                    );
-
-                    $link = new Wikula_Model_Links();
-                    $link->merge($record);
-                    $link->save();
-
-                    /*if ($record === false) {
-                        return LogUtil::registerError(__('Inserting link failed!'));
-                    }*/
-
-                    $written[$lower_to_tag] = 1;
-                }
-            }
-        }
-
-        return true;
-    }
 
     /**
     * Log Referrers

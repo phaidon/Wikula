@@ -66,12 +66,12 @@ class Wikula_Controller_User extends Zikula_AbstractController
         }
 
         //if ($modvars['logreferers']) {
-        //    ModUtil::apiFunc('Wikula', 'user', 'LogReferer', array('tag' => $tag));
+        //    ModUtil::apiFunc($this->name, 'user', 'LogReferer', array('tag' => $tag));
         //}
 
 
         // Get the page
-        $page = ModUtil::apiFunc('Wikula', 'user', 'LoadPage', array(
+        $page = ModUtil::apiFunc($this->name, 'user', 'LoadPage', array(
             'tag'  => $tag,
             'time' => $time)
         );
@@ -79,20 +79,20 @@ class Wikula_Controller_User extends Zikula_AbstractController
         
         // Validate invalid petition
         if (!$page && !empty($time)) {
-            LogUtil::registerError(__("The page you requested doesn't exists"), null, ModUtil::url('Wikula'));
+            LogUtil::registerError(__("The page you requested doesn't exists"), null, ModUtil::url($this->name));
         }
 
         // Get the latest version
         if (empty($time)) {
             $latest = $page;
         } else {
-            $latest = ModUtil::apiFunc('Wikula', 'user', 'LoadPage', array('tag' => $tag));
+            $latest = ModUtil::apiFunc($this->name, 'user', 'LoadPage', array('tag' => $tag));
         }
 
         // Check if this tag doesn't exists
         if (!$page && !$latest) {
             LogUtil::registerStatus(__('The page does not exist yet! do you want to create it?').'<br />'.__('Feel free to participate and be the first who creates content for this page!'));
-            System::redirect(ModUtil::url('Wikula', 'user', 'edit', array('tag' => $tag)));
+            System::redirect(ModUtil::url($this->name, 'user', 'edit', array('tag' => $tag)));
         }
 
         // Resetting session access and previous
@@ -103,13 +103,10 @@ class Wikula_Controller_User extends Zikula_AbstractController
         // TODO: check if this can be migrated to an action
         // we'll get later revisions too because we want to display the history and the last editors next to the page
 
-        // assign the modvars
-        //$this->view->assign('modvars', $modvars);
-
         $this->view->assign('tag',      $tag);
         $this->view->assign('time',     $time);
         $this->view->assign('showpage', $page);
-
+        
         return $this->view->fetch('user/show.tpl', md5($page['id'].$page['time']));
     }
 
@@ -118,7 +115,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
      */
     public function edit()
     {
-        $form = FormUtil::newForm('Wikula', $this);
+        $form = FormUtil::newForm($this->name, $this);
         return $form->execute('user/edit.tpl', new Wikula_Handler_Page());
 
     }
@@ -143,12 +140,14 @@ class Wikula_Controller_User extends Zikula_AbstractController
         //$time = FormUtil::getPassedValue('time');
 
         if (empty($tag)) {
-            return LogUtil::registerError(__f('Missing argument [%s]', 'tag'),
-                                          null,
-                                          ModUtil::url('Wikula', 'user', 'main'));
+            return LogUtil::registerError(
+                __f('Missing argument [%s]', 'tag'),
+                null,
+                ModUtil::url($this->name, 'user', 'main')
+            );
         }
 
-        $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadRevisions', array(
+        $pages = ModUtil::apiFunc($this->name, 'user', 'LoadRevisions', array(
             'tag' => $tag)
         );
 
@@ -156,7 +155,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
             return LogUtil::registerError(
                 __f('No %s found.', 'Rev'),
                 null,
-                ModUtil::url('Wikula', 'user', 'main')
+                ModUtil::url($this->name, 'user', 'main')
             );
         }
 
@@ -224,11 +223,11 @@ class Wikula_Controller_User extends Zikula_AbstractController
     public function RecentChangesXML()
     {
         
-        if (!SecurityUtil::checkPermission('wikula::', 'xml::recentchanges', ACCESS_READ)) {
-            return LogUtil::registerError(__('Sorry! No authorization to access this module.'), null, ModUtil::url('Wikula', 'user', 'main'));
+        if (!SecurityUtil::checkPermission('Wikula::', 'xml::recentchanges', ACCESS_READ)) {
+            return LogUtil::registerError(__('Sorry! No authorization to access this module.'), null, ModUtil::url($this->name, 'user', 'main'));
         }
 
-        $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadRecentlyChanged');
+        $pages = ModUtil::apiFunc($this->name, 'user', 'LoadRecentlyChanged');
 
         if (!$pages) {
             return LogUtil::registerError(__('Error during element fetching !'));
@@ -250,13 +249,13 @@ class Wikula_Controller_User extends Zikula_AbstractController
     public function RevisionsXML()
     {
         
-        if (!SecurityUtil::checkPermission('wikula::', 'xml::revisions', ACCESS_READ)) {
-            return LogUtil::registerError(__('Sorry! No authorization to access this module.'), null, ModUtil::url('Wikula', 'user', 'main'));
+        if (!SecurityUtil::checkPermission('Wikula::', 'xml::revisions', ACCESS_READ)) {
+            return LogUtil::registerError(__('Sorry! No authorization to access this module.'), null, ModUtil::url($this->name, 'user', 'main'));
         }
 
         $tag = FormUtil::getPassedValue('tag');
 
-        $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadRevisions', array('tag' => $tag));
+        $pages = ModUtil::apiFunc($this->name, 'user', 'LoadRevisions', array('tag' => $tag));
 
         if (!$pages) {
             return LogUtil::registerError(__('Error during element fetching !'));
@@ -281,7 +280,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
         .'  <node text="'.__('Recent Changes').'">'.$cr
         .'    <node text="Date" position="right">'.$cr;
 
-        $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadRecentlyChanged', array());
+        $pages = ModUtil::apiFunc($this->name, 'user', 'LoadRecentlyChanged', array());
 
         $users  = array();
         $curday = '';
@@ -305,8 +304,8 @@ class Wikula_Controller_User extends Zikula_AbstractController
                     $curday = $day;
                 }
 
-                $pagelink      = ModUtil::url('Wikula', 'user', 'main',    array('tag' => DataUtil::formatForDisplay($pagetag)));
-                $revlink       = ModUtil::url('Wikula', 'user', 'History', array('tag' => DataUtil::formatForDisplay($pagetag)));
+                $pagelink      = ModUtil::url($this->name, 'user', 'main',    array('tag' => DataUtil::formatForDisplay($pagetag)));
+                $revlink       = ModUtil::url($this->name, 'user', 'History', array('tag' => DataUtil::formatForDisplay($pagetag)));
                 $xml          .= '        <node text="'.$pagetag.'" folded="true">'.$cr;
                 $timeformatted = date('H:i T', strtotime($page['time']));
                 $xml          .= '          <node link="'.$pagelink.'" text="'.$this->__('Revision time: ').$timeformatted.'"/>'.$cr;
@@ -334,7 +333,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
             $start_loop = true;
             foreach ($user as $user_page) {
                 if (!$start_loop) {
-                    $xml .= '    <node link="'.ModUtil::url('Wikula','user','main', array('tag' => DataUtil::formatForDisplay($user_page))).'" text="'.$user_page.'"/>'.$cr;
+                    $xml .= '    <node link="'.ModUtil::url($this->name, 'user', 'main', array('tag' => DataUtil::formatForDisplay($user_page))).'" text="'.$user_page.'"/>'.$cr;
                 } else {
                     $xml .= '    <node text="'.$user_page.'">'.$cr;
                     $start_loop = false;
@@ -360,20 +359,17 @@ class Wikula_Controller_User extends Zikula_AbstractController
             SecurityUtil::checkPermission('Wikula::', '::', ACCESS_READ)
         );
         
-        $linkedtag = FormUtil::getPassedValue('tag');
-
-        if (empty($linkedtag)) {
-            return LogUtil::registerError(__f('Missing argument [%s]', 'tag'), null, ModUtil::url('Wikula', 'user', 'main'));
+        $tag = FormUtil::getPassedValue('tag');
+        if (empty($tag)) {
+            return LogUtil::registerError(__f('Missing argument [%s]', 'tag'), null, ModUtil::url($this->name, 'user', 'main'));
         }
 
         // Get the variables
-        $page  = ModUtil::apiFunc('Wikula', 'user', 'LoadPage', array('tag' => $linkedtag));
-        $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadPagesLinkingTo', array('tag' => $linkedtag));
+        $pages = ModUtil::apiFunc($this->name, 'user', 'LoadPagesLinkingTo', $tag);
 
         
-        $this->view->assign('tag',       $linkedtag);
-        $this->view->assign('backpage',  $page);
-        $this->view->assign('pages',     $pages);
+        $this->view->assign('tag',   $tag);
+        $this->view->assign('pages', $pages);
 
         return $this->view->fetch('user/backlinks.tpl');
     }
@@ -387,16 +383,16 @@ class Wikula_Controller_User extends Zikula_AbstractController
         $tag = FormUtil::getPassedValue('tag');
         
         if (empty($tag)) {
-            return LogUtil::registerError(__f('Missing argument [%s]', 'tag'), null, ModUtil::url('Wikula', 'user', 'main'));
+            return LogUtil::registerError(__f('Missing argument [%s]', 'tag'), null, ModUtil::url($this->name, 'user', 'main'));
         }
 
         // Permission check
-        if (!SecurityUtil::checkPermission('wikula::', 'page::'.$tag, ACCESS_COMMENT)) {
-            return LogUtil::registerError(__('You do not have the authorization to edit this page!'), null, ModUtil::url('Wikula', 'user', 'main'));
+        if (!SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_COMMENT)) {
+            return LogUtil::registerError(__('You do not have the authorization to edit this page!'), null, ModUtil::url($this->name, 'user', 'main'));
         }
 
-        if (!ModUtil::apiFunc('Wikula', 'user', 'PageExists', array('tag' => $tag))) {
-            return LogUtil::registerError(__("The page you requested doesn't exists"), null, ModUtil::url('Wikula', 'user', 'main'));
+        if (!ModUtil::apiFunc($this->name, 'user', 'PageExists', array('tag' => $tag))) {
+            return LogUtil::registerError(__("The page you requested doesn't exists"), null, ModUtil::url($this->name, 'user', 'main'));
         }
 
         // Default values
@@ -407,7 +403,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
         $submit = FormUtil::getPassedValue('submit');
 
         if ($submit == $this->__('Cancel')) {
-            $this->redirect(ModUtil::url('Wikula', 'user', 'main', array('tag' => $tag)));
+            $this->redirect(ModUtil::url($this->name, 'user', 'main', array('tag' => $tag)));
 
         } elseif ($submit == $this->__('Submit')) {
             $to   = FormUtil::getPassedValue('to');
@@ -416,38 +412,38 @@ class Wikula_Controller_User extends Zikula_AbstractController
 
             // Validate the choosen pagename
             $validationerror = false;
-            if (!ModUtil::apiFunc('Wikula', 'user', 'isValidPagename', array('tag' => $to))) {
+            if (!ModUtil::apiFunc($this->name, 'user', 'isValidPagename', array('tag' => $to))) {
                 LogUtil::registerError(__('That page name is not valid'));
                 $validationerror = true;
             }
 
             // check if the page already exists
-            if (!$validationerror && ModUtil::apiFunc('Wikula', 'user', 'PageExists', array('tag' => $to))) {
-                return LogUtil::registerError(__('This page does already exist'), null, ModUtil::url('Wikula', 'user', 'main'));
+            if (!$validationerror && ModUtil::apiFunc($this->name, 'user', 'PageExists', array('tag' => $to))) {
+                return LogUtil::registerError(__('This page does already exist'), null, ModUtil::url($this->name, 'user', 'main'));
             }
 
             // check if has access to create it
-            if (!$validationerror && !SecurityUtil::checkPermission('wikula::', 'page::'.$tag, ACCESS_COMMENT)) {
-                return LogUtil::registerError(__('You do not have the authorization to edit this page!'), null, ModUtil::url('Wikula', 'user', 'main'));
+            if (!$validationerror && !SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_COMMENT)) {
+                return LogUtil::registerError(__('You do not have the authorization to edit this page!'), null, ModUtil::url($this->name, 'user', 'main'));
             }
 
             // if valid request
             if (!$validationerror) {
                 // proceed to page cloning
-                $page = ModUtil::apiFunc('Wikula', 'user', 'LoadPage', array('tag' => $tag));
+                $page = ModUtil::apiFunc($this->name, 'user', 'LoadPage', array('tag' => $tag));
                 $newpage = array(
                     'tag'  => $to,
                     'body' => $page['body'],
                     'note' => $note
                 );
 
-                if (ModUtil::apiFunc('Wikula', 'user', 'SavePage', $newpage)) {
+                if (ModUtil::apiFunc($this->name, 'user', 'SavePage', $newpage)) {
                     // redirect
                     if ($edit) {
-                        $this->redirect(ModUtil::url('Wikula', 'user', 'edit', array('tag' => $to)));
+                        $this->redirect(ModUtil::url($this->name, 'user', 'edit', array('tag' => $to)));
                     } else {
                         LogUtil::registerStatus(__('Clone created successfully'));
-                        $this->redirect(ModUtil::url('Wikula', 'user', 'main', array('tag' => $to)));
+                        $this->redirect(ModUtil::url($this->name, 'user', 'main', array('tag' => $to)));
                     }
                 }
             }
@@ -474,7 +470,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
         );
         
         if (!UserUtil::isLoggedIn()) {
-            return LogUtil::registerError(__('You must be logged in to be able to view referrers - Anti botspam'), null, ModUtil::url('Wikula', 'user', 'main'));
+            return LogUtil::registerError(__('You must be logged in to be able to view referrers - Anti botspam'), null, ModUtil::url($this->name, 'user', 'main'));
         }
 
         $tag    = FormUtil::getPassedValue('tag');
@@ -508,7 +504,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
             $submit = true;
         }
 
-        $referrers = ModUtil::apiFunc('Wikula', 'user', 'LoadReferrers', array(
+        $referrers = ModUtil::apiFunc($this->name, 'user', 'LoadReferrers', array(
             'tag'    => $tag,
             'global' => $global,
             'sites'  => $sites,
@@ -525,7 +521,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
         }
 
         // load the wiki page for output purposes
-        $page = ModUtil::apiFunc('Wikula', 'user', 'LoadPage', array('tag' => $tag));
+        $page = ModUtil::apiFunc($this->name, 'user', 'LoadPage', array('tag' => $tag));
 
         
 
@@ -555,7 +551,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
     
     public function settings()
     {
-        $form = FormUtil::newForm('Wikula', $this);
+        $form = FormUtil::newForm($this->name, $this);
         return $form->execute('user/settings.tpl', new Wikula_Handler_Settings());
     }
 

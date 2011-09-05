@@ -210,7 +210,7 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
 
         foreach ($pages as $pageID => $pageTab) {
             $pages[$pageID]['revisions'] = ModUtil::apiFunc($this->name, 'admin', 'CountRevisions', array('tag' => $pageTab['tag']));
-            $pages[$pageID]['backlinks'] = ModUtil::apiFunc($this->name, 'user',  'CountBackLinks', array('tag' => $pageTab['tag']));
+            $pages[$pageID]['backlinks'] = ModUtil::apiFunc($this->name, 'user',  'CountBackLinks', $pageTab['tag']);
             $pages[$pageID]['referrers'] = (($logref == 1) ? ModUtil::apiFunc('Wikula', 'user', 'CountReferers', array('tag' => $pageTab['tag'])) : 0);
             if( ModUtil::available('EZComments')) {
                 $commentsCount = ModUtil::apiFunc('EZComments', 'user', 'countitems', array(
