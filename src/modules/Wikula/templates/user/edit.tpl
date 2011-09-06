@@ -3,7 +3,7 @@
 {form cssClass="z-form"}
 {formvalidationsummary}
 
-<div id="Wikula">
+<div id="wikula">
 
     {if isset($preview)}
     <div id="wikula_editpreview">

@@ -1,6 +1,6 @@
 {include file='user/menu.tpl' tag=$tag}
 
-<div id="Wikula">
+<div id="wikula">
     <div class="page">
 
         <a href="{modurl modname='Wikula' type='user' func='RevisionsXML' tag=$tag theme='rss'}">{gt text='Show feed'}</a>

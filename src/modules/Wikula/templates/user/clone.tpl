@@ -1,6 +1,6 @@
 {include file='user/menu.tpl' tag=$tag}
 
-<div id="Wikula">
+<div id="wikula">
     <div class="page">
 
         <form class="z-form" action="{modurl modname='Wikula' type='user' func='clone'}" method="post" enctype="application/x-www-form-urlencoded">

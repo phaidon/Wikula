@@ -10,7 +10,7 @@
     </div>
 </div>
 
-<div id="Wikula">
+<div id="wikula">
     <div class="page">{$content}</div>
     {include file='user/footer.tpl'}
 </div>

@@ -1,6 +1,6 @@
 {include file='user/menu.tpl' tag=$tag}
 
-<div id="Wikula">
+<div id="wikula">
     {if $showpage.latest eq 'N'}
     {modurl modname='Wikula' tag=$showpage.tag assign='showpageurl'}
     {modurl modname='Wikula' tag=$showpage.tag func='revisions' assign='revisionsurl'}

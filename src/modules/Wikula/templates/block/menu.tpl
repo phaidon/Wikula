@@ -1,4 +1,4 @@
-<div id="Wikula">
+<div id="wikula">
 
 {foreach from=$pages item="page"}
     <a href="{modurl modname='Wikula' type='user' func='main' tag=$page}">{$page}</a>
