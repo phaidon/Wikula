@@ -5,6 +5,6 @@
   </div>
   {/if}
   <div class="sidenote_text">
-    {$text|wakka|pnmodcallhooks:'wikula'}
+    {$text|notifyfilters:'wikula.filter_hooks.body.filter'}
   </div>
 </div>
