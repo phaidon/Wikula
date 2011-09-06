@@ -13,7 +13,7 @@
     {foreach from=$pages item='page'}
       <li>
       <a href="{modurl modname='wikula' tag=$page.tag|urlencode}" title="{$page.tag}">{$page.tag}</a>
-      <span class="pn-sub">{gt text='by' comment="e.g. written by Drak"}</span> {$page.user} <span class="pn-sub">({$page.time|pndate_format:'%b %d'})</span>
+      <span class="pn-sub">{gt text='by' comment="e.g. written by Drak"}</span> {$page.user} <span class="pn-sub">({$page.time|dateformat:'%b %d'})</span>
       {if $page.note neq ''}<br /><span class="pagenote">[ {$page.note} ]</span>{/if}
       </li>
     {/foreach}

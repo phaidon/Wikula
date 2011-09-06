@@ -14,7 +14,7 @@
     {foreach name='mychanges' from=$pagelist item='pages' key='key'}
     {if $currentkey neq $key}
     {assign var='currentkey' value=$key}
-    <h5>{$key|pndate_format:'datelong'}</h5>
+    <h5>{$key|dateformat:'datelong'}</h5>
     {/if}
 
     <ul class="mychanges">
