@@ -1,4 +1,4 @@
-<form class="z-form" action="{textsearchlink|safehtml}" method="post" enctype="application/x-www-form-urlencoded">
+<form class="z-form" action="{modurl modname='wikula' type='user' func='main' __tag='Search'}" method="post" enctype="application/x-www-form-urlencoded">
     <div>
         <fieldset>
             <label for="action_phrase">{gt text='Search for'}</label>
