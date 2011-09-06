@@ -6,7 +6,7 @@
       <strong>{$item.titledate}</strong><br /><br />
       {assign var='olddate' value=$item.titledate}
     {/if}
-    {pnusergetvar name='uname' uid=$item.uid assign='uname'}
+    {usergetvar name='uname' uid=$item.uid assign='uname'}
     &nbsp;&nbsp;&nbsp; <a href="{modurl modname='wikula' tag=$item.objectid|urlencode}" title="{$item.objectid}">{$item.objectid}</a>,
     {gt text='Comment by'} {$uname|profilelinkbyuname} ({$item.date})<br />
     &nbsp;&nbsp;&nbsp; <em>{$item.comment|safehtml}</em>

@@ -2,7 +2,7 @@
     <div class="wiki_authorboxelement z-clearfix">
         <h4>{gt text='Site creator'}:</h4>
 
-        {pnusergetvar uid=$first_writer.uid name='_YOURAVATAR' assign='avatar'}
+        {usergetvar uid=$first_writer.uid name='_YOURAVATAR' assign='avatar'}
 
         {if $avatar eq '' OR $avatar eq 'blank.gif'}
         {img modname='wikula' src='avatar_male.gif' width='50'}
@@ -17,7 +17,7 @@
         <h4>{gt text='Last authors'}:</h4>
         {foreach from=$history item='author'}
         <div class="z-clearfix">
-            {pnusergetvar uid=$author.uid name='_YOURAVATAR' assign='avatar'}
+            {usergetvar uid=$author.uid name='_YOURAVATAR' assign='avatar'}
 
             {if $avatar eq '' OR $avatar eq 'blank.gif'}
             {img modname='wikula' src='avatar_male.gif' width='25'}
