@@ -43,11 +43,6 @@
     font-weight: bold;
 }
 
-#wikulaheader .header {
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 2px;
-}
-
 #wikulaheader .header h2 a:hover {
     text-decoration: none;
 }
