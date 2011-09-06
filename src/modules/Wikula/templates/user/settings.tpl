@@ -11,7 +11,6 @@
         {formcheckbox id="subscribe"}
     </div>
     {/if}
-
 </fieldset>
 
 <div class="z-formbuttons z-buttons">

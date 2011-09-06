@@ -1,8 +1,5 @@
 <div class="action_recentchanges">
-    <p class="z-floatright">
-        <a href="{modurl modname='Wikula' func='recentchangesxml' theme='rss'}" title="{gt text='Recent Changes'}">{img modname='Wikula' src='rss.png' __title='Recent changes Feed'  __alt='RSS'}</a>
-    </p>
-
+    <p class="z-clearfix"><a class="z-icon-es-rss z-floatright" href="{modurl modname='Wikula' func='recentchangesxml' theme='rss'}" title="{gt text='Recent Changes'}">{gt text='Recent Changes'}</a></p>
     {if $pagelist}
     {assign var='currentdate' value=''}
     {foreach from=$pagelist key='date' item='pages'}

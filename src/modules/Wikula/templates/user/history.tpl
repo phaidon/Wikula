@@ -3,7 +3,7 @@
 <div id="wikula">
     <div class="page">
 
-        <p><a class="z-icon-es-rss" href="{modurl modname='Wikula' type='user' func='RevisionsXML' tag=$tag theme='rss'}">{gt text='Show feed of these changes'}</a></p>
+        <p class="z-clearfix"><a class="z-icon-es-rss z-floatright" href="{modurl modname='Wikula' type='user' func='RevisionsXML' tag=$tag theme='rss'}">{gt text='Show feed of these changes'}</a></p>
 
         {assign var='lastauthor' value=''}
         {assign var='lastedit' value=''}

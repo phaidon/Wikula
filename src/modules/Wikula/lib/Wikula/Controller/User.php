@@ -88,7 +88,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
 
         // Check if this tag doesn't exists
         if (!$page && !$latest) {
-            LogUtil::registerStatus(__('The page does not exist yet! do you want to create it?').'<br />'.__('Feel free to participate and be the first who creates content for this page!'));
+            LogUtil::registerStatus(__('The page does not exist yet! do you want to create it? Feel free to participate and be the first who creates content for this page!'));
             System::redirect(ModUtil::url($this->name, 'user', 'edit', array('tag' => $tag)));
         }
 

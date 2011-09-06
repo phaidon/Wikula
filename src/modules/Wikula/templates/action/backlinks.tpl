@@ -1,8 +1,8 @@
 {if $pages}
 <h5>{gt text='Backlinks'}</h5>
-<blockquote>
+<ul>
     {foreach item='page' from=$pages}
-    <a href="{modurl modname='Wikula' func='main' tag=$page|urlencode}" title="{$page}">{$page}</a><br />
+    <li><a href="{modurl modname='Wikula' func='main' tag=$page|urlencode}" title="{$page|safehtml}">{$page|safehtml}</a></li>
     {/foreach}
-</blockquote>
+</ul>
 {/if}
