@@ -88,7 +88,6 @@ class Wikula_Block_Random extends Zikula_Controller_AbstractBlock
 
         $render->assign('latest',   1);
         $render->assign('tag',      $tag);
-        $render->assign('islogged', $islogged);
         $render->assign('canedit',  $canedit);
         $render->assign('body',     $page['body']);
         $render->assign('time',     $page['time']);

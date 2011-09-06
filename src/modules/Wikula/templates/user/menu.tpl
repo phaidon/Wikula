@@ -45,8 +45,7 @@
                 {/if}
             </li>
 
-            {userloggedin assign='islogged'}
-            {if $islogged eq false}
+            {if $coredata.logged_in eq false}
             <li>
                 <a href="{modurl modname='Users' func='loginscreen'}" title="">{gt text='Log in'}</a>
             </li>
