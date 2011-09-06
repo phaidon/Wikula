@@ -3,7 +3,7 @@
 <div id="wikula">
     <div class="page">
 
-        <form action="{modurl modname='wikula' type='user' func='clone'}" method="post" enctype="application/x-www-form-urlencoded">
+        <form class="z-form" action="{modurl modname='wikula' type='user' func='clone'}" method="post" enctype="application/x-www-form-urlencoded">
             <div id="wikula_cloneform">
                 {modurl modname='wikula' tag=$tag|urlencode assign='pageurl'}
                 <h3>{gt text='Clone <a href="%1$s">%1$s</a>' tag2=$tag|safehtml tag1=$pageurl}</h3>
@@ -20,14 +20,14 @@
                         <td><input id="note" name="note" type="text" value="{$note}" size="37" maxlength="75" /></td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td>&nbsp;</td>
                         <td>
                             <input type="checkbox" name="edit" id="editoption"{if $edit} checked="checked"{/if} />
                             <label for="editoption">{gt text='Edit after creation'}</label>
                         </td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td>&nbsp;</td>
                         <td>
                             <input name="submit" type="submit" value="{gt text='Submit'}" accesskey="s" />&nbsp;
                             <input name="submit" type="submit" value="{gt text='Cancel'}" accesskey="c" />

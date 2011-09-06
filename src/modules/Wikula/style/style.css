@@ -2,14 +2,6 @@
     font-family: "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Verdana, sans-serif;
 }
 
-#wikula textarea,
-#wikula input {
-    border: 1px solid #aaa;
-    font-size: 14px;
-    margin-bottom: 0.7em;
-    padding: 5px;
-}
-
 #wikula a {
     text-decoration: none;
 }

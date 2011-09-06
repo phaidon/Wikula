@@ -12,7 +12,7 @@
                 {gt text='Owner'}: {$backpage.owner|profilelinkbyuname}
                 <span class="text_separator">::</span>
                 <label for="wikula_phrase">{gt text='Search for'}
-                <input id="wikula_phrase" name="phrase" size="12" class="searchbox" />
+                    <input id="wikula_phrase" name="phrase" size="12" class="searchbox" />
                 </label>
             </div>
         </form>
