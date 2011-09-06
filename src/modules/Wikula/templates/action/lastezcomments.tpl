@@ -1,5 +1,3 @@
-{* $Id: action/lastezcomments.tpl 41 2008-10-09 18:29:16Z quan $ *}
-
 {if $items}
 {assign var='olddate' value=''}
   {foreach item='item' from=$items}

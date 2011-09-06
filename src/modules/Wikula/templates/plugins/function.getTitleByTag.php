@@ -3,8 +3,7 @@
  * Wikula
  *
  * @copyright  (c) Wikula Development Team
- * @link       http://code.zikula.org/wikula/
- * @version    $Id: function.getTitleByTag.php 164 2010-04-22 13:05:06Z yokav $
+ * @link       https://github.com/phaidon/Wikula/
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * category    Zikula_3rdParty_Modules
  * @subpackage Wiki

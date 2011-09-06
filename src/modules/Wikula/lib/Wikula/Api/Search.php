@@ -8,7 +8,7 @@
  *
  * @license GNU/LGPLv3 (or at your option, any later version).
  * @package Wikula
- * @link http://code.zikula.org/wikula
+ * @link https://github.com/phaidon/Wikula
  *
  * Please see the NOTICE file distributed with this source code for further
  * information regarding copyright and licensing.

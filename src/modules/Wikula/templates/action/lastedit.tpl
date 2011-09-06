@@ -1,5 +1,3 @@
-{* $Id: action/lastedit.tpl 41 2008-10-09 18:29:16Z quan $ *}
-
 {if $action_le.page}
   <div class="lastedit">
     {gt text='Last edited by '}

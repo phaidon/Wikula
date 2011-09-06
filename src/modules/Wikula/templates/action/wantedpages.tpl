@@ -1,5 +1,3 @@
-{* $Id: action/wantedpages.tpl 41 2008-10-09 18:29:16Z quan $ *}
-
 {if !empty($items)}
 <div class="action_wantedpages">
 

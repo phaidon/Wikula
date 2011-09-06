@@ -1,5 +1,3 @@
-{*  $Id: wikula_init_step3.tpl 83 2008-12-17 04:04:58Z mateo $  *}
-
 <h2>{gt text='Wikula Installation'}</h2>
 <div style="text-align:center;" class="z-form">
 <fieldset>

@@ -3,8 +3,7 @@
  * Wikula
  *
  * @copyright  (c) Wikula Development Team
- * @link       http://code.zikula.org/wikula/
- * @version    $Id: modifier.php.php 107 2009-02-22 08:51:33Z mateo $
+ * @link       https://github.com/phaidon/Wikula/
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * category    Zikula_3rdParty_Modules
  * @subpackage Wiki
@@ -25,11 +24,13 @@ function smarty_modifier_php($text, $method='diff')
                             array('��', '��'),
                             $text);
     }
-    highlight_string($text);
-    if ($method == 'diff') {
+
+    highlight_string($text);
+
+    if ($method == 'diff') {
         // get highlighting output
         $listing = ob_get_clean();
-        ob_start();
+        ob_start();
         // render diff tags
         $listing = preg_replace('/��<\/font>/',
                                 '</font>��',

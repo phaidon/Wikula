@@ -1,5 +1,3 @@
-{* $Id: action/rss.tpl 67 2008-11-22 16:20:16Z mateo $ *}
-
 {assign var='link' value=$feed->get_image_link()}
 {if $feedimage AND $link neq ''}
 <div class="rss-image">
@@ -14,9 +12,9 @@
 {/if}
 
 {if !empty($feedname)}
-<p><strong>{gt text='Name'}</strong> : {$feedname|pnvarprephtmldisplay}</p>
+<p><strong>{gt text='Name'}</strong> : {$feedname|safehtml}</p>
 {/if}
-<p><strong>{gt text='URL'}</strong> : {$feedurl|pnvarprephtmldisplay}</p>
+<p><strong>{gt text='URL'}</strong> : {$feedurl|safehtml}</p>
 <div>
 		{assign var='feeditems' value=$feed->get_items()}
 		{foreach from=$feeditems item='feeditem'}
@@ -33,7 +31,7 @@
 			</div>
 			{if $feeditemdescription neq ''}
 				<p>
-				{$feeditemdescription|pnvarprephtmldisplay}
+				{$feeditemdescription|safehtml}
 				</p>
 				<div style="text-align:right"><a href="{$feeditemlink}" {if $feednewwin eq 1}target="_blank"{/if}>{gt text='Read more'}</a></div>
 			{/if}

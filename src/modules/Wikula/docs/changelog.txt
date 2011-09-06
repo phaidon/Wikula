@@ -2,8 +2,7 @@
  * Wikula
  *
  * @copyright  (c) Wikula Development Team
- * @link       http://code.zikula.org/wikula/
- * @version    $Id: pnuserapi.php 25226 2008-12-28 23:11:15Z gf $
+ * @link       https://github.com/phaidon/Wikula/
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  */
 

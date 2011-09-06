@@ -1,4 +1,3 @@
-{* $Id: wikula_init_delete.tpl 83 2008-12-17 04:04:58Z mateo $ *}
 {admincategorymenu}
 
 <div class="pn-admincontainer" style="text-align:center;">

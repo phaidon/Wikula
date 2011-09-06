@@ -8,7 +8,7 @@
  *
  * @license GNU/GPLv3 (or at your option, any later version).
  * @package Piwik
- * @link http://code.zikula.org/wikula
+ * @link https://github.com/phaidon/Wikula
  *
  * Please see the NOTICE file distributed with this source code for further
  * information regarding copyright and licensing.
@@ -996,7 +996,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
                 }
             }
         } else {
-            $interwiki['WIKULA'] = 'http://code.zikula.org/wikula/wiki/';
+            $interwiki['WIKULA'] = 'https://github.com/phaidon/Wikula/wiki/';
             $interwiki['ZIKULA'] = 'http://community.zikula.org/index.php?module=Wikula&tag=';
         }
 

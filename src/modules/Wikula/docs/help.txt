@@ -2,8 +2,7 @@
  * Wikula
  *
  * @copyright  (c) Wikula Development Team
- * @link       http://code.zikula.org/wikula/
- * @version    $Id: pnuserapi.php 25226 2008-12-28 23:11:15Z gf $
+ * @link       https://github.com/phaidon/Wikula/
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -18,7 +17,7 @@ It's recommended to enable them ("without parameters" at least)
 to display the contents properly.
 Enable them in your Admin Panel > Settings > HTML Settings
 
-If you need help, please go to http://code.zikula.org/wikula
+If you need help, please go to https://github.com/phaidon/Wikula
 or ask in the community forums http://community.zikula.org/
 
 Enjoy!

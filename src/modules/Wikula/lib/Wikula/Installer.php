@@ -3,8 +3,7 @@
  * Wikula
  *
  * @copyright  (c) Wikula Development Team
- * @link       http://code.zikula.org/wikula/
- * @version    $Id: pninit.php 173 2010-05-06 08:31:17Z slam $
+ * @link       https://github.com/phaidon/Wikula/
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * category    Zikula_3rdParty_Modules
  * @subpackage Wiki
@@ -197,12 +196,12 @@ class Wikula_Installer extends Zikula_AbstractInstaller
         $dom = ZLanguage::getModuleDomain('Wikula');
         $page = __("Welcome to your Wiki!", $dom);
         /*__("=====Welcome to your Wiki!=====
-Thanks for install **[[http://code.zikula.org/wikula/ Wikula]]**! The Wiki module for Zikula based on [[http://wikkawiki.org WikkaWiki]].
+Thanks for install **[[https://github.com/phaidon/Wikula/ Wikula]]**! The Wiki module for Zikula based on [[http://wikkawiki.org WikkaWiki]].
 This site is running on version {{wikkaversion}}.
 
 >>==Contribute==
 You can report bugs or file feature requests
-on the [[http://code.zikula.org/wikula Wikula development website]]!
+on the [[https://github.com/phaidon/Wikula Wikula development website]]!
 >>====Getting started====
 If you are not sure how a wiki works, you can check out the [[WikiHelp Help page]] to get started or click or the &quot;edit page&quot; link at the bottom.
 

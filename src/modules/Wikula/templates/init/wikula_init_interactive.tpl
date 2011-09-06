@@ -15,7 +15,7 @@
 <div>
 
 <div class="z-informationmsg">
-    {gt text='If you have any trouble with the installation of Wikula,<br />please refer to <a href="http://code.zikula.org/wikula" title="Wikula at Cozi">Wikula@Cozi</a> for support and documentation.'}
+    {gt text='If you have any trouble with the installation of Wikula,<br />please refer to <a href="https://github.com/phaidon/Wikula" title="Wikula at Cozi">Wikula@Cozi</a> for support and documentation.'}
 </div>
 
 

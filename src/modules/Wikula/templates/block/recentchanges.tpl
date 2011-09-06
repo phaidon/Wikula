@@ -1,5 +1,3 @@
-{* $Id: wikula_block_wkrecentchanges.tpl 41 2008-10-09 18:29:16Z quan $ *}
-
 <div class="wk-block-recentchanges">
 
 <p style="float: right;">

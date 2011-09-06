@@ -3,8 +3,7 @@
  * Wikula
  *
  * @copyright (c) Wikula Development Team
- * @link      http://code.zikula.org/wikula/
- * @version   $Id: pnversion.php 157 2010-04-20 21:35:31Z yokav $
+ * @link      https://github.com/phaidon/Wikula/
  * @license   GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  */
 
@@ -27,7 +26,7 @@ class Wikula_Version extends Zikula_AbstractVersion
         $meta['official']       = false;
 
         $meta['author']         = 'Fabian Würtz, Frank Chestnut, Chris Hildebrandt, Florian Schießl, Mateo Tibaquirá, Gilles Pilloud,';
-        $meta['contact']        = 'http://code.zikula.org/wikula';
+        $meta['contact']        = 'https://github.com/phaidon/Wikula';
 
         $meta['securityschema'] = array(
             'Wikula::' => '::',
