@@ -1,4 +1,4 @@
-<form class="z-form" action="{modurl modname='wikula' type='user' func='main' tag=$TextSearchExpandedTag|safehtml}" method="post" enctype="application/x-www-form-urlencoded">
+<form class="z-form" action="{modurl modname='Wikula' type='user' func='main' tag=$TextSearchExpandedTag|safehtml}" method="post" enctype="application/x-www-form-urlencoded">
     <div>
         <fieldset>
             <label for="action_phrase">{gt text='Search for'}</label>
@@ -13,7 +13,7 @@
 <ol>
     {foreach from=$results item='result'}
     <li>
-        <a href="{modurl modname='wikula' tag=$result.page_tag}" title="{$result.page_tag|safehtml}">{$result.page_tag|safehtml}</a> &mdash; {$result.page_time|safehtml}
+        <a href="{modurl modname='Wikula' tag=$result.page_tag}" title="{$result.page_tag|safehtml}">{$result.page_tag|safehtml}</a> &mdash; {$result.page_time|safehtml}
         {if !empty($result.matchtext)}
         <blockquote>... {$result.matchtext|safehtml} ...</blockquote>
         {/if}
@@ -27,7 +27,7 @@
     {gt text='Search string not found'}.
     {if $phrase neq ''}
     <br />
-    <a href="{modurl modname='wikula' type='user' func='edit' tag=$phrase|capitalize:true|replace:' ':''|formatpermalink}">
+    <a href="{modurl modname='Wikula' type='user' func='edit' tag=$phrase|capitalize:true|replace:' ':''|formatpermalink}">
         {gt text='Click here to create a new page named "%tag%"' tag=$phrase|safehtml}
     </a>.
     {/if}

@@ -32,7 +32,7 @@ class Wikula_Block_Menu extends Zikula_Controller_AbstractBlock
         return array(
             'text_type'      => 'menu',
             'module'         => 'Wikula',
-            'text_type_long' => 'Show wikula menu page',
+            'text_type_long' => 'Show Wikula menu page',
             'allow_multiple' => true,
             'form_content'   => false,
             'form_refresh'   => false,
@@ -60,7 +60,7 @@ class Wikula_Block_Menu extends Zikula_Controller_AbstractBlock
             $vars['menupages'] = $this->__('HomePage');
         }
 
-        // Check if the wikula module is available. 
+        // Check if the Wikula module is available. 
         if (!ModUtil::available('Wikula')) {
             return false;
         }

@@ -5,7 +5,7 @@
     {gt text='Pages linking to <a href="%1$s">%2$s</a>' tag2=$tag|safehtml tag1=$pageurl}
 </div>
 
-<div id="wikula">
+<div id="Wikula">
     <div class="page">
         {foreach from=$pages item='page'}
         <a href="{modurl modname='Wikula' type='user' func='main' tag=$page|urlencode}" title="{$page|safehtml}">{$page|safehtml}</a><br />

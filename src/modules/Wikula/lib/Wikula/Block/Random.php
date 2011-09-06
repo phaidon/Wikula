@@ -20,7 +20,7 @@ class Wikula_Block_Random extends Zikula_Controller_AbstractBlock
     public function init()
     {
         // Security
-        SecurityUtil::registerPermissionSchema('wikula:randomblock:', 'Block title::');
+        SecurityUtil::registerPermissionSchema('Wikula:randomblock:', 'Block title::');
     }
 
     /**
@@ -32,7 +32,7 @@ class Wikula_Block_Random extends Zikula_Controller_AbstractBlock
     public function info()
     {
         return array('text_type'      => 'random',
-                     'module'         => 'wikula',
+                     'module'         => 'Wikula',
                      'text_type_long' => 'Show random wikula page',
                      'allow_multiple' => true,
                      'form_content'   => false,
@@ -49,7 +49,7 @@ class Wikula_Block_Random extends Zikula_Controller_AbstractBlock
      */
     public function display($blockinfo)
     {
-        if (!SecurityUtil::checkPermission('wikula:randomblock', $blockinfo['title'].'::', ACCESS_READ)) {
+        if (!SecurityUtil::checkPermission('Wikula:randomblock', $blockinfo['title'].'::', ACCESS_READ)) {
             return;
         }
 
@@ -62,25 +62,25 @@ class Wikula_Block_Random extends Zikula_Controller_AbstractBlock
         }
 
         // Check if the wikula module is available. 
-        if (!pnModAvailable('wikula')) return false;
+        if (!pnModAvailable('Wikula')) return false;
 
             // Add stylesheet and language
-            PageUtil::AddVar('stylesheet', ThemeUtil::getModuleStylesheet('wikula'));
+            PageUtil::AddVar('stylesheet', ThemeUtil::getModuleStylesheet('Wikula'));
 
             // get random article
-            $pages = ModUtil::apiFunc('wikula', 'user', 'LoadAllPages');
+            $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadAllPages');
             $id = rand(1,(count($pages)+1))-1;
             $page = $pages[$id];
 
             extract($page);
 
-        if (SecurityUtil::checkPermission('wikula::', 'page::'.$tag, ACCESS_COMMENT) || $tag == __('SandBox', $dom)) {
+        if (SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_COMMENT) || $tag == __('SandBox', $dom)) {
             $canedit = true;
         } else {
             $canedit = false;
         }
 
-        $render = pnRender::getInstance('wikula');
+        $render = pnRender::getInstance('Wikula');
         if ($method != 'show') {
             $render->caching = false;
         }
@@ -94,7 +94,7 @@ class Wikula_Block_Random extends Zikula_Controller_AbstractBlock
         $render->assign('user',     $page['user']);
         $render->assign('owner',    $page['owner']);
         $render->assign('hooks',    pnModCallHooks('item', 'display', $tag,
-                                                   pnModURL('wikula', 'user', 'main',
+                                                   pnModURL('Wikula', 'user', 'main',
                                                             array('tag' => $tag))));
 
         $content = $render->fetch('block/random.tpl', md5($page['id'].$page['time']));
@@ -123,7 +123,7 @@ class Wikula_Block_Random extends Zikula_Controller_AbstractBlock
 
         // Create output object
             // As Admin output changes often, we do not want caching.
-        $render = pnRender::getInstance('wikula', false);
+        $render = pnRender::getInstance('Wikula', false);
 
         // assign the approriate values
             $render->assign('chars', $vars['chars']);
@@ -150,7 +150,7 @@ class Wikula_Block_Random extends Zikula_Controller_AbstractBlock
         $blockinfo['content'] = pnBlockVarsToContent($vars);
 
         // clear the block cache
-        $render = pnRender::getInstance('wikula');
+        $render = pnRender::getInstance('Wikula');
         $render->clear_cache('block/random.tpl');
 
         return $blockinfo;

@@ -202,7 +202,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
         // define the permission filter to apply
         // TODO permissions 
         /*$permFilter = array(array('realm'           => 0,
-                                'component_left'  => 'wikula',
+                                'component_left'  => 'Wikula',
                                 'instance_left'   => 'page',
                                 'instance_right'  => 'tag',
                                 'level'           => ACCESS_READ));*/
@@ -467,7 +467,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
         // define the permission filter to apply
         // even when doesn't make sense in the user's owned pages
         /*$permFilter = array(array('realm'           => 0,
-                                'component_left'  => 'wikula',
+                                'component_left'  => 'Wikula',
                                 'instance_left'   => 'page',
                                 'instance_right'  => 'tag',
                                 'level'           => ACCESS_READ));*/
@@ -1134,11 +1134,11 @@ class Wikula_Api_User extends Zikula_AbstractApi
             SessionUtil::setVar('linktable', serialize($linktable));
 
             if (!empty($pageid)) {
-                //$pnurl = urlencode( ModUtil::url('wikula', 'user', 'main', array('tag' => $args['tag'])));
+                //$pnurl = urlencode( ModUtil::url('Wikula', 'user', 'main', array('tag' => $args['tag'])));
                 //$text = DataUtil::formatForDisplay($args['text']);
-                return '<a href="'. ModUtil::url('wikula', 'user', 'main', array('tag' => DataUtil::formatForDisplay(urlencode($args['tag'])))).'" title="'.$args['text'].'">'.$args['text'].'</a>';
+                return '<a href="'. ModUtil::url('Wikula', 'user', 'main', array('tag' => DataUtil::formatForDisplay(urlencode($args['tag'])))).'" title="'.$args['text'].'">'.$args['text'].'</a>';
             } else {
-                return '<span class="missingpage">'.$args['text'].'</span><a href="'. ModUtil::url('wikula', 'user', 'edit', array('tag' => urlencode($args['tag']))).'" title="'.DataUtil::formatForDisplay($args['tag']).'">?</a>';
+                return '<span class="missingpage">'.$args['text'].'</span><a href="'. ModUtil::url('Wikula', 'user', 'edit', array('tag' => urlencode($args['tag']))).'" title="'.DataUtil::formatForDisplay($args['tag']).'">?</a>';
             }
         }
 

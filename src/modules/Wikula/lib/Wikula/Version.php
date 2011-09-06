@@ -13,7 +13,7 @@ class Wikula_Version extends Zikula_AbstractVersion
     {
         $meta['name']           = 'Wikula';
         $meta['displayname']    = __('Wikula');
-        $meta['oldnames']       = array('pnWikka', 'wikula');
+        $meta['oldnames']       = array('pnWikka', 'Wikula');
         $meta['description']    = __('The Wikula module provides a wiki to your website.');
         $meta['url']            = __('Wikula');
         $meta['version']        = '2.0.0';

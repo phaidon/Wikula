@@ -24,7 +24,7 @@ class Wikula_Block_RecentChanges extends Zikula_Controller_AbstractBlock
     public function init()
     {
         // Security
-        SecurityUtil::registerPermissionSchema('wikula:recentchangesblock:', 'Block ID::');
+        SecurityUtil::registerPermissionSchema('Wikula:recentchangesblock:', 'Block ID::');
     }
 
     /**
@@ -36,7 +36,7 @@ class Wikula_Block_RecentChanges extends Zikula_Controller_AbstractBlock
     public function info()
     {
         return array('text_type'      => 'recentchanges',
-                     'module'         => 'wikula',
+                     'module'         => 'Wikula',
                      'text_type_long' => 'Show the wikula recent changes',
                      'allow_multiple' => false,
                      'form_content'   => false,
@@ -112,7 +112,7 @@ class Wikula_Block_RecentChanges extends Zikula_Controller_AbstractBlock
      */
     public function modify($blockinfo)
     {
-        $dom = ZLanguage::getModuleDomain('wikula');
+        $dom = ZLanguage::getModuleDomain('Wikula');
         // Get current content
         $vars = BlockUtil::varsFromContent($blockinfo['content']);
 
@@ -123,7 +123,7 @@ class Wikula_Block_RecentChanges extends Zikula_Controller_AbstractBlock
 
         // Create output object
             // As Admin output changes often, we do not want caching.
-        $render = pnRender::getInstance('wikula', false);
+        $render = pnRender::getInstance('Wikula', false);
 
         // assign the approriate values
         $render->assign('blockvars', $vars);
@@ -142,7 +142,7 @@ class Wikula_Block_RecentChanges extends Zikula_Controller_AbstractBlock
      */
     public function update($blockinfo)
     {
-        $dom = ZLanguage::getModuleDomain('wikula');
+        $dom = ZLanguage::getModuleDomain('Wikula');
         // Get current content
         $vars = BlockUtil::varsFromContent($blockinfo['content']);
 
@@ -153,7 +153,7 @@ class Wikula_Block_RecentChanges extends Zikula_Controller_AbstractBlock
         $blockinfo['content'] = BlockUtil::varsToContent($vars);
 
         // clear the block cache
-        $render = pnRender::getInstance('wikula');
+        $render = pnRender::getInstance('Wikula');
         $render->clear_cache('block/recentchanges.tpl');
 
         return $blockinfo;

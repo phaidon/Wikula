@@ -1,9 +1,9 @@
 <div class="action_mychanges">
     <p class="z-informationmsg">
         {if $alpha eq 1}
-        {gt text='This is a list of pages you'} (<a href="{modurl modname='wikula' tag=$tag|urlencode}" title="{gt text='Order by date'}">{gt text='Order by date'}</a>).
+        {gt text='This is a list of pages you'} (<a href="{modurl modname='Wikula' tag=$tag|urlencode}" title="{gt text='Order by date'}">{gt text='Order by date'}</a>).
         {else}
-        {gt text='This is a list of pages you'} (<a href="{modurl modname='wikula' tag=$tag|urlencode alpha=1}" title="{gt text='Order alphabetically'}">{gt text='Order alphabetically'}</a>).
+        {gt text='This is a list of pages you'} (<a href="{modurl modname='Wikula' tag=$tag|urlencode alpha=1}" title="{gt text='Order alphabetically'}">{gt text='Order alphabetically'}</a>).
         {/if}
     </p>
 
@@ -20,9 +20,9 @@
     <ul class="mychanges">
         {foreach from=$pages item='page'}
         <li>
-            (<a href="{modurl modname='wikula' tag=$page.tag|urlencode time=$page.time|urlencode}" title="{gt text='Revisions'}">{$page.timeformatted}</a>)
-            (<a href="{modurl modname='wikula' func='history' tag=$page.tag|urlencode}" title="{$page.tag} {gt text='History'}">{gt text='History'}</a>)
-            <a href="{modurl modname='wikula' tag=$page.tag|urlencode}" title="{$page.tag}">{$page.tag}</a>
+            (<a href="{modurl modname='Wikula' tag=$page.tag|urlencode time=$page.time|urlencode}" title="{gt text='Revisions'}">{$page.timeformatted}</a>)
+            (<a href="{modurl modname='Wikula' func='history' tag=$page.tag|urlencode}" title="{$page.tag} {gt text='History'}">{gt text='History'}</a>)
+            <a href="{modurl modname='Wikula' tag=$page.tag|urlencode}" title="{$page.tag}">{$page.tag}</a>
             {if !$alpha}
             &nbsp;<span class="pagenote">[&nbsp;{$page.note}&nbsp;]</span>
             {/if}

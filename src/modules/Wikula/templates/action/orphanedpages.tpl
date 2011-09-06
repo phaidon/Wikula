@@ -6,7 +6,7 @@
 {if !empty($items)}
   <ul>
     {foreach from=$items item='item'}
-    <li><a href="{modurl modname='wikula' tag=$item.tag|urlencode}" title="{$item.tag|safehtml}">{$item.tag|safehtml}</a></li>
+    <li><a href="{modurl modname='Wikula' tag=$item.tag|urlencode}" title="{$item.tag|safehtml}">{$item.tag|safehtml}</a></li>
     {/foreach}
   </ul>
 {else}

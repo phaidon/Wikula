@@ -1,11 +1,11 @@
 {include file='user/menu.tpl' tag=$tag}
 
-<div id="wikula">
+<div id="Wikula">
     <div class="page">
 
-        <form class="z-form" action="{modurl modname='wikula' type='user' func='clone'}" method="post" enctype="application/x-www-form-urlencoded">
+        <form class="z-form" action="{modurl modname='Wikula' type='user' func='clone'}" method="post" enctype="application/x-www-form-urlencoded">
             <div id="wikula_cloneform">
-                {modurl modname='wikula' tag=$tag|urlencode assign='pageurl'}
+                {modurl modname='Wikula' tag=$tag|urlencode assign='pageurl'}
                 <h3>{gt text='Clone <a href="%1$s">%1$s</a>' tag2=$tag|safehtml tag1=$pageurl}</h3>
                 <input type="hidden" name="tag" value="{$tag|safehtml}" />
 

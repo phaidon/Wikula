@@ -6,10 +6,10 @@
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  */
 
-Upload the wikula folder to your Zikula /modules folder.
+Upload the Wikula folder to your Zikula /modules folder.
 
 In your Zikula administration panel, in the Modules Section
-Regenerate your modules list, initialize the wikula module
+Regenerate your modules list, initialize the Wikula module
 and follow the interactive installation.
 
 Wikula uses the Q, THEAD, TBODY, and some others HTML Tags.

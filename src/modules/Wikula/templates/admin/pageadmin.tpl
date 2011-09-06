@@ -82,7 +82,7 @@
                 <td class="number  c2">
                     <a href="{modurl modname='Wikula' func='history' tag=$item.tag|urlencode}" title="Display History for UserAdmin ({$item.revisions})">{$item.revisions}</a>
                 </td>
-                {*modapifunc modname='EZComments' type='user' func='countitems' mod='wikula' objectid=$item.tag assign='comcount'*}
+                {*modapifunc modname='EZComments' type='user' func='countitems' mod='Wikula' objectid=$item.tag assign='comcount'*}
                 <td class="number  c3">
                     <a href="{modurl modname='Wikula' tag=$item.tag|urlencode}" title="Display comments for {$item.tag} ({$item.comments})">{$item.comments}</a>
                 </td>

@@ -26,19 +26,19 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
     {
         
         $links = array();
-        if (SecurityUtil::checkPermission('wikula::', '::', ACCESS_ADMIN)) {
+        if (SecurityUtil::checkPermission('Wikula::', '::', ACCESS_ADMIN)) {
             $links[] = array(
-                'url' => ModUtil::url('wikula', 'admin', 'main'),
+                'url' => ModUtil::url('Wikula', 'admin', 'main'),
                 'text' => __('Main'),
                 'class' => 'z-icon-es-home'
             );
             $links[] = array(
-                'url' => ModUtil::url('wikula', 'admin', 'pages'),
+                'url' => ModUtil::url('Wikula', 'admin', 'pages'),
                 'text' =>  __('Pages'),
                 'class' => 'z-icon-es-view'
             );
             $links[] = array(
-                'url' => ModUtil::url('wikula', 'admin', 'modifyconfig'),
+                'url' => ModUtil::url('Wikula', 'admin', 'modifyconfig'),
                 'text' => __('Settings'),
                 'class' => 'z-icon-es-config'
             );
@@ -69,7 +69,7 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
     public function PageIndex()
     {
         
-        $pages = ModUtil::apiFunc('wikula', 'user', 'LoadAllPages');
+        $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadAllPages');
 
         $requested_letter = FormUtil::getPassedValue('letter');
         $currentpage      = FormUtil::getPassedValue('tag');
@@ -116,7 +116,7 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
             }
         }
 
-        $render = pnRender::getInstance('wikula', false);
+        $render = pnRender::getInstance('Wikula', false);
 
         $render->assign('currentpage',   $currentpage);
         $render->assign('headerletters', $headerletters);

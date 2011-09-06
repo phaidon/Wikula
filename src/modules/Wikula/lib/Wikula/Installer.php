@@ -19,7 +19,7 @@ class Wikula_Installer extends Zikula_AbstractInstaller
     }
 
     /**
-     * wikula install function
+     * Wikula install function
      */
     public function install()
     {        
@@ -39,7 +39,7 @@ class Wikula_Installer extends Zikula_AbstractInstaller
     }
 
     /**
-     * wikula upgrade function
+     * Wikula upgrade function
      */
     public function upgrade($oldversion)
     {
@@ -72,7 +72,7 @@ class Wikula_Installer extends Zikula_AbstractInstaller
 
                 // migrate module vars
                 $pnwikkavars = ModUtil::getVar('pnWikka');
-                $wikulavars  = ModUtil::getVar('wikula');
+                $wikulavars  = ModUtil::getVar('Wikula');
                 foreach ($pnwikkavars as $name => $value) {
                     if (!isset($wikulavars[$name])) {
                         $wikulavars[$name] = $value;
@@ -108,7 +108,7 @@ class Wikula_Installer extends Zikula_AbstractInstaller
     }
 
     /**
-     * wikula uninstall function
+     * Wikula uninstall function
      */
     public function uninstall()
     {

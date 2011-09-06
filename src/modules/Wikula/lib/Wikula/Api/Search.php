@@ -57,7 +57,7 @@ class Wikula_Api_Search extends Zikula_AbstractApi
 
         $search = $args['q'];
         
-       $pages = ModUtil::apiFunc('wikula', 'user', 'FullTextSearch', array('phrase' => $search));
+       $pages = ModUtil::apiFunc('Wikula', 'user', 'FullTextSearch', array('phrase' => $search));
        
        
         $sessionId = session_id();

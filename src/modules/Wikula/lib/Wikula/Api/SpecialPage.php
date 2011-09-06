@@ -126,7 +126,7 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
 
     public function category($args)
     {
-        $tag     = (isset($args['page']) && !empty($args['page'])) ? $args['page'] : FormUtil::getPassedValue('tag', ModUtil::getVar('wikula', 'root_page'));
+        $tag     = (isset($args['page']) && !empty($args['page'])) ? $args['page'] : FormUtil::getPassedValue('tag', ModUtil::getVar('Wikula', 'root_page'));
         $col     = (isset($args['col']) && !empty($args['col'])) ? $args['col'] : 1;
         $full    = (isset($args['full']) && !empty($args['full'])) ? 1 : 0;
         $compact = (isset($args['compact']) && !empty($args['compact'])) ? 1 : 0;
@@ -511,7 +511,7 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
     
     function TextSearchExpanded()
     {
-        $dom = ZLanguage::getModuleDomain('wikula');
+        $dom = ZLanguage::getModuleDomain('Wikula');
         $phrase = FormUtil::getPassedValue('phrase');
 
         // Defaults

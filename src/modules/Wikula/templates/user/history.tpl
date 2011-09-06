@@ -1,6 +1,6 @@
 {include file='user/menu.tpl' tag=$tag}
 
-<div id="wikula">
+<div id="Wikula">
     <div class="page">
 
         <a href="{modurl modname='Wikula' type='user' func='RevisionsXML' tag=$tag theme='rss'}">{gt text='Show feed'}</a>
@@ -15,7 +15,7 @@
         {usergetvar uid=$uid name='_YOURAVATAR' assign='avatar'}
 
         {if $avatar eq '' OR $avatar eq 'blank.gif'}
-        {img modname='wikula' src='avatar_male.gif' width='20' class='avatar'}
+        {img modname='Wikula' src='avatar_male.gif' width='20' class='avatar'}
         {else}
         <img src="images/avatar/{$avatar|safehtml}" class="avatar" width="20" />
         {/if}
@@ -28,7 +28,7 @@
             {else}
             {gt text='Edit'}
             {/if}
-            <a href="{modurl modname='wikula' func='main' tag=$tag time=$object.pageAtimeurl}" title="{$tag} - {$object.pageAtime}">{$object.pageAtime}</a>
+            <a href="{modurl modname='Wikula' func='main' tag=$tag time=$object.pageAtimeurl}" title="{$tag} - {$object.pageAtime}">{$object.pageAtime}</a>
             {gt text='by'} {$object.EditedByUser|profilelinkbyuname}
         </strong>
         <span class="pagenote changenote">{if $object.note ne ''}[ {$object.note} ]{/if}</span>
@@ -52,12 +52,12 @@
         {usergetvar uid=$uid name='_YOURAVATAR' assign='avatar'}
 
         {if $avatar eq '' OR $avatar eq 'blank.gif'}
-        {img modname='wikula' src='avatar_male.gif' width='20' class='avatar'}
+        {img modname='Wikula' src='avatar_male.gif' width='20' class='avatar'}
         {else}
         <img src="images/avatar/{$avatar|safehtml}" class="avatar" width="20" />
         {/if}
 
-        <strong>{gt text='Oldest known version of this page was edited on'} <a href="{modurl modname='wikula' func='main' tag=$tag time=$oldest.time|@urlencode}" title="{$tag} - {$oldest.time}">{$oldest.time}</a>
+        <strong>{gt text='Oldest known version of this page was edited on'} <a href="{modurl modname='Wikula' func='main' tag=$tag time=$oldest.time|@urlencode}" title="{$tag} - {$oldest.time}">{$oldest.time}</a>
             {gt text='by'} {$oldest.user|profilelinkbyuname}
         <span style="color:#888;font-size:smaller;">{if $oldest.note ne ''}[ {$oldest.note} ]{/if}</span></strong>
 

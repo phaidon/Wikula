@@ -5,7 +5,7 @@
       <thead>
         <tr>
           <th{if $action_cc.col > 1} colspan="{$action_cc.col}"{/if}>
-            {gt text='Pages that belong to this category '} <a href="{modurl modname='wikula' tag=$action_cc.tag|urlencode}" title="{$action_cc.tag}">{$action_cc.tag}</a> ({$action_cc.total})
+            {gt text='Pages that belong to this category '} <a href="{modurl modname='Wikula' tag=$action_cc.tag|urlencode}" title="{$action_cc.tag}">{$action_cc.tag}</a> ({$action_cc.total})
           </th>
         </tr>
       </thead>
@@ -15,7 +15,7 @@
         {counter name='categorycategory' start=0 print=false assign='action_cc_count'}
         {foreach from=$action_cc.pages item='action_cc_page' name='action_cc_pages'}
           <td>
-            <a href="{modurl modname='wikula' tag=$action_cc_page.page_tag|urlencode}" title="{$action_cc_page.page_tag}">{$action_cc_page.page_tag}</a>
+            <a href="{modurl modname='Wikula' tag=$action_cc_page.page_tag|urlencode}" title="{$action_cc_page.page_tag}">{$action_cc_page.page_tag}</a>
           </td>
           {counter name='categorycategory' print=false}
         {* row break check *}
@@ -37,12 +37,12 @@
     </table>
   {else}
     {if $action_cc.notitle eq 0}
-    <h5>{gt text='Pages that belong to this category '} <a href="{modurl modname='wikula' tag=$action_cc.tag|urlencode}" title="{$action_cc.tag}">{$action_cc.tag}</a></h5>
+    <h5>{gt text='Pages that belong to this category '} <a href="{modurl modname='Wikula' tag=$action_cc.tag|urlencode}" title="{$action_cc.tag}">{$action_cc.tag}</a></h5>
     {/if}
     <div class="categorycategory">
       <ul>
         {foreach from=$action_cc.pages item='action_cc_page'}
-        <li><a href="{modurl modname='wikula' tag=$action_cc_page.page_tag|urlencode}" title="{$action_cc_page.page_tag}">{$action_cc_page.page_tag}</a></li>
+        <li><a href="{modurl modname='Wikula' tag=$action_cc_page.page_tag|urlencode}" title="{$action_cc_page.page_tag}">{$action_cc_page.page_tag}</a></li>
         {/foreach}
       </ul>
     </div>
