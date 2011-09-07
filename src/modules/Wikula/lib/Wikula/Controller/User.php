@@ -22,8 +22,14 @@ class Wikula_Controller_User extends Zikula_AbstractController
         require_once 'modules/Wikula/lib/Wikula/Common.php';
     }
 
+    
+    public function main($args)
+    {
+        return $this->show($args);
+    }
+    
     /**
-     * Main function
+     * Show function
      * 
      * Displays a wiki page
      *
@@ -33,7 +39,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
      * @return unknown
      */
     
-    public function main($args)
+    public function show($args)
     {
 
         // Permission check
@@ -51,10 +57,23 @@ class Wikula_Controller_User extends Zikula_AbstractController
         if(empty($tag)) {
             $tag = $this->getVar('root_page');
         }
+
         
         if (empty($time)) {
             $time = null;
         }
+        
+        // redirect if tag contains spaces
+        if (strpos($tag, ' ') !== false) {
+            $arguments = array(
+                'tag'  => str_replace(' ', '_', $tag),
+                'time' => $time,
+                'raw'  => $raw
+            );
+            $redirecturl = ModUtil::url($this->name, 'user', 'show', $arguments);
+            System::redirect($redirecturl);
+        }
+        
         
         $specialPages = ModUtil::apiFunc($this->name, 'SpecialPage', 'listpages');
         
@@ -134,7 +153,17 @@ class Wikula_Controller_User extends Zikula_AbstractController
         );
         
         $tag  = FormUtil::getPassedValue('tag');
-        //$time = FormUtil::getPassedValue('time');
+        
+        // redirect if tag contains spaces
+        if (strpos($tag, ' ') !== false) {
+            $arguments = array(
+                'tag'  => str_replace(' ', '_', $tag),
+                'time' => $time,
+                'raw'  => $raw
+            );
+            $redirecturl = ModUtil::url($this->name, 'user', 'show', $arguments);
+            System::redirect($redirecturl);
+        }
 
         if (empty($tag)) {
             return LogUtil::registerError(
@@ -364,6 +393,15 @@ class Wikula_Controller_User extends Zikula_AbstractController
         $tag = FormUtil::getPassedValue('tag');
         if (empty($tag)) {
             return LogUtil::registerError(__f('Missing argument [%s]', 'tag'), null, ModUtil::url($this->name, 'user', 'main'));
+        }
+        
+        
+        if (strpos($tag, ' ') !== false) {
+            $arguments = array(
+                'tag'  => str_replace(' ', '_', $tag)
+            );
+            $redirecturl = ModUtil::url($this->name, 'user', 'show', $arguments);
+            System::redirect($redirecturl);
         }
 
         // Get the variables
