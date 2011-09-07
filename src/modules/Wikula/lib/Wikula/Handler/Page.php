@@ -34,6 +34,16 @@ class Wikula_Handler_Page  extends Zikula_Form_AbstractHandler
         
         $this->_tag = FormUtil::getPassedValue('tag', null, "GET", FILTER_SANITIZE_STRING);
         
+        
+                // redirect if tag contains spaces
+        if (strpos($this->_tag, ' ') !== false) {
+            $arguments = array(
+                'tag'  => str_replace(' ', '_', $this->_tag),
+            );
+            $redirecturl = ModUtil::url($this->name, 'user', 'show', $arguments);
+            System::redirect($redirecturl);
+        }
+        
         $specialPages = ModUtil::apiFunc($this->name, 'SpecialPage', 'listpages');
         if( array_key_exists($this->_tag, $specialPages)) {
             return $view->redirect(ModUtil::url($this->name, 'user', 'main', array('tag' => $this->_tag)));
