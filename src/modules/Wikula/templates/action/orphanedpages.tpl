@@ -1,8 +1,7 @@
 <div class="action_pageindex">
 
-<h3>{gt text='Orphaned Pages'}</h3>
-
-<h4>{gt text='The following list shows those pages held in the Wiki that are not linked to on any other pages.'}</h4>
+<p>{gt text='The following list shows those pages held in the Wiki that are not linked to on any other pages.'}</p>
+<br />
 {if !empty($items)}
   <ul>
     {foreach from=$items item='item'}

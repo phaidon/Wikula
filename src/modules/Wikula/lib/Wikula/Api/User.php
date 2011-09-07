@@ -627,6 +627,9 @@ class Wikula_Api_User extends Zikula_AbstractApi
         extract($args);
         unset($args);
 
+        
+        
+        
         if (!isset($startnum) || !is_numeric($startnum)) {
             $startnum = 1;
         }
@@ -634,41 +637,21 @@ class Wikula_Api_User extends Zikula_AbstractApi
             $numitems = -1;
         }
 
-        $dbconn  =& pnDBGetConn(true);
-        $table =& DBUtil::getTables();
-
-        $pagetbl = &$table['wikula_pages'];
-        $pagecol = &$table['wikula_pages_column'];
-        $linktbl = &$table['wikula_links'];
-        $linkcol = &$table['wikula_links_column'];
-
-        $sql = 'SELECT DISTINCT '.$pagecol['tag']
-                .' FROM '.$pagetbl
-                .' LEFT JOIN '.$linktbl.' ON '.$pagecol['tag'].' = '.$linkcol['to_tag']
-                .' WHERE '.$linkcol['to_tag'].' IS NULL '
-                .' ORDER BY '.$pagecol['tag'];
-
-        $result =& $dbconn->SelectLimit($sql, $numitems, $startnum-1);
-
-        if ($dbconn->ErrorNo() != 0) {
-            return LogUtil::registerError(__('Getting matches for this page failed!').' - '.$dbconn->ErrorMsg());
-        }
-
-        $pages = array();
-
-        for (; !$result->EOF; $result->MoveNext()) {
-
-            list($tag) = $result->fields;
-
-            if (SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_READ))  {
-                $pages[] = array('tag' => $tag);
+        
+        $q = Doctrine_Query::create()
+            ->from('Wikula_Model_Pages a')
+            ->select('a.tag, b.to_tag')
+            ->leftJoin('a.Wikula_Model_Links b')
+            ->where('a.latest = ?', array('Y'))
+            ;
+        
+        $orphanedPages = $q->execute()->toArray();
+        foreach($orphanedPages as $key => $value) {
+            if(count($value['Wikula_Model_Links']) > 0 ) {
+                unset($orphanedPages[$key]);
             }
-
         }
-
-        $result->Close();
-
-        return $pages;
+        return $orphanedPages;
 
     }
 
