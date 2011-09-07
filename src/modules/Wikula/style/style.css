@@ -891,10 +891,10 @@ input.wikula_searchbox {
     border: 1px solid #ccc;
     background-color: #f1f1f1;
     width: 200px;
+    margin-right:-32px;
 }
 
 button.wikula_searchbutton {
-    margin-left:-30px;
     border-width:0px;
     background-color:transparent
 }
