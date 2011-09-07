@@ -1,3 +1,4 @@
+
 <div id="wikulaheader">
     <div class="header">
         <h2>
@@ -6,7 +7,10 @@
         </h2>
         <div class="z-clearfix">
             <ul class="z-menulinks" style="height:24px">
+                {modapifunc modname=$modinfo.name type='user' func='isAllowedToEdit' tag=$tag assign='isAllowedToEdit'}
+                {if $isAllowedToEdit}
                 <li><a href="{modurl modname=$modinfo.name type='user' func='edit' tag=$tag|urlencode}" title="{gt text='Edit'}">{gt text='Edit'}</a></li>
+                {/if}
                 <li><a href="{modurl modname=$modinfo.name type='user' func='history' tag=$tag|urlencode}" title="{gt text='History'}">{gt text='History'}</a></li>
                 <li><a href="{modurl modname=$modinfo.name type='user' func='backlinks' tag=$tag|urlencode}" title="{gt text='Backlinks'}">{gt text='Backlinks'}</a></li>
                 <li><a href="{modurl modname=$modinfo.name type='user' func='main' tag='Special_pages'}" title="{gt text='Special pages'}">{gt text='Special pages'}</a></li>

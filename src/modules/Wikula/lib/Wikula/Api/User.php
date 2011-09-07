@@ -21,6 +21,12 @@ class Wikula_Api_User extends Zikula_AbstractApi
 {
 
 
+      public function test($args)
+    {
+       return 'tt';
+    }  
+    
+    
     /**
     * Validate a PageName
     */
@@ -43,7 +49,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
             return LogUtil::registerArgsError();
         }
 
-        $access = SecurityUtil::checkPermission('Wikula::', 'page::'.$args['tag'], ACCESS_COMMENT) ||
+        $access = SecurityUtil::checkPermission('Wikula::', 'page::'.$args['tag'], ACCESS_EDIT) ||
                 $args['tag'] == __('SandBox');
 
         return $access;
@@ -757,7 +763,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
         // Permission check
         $this->throwForbiddenUnless(
-            SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_COMMENT),
+            SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_EDIT),
             LogUtil::getErrorMsgPermission()
         );
 
