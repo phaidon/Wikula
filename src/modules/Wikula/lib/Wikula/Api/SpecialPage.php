@@ -61,10 +61,6 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
                 'action' => 'mypages',
                 'description' => $this->__('list of pages that you own on this wiki')
             ),
-            $this->__('Owned_pages')         => array(
-                'action' => 'ownedpages',
-                'description' => $this->__('check out how many pages you own on the wiki')
-            ),
             $this->__('Recent_changes')      => array(
                 'action' => 'recentchanges',
                 'description' => $this->__('check which pages that were changed recently')
@@ -316,29 +312,6 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
                           ->assign('count',     $pages['count'])
                           ->assign('total',     $pages['total'])
                           ->fetch('action/mypages.tpl', $uname.$pages['count']);
-    }
-    
-    function ownedpages($args)
-    {
-        if (!UserUtil::isLoggedIn()) {
-            return;
-        }
-
-        $result = ModUtil::apiFunc($this->name, 'user', 'LoadAllPagesOwnedByUser', array(
-            'uname'     => UserUtil::getVar('uname'),
-            'justcount' => true)
-        );
-
-        if (!$result) {
-            return __('Error during element fetching !');
-        }
-        $percent = round(($result['count']/$result['total'])*100, 2);
-
-
-
-        return $this->view->assign($result)
-                          ->assign('percent', $percent)
-                          ->fetch('action/ownedpages.tpl');
     }
     
     
