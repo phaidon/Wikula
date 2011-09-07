@@ -39,7 +39,7 @@
 
             <input id="wikula_phrase" name="phrase" size="12" class="wikula_searchbox"/>
             <button id="searchButton" type="submit" name="button" class="wikula_searchbutton">
-                {img src='search.png' alt='' modname=$modinfo.name width="12" height=12"}
+                {img modname=core src=search.png set=icons/extrasmall width="12" height=12" alt=""} 
             </button>
         </form>
         </div>
