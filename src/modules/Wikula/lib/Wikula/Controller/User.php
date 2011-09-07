@@ -158,8 +158,6 @@ class Wikula_Controller_User extends Zikula_AbstractController
         if (strpos($tag, ' ') !== false) {
             $arguments = array(
                 'tag'  => str_replace(' ', '_', $tag),
-                'time' => $time,
-                'raw'  => $raw
             );
             $redirecturl = ModUtil::url($this->name, 'user', 'show', $arguments);
             System::redirect($redirecturl);
