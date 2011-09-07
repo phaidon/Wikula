@@ -13,7 +13,6 @@
         <em class="wikula_error">{gt text='There are no backlinks to this page'}</em>
         {/foreach}
     </div>
-    {include file='user/footer.tpl'}
 </div>
 
 

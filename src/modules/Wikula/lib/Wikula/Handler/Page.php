@@ -36,7 +36,7 @@ class Wikula_Handler_Page  extends Zikula_Form_AbstractHandler
         
         $specialPages = ModUtil::apiFunc($this->name, 'SpecialPage', 'listpages');
         if( array_key_exists($this->_tag, $specialPages)) {
-            return $this->redirect(ModUtil::url($this->name, 'user', 'main', array('tag' => $this->_tag)));
+            return $view->redirect(ModUtil::url($this->name, 'user', 'main', array('tag' => $this->_tag)));
         }
         
         $page = ModUtil::apiFunc($this->name, 'user', 'LoadPage', array(

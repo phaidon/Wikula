@@ -101,6 +101,10 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
                 'action' => 'allcategories',
                 'title'  => $this->__('All categories')
             ),
+            $this->__('SpecialPages')      => array(
+                'action' => 'specialpages',
+                'title'  => $this->__('Special pages')
+            ),
         );
     }
     
@@ -176,6 +180,15 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
         return $this->view->assign('action_cc', $assign)
                           ->fetch('action/categorycategory.tpl');
 
+    }
+    
+    public function specialpages($args)
+    {
+        
+        $specialpages = $this->listpages();
+        $this->view->assign('specialpages',   $specialpages);
+        return $this->view->fetch('action/specialpages.tpl');
+        
     }
     
     

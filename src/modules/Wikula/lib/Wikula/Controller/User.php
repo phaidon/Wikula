@@ -143,6 +143,11 @@ class Wikula_Controller_User extends Zikula_AbstractController
                 ModUtil::url($this->name, 'user', 'main')
             );
         }
+        
+        $specialPages = ModUtil::apiFunc($this->name, 'SpecialPage', 'listpages');
+        if( array_key_exists($tag, $specialPages)) {
+            return System::redirect(ModUtil::url($this->name, 'user', 'main', array('tag' => $tag)));
+        }
 
         $pages = ModUtil::apiFunc($this->name, 'user', 'LoadRevisions', array(
             'tag' => $tag)

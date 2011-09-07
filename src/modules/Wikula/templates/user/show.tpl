@@ -27,7 +27,6 @@
     <div class="page">
         {$showpage.body|notifyfilters:'wikula.filter_hooks.body.filter'}
     </div>
-    {include file='user/footer.tpl'}
 
 </div>
 

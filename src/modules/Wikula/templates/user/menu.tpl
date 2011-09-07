@@ -1,48 +1,28 @@
 <div id="wikulaheader">
     <div class="header">
         <h2>
-            <a href="{modurl modname='Wikula' type='user' func='main'}">{$modinfo.displayname}</a> &#187;
-            <a href="{modurl modname='Wikula' type='user' func='main' tag=$tag|urlencode}">{$tag|safehtml}</a>
+            <a href="{modurl modname=$modinfo.name type='user' func='main'}">{$modinfo.displayname}</a> &#187;
+            <a href="{modurl modname=$modinfo.name type='user' func='main' tag=$tag|urlencode}">{$tag|safehtml}</a>
         </h2>
-        <ul class="z-menulinks">
+        <div style="float:left;">
+        <ul class="z-menulinks" style="height:26px;border-right-width:0px">
             <li>
-                {if $tag neq $modvars.Wikula.root_page}
-                <a href="{modurl modname='Wikula'}" title="{$modvars.Wikula.root_page}">{$modvars.Wikula.root_page}</a>
-                {else}
-                {$modvars.Wikula.root_page}
-                {/if}
+                <a href="{modurl modname=$modinfo.name type='user' func='edit' tag=$tag|urlencode}" title="{gt text='Edit'}">{gt text='Edit'}</a>
             </li>
 
             <li>
-                {if $tag neq $smarty.const.CategoryCategory}
-                <a href="{modurl modname='Wikula' type='user' tag=$smarty.const.CategoryCategory}" title="">{gt text='Categories'}</a>
-                {else}
-                {gt text='Categories'}
-                {/if}
+                <a href="{modurl modname=$modinfo.name type='user' func='history' tag=$tag|urlencode}" title="{gt text='History'}">{gt text='History'}</a>
+            </li>
+            <li>
+                <a href="{modurl modname=$modinfo.name type='user' func='backlinks' tag=$tag|urlencode}" title="{gt text='Backlinks'}">{gt text='Backlinks'}</a>
             </li>
 
             <li>
-                {if $tag neq $smarty.const.PageIndex}
-                <a href="{modurl modname='Wikula' type='user' tag=$smarty.const.PageIndex}" title="">{gt text='Page index'}</a>
-                {else}
-                <span>{gt text='Page index'}</span>
-                {/if}
+                &nbsp;&nbsp;
             </li>
 
             <li>
-                {if $tag neq $smarty.const.TextSearch}
-                <a href="{modurl modname='Wikula' type='user' __tag='Search'}" title="">{gt text='Search'}</a>
-                {else}
-                <span>{gt text='Search'}</span>
-                {/if}
-            </li>
-
-            <li>
-                {if $tag neq $smarty.const.WikiHelp}
-                <a href="{modurl modname='Wikula' type='user' tag=$smarty.const.WikiHelp}" title="">{gt text='Help'}</a>
-                {else}
-                <span>{gt text='Help'}</span>
-                {/if}
+                <a href="{modurl modname=$modinfo.name type='user' func='main' tag='SpecialPages'}" title="{gt text='Special pages'}">{gt text='Special pages'}</a>
             </li>
 
             {if $coredata.logged_in eq false}
@@ -51,16 +31,20 @@
             </li>
             {/if}
 
-            <li>
-                {if $tag neq $smarty.const.RecentChanges}
-                <a href="{modurl modname='Wikula' type='user' tag=$smarty.const.RecentChanges}" title="">{gt text='Recent changes'}</a>
-                {else}
-                <span>{gt text='Recent changes'}</span>
-                {/if}
-            </li>
-
-            <li><a href="{modurl modname='Wikula' func='recentchangesxml' theme='rss'}" title="{gt text='Recent changes Feed'}">{img modname='Wikula' src='rss.png' __title='Recent changes Feed'  __alt='RSS'}</a></li>
         </ul>
+        </div>
+        <div class="wikula_menu">
+        <form class="z-form" action="{modurl modname=$modinfo.name type='user' func='main' __tag='Search'}" method="post" enctype="application/x-www-form-urlencoded">
+
+
+            <input id="wikula_phrase" name="phrase" size="12" class="wikula_searchbox"/>
+            <button id="searchButton" type="submit" name="button" class="wikula_searchbutton">
+                {img src='search.png' alt='' modname=$modinfo.name width="12" height=12"}
+            </button>
+        </form>
+        </div>
+
+        <div style="clear:both;"></div>
 
         {insert name='getstatusmsg'}
     </div>

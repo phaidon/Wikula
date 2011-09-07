@@ -886,3 +886,52 @@ div.sidenote_warning .sidenote_title {
 .z-menulinks img {
     vertical-align: middle;
 }
+
+
+div.wikula_menu {
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefefe', endColorstr='#E6E6E6'); /*IE*/
+    background: -webkit-gradient(linear,left top, left bottom,from(#fefefe), to(#E6E6E6)); /*webkit*/
+    background: -moz-linear-gradient(top, #fefefe, #E6E6E6); /*gecko*/
+    background: linear-gradient(#fefefe, #E6E6E6); /*CSS3*/
+    border: 1px solid #ccc;
+    color: #aaa;
+    height: auto;
+    line-height: 22px;
+    list-style: none outside none;
+    margin: 1em 0;
+    height:26px;
+    padding:0 5px;
+    text-align:right;
+}
+
+div.wikula_menu {
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefefe', endColorstr='#E6E6E6'); /*IE*/
+    background: -webkit-gradient(linear,left top, left bottom,from(#fefefe), to(#E6E6E6)); /*webkit*/
+    background: -moz-linear-gradient(top, #fefefe, #E6E6E6); /*gecko*/
+    background: linear-gradient(#fefefe, #E6E6E6); /*CSS3*/
+    border: 1px solid #ccc;
+    color: #aaa;
+    height: auto;
+    line-height: 22px;
+    list-style: none outside none;
+    margin: 1em 0;
+    height:26px;
+    padding:0 5px;
+    text-align:right;
+}
+
+input.wikula_searchbox {
+    border:1px;
+    border-style:solid;
+    border-color:#cccccc;
+    background-color:#f1f1f1;
+    width:200px
+}
+
+
+button.wikula_searchbutton {
+    margin-left:-30px;
+    border-width:0px;
+    background-color:transparent
+}
+
