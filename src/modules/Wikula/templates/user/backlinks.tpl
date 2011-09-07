@@ -2,7 +2,7 @@
 
 {modurl modname='Wikula' type='user' func='main' tag=$tag|urlencode assign='pageurl'}
 <div class="z-informationmsg">
-    {gt text='Pages linking to <a href="%1$s">%2$s</a>' tag1=$pageurl|safehtml tag2=$tag|safehtml}
+    {gt text='Pages linking to <a href="%1$s">%2$s</a>' tag1=$pageurl|safehtml tag2=$tag|hyphen2space|safehtml}
 </div>
 
 <div id="wikula">
