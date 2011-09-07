@@ -2,7 +2,7 @@
     <div class="header">
         <h2>
             <a href="{modurl modname=$modinfo.name type='user' func='main'}">{$modinfo.displayname}</a> &#187;
-            <a href="{modurl modname=$modinfo.name type='user' func='main' tag=$tag|urlencode}">{$tag|safehtml}</a>
+            <a href="{modurl modname=$modinfo.name type='user' func='main' tag=$tag|urlencode}">{$tag|hyphen2space|safehtml}</a>
         </h2>
         <div style="float:left;">
         <ul class="z-menulinks" style="height:26px;border-right-width:0px">
@@ -22,7 +22,7 @@
             </li>
 
             <li>
-                <a href="{modurl modname=$modinfo.name type='user' func='main' tag='SpecialPages'}" title="{gt text='Special pages'}">{gt text='Special pages'}</a>
+                <a href="{modurl modname=$modinfo.name type='user' func='main' tag='Special_pages'}" title="{gt text='Special pages'}">{gt text='Special pages'}</a>
             </li>
 
             {if $coredata.logged_in eq false}

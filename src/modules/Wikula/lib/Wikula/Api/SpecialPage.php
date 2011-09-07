@@ -53,57 +53,53 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
     public function listpages()
     {
         return array(
-            $this->__('PageIndex')          => array(
+            $this->__('Page_index')          => array(
                 'action' => 'pageindex',
-                'title'  => $this->__('Page index')
+                'description' =>  $this->__('index of the available pages on the wiki')
             ),
-            $this->__('MyPages')            => array(
+            $this->__('My_pages')            => array(
                 'action' => 'mypages',
-                'title'  => $this->__('My pages')
+                'description' => $this->__('list of pages that you own on this wiki')
             ),
-            $this->__('OwnedPages')         => array(
+            $this->__('Owned_pages')         => array(
                 'action' => 'ownedpages',
-                'title'  => $this->__('Owned pages')
+                'description' => $this->__('check out how many pages you own on the wiki')
             ),
-            $this->__('RecentChanges')      => array(
+            $this->__('Recent_changes')      => array(
                 'action' => 'recentchanges',
-                'title'  => $this->__('Recent changes')
+                'description' => $this->__('check which pages that were changed recently')
             ),
-            $this->__('HighScores')         => array(
+            $this->__('High_scores')         => array(
                 'action' => 'highscores',
-                'title'  => $this->__('High scores')
+                'description' => $this->__('check who had contributed more to the wiki')
             ),
-            $this->__('MyChanges')          => array(
+            $this->__('My_changes')          => array(
                 'action' => 'mychanges',
-                'title'  => $this->__('My changes')
+                'description' => $this->__('list of changes that you have done')
             ),
             $this->__('Search')             => array(
                 'action' => 'search',
-                'title'  => $this->__('Search')
+                'description' => $this->__('search something of your interest in the wiki')
             ),
-            $this->__('TextSearchExpanded') => array(
+            $this->__('Text_search_expanded') => array(
                 'action' => 'textsearchexpanded',
-                'title'  => $this->__('TextSearchExpanded')
+                'description' => $this->__("fine grained search if you haven't found anything in the normal search")
             ),
-            $this->__('WantedPages')        => array(
+            $this->__('Wanted_pages')        => array(
                 'action' => 'wantedpages',
-                'title'  => $this->__('Wanted pages')
+                'description' => $this->__('check out the pages pending for creation')
             ),
-            $this->__('OrphanedPages')      => array(
+            $this->__('Orphaned_pages')      => array(
                 'action' => 'orphanedpages',
-                'title'  => $this->__('Orphaned pages')
+                'description' => $this->__('list of orphaned pages')
             ),
-            $this->__('Help')               => array(
-                'action' => 'help',
-                'title'  => $this->__('Help')
-            ),
-            $this->__('AllCategories')      => array(
+            $this->__('All categories')      => array(
                 'action' => 'allcategories',
-                'title'  => $this->__('All categories')
+                'description' => $this->__('list of all categories')
             ),
-            $this->__('SpecialPages')      => array(
+            $this->__('Special_pages')      => array(
                 'action' => 'specialpages',
-                'title'  => $this->__('Special pages')
+                'description' => $this->__('list of special pages')
             ),
         );
     }
@@ -111,9 +107,7 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
     public function get($args)
     {
         $action = $args['action'];
-        if($action == 'help') {
-            return $this->view->fetch('user/help.tpl');
-        } else if ($action == 'allcategories') {
+        if ($action == 'allcategories') {
             $categories =  ModUtil::apiFunc($this->name, 'page', 'category', array(
                 'compact' => 1,
                 'notitle' => 1
@@ -121,9 +115,7 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
             return $this->view->assign('categories', $categories)
                             ->fetch('action/allcategories.tpl');
         }
-        $body  = '<h2>'.$args['title'].'</h2><br />';
-        $body .= call_user_func(array($this, $action), $args);
-        return $body;
+        return call_user_func(array($this, $action), $args);
     }
 
     
