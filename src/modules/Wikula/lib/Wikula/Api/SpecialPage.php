@@ -178,6 +178,7 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
     {
         
         $specialpages = $this->listpages();
+        unset($specialpages[$this->__('Special_pages')]);
         $this->view->assign('specialpages',   $specialpages);
         return $this->view->fetch('action/specialpages.tpl');
         
@@ -249,8 +250,7 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
             $page = array(
                 'tag'   => $tag,
                 'owner' => __('(Public)'),
-                'title' => $value['title']
-
+                'title' => str_replace("_", " ", $tag)
             );
 
             $firstChar = strtoupper(substr($tag, 0, 1));
