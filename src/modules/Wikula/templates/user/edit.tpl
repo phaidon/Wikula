@@ -33,18 +33,12 @@
     <!--//finish-->
 
     <div class="z-formbuttons z-buttons">
-        {formbutton class="z-bt-ok"      commandName="save"    __text="Save"}
-        {formbutton class="z-bt-preview" commandName="preview" __text="Preview"}
-        {formbutton class="z-bt-cancel"  commandName="cancel"  __text="Cancel"}
+        {formbutton class="z-bt-ok"                    commandName="save"    __text="Save"}
+        {formbutton class="z-bt-icon wikula-bt-clone"  commandName="clone"   __text="Clone"}
+        {formbutton class="z-bt-preview"               commandName="preview" __text="Preview"}
+        {formbutton class="z-bt-cancel"                commandName="cancel"  __text="Cancel"}
     </div>
 
-</div>
-
-
-<br /><p><a href="javascript:$('wikula_edit_moreoptions').toggle()">{gt text='More options'}</a></p>
-
-<div id="wikula_edit_moreoptions" style="display:none;" class="z-formbuttons z-buttons">
-    {formbutton class="z-bt-new"      commandName="clone"    __text="Clone"}
 </div>
 
 {/form}

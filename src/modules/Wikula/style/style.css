@@ -898,3 +898,24 @@ button.wikula_searchbutton {
     border-width:0px;
     background-color:transparent
 }
+
+.z-buttons input.wikula-bt-clone {
+    background: url("../../../images/icons/extrasmall/editcopy.png") #dfdfdf 10px 50% no-repeat; /*non-CSS3 browsers*/
+    background: url("../../../images/icons/extrasmall/editcopy.png") 10px 50% no-repeat, -moz-linear-gradient(center top , #ffffff, #dfdfdf) repeat scroll 0 0 transparent; /*gecko*/
+    background: url("../../../images/icons/extrasmall/editcopy.png") 10px 50% no-repeat, -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#dfdfdf)) repeat scroll 0 0 transparent; /*webkit*/
+    background: url("../../../images/icons/extrasmall/editcopy.png") 10px 50% no-repeat, linear-gradient(#ffffff, #dfdfdf); /*CSS3*/
+}
+
+.z-buttons input.wikula-bt-clone:hover {
+    background: url("../../../images/icons/extrasmall/editcopy.png") #cfcfcf 10px 50% no-repeat; /*non-CSS3 browsers*/
+    background: url("../../../images/icons/extrasmall/editcopy.png") 10px 50% no-repeat, -moz-linear-gradient(top,  #fafafa, #cfcfcf) repeat scroll 0 0 transparent; /*gecko*/
+    background: url("../../../images/icons/extrasmall/editcopy.png") 10px 50% no-repeat, -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#cfcfcf)) repeat scroll 0 0 transparent; /*webkit*/
+    background: url("../../../images/icons/extrasmall/editcopy.png") 10px 50% no-repeat, linear-gradient(#fafafa, #cfcfcf); /*CSS3*/
+}
+
+.z-buttons input.wikula-bt-clone:active {
+    background: url("../../../images/icons/extrasmall/editcopy.png") #fafafa 10px 50% no-repeat; /*non-CSS3 browsers*/
+    background: url("../../../images/icons/extrasmall/editcopy.png") 10px 50% no-repeat, -moz-linear-gradient(top,  #cfcfcf, #fafafa) repeat scroll 0 0 transparent; /*gecko*/
+    background: url("../../../images/icons/extrasmall/editcopy.png") 10px 50% no-repeat, -webkit-gradient(linear, left top, left bottom, from(#cfcfcf), to(#fafafa)) repeat scroll 0 0 transparent; /*webkit*/
+    background: url("../../../images/icons/extrasmall/editcopy.png") 10px 50% no-repeat, linear-gradient(#cfcfcf, #fafafa); /*CSS3*/
+}
