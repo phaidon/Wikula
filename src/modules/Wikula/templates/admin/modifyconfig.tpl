@@ -35,8 +35,8 @@
     </div>
 
     <div class="z-formrow">
-        {formlabel for="mandatorycomment" __text='Page edit comments are mandatory.'}
-        {formcheckbox id="mandatorycomment" }
+        {formlabel for="mandatorycomment" __text='Page edit comments are mandatory'}
+        {formcheckbox id="mandatorycomment"}
     </div>
 
     <div class="z-formrow">
