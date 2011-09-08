@@ -1,16 +1,15 @@
 <h2>{gt text='Wiki Setting'}</h2>
 
+{if $modvars.Wikula.subscription}
 {form cssClass="z-form"}
 {formvalidationsummary}
 
 <fieldset>
     <legend>{gt text='Settings'}</legend>
-    {if $modvars.Wikula.subscription}
     <div class="z-formrow">
         {formlabel for="subscribe" __text='Subscribe wiki'}
         {formcheckbox id="subscribe"}
     </div>
-    {/if}
 </fieldset>
 
 <div class="z-formbuttons z-buttons">
@@ -19,3 +18,6 @@
 </div>
 
 {/form}
+{else}
+<p class="z-informationmsg">{gt text='No settings available'}</p>
+{/if}
