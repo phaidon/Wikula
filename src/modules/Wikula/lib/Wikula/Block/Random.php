@@ -13,9 +13,7 @@
 class Wikula_Block_Random extends Zikula_Controller_AbstractBlock
 {
     /**
-     * initialise block
-     * 
-     * @author       The PostNuke Development Team
+     * Initialise block
      */
     public function init()
     {
@@ -24,37 +22,36 @@ class Wikula_Block_Random extends Zikula_Controller_AbstractBlock
     }
 
     /**
-     * get information on block
+     * Get information on block
      * 
-     * @author       The PostNuke Development Team
      * @return       array       The block information
      */
     public function info()
     {
-        return array('text_type'      => 'random',
-                     'module'         => 'Wikula',
-                     'text_type_long' => 'Show random wikula page',
-                     'allow_multiple' => true,
-                     'form_content'   => false,
-                     'form_refresh'   => false,
-                     'show_preview'   => true);
+        return array('text_type'       => $this->__('random'),
+                     'text_type_long'  => $this->__('Wikula Random Page'),
+                     'module'          => 'Wikula',
+                     'allow_multiple'  => true,
+                     'form_content'    => false,
+                     'form_refresh'    => false,
+                     'admin_tableless' => true,
+                     'show_preview'    => true);
     }
 
     /**
-     * display block
+     * Display block
      * 
-     * @TODO: OPTIMIZE!
      * @param        array       $blockinfo     a blockinfo structure
      * @return       output      the rendered bock
      */
     public function display($blockinfo)
     {
         if (!SecurityUtil::checkPermission('Wikula:randomblock', $blockinfo['title'].'::', ACCESS_READ)) {
-            return;
+            return false;
         }
 
         // Get variables from content block
-        $vars = pnBlockVarsFromContent($blockinfo['content']);
+        $vars = BlockUtil::varsFromContent($blockinfo['content']);
 
         // Defaults
         if (empty($vars['chars'])) {
@@ -62,17 +59,19 @@ class Wikula_Block_Random extends Zikula_Controller_AbstractBlock
         }
 
         // Check if the wikula module is available. 
-        if (!pnModAvailable('Wikula')) return false;
+        if (!ModUtil::available('Wikula')) {
+            return false;
+        }
 
-            // Add stylesheet and language
-            PageUtil::AddVar('stylesheet', ThemeUtil::getModuleStylesheet('Wikula'));
+        // Add stylesheet and language
+        PageUtil::AddVar('stylesheet', ThemeUtil::getModuleStylesheet('Wikula'));
 
-            // get random article
-            $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadAllPages');
-            $id = rand(1,(count($pages)+1))-1;
-            $page = $pages[$id];
+        // get random article
+        $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadAllPages');
+        $id = rand(1,(count($pages)+1))-1;
+        $page = $pages[$id];
 
-            extract($page);
+        extract($page);
 
         if (SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_COMMENT) || $tag == __('SandBox', $dom)) {
             $canedit = true;
@@ -80,41 +79,36 @@ class Wikula_Block_Random extends Zikula_Controller_AbstractBlock
             $canedit = false;
         }
 
-        $render = pnRender::getInstance('Wikula');
-        if ($method != 'show') {
-            $render->caching = false;
-        }
         SessionUtil::setVar('wikula_previous', $tag);
-
-        $render->assign('latest',   1);
-        $render->assign('tag',      $tag);
-        $render->assign('canedit',  $canedit);
-        $render->assign('body',     $page['body']);
-        $render->assign('time',     $page['time']);
-        $render->assign('user',     $page['user']);
-        $render->assign('owner',    $page['owner']);
-        $render->assign('hooks',    pnModCallHooks('item', 'display', $tag,
-                                                   pnModURL('Wikula', 'user', 'main',
+        $this->view->setCaching(false);
+        $this->view->assign('latest',   1);
+        $this->view->assign('tag',      $tag);
+        $this->view->assign('canedit',  $canedit);
+        $this->view->assign('body',     $page['body']);
+        $this->view->assign('time',     $page['time']);
+        $this->view->assign('user',     $page['user']);
+        $this->view->assign('owner',    $page['owner']);
+        $this->view->assign('hooks',    pnModCallHooks('item', 'display', $tag, // TODO Hook
+                                                   ModUtil::url('Wikula', 'user', 'main',
                                                             array('tag' => $tag))));
 
-        $content = $render->fetch('block/random.tpl', md5($page['id'].$page['time']));
+        $content = $this->view->fetch('block/random.tpl', md5($page['id'].$page['time']));
 
         // Populate block info and pass to theme
         $blockinfo['content'] = $content;
-        return themesideblock($blockinfo);
+        return BlockUtil::themeBlock($blockinfo);
     }
 
     /**
-     * modify block settings
+     * Modify block settings
      * 
-     * @author       The PostNuke Development Team
      * @param        array       $blockinfo     a blockinfo structure
      * @return       output      the bock form
      */
     public function modify($blockinfo)
     {
         // Get current content
-        $vars = pnBlockVarsFromContent($blockinfo['content']);
+        $vars = BlockUtil::varsFromContent($blockinfo['content']);
 
         // Defaults
         if (empty($vars['chars'])) {
@@ -122,18 +116,16 @@ class Wikula_Block_Random extends Zikula_Controller_AbstractBlock
         }
 
         // Create output object
-            // As Admin output changes often, we do not want caching.
-        $render = pnRender::getInstance('Wikula', false);
 
         // assign the approriate values
-            $render->assign('chars', $vars['chars']);
+            $this->view->assign('chars', $vars['chars']);
 
         // Return the output that has been generated by this function
-            return $render->fetch('block/random_modify.tpl');
+            return $this->view->fetch('block/random_modify.tpl');
     }
 
     /**
-     * update block settings
+     * Update block settings
      * 
      * @param        array       $blockinfo     a blockinfo structure
      * @return       $blockinfo  the modified blockinfo structure
@@ -141,17 +133,16 @@ class Wikula_Block_Random extends Zikula_Controller_AbstractBlock
     public function update($blockinfo)
     {
         // Get current content
-        $vars = pnBlockVarsFromContent($blockinfo['content']);
+        $vars = BlockUtil::varsFromContent($blockinfo['content']);
 
             // alter the corresponding variable
         $vars['chars'] = FormUtil::getPassedValue('chars');
 
             // write back the new contents
-        $blockinfo['content'] = pnBlockVarsToContent($vars);
+        $blockinfo['content'] = BlockUtil::varsToContent($vars);
 
         // clear the block cache
-        $render = pnRender::getInstance('Wikula');
-        $render->clear_cache('block/random.tpl');
+        $this->view->clear_cache('block/random.tpl');
 
         return $blockinfo;
     }

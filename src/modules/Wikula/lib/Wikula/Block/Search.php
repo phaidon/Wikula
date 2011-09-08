@@ -11,9 +11,7 @@ class Wikula_Block_Search extends Zikula_Controller_AbstractBlock
 {
 
     /**
-     * initialise block
-     * 
-     * @author       The PostNuke Development Team
+     * Initialise block
      */
     public function init()
     {
@@ -22,35 +20,34 @@ class Wikula_Block_Search extends Zikula_Controller_AbstractBlock
     }
 
     /**
-     * get information on block
+     * Get information on block
      * 
-     * @author       The PostNuke Development Team
      * @return       array       The block information
      */
     public function info()
     {
         return array(
-            'text_type'      => 'search',
-            'module'         => 'Wikula',
-            'text_type_long' => 'Search box',
-            'allow_multiple' => true,
-            'form_content'   => false,
-            'form_refresh'   => false,
-            'show_preview'   => true
+            'text_type'       => $this->__('search'),
+            'text_type_long'  => $this->__('Wikula Search Box'),
+            'module'          => 'Wikula',
+            'allow_multiple'  => true,
+            'form_content'    => false,
+            'form_refresh'    => false,
+            'admin_tableless' => true,
+            'show_preview'    => true
         );
     }
 
     /**
-     * display block
+     * Display block
      * 
-     * @TODO: OPTIMIZE!
      * @param        array       $blockinfo     a blockinfo structure
      * @return       output      the rendered bock
      */
     public function display($blockinfo)
     {
         if (!SecurityUtil::checkPermission('Wikula:searchblock', $blockinfo['title'].'::', ACCESS_READ)) {
-            return;
+            return false;
         }
 
         // Get variables from content block
@@ -62,16 +59,11 @@ class Wikula_Block_Search extends Zikula_Controller_AbstractBlock
             return false;
         }
 
-
-
-        $render = pnRender::getInstance('Wikula');
-
-        $content = $render->fetch('block/search.tpl');
+        $content = $this->view->fetch('block/search.tpl');
 
         // Populate block info and pass to theme
         $blockinfo['content'] = $content;
-        return BlockUtil::themesideblock($blockinfo);
+        return BlockUtil::themeBlock($blockinfo);
     }
-
 
 }
