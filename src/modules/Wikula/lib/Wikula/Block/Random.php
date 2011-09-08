@@ -71,6 +71,10 @@ class Wikula_Block_Random extends Zikula_Controller_AbstractBlock
         $id = rand(1,(count($pages)+1))-1;
         $page = $pages[$id];
 
+        if (empty($page)) {
+            return false;
+        }
+        
         extract($page);
 
         if (SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_COMMENT) || $tag == __('SandBox', $dom)) {
