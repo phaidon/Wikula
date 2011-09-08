@@ -205,21 +205,6 @@ class Wikula_Api_User extends Zikula_AbstractApi
         }
         $q->orderBy($orderBy);
 
-        // define the permission filter to apply
-        // TODO permissions 
-        /*$permFilter = array(array('realm'           => 0,
-                                'component_left'  => 'Wikula',
-                                'instance_left'   => 'page',
-                                'instance_right'  => 'tag',
-                                'level'           => ACCESS_READ));*/
-
-
-
-        // exclude fields if needed
-        /*if (!isset($args['loadbody']) || (isset($args['loadbody']) && !$args['loadbody'])) {
-            unset($columnArray['body']);
-        }*/
-
         // check if we want to get the latest only
         if (isset($getoldest) && $getoldest) {
             $orderBy = $time.' DESC';
@@ -286,15 +271,12 @@ class Wikula_Api_User extends Zikula_AbstractApi
     *
     * @param unknown_type $args
     * @return unknown
-    * @todo only loads the latest = Y... param and RecentChanges show show all eh?
     */
     public function LoadRecentlyChanged($args)
     {
         
         extract($args);
         unset($args);
-
-
 
 
         $q = Doctrine_Query::create()->from('Wikula_Model_Pages t');
@@ -838,8 +820,6 @@ class Wikula_Api_User extends Zikula_AbstractApi
             $d->save();
         }
         
-
-        // TODO: Wikka Ping feature here
 
         if (!$oldpage) {
             LogUtil::registerStatus(__('New page created!'));

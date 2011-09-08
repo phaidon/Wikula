@@ -133,7 +133,6 @@ class Wikula_Controller_User extends Zikula_AbstractController
     {
         $form = FormUtil::newForm($this->name, $this);
         return $form->execute('user/edit.tpl', new Wikula_Handler_Page());
-
     }
 
     /**
@@ -299,85 +298,6 @@ class Wikula_Controller_User extends Zikula_AbstractController
         return $this->view->fetch('xml/revisions.tpl');
     }
 
-    public function RecentChangesMindMap()
-    {
-
-        
-        $cr = "\n";
-
-        $xml  = '<map version="0.7.1">'.$cr
-        .'  <node text="'.__('Recent Changes').'">'.$cr
-        .'    <node text="Date" position="right">'.$cr;
-
-        $pages = ModUtil::apiFunc($this->name, 'user', 'LoadRecentlyChanged', array());
-
-        $users  = array();
-        $curday = '';
-        $max = $this->getVar( 'itemsperpage');
-
-        $c = 0;
-        foreach ($pages as $page) {
-            $c++;
-            if (($c <= $max) || !$max) {
-                $pageuser = $page['user'];
-                $pagetag  = $page['tag'];
-
-                // day header
-                list($day, $time) = explode(' ', $page['time']);
-                if ($day != $curday) {
-                    $dateformatted = date(__('D, d M Y'), strtotime($day));
-                    if ($curday) {
-                        $xml .= '      </node>'.$cr;
-                    }
-                    $xml .= '      <node text="'.$dateformatted.'">'.$cr;
-                    $curday = $day;
-                }
-
-                $pagelink      = ModUtil::url($this->name, 'user', 'main',    array('tag' => DataUtil::formatForDisplay($pagetag)));
-                $revlink       = ModUtil::url($this->name, 'user', 'History', array('tag' => DataUtil::formatForDisplay($pagetag)));
-                $xml          .= '        <node text="'.$pagetag.'" folded="true">'.$cr;
-                $timeformatted = date('H:i T', strtotime($page['time']));
-                $xml          .= '          <node link="'.$pagelink.'" text="'.$this->__('Revision time: ').$timeformatted.'"/>'.$cr;
-                if ($page['note']) {
-                    $xml .= '          <node text="'.$pageuser.': '.DataUtil::formatForDisplay($page['note']).'"/>'.$cr;
-                } else {
-                    $xml .= '          <node text="'.$this->__('Author: ').$pageuser.'"/>'.$cr;
-                }
-
-                $xml .= '          <node link="'.$revlink.'" text="'.$this->__('View History').'"/>'.$cr.'</node>'.$cr;
-
-                if (is_array($users[$pageuser])) {
-                    $u_count = count($users[$pageuser]);
-                    $users[$pageuser][$u_count] = $pagetag;
-                } else {
-                    $users[$pageuser][0] = $pageuser;
-                    $users[$pageuser][1] = $pagetag;
-                }
-            }
-        }
-
-        $xml .= '    </node>'.$cr.'  </node>'.$cr
-        .'  <node text="'.$this->__('Author').'" position="left">'.$cr;
-        foreach ($users as $user) {
-            $start_loop = true;
-            foreach ($user as $user_page) {
-                if (!$start_loop) {
-                    $xml .= '    <node link="'.ModUtil::url($this->name, 'user', 'main', array('tag' => DataUtil::formatForDisplay($user_page))).'" text="'.$user_page.'"/>'.$cr;
-                } else {
-                    $xml .= '    <node text="'.$user_page.'">'.$cr;
-                    $start_loop = false;
-                }
-            }
-            $xml .= '  </node>'.$cr;
-        }
-
-        $xml .= '</node>'.$cr.'</node>'.$cr.'</map>'.$cr;
-
-        echo $xml;
-
-        return true;
-    }
-
     /**
      * Display a list of internal pages linking to the current page
      */
@@ -417,97 +337,15 @@ class Wikula_Controller_User extends Zikula_AbstractController
      */
     public function cloneTag()
     {
-        
-        $tag = FormUtil::getPassedValue('tag');
-        
-        if (empty($tag)) {
-            return LogUtil::registerError(__f('Missing argument [%s]', 'tag'), null, ModUtil::url($this->name, 'user', 'main'));
-        }
+        // clone is not possible as function name.
 
-        // Permission check
-        if (!SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_COMMENT)) {
-            return LogUtil::registerError(__('You do not have the authorization to edit this page!'), null, ModUtil::url($this->name, 'user', 'main'));
-        }
-
-        if (!ModUtil::apiFunc($this->name, 'user', 'PageExists', array('tag' => $tag))) {
-            return LogUtil::registerError(__("The page you requested doesn't exists"), null, ModUtil::url($this->name, 'user', 'main'));
-        }
-
-        // Default values
-        $to   = $tag;
-        $note = __f('Cloned from %s', $tag);
-        $edit = false;
-
-        $submit = FormUtil::getPassedValue('submit');
-
-        if ($submit == $this->__('Cancel')) {
-            $this->redirect(ModUtil::url($this->name, 'user', 'main', array('tag' => $tag)));
-
-        } elseif ($submit == $this->__('Submit')) {
-            $to   = FormUtil::getPassedValue('to');
-            $note = FormUtil::getPassedValue('note');
-            $edit = (bool)FormUtil::getPassedValue('edit');
-
-            // Validate the choosen pagename
-            $validationerror = false;
-            if (!ModUtil::apiFunc($this->name, 'user', 'isValidPagename', array('tag' => $to))) {
-                LogUtil::registerError(__('That page name is not valid'));
-                $validationerror = true;
-            }
-
-            // check if the page already exists
-            if (!$validationerror && ModUtil::apiFunc($this->name, 'user', 'PageExists', array('tag' => $to))) {
-                return LogUtil::registerError(__('This page does already exist'), null, ModUtil::url($this->name, 'user', 'main'));
-            }
-
-            // check if has access to create it
-            if (!$validationerror && !SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_COMMENT)) {
-                return LogUtil::registerError(__('You do not have the authorization to edit this page!'), null, ModUtil::url($this->name, 'user', 'main'));
-            }
-
-            // if valid request
-            if (!$validationerror) {
-                // proceed to page cloning
-                $page = ModUtil::apiFunc($this->name, 'user', 'LoadPage', array('tag' => $tag));
-                $newpage = array(
-                    'tag'  => $to,
-                    'body' => $page['body'],
-                    'note' => $note
-                );
-
-                if (ModUtil::apiFunc($this->name, 'user', 'SavePage', $newpage)) {
-                    // redirect
-                    if ($edit) {
-                        $this->redirect(ModUtil::url($this->name, 'user', 'edit', array('tag' => $to)));
-                    } else {
-                        LogUtil::registerStatus(__('Clone created successfully'));
-                        $this->redirect(ModUtil::url($this->name, 'user', 'main', array('tag' => $to)));
-                    }
-                }
-            }
-        }
+        $form = FormUtil::newForm($this->name, $this);
+        return $form->execute('user/clone.tpl', new Wikula_Handler_CloneTag());
 
         
-
-        $this->view->assign('tag',  $tag);
-        $this->view->assign('to',   $to);
-        $this->view->assign('note', $note);
-        $this->view->assign('edit', $edit);
-
-        return $this->view->fetch('user/clone.tpl');
     }
     
-    public function grabcode()
-    {
-        $code = FormUtil::getPassedValue('code');
-        return $this->nl2br(htmlentities(br2nl(urldecode($code))));
 
-    }
-
-    public function br2nl($string){
-        $return=preg_replace('`<br[[:space:]]*/?'.'[[:space:]]*>`',chr(13),$string);
-        return $return;
-    }
     
     public function settings()
     {
