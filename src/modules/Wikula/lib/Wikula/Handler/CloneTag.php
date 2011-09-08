@@ -66,8 +66,6 @@ class Wikula_Handler_CloneTag  extends Zikula_Form_AbstractHandler
 
  
         return true;
-        
-        
     }
 
 
@@ -130,10 +128,6 @@ class Wikula_Handler_CloneTag  extends Zikula_Form_AbstractHandler
             }
         }
         
-        
-        
-        return;            
-
+        return;
     }
-
 }

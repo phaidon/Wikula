@@ -14,7 +14,7 @@
  * information regarding copyright and licensing.
  */
 
-class Wikula_Handler_Page  extends Zikula_Form_AbstractHandler
+class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
 {
     /**
      * tag.
@@ -78,7 +78,15 @@ class Wikula_Handler_Page  extends Zikula_Form_AbstractHandler
             $url = ModUtil::url(
                 $this->name,
                 'user',
-                'main',
+                'show',
+                array('tag' => $this->_tag) 
+            );
+            return $view->redirect($url);
+        } else if ($args['commandName'] == 'clone') {
+                $url = ModUtil::url(
+                $this->name,
+                'user',
+                'cloneTag',
                 array('tag' => $this->_tag) 
             );
             return $view->redirect($url);

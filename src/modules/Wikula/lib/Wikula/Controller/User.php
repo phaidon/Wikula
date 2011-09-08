@@ -132,7 +132,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
     public function edit()
     {
         $form = FormUtil::newForm($this->name, $this);
-        return $form->execute('user/edit.tpl', new Wikula_Handler_Page());
+        return $form->execute('user/edit.tpl', new Wikula_Handler_EditTag());
     }
 
     /**

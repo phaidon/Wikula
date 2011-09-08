@@ -40,4 +40,11 @@
 
 </div>
 
+
+<br /><p><a href="javascript:$('wikula_edit_moreoptions').toggle()">{gt text='More options'}</a></p>
+
+<div id="wikula_edit_moreoptions" style="display:none;" class="z-formbuttons z-buttons">
+    {formbutton class="z-bt-new"      commandName="clone"    __text="Clone"}
+</div>
+
 {/form}
