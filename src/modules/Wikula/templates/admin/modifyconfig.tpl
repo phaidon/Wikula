@@ -19,20 +19,6 @@
         {formcheckbox id="subscription"}
     </div>
 
-    <div class="z-formrow">
-        {formlabel for="hidehistory" __text='Do not include page history info box into wiki pages'}
-        {formcheckbox id="hidehistory"}
-    </div>
-
-    <div class="z-formrow">
-        {formlabel for="excludefromhistory" __text='Page tags, separated with comma, that should always be displayed without page history info box'}
-        {formtextinput id="excludefromhistory" size="64" maxLength="64"}
-    </div>
-
-    <div class="z-formrow">
-        {formlabel for="hideeditbar" __text='Do not show the editor help bar (wiki-edit) above an articled that gets edited'}
-        {formcheckbox id="hideeditbar"}
-    </div>
 
     <div class="z-formrow">
         {formlabel for="mandatorycomment" __text='Page edit comments are mandatory'}

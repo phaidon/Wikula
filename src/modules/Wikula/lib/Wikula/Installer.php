@@ -96,12 +96,17 @@ class Wikula_Installer extends Zikula_AbstractInstaller
                 ModUtil::delVar('pnWikka');
                 return wikula_upgrade('1.1');
 
-            case '1.1':
+            case '2.1':
                 try {
                     DoctrineUtil::createTablesFromModels($this->name);
                 } catch (Exception $e) {
                     return false;
                 }
+                $this->delVar('hideeditbar');
+                $this->delVar('excludefromhistory');
+                $this->delVar('hidehistory');
+                
+                
         }
 
         return true;
