@@ -93,7 +93,6 @@
                 <td class="z-nowrap z-right">
                     <a href="{modurl modname='Wikula' func='edit' tag=$item.tag|urlencode}" title="Edit {$item.tag}">{icon type="xedit" size="extrasmall"}</a>
                     <a href="{modurl modname='Wikula' type='admin' func='delete' tag=$item.tag|urlencode}" title="Delete {$item.tag}">{icon type="delete" size="extrasmall"}</a>
-                    <a href="{modurl modname='Wikula' func='info' tag=$item.tag|urlencode}" title="Display information and statistics for {$item.tag}">{icon type="info" size="extrasmall"}</a>
                 </td>
             </tr>
             {/foreach}
