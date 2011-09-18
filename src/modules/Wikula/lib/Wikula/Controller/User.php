@@ -136,6 +136,15 @@ class Wikula_Controller_User extends Zikula_AbstractController
     }
 
     /**
+     * Rename method
+     */
+    public function renameTag()
+    {
+        $form = FormUtil::newForm($this->name, $this);
+        return $form->execute('user/rename.tpl', new Wikula_Handler_RenameTag());
+    }
+    
+    /**
      * Show the history of the Wiki Page
      *
      * @param string $args['tag'] tag of the page

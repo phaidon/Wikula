@@ -90,6 +90,14 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
                 array('tag' => $this->_tag) 
             );
             return $view->redirect($url);
+        } else if ($args['commandName'] == 'rename') {
+                $url = ModUtil::url(
+                $this->name,
+                'user',
+                'renameTag',
+                array('tag' => $this->_tag) 
+            );
+            return $view->redirect($url);
         }
         
         
