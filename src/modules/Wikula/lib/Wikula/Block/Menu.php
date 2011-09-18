@@ -55,7 +55,7 @@ class Wikula_Block_Menu extends Zikula_Controller_AbstractBlock
 
         // Defaults
         if (empty($vars['menupages'])) {
-            $vars['menupages'] = $this->__('HomePage');
+            $vars['menupages'] = array($this->__('HomePage'));
         }
 
         // Check if the Wikula module is available. 
@@ -63,7 +63,7 @@ class Wikula_Block_Menu extends Zikula_Controller_AbstractBlock
             return false;
         }
 
-        $this->view->assign('pages', explode(",", $vars['menupages']));
+        $this->view->assign('pages', $vars['menupages']);
 
         $content = $this->view->fetch('block/menu.tpl');
 
@@ -85,9 +85,12 @@ class Wikula_Block_Menu extends Zikula_Controller_AbstractBlock
 
         // Defaults
         if (empty($vars['menupages'])) {
-            $vars['menupages'] = 'HomePage';
+            $vars['menupages'] = array($this->__('HomePage'));
         }
-
+                
+        $pages = ModUtil::apiFunc($this->name, 'user', 'LoadAllPages');
+        $this->view->assign('pages', $pages);
+        
         // assign the approriate values
         $this->view->assign('menupages', $vars['menupages']);
 
@@ -103,6 +106,10 @@ class Wikula_Block_Menu extends Zikula_Controller_AbstractBlock
      */
     public function update($blockinfo)
     {
+        $test = FormUtil::getPassedValue('test');
+        $test = implode(",", $test);
+        LogUtil::registerStatus($test);
+        
         // Get current content
         $vars = BlockUtil::varsFromContent($blockinfo['content']);
 

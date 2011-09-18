@@ -21,7 +21,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
 {
 
 
-      public function test($args)
+    public function test($args)
     {
        return 'tt';
     }  

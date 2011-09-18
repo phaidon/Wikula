@@ -1,4 +1,15 @@
+{ajaxheader modname='Wikula' filename='chosen/chosen.proto.min.js'}
+{pageaddvar name='stylesheet' value='modules/Wikula/javascript/chosen/chosen.css'}
+
 <div class="z-formrow">
-    <label for="wkrcblock_pages">{gt text='Menu pages'}</label>
-    <input id="wkrcblock_pages" type="text" name="menupages" size="32" maxlength="32" value="{$menupages|safehtml}" />
+    <label for="menupages[]">{gt text='Menu pages'}</label>
+    <select multiple class="chzn-select" name="menupages[]">
+        {foreach from=$pages item="page"}
+        <option value="{$page.tag}" {if in_array($page.tag, $menupages)}selected{/if} >{$page.tag}</option>
+        {/foreach}
+    </select> 
 </div>
+
+<script type="text/javascript">
+    New Chosen($("chzn_select_field"),{no_results_text: "No results matched"});
+</script>
