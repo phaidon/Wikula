@@ -8,7 +8,7 @@
 <div id="wikula">
     <div class="page">
         {foreach from=$pages item='page'}
-        <a href="{modurl modname='Wikula' type='user' func='main' tag=$page|urlencode}" title="{$page|safehtml}">{$page|safehtml}</a><br />
+        <a href="{modurl modname='Wikula' type='user' func='main' tag=$page.from_tag|urlencode}" title="{$page.from_tag|safehtml}">{$page.from_tag|safehtml}</a><br />
         {foreachelse}
         <em class="wikula_error">{gt text='There are no backlinks to this page'}</em>
         {/foreach}

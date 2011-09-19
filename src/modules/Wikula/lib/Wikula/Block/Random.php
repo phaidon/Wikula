@@ -92,9 +92,6 @@ class Wikula_Block_Random extends Zikula_Controller_AbstractBlock
         $this->view->assign('time',     $page['time']);
         $this->view->assign('user',     $page['user']);
         $this->view->assign('owner',    $page['owner']);
-        $this->view->assign('hooks',    pnModCallHooks('item', 'display', $tag, // TODO Hook
-                                                   ModUtil::url('Wikula', 'user', 'main',
-                                                            array('tag' => $tag))));
 
         $content = $this->view->fetch('block/random.tpl', md5($page['id'].$page['time']));
 
