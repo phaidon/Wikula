@@ -26,10 +26,13 @@ class Wikula_Installer extends Zikula_AbstractInstaller
         // create table
         try {
             DoctrineUtil::createTablesFromModels($this->name);
+            DoctrineHelper::createSchema($this->entityManager, array('Wikula_Entity_Links' ));
         } catch (Exception $e) {
+            LogUtil::registerStatus($e->getMessage());
             return false;
         }
 
+        
         $this->defaultdata();
 
         HookUtil::registerSubscriberBundles($this->version->getHookSubscriberBundles());
@@ -117,11 +120,13 @@ class Wikula_Installer extends Zikula_AbstractInstaller
      */
     public function uninstall()
     {
-        DoctrineUtil::dropTable('wikula_pages');
-        DoctrineUtil::dropTable('wikula_links');
-        DoctrineUtil::dropTable('wikula_referrers');
-        DoctrineUtil::dropTable('wikula_subscriptions');
+        //DoctrineUtil::dropTable('wikula_pages');
+        //DoctrineUtil::dropTable('wikula_referrers');
+        //DoctrineUtil::dropTable('wikula_subscriptions');
 
+         // drop table
+        DoctrineHelper::dropSchema($this->entityManager, array('Wikula_Entity_Links'));
+        
         HookUtil::unregisterSubscriberBundles($this->version->getHookSubscriberBundles());
         
         // Delete the module vars

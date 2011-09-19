@@ -64,12 +64,12 @@ class Wikula_Model_Pages extends Doctrine_Record
    
     }
     
-    public function setUp() {
+    /*public function setUp() {
         $this->hasMany('Wikula_Model_Links', array(
             'local' => 'tag',
             'foreign' => 'to_tag',
             'onDelete' => 'CASCADE')
         );
-    }
+    }*/
 
 }

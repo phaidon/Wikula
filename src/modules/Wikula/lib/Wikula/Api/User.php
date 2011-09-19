@@ -19,13 +19,6 @@ require_once 'modules/Wikula/lib/Wikula/Common.php';
 
 class Wikula_Api_User extends Zikula_AbstractApi
 {
-
-
-    public function test($args)
-    {
-       return 'tt';
-    }  
-    
     
     /**
     * Validate a PageName
@@ -234,15 +227,17 @@ class Wikula_Api_User extends Zikula_AbstractApi
             LogUtil::getErrorMsgPermission()
         );
 
-        $q = Doctrine_Query::create()->from('Wikula_Model_Links t');
-        $q->where('to_tag = ?', array($tag));
-        $q->orderBy('from_tag');
-        $links = $q->execute();
-        $links = $links->toKeyValueArray('from_tag', 'from_tag');
-        if( array_key_exists($tag, $links) ) {
-            unset($links['$tag']);
-        }
+        $links =array();
         
+        $em = $this->getService('doctrine.entitymanager');
+        $qb = $em->createQueryBuilder();
+        $qb->add('select',  'u.from_tag')
+           ->add('from',    'Wikula_Entity_Links u')
+           ->add('where',   'u.to_tag = :to_tag')
+           ->add('orderBy', 'u.from_tag')
+           ->setParameter('to_tag', $tag);
+        $query = $qb->getQuery();
+        $links = $query->getArrayResult();
 
         if ($links === false) {
             return LogUtil::registerError(__('Error! Getting the links for this page failed.'));
