@@ -15,10 +15,18 @@
  */
 
 
-require_once 'modules/Wikula/lib/Wikula/Common.php';
-
 class Wikula_Api_User extends Zikula_AbstractApi
 {
+    private $_em;
+    
+    
+    function __autoload($class_name) {
+        require_once 'modules/Wikula/lib/Wikula/Common.php';
+        $this->_em = $this->getService('doctrine.entitymanager');
+    }
+    
+ 
+    
     
     /**
     * Validate a PageName
@@ -58,32 +66,38 @@ class Wikula_Api_User extends Zikula_AbstractApi
     public function LoadPage($args)
     {
         
-        if (!isset($args['tag'])) {
+        extract($args);
+        unset($arg);
+        if (!isset($tag)) {
             return LogUtil::registerArgsError();
         }
-
-        if (!SecurityUtil::checkPermission('Wikula::', 'page::'.$args['tag'], ACCESS_READ)) {
+        
+        if (!SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_READ)) {
             return LogUtil::registerError(__('You do not have the authorization to read this page!'), 403);
         }
+        
+        $em = $this->getService('doctrine.entitymanager');
+        $qb = $em->createQueryBuilder();
+        $qb->select('u')
+           ->from('Wikula_Entity_Pages', 'u')
+           ->where('u.tag = :tag')
+           ->setParameter('tag', $tag)
+           ->setMaxResults(1);
 
-
-        $q = Doctrine_Query::create()->from('Wikula_Model_Pages t');
-
-        if (isset($args['time']) && !empty($args['time'])) {
-            $q->where('time = ?', array($args['time']));
+        if (isset($time) && !empty($time)) {
+            $qb->andWhere('where', 'u.time = :time')
+               ->setParameter('time', $args['time']);
 
         } else {
-            $q->where('latest = ?', array('Y'));
+            $qb->andWhere('u.latest = :latest')
+               ->setParameter('latest', 'Y');
         }
+        //$qb->where(implode(' AND ', $where));
 
-        $q->addWhere('tag = ?', array($args['tag']));
-
+        
         // return the page or false if failed
-        $result = $q->execute();
-        $result = $result->toArray();
-        if(count($result) == 0) {
-            return false;
-        }
+        $query = $qb->getQuery();
+        $result = $query->getArrayResult();
         return $result[0];
 
     }
@@ -97,23 +111,32 @@ class Wikula_Api_User extends Zikula_AbstractApi
     */
     public function PageExists($args)
     {
-        if (!isset($args['tag'])) {
+        extract($args);
+        unset($arg);
+        if (!isset($tag)) {
             return LogUtil::registerArgsError();
         }
         
         $specialPages = ModUtil::apiFunc($this->name, 'SpecialPage', 'listpages');
-        if(array_key_exists($args['tag'], $specialPages)) {
+        if(array_key_exists($tag, $specialPages)) {
             return true;
         }
+        
+        $em = $this->getService('doctrine.entitymanager');
+        $qb = $em->createQueryBuilder();
+        $qb->select('p')
+           ->from('Wikula_Entity_Pages', 'p')
+           ->where('p.tag = :tag')
+           ->setParameter('tag', $tag)
+           ->andWhere('p.latest = :latest')
+           ->setParameter('latest', 'Y')
+           ->setMaxResults(1);
 
-        $q = Doctrine_Query::create()->from('Wikula_Model_Pages t');
-        $q->where('latest = ?', array('y'));
-        $q->addWhere('tag = ?', array($args['tag']));
-        $result = $q->execute();
+        $query = $qb->getQuery();
+        $result = $query->getArrayResult();
         if(!$result) {
             return false;
         }
-        $result->toArray();
         return $result[0]['id'];
 
     }
@@ -134,8 +157,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
             LogUtil::getErrorMsgPermission()
         );
 
-        $page = Doctrine_Core::getTable('Wikula_Model_Pages')->find($id);
-
+        $page = $this->entityManager->find('Wikula_Entity_Pages', $id);
 
         if ($page === false) {
             return LogUtil::registerError(__('Error! Getting the this page by id failed.'));
@@ -227,7 +249,6 @@ class Wikula_Api_User extends Zikula_AbstractApi
             LogUtil::getErrorMsgPermission()
         );
 
-        $links =array();
         
         $em = $this->getService('doctrine.entitymanager');
         $qb = $em->createQueryBuilder();
@@ -237,6 +258,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
            ->add('orderBy', 'u.from_tag')
            ->setParameter('to_tag', $tag);
         $query = $qb->getQuery();
+        $links = array();
         $links = $query->getArrayResult();
 
         if ($links === false) {
@@ -255,9 +277,15 @@ class Wikula_Api_User extends Zikula_AbstractApi
             LogUtil::getErrorMsgPermission()
         );
 
-        return Doctrine_Query::create()->from('Wikula_Model_Links t')
-            ->where('to_tag = ?', array($tag))
-            ->count();
+        
+        $em = $this->getService('doctrine.entitymanager');
+        $qb = $em->createQueryBuilder();
+        $qb->add('select',  'count(u.from_tag)')
+           ->add('from',    'Wikula_Entity_Links u')
+           ->add('where',   'u.to_tag = :to_tag')
+           ->setParameter('to_tag', $tag);
+        $query = $qb->getQuery();
+        return $query->getSingleScalarResult();
 
     }
 
@@ -323,24 +351,31 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
     }
 
-    //function LoadAllPages($args)
+
     public function LoadAllPages($args)
     {
-        
         extract($args);
         unset($args);
-
-        $q = Doctrine_Query::create()->from('Wikula_Model_Pages t');
+         
+        $em = $this->getService('doctrine.entitymanager');
+        $qb = $em->createQueryBuilder();
+        $qb->add('select',  'u')
+           ->add('from',    'Wikula_Entity_Pages u')
+           ->add('where',   'u.latest = :latest')
+           ->add('orderBy', 'u.tag')
+           ->setParameter('latest', 'Y');
+        $query = $qb->getQuery();
+        
+        
         if (isset($startnum) and is_numeric($startnum) and $startnum > 1) {
-            $q->offset($startnum-1);
+            $query->setFirstResult($offset = $startnum-1);
         }
         if (isset($numitems) and is_numeric($numitems) and $numitems > 0) {
-            $q->limit($numitems);
-        }
-        $q->where('latest = ?', array('Y'));
-        $q->orderBy('tag');
-        $pages = $q->execute();
-        $pages = $pages->toArray();
+            $query->setMaxResults($limit = $numitems);
+
+        }        
+        
+        $pages = $query->getArrayResult();
 
         if ($pages === false) {
             return LogUtil::registerError(__('Error! Getting all pages failed.'));
@@ -540,6 +575,9 @@ class Wikula_Api_User extends Zikula_AbstractApi
     public function LoadWantedPages($args)
     {
         
+        // TODO remove old DB query
+        
+        
         extract($args);
         unset($args);
 
@@ -641,6 +679,8 @@ class Wikula_Api_User extends Zikula_AbstractApi
     public function IsOrphanedPage($args)
     {
         
+        // ToDo Remove old DB query
+        
         extract($args);
         unset($args);
 
@@ -737,16 +777,16 @@ class Wikula_Api_User extends Zikula_AbstractApi
         
         extract($args);
         unset($args);
+        if (!isset($tag)) {
+            return LogUtil::registerArgsError();
+        }
+        
 
         // Permission check
         $this->throwForbiddenUnless(
             SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_EDIT),
             LogUtil::getErrorMsgPermission()
         );
-
-        if (!isset($tag)) {
-            return LogUtil::registerArgsError();
-        }
 
         $user = UserUtil::getVar('uname');
 
@@ -765,18 +805,20 @@ class Wikula_Api_User extends Zikula_AbstractApi
         }
 
         // set all other revisions to old
-        $q = Doctrine_Query::create()
-            ->update('Wikula_Model_Pages t')
-            ->set('latest', '?', 'N')
-            ->where('latest = ? and tag = ?', array('Y', $tag));
-        $q->execute();
-
-        if ($res === false) {
-            return LogUtil::registerError(__('Setting last revision failed!'));
-        }
-
-        $tag = DataUtil::formatForStore($tag);
+        $em = $this->getService('doctrine.entitymanager');
+        $qb = $em->createQueryBuilder();
+        $qb->update('Wikula_Entity_Pages', 'p')
+           ->where("p.tag = :tag AND p.latest = 'Y'")
+           ->setParameter('tag', $tag)
+           ->set('p.latest', ':newlatest')
+           ->setParameter('newlatest', 'N');
+        $query = $qb->getQuery();
+        $result = $query->getArrayResult();
+                
+        
+ 
         // add new revision
+        $tag = DataUtil::formatForStore($tag);
         $newrev = array(
             'tag'    => $tag,
             'body'   => $body,
@@ -785,19 +827,26 @@ class Wikula_Api_User extends Zikula_AbstractApi
             'owner'  => $owner,
             'user'   => $user,
             'latest' => 'Y'
-        );
+        );        
+       
 
-        $res = new Wikula_Model_Pages();
+        $res = new Wikula_Entity_Pages();
         $res->merge($newrev);
-        $res->save();
+        $this->entityManager->persist($res);
+
 
         if ($res === false) {
             return LogUtil::registerError(__('Saving revision failed!'));
         }
 
+
         // add links to other page into the link table
-        $oldlinks = Doctrine_Core::getTable('Wikula_Model_Links')->findBy('from_tag', $tag);
-        $oldlinks->delete();
+        $oldlinks = $this->entityManager->getRepository('Wikula_Entity_Links')
+                                        ->findBy(array('from_tag' => $tag));
+        foreach($oldlinks as $oldlink) {
+            $this->entityManager->remove($oldlink);
+        }
+        
                 
         $pagelinks = ModUtil::apiFunc(
             'LuMicuLa',
@@ -810,11 +859,11 @@ class Wikula_Api_User extends Zikula_AbstractApi
             )
         );
         foreach($pagelinks as $pagelink) {
-            $d = new Wikula_Model_Links();
-            $d->merge($pagelink);
-            $d->save();
+           $d = new Wikula_Entity_Links();
+           $d->merge($pagelink);
+           $this->entityManager->persist($d);
         }
-        
+
 
         if (!$oldpage) {
             LogUtil::registerStatus(__('New page created!'));
@@ -824,6 +873,10 @@ class Wikula_Api_User extends Zikula_AbstractApi
              ModUtil::apiFunc($this->name, 'user', 'NotificateNewRevsion', $tag);
         }
 
+        
+        $this->entityManager->flush();
+
+        
         return true;
     }
 
@@ -835,6 +888,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
             return false;
         }
 
+        // prepare email design
         $view = Zikula_View::getInstance($this->name, false);
         $view->assign('baseUrl', System::getBaseUrl());
         $view->assign('tag', $tag);
@@ -843,9 +897,14 @@ class Wikula_Api_User extends Zikula_AbstractApi
         $subject = $this->__('Wiki update');
 
 
-        $uids = Doctrine_Core::getTable('Wikula_Model_Subscriptions')->findAll();
-        $uids = $uids->toKeyValueArray('uid', 'uid');
-        foreach($uids as $uid) {
+        // find all subscriptions
+        $em = $this->getService('doctrine.entitymanager');
+        $query = $em->createQuery('SELECT u FROM Wikula_Entity_Subscriptions u');        
+        $users = $query->getArrayResult();
+        
+        // send emails        
+        foreach($users as $user) {
+            $uid = $user['uid'];
             $toaddress = UserUtil::getVar('email', $uid);
             ModUtil::apiFunc('Mailer', 'user', 'sendmessage', array(
                 'toaddress' => $toaddress,
@@ -855,14 +914,14 @@ class Wikula_Api_User extends Zikula_AbstractApi
             ));
         }
         return true;
-
         
     }
 
 
     public function NotificateNewRevsion($tag)
     {
-
+            // TODO DB
+        return true;
         if (empty($tag) or !$this->getVar('subscription') ) {
             return false;
         }
@@ -906,9 +965,15 @@ class Wikula_Api_User extends Zikula_AbstractApi
             $message = $view->fetch('notification/newRevision.tpl');
             $subject = $this->__('Wiki update');
 
-            $uids = Doctrine_Core::getTable('Wikula_Model_Subscriptions')->findAll();
-            $uids = $uids->toKeyValueArray('uid', 'uid');
-            foreach($uids as $uid) {
+            
+            // find all subscriptions
+            $em = $this->getService('doctrine.entitymanager');
+            $query = $em->createQuery('SELECT u FROM Wikula_Entity_Subscriptions u');        
+            $users = $query->getArrayResult();
+        
+            // send emails
+            foreach($users as $user) {
+                $uid = $user['uid'];
                 $toaddress = UserUtil::getVar('email', $uid);
                 ModUtil::apiFunc('Mailer', 'user', 'sendmessage', array(
                     'toaddress' => $toaddress,

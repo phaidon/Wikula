@@ -357,16 +357,46 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
     
     function highscores()
     {
-        $q = Doctrine_Query::create()->from('Wikula_Model_Pages t');
-        $q->select('user, count(*) as count');
-        $q->groupBy('user');
-        $q->orderBy('count desc');
-        $items = $q->execute();
-        $items = $items->toArray();
+        $em = $this->getService('doctrine.entitymanager');
+        $qb = $em->createQueryBuilder();
+        $qb->select('p.user, count(p.id) as number')
+           ->from('Wikula_Entity_Pages', 'p')
+           ->groupBy('p.user')
+           ->orderBy('number', 'DESC')
+           ;
+        $query = $qb->getQuery();
+        $revisions = $query->getArrayResult();
+        
+        
+        $qb = $em->createQueryBuilder();
+        $qb->select('p.user, count(p.id) as number')
+           ->where('p.latest = :latest')
+           ->setParameter('latest', 'Y')
+           ->from('Wikula_Entity_Pages', 'p')
+           ->groupBy('p.user')
+           ->orderBy('number', 'DESC')
+           ;
+        $query = $qb->getQuery();
+        $pages = $query->getArrayResult();
+                
+        $items = array();
+        $total['revisions'] = 0;
+        $total['pages']     = 0;
+        $i = 1;
 
-        $q = Doctrine_Query::create()->from('Wikula_Model_Pages t');
-        $total = $q->execute();
-        $total = $total->count();
+        foreach($revisions as $revision) {
+            $total['revisions'] += $revision['number'];
+            $user = $revision['user'];
+            $items[$user]['revisions'] = $revision['number'];
+            $items[$user]['i'] = $i;
+            $i++;
+        }
+        foreach($pages as $page) {
+            $total['pages'] += $page['number'];
+            $user = $page['user'];
+            $items[$user]['pages'] =  $page['number'];
+        }
+        
 
         return $this->view->assign('total', $total)
                           ->assign('items',  $items)

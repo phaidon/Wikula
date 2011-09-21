@@ -22,40 +22,27 @@ use Doctrine\ORM\Mapping as ORM;
  * Annotations define the entity mappings to database.
  *
  * @ORM\Entity
- * @ORM\Table(name="wikula_links")
+ * @ORM\Table(name="wikula_subscriptions")
  */
-class Wikula_Entity_Links extends Zikula_EntityAccess
+class Wikula_Entity_Subscriptions extends Zikula_EntityAccess
 {
     
     /**
      * The following are annotations which define the id field.
      *
      * @ORM\Id
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="integer", length=11, unique=true)
      */
-    private $from_tag;
-    
-    /**
-     * The following are annotations which define the id field.
-     *
-     * @ORM\Id
-     * @ORM\Column(type="string", length=30)
-     */
-    private $to_tag;
-    
-    public function getFrom()
+    private $uid;
+
+    public function getuid()
     {
-        return $this->from_tag;
+        return $this->uid;
     }
     
-    public function setfrom_tag($from_tag)
+    public function setuid($uid)
     {
-        $this->from_tag = $from_tag;
-    }
-    
-    public function setto_tag($to_tag)
-    {
-        $this->to_tag = $to_tag;
+        $this->uid = $uid;
     }
 
 }

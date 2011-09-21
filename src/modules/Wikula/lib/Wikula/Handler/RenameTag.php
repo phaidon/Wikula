@@ -104,14 +104,17 @@ class Wikula_Handler_RenameTag  extends Zikula_Form_AbstractHandler
             return LogUtil::registerError($this->__('You do not have the authorization to edit this page!'));
         }
 
-
+       
         // set all other revisions to old
-        $q = Doctrine_Query::create()
-            ->update('Wikula_Model_Pages t')
-            ->set('tag', '?', array($to))
-            ->where('tag = ?', array($this->_tag));
-        $q->execute();
-        
+        $em = $this->getService('doctrine.entitymanager');
+        $qb = $em->createQueryBuilder();
+        $qb->update('Wikula_Entity_Pages', 'p')
+           ->where('p.tag = :tag')
+           ->setParameter('tag', $this->_tag)
+           ->set('p.tag', $to);
+        $query = $qb->getQuery();
+        $result = $query->getArrayResult();
+                
 
         LogUtil::registerStatus(__('Rename successfully'));
         return $view->redirect(ModUtil::url($this->name, 'user', 'show', array('tag' => $to)));

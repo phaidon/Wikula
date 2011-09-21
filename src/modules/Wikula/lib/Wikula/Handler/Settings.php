@@ -16,6 +16,7 @@
 
 class Wikula_Handler_Settings  extends Zikula_Form_AbstractHandler
 {
+    private $_subscription;
 
     function initialize(Zikula_Form_View $view)
     {
@@ -24,13 +25,14 @@ class Wikula_Handler_Settings  extends Zikula_Form_AbstractHandler
             throw new Zikula_Exception_Forbidden(LogUtil::getErrorMsgPermission());
         }
         
-        $subscription = Doctrine_Core::getTable('Wikula_Model_Subscriptions')->find(UserUtil::getVar('uid'));
-        if ($subscription) {
-            $subscribe = true;
+        $this->_subscription = $this->entityManager->find('Wikula_Entity_Subscriptions', UserUtil::getVar('uid'));
+        if ($this->_subscription) {
+            $this->view->assign('subscribe', true);
         } else {
-            $subscribe = false;
+            $this->view->assign('subscribe', false);
+            $this->_subscription = new Wikula_Entity_Subscriptions();
         }
-        $this->view->assign('subscribe', $subscribe);
+        
         $this->view->caching = false;
         
         return true;
@@ -42,8 +44,7 @@ class Wikula_Handler_Settings  extends Zikula_Form_AbstractHandler
         if ($args['commandName'] == 'cancel') {
             $url = ModUtil::url('Wikula', 'user', 'settings' );
             return $view->redirect($url);
-        }
-        
+        }    
         
         // check for valid form
         if (!$view->isValid()) {
@@ -52,21 +53,15 @@ class Wikula_Handler_Settings  extends Zikula_Form_AbstractHandler
         
         $data = $view->getValues();
         
-        $uid = UserUtil::getVar('uid');
-        $subscription = Doctrine_Core::getTable('Wikula_Model_Subscriptions')->find($uid);        
-        if($data['subscribe']) {
-            if(!$subscription) {
-                $values['uid'] = $uid;
-                $sub = new Wikula_Model_Subscriptions();
-                $sub->merge($values);
-                $sub->save();
-            }
+        if($data['subscribe']) {                
+            $values['uid'] = UserUtil::getVar('uid');;
+             $this->_subscription->merge($values);
+             $this->entityManager->persist($this->_subscription);
         } else {
-            if($subscription) {
-                $subscription->delete();
-            }
+            $this->entityManager->remove($this->_subscription);
         }
 
+        $this->entityManager->flush();
         return true;
     }
 

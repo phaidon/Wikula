@@ -85,7 +85,6 @@ class Wikula_Controller_User extends Zikula_AbstractController
         }
 
 
-
         // Get the page
         $page = ModUtil::apiFunc($this->name, 'user', 'LoadPage', array(
             'tag'  => $tag,
