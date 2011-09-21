@@ -455,12 +455,11 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
                 $curDay = '';
                 foreach ($pages as $page) {
                     // day header
-                    list($day, $time) = explode(' ', $page['time']);
+                    $day  = $page['time']->format('Y-m-d');
                     if ($day != $curDay) {
                         $curDay = $day;
                     }
-
-                    $page['timeformatted'] = date(__('H:i T'), strtotime($time));
+                    $page['timeformatted'] = $page['time']->format('H:i: T');
 
                     $pagelist[$day][] = $page;
 

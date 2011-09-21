@@ -1,4 +1,4 @@
-{include file='user/menu.tpl' tag=$tag}
+{include file='user/menu_specialPage.tpl' tag=$tag}
 
 <div id="wikula">
     <div class="page">{$content}</div>

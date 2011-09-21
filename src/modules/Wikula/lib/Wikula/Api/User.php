@@ -276,7 +276,6 @@ class Wikula_Api_User extends Zikula_AbstractApi
             SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_READ),
             LogUtil::getErrorMsgPermission()
         );
-
         
         $em = $this->getService('doctrine.entitymanager');
         $qb = $em->createQueryBuilder();
@@ -359,11 +358,10 @@ class Wikula_Api_User extends Zikula_AbstractApi
          
         $em = $this->getService('doctrine.entitymanager');
         $qb = $em->createQueryBuilder();
-        $qb->add('select',  'u')
-           ->add('from',    'Wikula_Entity_Pages u')
-           ->add('where',   'u.latest = :latest')
-           ->add('orderBy', 'u.tag')
-           ->setParameter('latest', 'Y');
+        $qb->select('p')
+           ->from('Wikula_Entity_Pages', 'p')
+           ->where("p.latest = 'Y'")
+           ->orderBy('p.tag');
         $query = $qb->getQuery();
         
         
@@ -385,38 +383,45 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
     }
 
-    //function LoadAllPagesEditedByUser($args)
+
     public function LoadAllPagesEditedByUser($args)
-    {
-        
+    {        
         extract($args);
         unset($args);
 
         if (!isset($uname)) {
             return false;
         }
-
-        $q = Doctrine_Query::create()->from('Wikula_Model_Pages t');
-        if (isset($startnum) and is_numeric($startnum) and $startnum > 1) {
-            $q->offset($startnum-1);
-        }
-        if (isset($numitems) and is_numeric($numitems) and $numitems > 0) {
-            $q->limit($numitems);
-        }
-        $q->where('user = ?', array($uname));
+        
+        $em = $this->getService('doctrine.entitymanager');
+        $qb = $em->createQueryBuilder();
+        $qb->select('p')
+           ->from('Wikula_Entity_Pages', 'p')
+           ->where('p.user = :user')
+           ->setParameter('user', $uname);        
 
 
         if (!isset($all) || (isset($all) && !$all)) {
-            $q->addWhere('latest = ?', array('Y'));
+            $qb->andWhere("p.latest = 'Y'");
         }
         if (isset($alpha) && $alpha == 1) {
-            $q->orderBy('tag ASC, time DESC');
+            $qb->add('orderBy', 'p.tag ASC, p.time DESC');
         } else {
-            $q->orderBy('time DESC, tag ASC');
+            $qb->add('orderBy', 'p.time DESC, p.tag ASC');
         }
+        $query = $qb->getQuery();
 
-        $pages = $q->execute();
-        $pages = $pages->toArray();
+        
+        if (isset($startnum) and is_numeric($startnum) and $startnum > 1) {
+            $query->setFirstResult($offset = $startnum-1);
+        }
+        if (isset($numitems) and is_numeric($numitems) and $numitems > 0) {
+            $query->setMaxResults($limit = $numitems);
+
+        }    
+        
+        
+        $pages = $query->getArrayResult();
         
 
         if ($pages === false) {
@@ -433,10 +438,16 @@ class Wikula_Api_User extends Zikula_AbstractApi
     * @return integer total wiki pages
     */
     public function CountAllPages()
-    {     
-        return Doctrine_Query::create()->from('Wikula_Model_Pages t')
-            ->where('latest = ?', array('Y'))
-            ->count();
+    {                  
+        $em = $this->getService('doctrine.entitymanager');
+        $qb = $em->createQueryBuilder();
+        $qb->select('count(p.id) as num')
+           ->from('Wikula_Entity_Pages', 'p')
+           ->where("p.latest = 'Y'" );
+        $query = $qb->getQuery();
+        $count = $query->getSingleScalarResult();
+        return $count;
+
     }
 
     /**
@@ -451,55 +462,53 @@ class Wikula_Api_User extends Zikula_AbstractApi
     {
         extract($args);
         unset($args);
-
         if (!isset($uname) || empty($uname)) {
             return LogUtil::registerArgsError();
         }
-
-        // Defaults
-        if (!isset($startnum) || !is_numeric($startnum)) {
-            $startnum = 1;
-        }
-        if (!isset($numitems) || !is_numeric($numitems)) {
-            $numitems = -1;
-        }
+       
+        // defaults
         if (!isset($justcount) || !is_bool($justcount)) {
             $justcount = false;
         }
-
-        $q = Doctrine_Query::create()->from('Wikula_Model_Pages t');
-
-        $q->orderBy('time DESC');
-
-
-        // build the order by
         if (!isset($orderby)) {
             $orderby = 'tag';
         }
         if (!isset($orderdir) || !in_array(strtoupper($orderdir), array('ASC', 'DESC'))) {
-            $orderby .= ' ASC';
-        } else {
-            $orderby .= ' '.strtoupper($orderdir);
+            $orderdir = 'ASC';
         }
-
-        // define the permission filter to apply
-        // even when doesn't make sense in the user's owned pages
-        /*$permFilter = array(array('realm'           => 0,
-                                'component_left'  => 'Wikula',
-                                'instance_left'   => 'page',
-                                'instance_right'  => 'tag',
-                                'level'           => ACCESS_READ));*/
 
         
-        if ($justcount) {
-            $result = $q->execute();
-            $count = $q->count();
-        } else {
-            $q->where('latest = ? and owner = ?', array('Y', $uname) );
-            $result = $q->execute();
-            $pages = $result->toArray();
+                 
+        $em = $this->getService('doctrine.entitymanager');
+        $qb = $em->createQueryBuilder();
+        $qb->select('p')
+           ->from('Wikula_Entity_Pages', 'p')
+           ->orderBy('p.'.$orderby, $orderdir)
+           ->where("p.latest = 'Y' AND p.owner = :owner" )
+           ->setParameter('owner', $uname);
+        
+        
+        if (isset($startnum) and is_numeric($startnum) and $startnum > 1) {
+            $query->setFirstResult($offset = $startnum-1);
         }
+        if (isset($numitems) and is_numeric($numitems) and $numitems > 0) {
+            $query->setMaxResults($limit = $numitems);
+        }  
 
+        
+
+       
+       if ($justcount) {
+            $qb->select('count(p.id) as num');
+            $query = $qb->getQuery();
+            $count = $query->getSingleScalarResult();
+        } else {
+            $query = $qb->getQuery();
+            $pages = $query->getArrayResult();;
+        }
+     
+
+        
         // build the result array
         $result = array();
 
@@ -509,7 +518,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
             $result['pages'] = $pages;
             $result['count'] = count($pages);
         }
-        $result['total'] =  ModUtil::apiFunc($this->name, 'user', 'CountAllPages');
+        $result['total'] = $this->CountAllPages();
 
         return $result;
     }
@@ -920,18 +929,21 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
     public function NotificateNewRevsion($tag)
     {
-            // TODO DB
-        return true;
         if (empty($tag) or !$this->getVar('subscription') ) {
             return false;
         }
 
-        $q = Doctrine_Query::create()->from('Wikula_Model_Pages t');
-        $q->where('latest = ? and tag = ? and user = ?', array('N', $tag, UserUtil::getVar('uname')));
-        $q->orderBy('time desc');
-        $q->limit(1);
-        $lastEdit = $q->execute();
-        $lastEdit = $lastEdit->toArray();
+        $em = $this->getService('doctrine.entitymanager');
+        $qb = $em->createQueryBuilder();
+        $qb->from('Wikula_Entity_Pages', 'p')
+           ->where("p.user = :user AND p.latest = 'N'")
+           ->setParameter('user', UserUtil::getVar('uname'))
+           ->orderBy('time desc')
+           ->setMaxResults($limit = 1)
+           ->setParameter('newlatest', 'N');
+        $query = $qb->getQuery();
+        $lastEdit = $query->getArrayResult();
+        
 
         $notification = false;
         if(count($lastEdit) == 0 ) {

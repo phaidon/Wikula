@@ -122,7 +122,8 @@ class Wikula_Controller_User extends Zikula_AbstractController
         $this->view->assign('time',     $time);
         $this->view->assign('showpage', $page);
         
-        return $this->view->fetch('user/show.tpl', md5($page['id'].$page['time']));
+        $datetime = $page['time']->format('Y-m-d H:i:s');
+        return $this->view->fetch('user/show.tpl', md5($page['id'].$datetime));
     }
 
     /**
