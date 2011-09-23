@@ -81,10 +81,6 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
                 'action' => 'search',
                 'description' => $this->__('search something of your interest in the wiki')
             ),
-            $this->__('Text_search_expanded') => array(
-                'action' => 'textsearchexpanded',
-                'description' => $this->__("fine grained search if you haven't found anything in the normal search")
-            ),
             $this->__('Wanted_pages')        => array(
                 'action' => 'wantedpages',
                 'description' => $this->__('check out the pages pending for creation')
@@ -332,14 +328,14 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
         $curday = '';
         $pagelist = array();
         foreach ($pages as $page)
-        {
-            list($day, $time) = explode(' ', $page['time']);
+        {            
+            $day = $page['time']->format('Y-m-d');
             if ($day != $curday) {
-                $dateformatted = date(__('D, d M Y'), strtotime($day));
+                $dateformatted = $page['time']->format('D, d M Y');
                 $curday = $day;
             }
 
-            $page['timeformatted'] = date(__('H:i T'), strtotime($page['time']));
+            $page['timeformatted'] = $page['time']->format('H:i T');
 
             if ($page['user'] == System::getVar('anonymous')) {
                 $page['user'] .= ' ('.__('anonymous user').')'; // anonymous user
@@ -454,7 +450,7 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
             } else {
                 $curDay = '';
                 foreach ($pages as $page) {
-                    // day header
+                    //$day day header
                     $day  = $page['time']->format('Y-m-d');
                     if ($day != $curDay) {
                         $curDay = $day;
@@ -492,7 +488,7 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
         if (!empty($phrase)) {
             $phrase = trim($phrase);
 
-            $result = ModUtil::apiFunc($this->name, 'user', 'FullTextSearch',
+            $result = ModUtil::apiFunc($this->name, 'user', 'Search',
                                    array('phrase' => $phrase));
 
             if (empty($result)) {
@@ -507,7 +503,6 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
         }
 
         // create the output
-
 
         $this->view->assign('phrase',                 $phrase);
         $this->view->assign('results',                $result);

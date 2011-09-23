@@ -27,12 +27,13 @@ class Wikula_Handler_RenameTag  extends Zikula_Form_AbstractHandler
     
     function initialize(Zikula_Form_View $view)
     {
+        $this->_tag = FormUtil::getPassedValue('tag', null, "GET", FILTER_SANITIZE_STRING);
+        
         // Permission check
-        if (!SecurityUtil::checkPermission('Wikula::', '::', ACCESS_EDIT) ) {
+        if (!ModUtil::apiFunc($this->name, 'Permission', 'canModerate', $this->_tag)) {
             throw new Zikula_Exception_Forbidden(LogUtil::getErrorMsgPermission());
         }
         
-        $this->_tag = FormUtil::getPassedValue('tag', null, "GET", FILTER_SANITIZE_STRING);
         
         
         // redirect if tag contains spaces

@@ -38,10 +38,10 @@ class Wikula_Entity_Links extends Zikula_EntityAccess
     /**
      * The following are annotations which define the id field.
      *
-     * @ORM\Id
      * @ORM\Column(type="string", length=30)
      */
     private $to_tag;
+    
     
     public function getFrom()
     {

@@ -27,12 +27,14 @@ class Wikula_Handler_CloneTag  extends Zikula_Form_AbstractHandler
     
     function initialize(Zikula_Form_View $view)
     {
-        // Permission check
-        if (!SecurityUtil::checkPermission('Wikula::', '::', ACCESS_EDIT) ) {
-            throw new Zikula_Exception_Forbidden(LogUtil::getErrorMsgPermission());
-        }
         
         $this->_tag = FormUtil::getPassedValue('tag', null, "GET", FILTER_SANITIZE_STRING);
+        
+        
+        // Permission check
+        if (!ModUtil::apiFunc($this->name, 'Permission', 'canModerate', $this->_tag)) {
+            throw new Zikula_Exception_Forbidden(LogUtil::getErrorMsgPermission());
+        }
         
         
         // redirect if tag contains spaces

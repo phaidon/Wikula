@@ -17,47 +17,54 @@
 
 class Wikula_Controller_User extends Zikula_AbstractController
 {
-
+    /**
+     * autoload
+     * 
+     * Loads common values at the beginning
+     *
+     */
     function __autoload($class_name) {
         require_once 'modules/Wikula/lib/Wikula/Common.php';
     }
 
-    
+    /**
+     * main
+     * 
+     * This function is a forward to the show function. 
+     *
+     */    
     public function main($args)
     {
         return $this->show($args);
     }
     
     /**
-     * Show function
+     * show
      * 
      * Displays a wiki page
      *
      * @param string $args['tag'] Tag of the wiki page to show
-     * @TODO Improve the authors box grouping the same users contribs
-     * @TODO Do not show the Last edit in the authorsbox if it's the same creation
-     * @return unknown
+     * @return smarty output
      */
-    
     public function show($args)
-    {
-
-        // Permission check
-        $this->throwForbiddenUnless(
-            SecurityUtil::checkPermission('Wikula::', '::', ACCESS_READ)
-        );
-        
+    {   
 
         // Get input parameters
         $tag  = isset($args['tag']) ? $args['tag'] : FormUtil::getPassedValue('tag');
         $time = isset($args['time']) ? $args['time'] : FormUtil::getPassedValue('time');
         $raw  = isset($args['raw']) ? $args['raw'] : FormUtil::getPassedValue('raw');
         unset($args);
-
+        
         if(empty($tag)) {
             $tag = $this->getVar('root_page');
         }
 
+        
+        // Permission check
+        $this->throwForbiddenUnless(
+            ModUtil::apiFunc($this->name, 'Permission', 'canRead', $tag)  
+        );        
+        
         
         if (empty($time)) {
             $time = null;
@@ -127,7 +134,12 @@ class Wikula_Controller_User extends Zikula_AbstractController
     }
 
     /**
-     * Edit method
+     * edit
+     * 
+     * This function edits a wiki page.
+     *     
+     * @param:post tag name of the wiki page
+     * @return smarty output
      */
     public function edit()
     {
@@ -136,7 +148,11 @@ class Wikula_Controller_User extends Zikula_AbstractController
     }
 
     /**
-     * Rename method
+     * rename
+     * 
+     * This function renames a wiki page
+     *
+     * @return smarty output
      */
     public function renameTag()
     {
@@ -145,22 +161,25 @@ class Wikula_Controller_User extends Zikula_AbstractController
     }
     
     /**
-     * Show the history of the Wiki Page
+     * history
+     * 
+     * This function shows the history of a wiki page
      *
      * @param string $args['tag'] tag of the page
      * @TODO Implement the time parameter?
      * @TODO Add a paginator?
      * @TODO Improve this view with JavaScript sliders
-     * @return unknown
+     * @return smarty output
      */
     public function history($args)
     {
-         // Permission check
+        $tag  = FormUtil::getPassedValue('tag');
+        
+        // Permission check
         $this->throwForbiddenUnless(
-            SecurityUtil::checkPermission('Wikula::', '::', ACCESS_READ)
+            ModUtil::apiFunc($this->name, 'Permission', 'canRead', $tag)
         );
         
-        $tag  = FormUtil::getPassedValue('tag');
         
         // redirect if tag contains spaces
         if (strpos($tag, ' ') !== false) {
@@ -248,7 +267,6 @@ class Wikula_Controller_User extends Zikula_AbstractController
         $this->view->assign('tag',     $tag);
         $this->view->assign('objects', $objects);
         $this->view->assign('oldest',  $page);
-
         return $this->view->fetch('user/history.tpl');
     }
 
@@ -260,9 +278,10 @@ class Wikula_Controller_User extends Zikula_AbstractController
     public function RecentChangesXML()
     {
         
-        if (!SecurityUtil::checkPermission('Wikula::', 'xml::recentchanges', ACCESS_READ)) {
-            return LogUtil::registerError(__('Sorry! No authorization to access this module.'), null, ModUtil::url($this->name, 'user', 'main'));
-        }
+        // Permission check
+        $this->throwForbiddenUnless(
+            ModUtil::apiFunc($this->name, 'Permission', 'canRead')
+        );
 
         $pages = ModUtil::apiFunc($this->name, 'user', 'LoadRecentlyChanged');
 
@@ -285,43 +304,52 @@ class Wikula_Controller_User extends Zikula_AbstractController
      */
     public function RevisionsXML()
     {
-        
-        if (!SecurityUtil::checkPermission('Wikula::', 'xml::revisions', ACCESS_READ)) {
-            return LogUtil::registerError(__('Sorry! No authorization to access this module.'), null, ModUtil::url($this->name, 'user', 'main'));
-        }
 
-        $tag = FormUtil::getPassedValue('tag');
-
-        $pages = ModUtil::apiFunc($this->name, 'user', 'LoadRevisions', array('tag' => $tag));
-
-        if (!$pages) {
-            return LogUtil::registerError(__('Error during element fetching !'));
-        }
-
+        $tag = FormUtil::getPassedValue('tag'); 
+        // Permission check
+        $this->throwForbiddenUnless(
+            ModUtil::apiFunc($this->name, 'Permission', 'canRead', $tag)
+        );
+        $pages = ModUtil::apiFunc(
+            $this->name,
+            'user',
+            'LoadRevisions',
+            array('tag' => $tag)
+        );
         
         $this->view->force_compile = true;
-
         $this->view->assign('tag',   $tag);
         $this->view->assign('pages', $pages);
-
         return $this->view->fetch('xml/revisions.tpl');
     }
 
     /**
-     * Display a list of internal pages linking to the current page
+     * backlings
+     * 
+     * This function displays a list of internal pages linking to the current 
+     * page.
+     * 
+     * @param:post tag name of the wiki page
+     * @return smarty output
      */
     public function backlinks()
     {
-        // Permission check
-        $this->throwForbiddenUnless(
-            SecurityUtil::checkPermission('Wikula::', '::', ACCESS_READ)
-        );
-        
         $tag = FormUtil::getPassedValue('tag');
         if (empty($tag)) {
-            return LogUtil::registerError(__f('Missing argument [%s]', 'tag'), null, ModUtil::url($this->name, 'user', 'main'));
+            return LogUtil::registerError(
+                __f('Missing argument [%s]', 'tag'),
+                null,
+                ModUtil::url($this->name, 'user', 'main')
+            );
         }
+
+                
+        // Permission check
+        $this->throwForbiddenUnless(
+            ModUtil::apiFunc($this->name, 'Permission', 'canRead', $tag)
+        );
         
+
         
         if (strpos($tag, ' ') !== false) {
             $arguments = array(
@@ -334,34 +362,36 @@ class Wikula_Controller_User extends Zikula_AbstractController
         // Get the variables
         $pages = ModUtil::apiFunc($this->name, 'user', 'LoadPagesLinkingTo', $tag);
 
-        
         $this->view->assign('tag',   $tag);
         $this->view->assign('pages', $pages);
-
         return $this->view->fetch('user/backlinks.tpl');
     }
 
     /**
-     * Clone the current page and save a copy of it as a new page
+     * clone tag
+     * 
+     * This function clones a wiki page and save a copy of it as a new page.
+     *      
+     * @param:post tag name of the wiki page
+     * @return smarty output
      */
     public function cloneTag()
     {
-        // clone is not possible as function name.
-
         $form = FormUtil::newForm($this->name, $this);
         return $form->execute('user/clone.tpl', new Wikula_Handler_CloneTag());
-
-        
     }
     
-
-    
+    /**
+     * settings
+     * 
+     * This functions shows the users settings.
+     *      
+     * @return smarty output
+     */    
     public function settings()
     {
         $form = FormUtil::newForm($this->name, $this);
         return $form->execute('user/settings.tpl', new Wikula_Handler_Settings());
     }
-
-    
     
 }

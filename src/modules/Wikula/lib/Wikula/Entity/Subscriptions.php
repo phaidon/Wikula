@@ -33,16 +33,16 @@ class Wikula_Entity_Subscriptions extends Zikula_EntityAccess
      * @ORM\Id
      * @ORM\Column(type="integer", length=11, unique=true)
      */
-    private $uid;
+    private $id;
 
-    public function getuid()
+    public function getid()
     {
-        return $this->uid;
+        return $this->id;
     }
     
-    public function setuid($uid)
+    public function setid($id)
     {
-        $this->uid = $uid;
+        $this->id = $id;
     }
 
 }

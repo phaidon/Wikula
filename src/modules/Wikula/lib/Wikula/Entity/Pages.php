@@ -15,6 +15,8 @@
  */
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * Wikula links entity class.
@@ -44,6 +46,27 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
     private $tag;
     
    
+    /**
+     * links
+     *
+     * @ORM\ManyToMany(targetEntity="Wikula_Entity_Subscriptions")
+     */
+    private $links = null;
+    
+    
+     public function __construct()
+    {
+        $this->links = new ArrayCollection();
+    }
+
+    
+    public function getLinks()
+    {
+        $links = $this->links;
+        return $links->toArray();
+    }
+    
+    
     /**
      * The following are annotations which define the id field.
      *
@@ -89,14 +112,13 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
      */
     private $note; 
     
-       /**
+    /**
      * The following are annotations which define the id field.
      *
      * @ORM\Column(type="string", length=30)
      */
     private $handler = 'page';
-    
-    
+
     
     public function setNote($note)
     {
