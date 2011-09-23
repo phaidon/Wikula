@@ -1,13 +1,13 @@
 {ajaxheader modname='Wikula' filename='chosen/chosen.proto.min.js'}
 {pageaddvar name='stylesheet' value='modules/Wikula/javascript/chosen/chosen.css'}
 
-<div class="z-formrow">
-    <label for="menupages[]">{gt text='Menu pages'}</label>
-    <select multiple class="chzn-select" name="menupages[]">
+<div id="chosenCss" class="z-formrow">
+    <label for="menupages">{gt text='Menu pages'}</label>
+    <select multiple="multiple" id="menupages" class="chzn-select" name="menupages[]">
         {foreach from=$pages item="page"}
-        <option value="{$page.tag}" {if in_array($page.tag, $menupages)}selected{/if} >{$page.tag}</option>
+        <option value="{$page.tag}" {if in_array($page.tag, $menupages)}selected="selected"{/if} >{$page.tag}</option>
         {/foreach}
-    </select> 
+    </select>
 </div>
 
 <script type="text/javascript">
