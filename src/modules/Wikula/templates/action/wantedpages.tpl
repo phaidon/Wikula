@@ -25,9 +25,9 @@
     <tbody>
       {foreach from=$items item='item'}
       <tr>
-        <td><a href="{modurl modname='Wikula' func='main' tag=$item.from_tag|urlencode}" title="{$item.from_tag|safehtml}">{$item.from_tag|safehtml}</a></td>
+        <td><a href="{modurl modname='Wikula' type='user' func='main' tag=$item.from_tag|urlencode}" title="{$item.from_tag|safehtml}">{$item.from_tag|safehtml}</a></td>
         <td>&rArr;</td>
-        <td>{ModUtil::apiFunc modname='Wikula' type='user' func='Link' tag=$item.to_tag}</td>
+        <td><a href="{modurl modname='Wikula' type='user' func='main' tag=$item.to_tag|urlencode}" title="{$item.to_tag|safehtml}">{$item.to_tag|safehtml}</a></td>
       </tr>
       {/foreach}
     </tbody>

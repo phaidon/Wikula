@@ -75,7 +75,7 @@
                     {/if}
                 </td>
                 <td>{$item.user|profilelinkbyuname}</td>
-                <td class="time">{$item.time}</td>
+                <td class="time">{$item.time|dateformat}</td>
                 <td class="time" title="[{$item.note}]">{$item.note|default:"[Empty note]"}</td>
                 {*<td class="number  c1">0</td>*}
                 {*modapifunc modname='Wikula' type='admin' func='CountRevisions' tag=$item.tag assign='revcount'*}

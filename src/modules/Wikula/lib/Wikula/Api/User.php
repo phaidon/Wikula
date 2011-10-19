@@ -14,6 +14,7 @@
  * information regarding copyright and licensing.
  */
 
+use Doctrine\ORM\Query;
 
 class Wikula_Api_User extends Zikula_AbstractApi
 {
@@ -182,69 +183,49 @@ class Wikula_Api_User extends Zikula_AbstractApi
     */
     public function LoadRevisions($args)
     {
-        extract($args);
-        unset($args);
         
-        if (!isset($tag)) {
+        if (!isset($args['tag'])) {
             return LogUtil::registerArgsError();
         }
 
         // Permission check
         $this->throwForbiddenUnless(
-            SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_READ),
+            SecurityUtil::checkPermission('Wikula::', 'page::'.$args['tag'], ACCESS_READ),
             LogUtil::getErrorMsgPermission()
         );
 
-        $q = Doctrine_Query::create()->from('Wikula_Model_Pages t');
+        $args['latest'] = false;
+        
 
 
-        // Defaults
-        if (!isset($startnum) || !is_numeric($startnum)) {
-            $startnum = 1;
-        } 
-        if (!isset($numitems) || !is_numeric($numitems)) {
-            $numitems = -1;
-        }
-
-        $q->where('tag = ?', array($tag));
 
         // build the order by
-        if (!isset($orderby)) {
-            $orderBy = 'time';
+        if (!isset($args['orderby'])) {
+            $args['orderBy'] = 'time';
         } else {
-            $orderBy = $orderby;
+            $args['orderBy'] = $orderby;
         }
-        if (!isset($orderdir) || !in_array(strtoupper($orderdir), array('ASC', 'DESC'))) {
-            $orderBy .= ' DESC';
+        if (!isset($args['orderdir']) || !in_array(strtoupper($args['orderdir']), array('ASC', 'DESC'))) {
+            $args['orderBy'] .= ' DESC';
         } else {
-            $orderBy .= ' '.strtoupper($orderdir);
+            $args['orderBy'] .= ' '.strtoupper($orderdir);
         }
-        $q->orderBy($orderBy);
 
         // check if we want to get the latest only
         if (isset($getoldest) && $getoldest) {
-            $orderBy = $time.' DESC';
+            $args['orderBy'] = $args['time'].' DESC';
             $numitems = 1;
         }
 
-        // getn the revisions from the db
-        $q->offset($startnum-1);
-        if($numitems-1 > 0) {
-            $q->limit($numitems-1);
-        }
-        $result = $q->execute();
-        $result = $result->toArray();
-
-        if (!$result) {
-            return LogUtil::registerError(__('Error during element fetching !'));
-        }
         
+        $revisions = $this->LoadPages($args);
         
         // return the results
-        if (isset($result[0]) && isset($getoldest) && $getoldest) {
-            return $result[0];
+        if (isset($revisions[0]) && isset($getoldest) && $getoldest) {
+            return $revisions[0];
         }
-        return $result;
+            return $revisions; 
+
     }
 
     public function LoadPagesLinkingTo($tag)
@@ -254,19 +235,19 @@ class Wikula_Api_User extends Zikula_AbstractApi
             SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_READ),
             LogUtil::getErrorMsgPermission()
         );
-
+        
         
         $em = $this->getService('doctrine.entitymanager');
-        $qb = $em->createQueryBuilder();
-        $qb->add('select',  'u.from_tag')
-           ->add('from',    'Wikula_Entity_Links u')
-           ->add('where',   'u.to_tag = :to_tag')
-           ->add('orderBy', 'u.from_tag')
+        $query = $em->createQueryBuilder();
+        $query->select('l') // 'u.from_tag'
+           ->from('Wikula_Entity_Links2', 'l')
+           ->where('l.to_tag = :to_tag')
+          // ->add('orderBy', 'u.from_tag')
            ->setParameter('to_tag', $tag);
-        $query = $qb->getQuery();
-        $links = array();
-        $links = $query->getArrayResult();
-
+        $links = $query->getQuery()->execute();
+        //$links = $query->getQuery()->setHint(\Doctrine\ORM\Query::HINT_INCLUDE_META_COLUMNS, true)->execute();
+        
+        
         if ($links === false) {
             return LogUtil::registerError(__('Error! Getting the links for this page failed.'));
         }
@@ -363,27 +344,9 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
     public function LoadAllPages($args)
     {
-        extract($args);
-        unset($args);
-         
-        $em = $this->getService('doctrine.entitymanager');
-        $qb = $em->createQueryBuilder();
-        $qb->select('p')
-           ->from('Wikula_Entity_Pages', 'p')
-           ->where("p.latest = 'Y'")
-           ->orderBy('p.tag');
-        $query = $qb->getQuery();
         
-        
-        if (isset($startnum) and is_numeric($startnum) and $startnum > 1) {
-            $query->setFirstResult($offset = $startnum-1);
-        }
-        if (isset($numitems) and is_numeric($numitems) and $numitems > 0) {
-            $query->setMaxResults($limit = $numitems);
-
-        }        
-        
-        $pages = $query->getArrayResult();
+        $args['orderBy'] = 'p.tag';         
+        $pages = $this->LoadPages($args);
 
         if ($pages === false) {
             return LogUtil::registerError(__('Error! Getting all pages failed.'));
@@ -393,6 +356,42 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
     }
 
+    
+    
+    public function LoadPages($args)
+    { 
+        extract($args);
+        unset($args);
+  
+        
+        $em = $this->getService('doctrine.entitymanager');
+        $query = $em->createQueryBuilder();
+        $query->select('p')
+              ->from('Wikula_Entity_Pages', 'p');
+                
+        
+        if(isset($orphaned) and  $orphaned) { 
+            $query->leftJoin('p.links', 'l');
+            $query->where("p.links IS EMPTY");    
+        }
+
+        
+        if(!isset($latest) or $latest) {
+            $query->andWhere("p.latest = 'Y'");        
+        }
+        
+        
+        if (isset($startnum) and is_numeric($startnum) and $startnum > 1) {
+            $query->setFirstResult($offset = $startnum-1);
+        }
+        if (isset($numitems) and is_numeric($numitems) and $numitems > 0) {
+            $query->setMaxResults($limit = $numitems);
+
+        }
+        
+        return $query->getQuery()->getArrayResult();                
+    }
+    
 
     public function LoadAllPagesEditedByUser($args)
     {        
@@ -595,29 +594,37 @@ class Wikula_Api_User extends Zikula_AbstractApi
     public function LoadWantedPages($args)
     {
         
-        // TODO remove old DB query
+        
+        // TODO remove old DB query 
+        $pages0 = $this->LoadAllPages(array());
+        $pages  = array();
+        foreach ($pages0 as $key => $value) {
+            $pages[] = $value['tag'];
+        }
         
         
-        extract($args);
-        unset($args);
+        $em = $this->getService('doctrine.entitymanager');
+        $qb = $em->createQueryBuilder();
+        $qb->select('l')
+           ->from('Wikula_Entity_Links2', 'l')
+           ->groupBy('l.to_tag');
+        $query = $qb->getQuery();
+        $links = $query->getArrayResult();
+        
 
-        if (!isset($startnum) || !is_numeric($startnum)) {
-            $startnum = 1;
+        foreach ($links as $key => $value) {
+            if(in_array($value['to_tag'], $pages)) {
+                unset($links[$key]);
+                unset($pages[$key]); 
+            }
         }
-        if (!isset($numitems) || !is_numeric($numitems)) {
-            $numitems = -1;
-        }
+                
+        return $links;
+        
 
-        $q = Doctrine_Query::create()
-            ->from('Wikula_Model_Pages t')
-            ->leftJoin('t.Wikula_Model_Links s');
-
-        $q->where('tag IS NULL');
-        $q->groupBy('s.to_tag, s.from_tag');
-        $q->orderBy('s.from_tag ASC, s.to_tag ASC');
-        $result = $q->execute();
-        $result = $result->toArray();
-        return;
+        
+        
+        /*
 
 
         $sql = 'SELECT DISTINCT '.$linkcol['from_tag'].', '
@@ -655,7 +662,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
         $result->Close();
 
-        return $pages;
+        return $pages; */
 
     }
     
@@ -663,71 +670,11 @@ class Wikula_Api_User extends Zikula_AbstractApi
     
     public function LoadOrphanedPages($args)
     {
-
-        
-        extract($args);
-        unset($args);
-
-        
-        
-        $em = $this->getService('doctrine.entitymanager');
-       
-        
-        
-        $group = $this->entityManager->find('Wikula_Entity_Pages', 1);
-        print_r($group->getLinks());
-        
-        
-        /*
-            $dql = "SELECT o FROM Wikula_Entity_Pages o JOIN o.links t";
-        
-        $query = $em->createQuery($dql);
-                $orphanedPages = $query->getArrayResult();
-*/
-        
-        /*$qb = $em->createQueryBuilder();
-        $qb->select('p')
-           ->from('Wikula_Entity_Pages', 'p')
-           ->where("p.latest = 'Y'" );
-        $query = $qb->getQuery();*/
-        
-        
-        
-        
-           /*     $q = Doctrine_Query::create()
-            ->from('Wikula_Model_Pages a')
-            ->select('a.tag, b.to_tag')
-            ->leftJoin('a.Wikula_Model_Links b')
-            ->where('a.latest = ?', array('Y'))
-            ;
-        
-        */
-        
-        
-        if (isset($startnum) and is_numeric($startnum) and $startnum > 1) {
-            $query->setFirstResult($offset = $startnum-1);
-        }
-        if (isset($numitems) and is_numeric($numitems) and $numitems > 0) {
-            $query->setMaxResults($limit = $numitems);
-
-        }    
-        
-        
-        
-        
-        
-        
-        
-        print_r($orphanedPages);
-        
-        foreach($orphanedPages as $key => $value) {
-            if(count($value['Wikula_Model_Links']) > 0 ) {
-                unset($orphanedPages[$key]);
-            }
-        }
-        return $orphanedPages;
-
+        $args['orphaned'] = true;        
+        return $this->LoadPages($args);
     }
+    
+    
 
     public function IsOrphanedPage($args)
     {
@@ -894,10 +841,11 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
 
         // add links to other page into the link table
-        $oldlinks = $this->entityManager->getRepository('Wikula_Entity_Links')
+        $oldlinks = $this->entityManager->getRepository('Wikula_Entity_Links2')
                                         ->findBy(array('from_tag' => $tag));
         foreach($oldlinks as $oldlink) {
             $this->entityManager->remove($oldlink);
+            $this->entityManager->flush();
         }
         
                 
@@ -912,9 +860,10 @@ class Wikula_Api_User extends Zikula_AbstractApi
             )
         );
         foreach($pagelinks as $pagelink) {
-           $d = new Wikula_Entity_Links();
+           $d = new Wikula_Entity_Links2();
            $d->merge($pagelink);
            $this->entityManager->persist($d);
+           $this->entityManager->flush();
         }
 
 
@@ -1285,20 +1234,18 @@ class Wikula_Api_User extends Zikula_AbstractApi
     public function FullCategoryTextSearch($args)
     {
         
-        extract($args);
-        unset($args);
+        $args['orderBy'] = 'tag';
 
-        if (!isset($phrase)) {
+        if (!isset($args['phrase'])) {
             return false;
         }
 
-        $q = Doctrine_Query::create()->from('Wikula_Model_Pages t');
-        $q->where('latest = ?', array('Y'));
-        $q->addWhere('body LIKE ?', array('%[['.$phrase.'%'));
-        $q->orderBy('tag');
-        $result = $q->execute();
-        $result = $result->toArray();
+        //TODO LIKE
+        $this->LoadPages($args);
+        
+        //$q->addWhere('body LIKE ?', array('%[['.$phrase.'%'));
 
+        
         if ($result === false) {
             return LogUtil::registerError(__('Error! Happened during element fetching.'));
         }

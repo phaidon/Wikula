@@ -7,7 +7,7 @@
  * Contributor Agreements and licensed to You under the following license:
  *
  * @license GNU/GPLv3 (or at your option, any later version).
- * @package Piwik
+ * @package Wikula
  * @link https://github.com/phaidon/Wikula
  *
  * Please see the NOTICE file distributed with this source code for further
@@ -27,23 +27,24 @@ use Doctrine\ORM\Mapping as ORM;
 class Wikula_Entity_Links extends Zikula_EntityAccess
 {
     
+      
     /**
-     * The following are annotations which define the id field.
-     *
      * @ORM\Id
      * @ORM\Column(type="string", length=30)
      */
     private $from_tag;
     
     /**
-     * The following are annotations which define the id field.
      *
-     * @ORM\Column(type="string", length=30)
+     * @ORM\ManyToOne(targetEntity="Wikula_Entity_Pages", inversedBy="links")
+     * @ORM\JoinColumn(name="to_tag", referencedColumnName="tag")
+     * @ORM\Id
+     * @var Wikula_Entity_Pages
      */
     private $to_tag;
     
     
-    public function getFrom()
+    public function getfrom_tag()
     {
         return $this->from_tag;
     }
@@ -52,6 +53,12 @@ class Wikula_Entity_Links extends Zikula_EntityAccess
     {
         $this->from_tag = $from_tag;
     }
+    
+        public function getto_tag()
+    {
+        return $this->to_tag;
+    }
+    
     
     public function setto_tag($to_tag)
     {

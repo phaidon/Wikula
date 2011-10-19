@@ -10,9 +10,6 @@
         </h2>
         <div class="z-clearfix">
             <ul class="z-menulinks" style="height: 24px;">
-                {if $coredata.logged_in eq false}
-                <li><a href="{modurl modname='Users' func='loginscreen'}" title="{gt text='Log in'}">{gt text='Log in'}</a></li>
-                {/if}
                 <li class="z-floatright" style="border-right: none;">
                     <form class="z-form" action="{modurl modname=$modinfo.name type='user' func='main' __tag='Search'}" method="post" enctype="application/x-www-form-urlencoded">
                         <div>

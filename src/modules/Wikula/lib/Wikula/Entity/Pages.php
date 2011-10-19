@@ -49,22 +49,13 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
     /**
      * links
      *
-     * @ORM\ManyToMany(targetEntity="Wikula_Entity_Subscriptions")
+     * @ORM\OneToMany(targetEntity="Wikula_Entity_Links", 
+     *                mappedBy="to_tag", cascade={"all"}, 
+     *                orphanRemoval=true)
      */
-    private $links = null;
-    
-    
-     public function __construct()
-    {
-        $this->links = new ArrayCollection();
-    }
+    private $links;
 
     
-    public function getLinks()
-    {
-        $links = $this->links;
-        return $links->toArray();
-    }
     
     
     /**
@@ -120,6 +111,29 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
     private $handler = 'page';
 
     
+    public function __construct()
+    {
+        $this->links = new Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    
+    public function getLinks()
+    {
+        $links = $this->links;
+        $to = array();
+        foreach($links as $link) {
+            $to[] = $link->getto_tag();
+        }
+        return $to;
+    }
+    
+    
+    public function getTag()
+    {
+        return $this->tag;
+    }
+    
+    
     public function setNote($note)
     {
         $this->note = $note;
@@ -160,13 +174,3 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
     
     
 }
-
-
-/*  
-    public function setUp() {
-        $this->hasMany('Wikula_Model_Links', array(
-            'local' => 'tag',
-            'foreign' => 'to_tag',
-            'onDelete' => 'CASCADE')
-        ); 
-*/

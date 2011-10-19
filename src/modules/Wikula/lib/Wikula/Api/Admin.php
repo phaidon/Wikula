@@ -48,16 +48,19 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
 
     public function GetOwners()
     {
-        $q = Doctrine_Query::create()->from('Wikula_Model_Pages t');
-        $result = $q->execute();
-        $result = $result->toKeyValueArray('owner', 'owner');
+        
+        $pages = ModUtil::apiFunc($this->name, 'user', 'LoadPages' );
+        $owners = array();
+        foreach ($pages as $key => $value) {
+            $owners[$value['owner']] = $value['owner'];
+        }
 
-        if ($result === false) {
+        if ($owners === false) {
             return LogUtil::registerError(__('Error! Get owners failed.'));
         }
 
-        $items['owners']      = $result;
-        $items['ownerscount'] = sizeof($items['owners']);
+        $items['owners']      = $owners;
+        $items['ownerscount'] = sizeof($owners);
 
         return $items;
     }
@@ -131,58 +134,43 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
     public function getall($args)
     {
         
-        extract($args);
-        unset($args);
-
-        $qy = Doctrine_Query::create()->from('Wikula_Model_Pages t');
-
-        
-        if (!isset($startnum) || !is_numeric($startnum)) {
-            $startnum = 1;
-        }
-        if (!isset($numitems) || !is_numeric($numitems)) {
-            $numitems = -1;
-        }
-        
-        $qy->offset($startnum-1);
-        $qy->limit($numitems);
 
 
-        if ($sort == 'revisions' ||
-            $sort == 'comments'  ||
-            $sort == 'backlinks') {
-            $sortby = 'id';
+        if ($args['sort'] == 'revisions' ||
+            $args['sort'] == 'comments'  ||
+            $args['sort'] == 'backlinks') {
+            $args['sortby'] = 'id';
         }
 
-        if (!isset($sort) || empty($sort)) {
-            $sortby  = 'time';
+        if (!isset($args['sort']) || empty($args['sort'])) {
+            $args['sortby']  = 'time';
         } else {
-            $sortby  = $sort;
+            $args['sortby']  = $args['sort'];
         }
 
-        if (isset($col) and !array_key_exists($sortby, $col)) {
-            $sortby  = 'time';
+        if (isset($col) and !array_key_exists($args['sortby'], $col)) {
+            $args['sortby']  = 'time';
         }
-        if ($order <> 'ASC' && $order <> 'DESC') {
-            if (empty($sortby)) {
-                $order = 'ASC';
+        if ($args['order'] <> 'ASC' && $args['order'] <> 'DESC') {
+            if (empty($args['sortby'])) {
+                $args['order'] = 'ASC';
             } else {
-                $order = 'DESC';
+                $args['order'] = 'DESC';
             }
         }
         
-        $qy->orderBy($sortby.' '.$order);
+        //$qy->orderBy($sortby.' '.$order);
 
-        $qy->where('latest = ?', array('Y'));
+        //$qy->where('latest = ?', array('Y'));
 
         $search  = '';
         $boolean = '';
         if (isset($q) && !empty($q)) {
-            $qy->addWhere('tag LIKE ?', array('%'.$q.'%'));
+            //$qy->addWhere('tag LIKE ?', array('%'.$q.'%'));
         }
 
-        $pages = $qy->execute();
-        $pages = $pages->toArray();
+
+        $pages = ModUtil::apiFunc($this->name, 'user', 'LoadPages', $args);
         
 
 
@@ -201,14 +189,14 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         }
 
 
-        if ($sort == 'revisions' ||
-            $sort == 'comments'  ||
-            $sort == 'backlinks') {
+        if ($args['sort'] == 'revisions' ||
+            $args['sort'] == 'comments'  ||
+            $args['sort'] == 'backlinks') {
             $sortAarr = array();
             foreach($pages as $res) {
-                $sortAarr[] = $res[$sort];
+                $sortAarr[] = $res[$args['sort']];
             }
-            array_multisort($sortAarr, (($order == 'ASC') ? SORT_ASC : SORT_DESC), SORT_NUMERIC, $pages);
+            array_multisort($sortAarr, (($args['order'] == 'ASC') ? SORT_ASC : SORT_DESC), SORT_NUMERIC, $pages);
         }
 
         return $pages;
@@ -219,11 +207,17 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         if (!isset($args['tag']) || empty($args['tag'])) {
             return false;
         }
-
-        $q = Doctrine_Query::create()->from('Wikula_Model_Pages t');
-        $q->where('tag = ?', array($args['tag']));
-        $result = $q->execute();
-        $pagecount = $result->count();
+        
+        $em = $this->getService('doctrine.entitymanager');
+        $qb = $em->createQueryBuilder();
+        $qb->select('count(p.tag)')
+           ->from('Wikula_Entity_Pages', 'p')
+           ->where('p.tag = :to_tag')
+           ->setParameter('to_tag', $args['tag']);
+        $query = $qb->getQuery();
+        return $query->getSingleScalarResult();
+        
+        
 
         if ($pagecount === false) {
             return LogUtil::registerError(__('Error! Count the revisions for this page failed.'));
@@ -239,9 +233,11 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         if (empty($id) || !is_numeric($id)) {
             return false;
         }
-              
-        $page = Doctrine_Core::getTable('Wikula_Model_Pages')->find($id);
-        $page->delete();
+                
+        $page = $this->entityManager->find('Wikula_Entity_Pages', $id);
+        $this->entityManager->remove($page);
+        $this->entityManager->flush();
+        
         
         return true;
     }
@@ -265,12 +261,11 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
             }
 
             $updates['latest'] = DataUtil::formatForStore($value);
-
             
-            $page = Doctrine_Core::getTable('Wikula_Model_Pages')->find($page['id']); 
+            $page = $this->entityManager->find('Tag_Entity_Tag', $page['id']);
             $page->merge($updates);
-            $page->save();
-            
+            $this->entityManager->persist($page);
+            $this->entityManager->flush();
 
             $count++;
         }

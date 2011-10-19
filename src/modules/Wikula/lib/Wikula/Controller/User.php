@@ -246,11 +246,14 @@ class Wikula_Controller_User extends Zikula_AbstractController
                 $deleted = false;
             }
 
+            
+            
             $objects[] = array(
+                //TODO zikula dateformat
                 'pageAtime'    => $previous['time'],
                 'pageBtime'    => $page['time'],
-                'pageAtimeurl' => urlencode($previous['time']),
-                'pageBtimeurl' => urlencode($page['time']),
+                'pageAtimeurl' => urlencode(DateUtil::formatDatetime($previous['time'])),
+                'pageBtimeurl' => urlencode(DateUtil::formatDatetime($page['time'])),
                 'EditedByUser' => $previous['user'],
                 'note'         => $previous['note'],
                 'newcontent'   => $newcontent,
@@ -261,8 +264,6 @@ class Wikula_Controller_User extends Zikula_AbstractController
 
             $previous = $page;
         }
-
-        
 
         $this->view->assign('tag',     $tag);
         $this->view->assign('objects', $objects);
