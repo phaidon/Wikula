@@ -20,7 +20,9 @@ class Wikula_Api_Permission extends Zikula_AbstractApi
     public function canRead($tag = null)
     {
         $instance = $this->getInstance($tag);
-        return SecurityUtil::checkPermission('Wikula::', $instance, ACCESS_READ);
+        $this->throwForbiddenUnless(
+            SecurityUtil::checkPermission('Wikula::', $instance, ACCESS_READ)
+        );  
     }
     
     

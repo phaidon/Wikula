@@ -154,6 +154,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
         }
 
         // Permission check
+        // TODO Permissions by ID
         $this->throwForbiddenUnless(
             SecurityUtil::checkPermission('Wikula::', "page:$id:", ACCESS_READ),
             LogUtil::getErrorMsgPermission()
@@ -183,16 +184,11 @@ class Wikula_Api_User extends Zikula_AbstractApi
     */
     public function LoadRevisions($args)
     {
+        // Security check will be done by LoadRevisions()
         
         if (!isset($args['tag'])) {
             return LogUtil::registerArgsError();
         }
-
-        // Permission check
-        $this->throwForbiddenUnless(
-            SecurityUtil::checkPermission('Wikula::', 'page::'.$args['tag'], ACCESS_READ),
-            LogUtil::getErrorMsgPermission()
-        );
 
         $args['latest'] = false;
         
@@ -287,22 +283,16 @@ class Wikula_Api_User extends Zikula_AbstractApi
     public function LoadPagesLinkingTo($tag)
     {
         // Permission check
-        $this->throwForbiddenUnless(
-            SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_READ),
-            LogUtil::getErrorMsgPermission()
-        );
+        ModUtil::apiFunc($this->name, 'Permission', 'canRead', $tag);
         
         
         $em = $this->getService('doctrine.entitymanager');
         $query = $em->createQueryBuilder();
-        $query->select('l') // 'u.from_tag'
-           ->from('Wikula_Entity_Links2', 'l')
+        $query->select('l')
+           ->from('Wikula_Entity_Links', 'l')
            ->where('l.to_tag = :to_tag')
-          // ->add('orderBy', 'u.from_tag')
            ->setParameter('to_tag', $tag);
-        $links = $query->getQuery()->execute();
-        //$links = $query->getQuery()->setHint(\Doctrine\ORM\Query::HINT_INCLUDE_META_COLUMNS, true)->execute();
-        
+        $links = $query->getQuery()->execute();        
         
         if ($links === false) {
             return LogUtil::registerError(__('Error! Getting the links for this page failed.'));
@@ -315,10 +305,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
     public function CountBackLinks($tag)
     {
         // Permission check
-        $this->throwForbiddenUnless(
-            SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_READ),
-            LogUtil::getErrorMsgPermission()
-        );
+        ModUtil::apiFunc($this->name, 'Permission', 'canRead', $tag);
         
         $em = $this->getService('doctrine.entitymanager');
         $qb = $em->createQueryBuilder();
@@ -415,7 +402,11 @@ class Wikula_Api_User extends Zikula_AbstractApi
     
     
     public function LoadPages($args)
-    { 
+    {
+        // Permission check
+        ModUtil::apiFunc($this->name, 'Permission', 'canRead', $tag);
+
+        
         extract($args);
         unset($args);
   
@@ -839,10 +830,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
         
 
         // Permission check
-        $this->throwForbiddenUnless(
-            SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_EDIT),
-            LogUtil::getErrorMsgPermission()
-        );
+        ModUtil::apiFunc($this->name, 'Permission', 'canEdit', $tag);
 
         $user = UserUtil::getVar('uname');
 

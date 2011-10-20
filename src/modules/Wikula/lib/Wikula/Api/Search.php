@@ -50,10 +50,7 @@ class Wikula_Api_Search extends Zikula_AbstractApi
     public function search($args)
     {
         // Permission check
-        $this->throwForbiddenUnless(
-            SecurityUtil::checkPermission('Wikula::', '::', ACCESS_READ),
-            LogUtil::getErrorMsgPermission()
-        );
+         ModUtil::apiFunc($this->name, 'Permission', 'canRead');
 
         $search = $args['q'];
         

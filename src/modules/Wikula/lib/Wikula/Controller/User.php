@@ -61,9 +61,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
 
         
         // Permission check
-        $this->throwForbiddenUnless(
-            ModUtil::apiFunc($this->name, 'Permission', 'canRead', $tag)  
-        );        
+        ModUtil::apiFunc($this->name, 'Permission', 'canRead', $tag);        
         
         
         if (empty($time)) {
@@ -201,9 +199,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
     {
         
         // Permission check
-        $this->throwForbiddenUnless(
-            ModUtil::apiFunc($this->name, 'Permission', 'canRead')
-        );
+        ModUtil::apiFunc($this->name, 'Permission', 'canRead');
 
         $pages = ModUtil::apiFunc($this->name, 'user', 'LoadRecentlyChanged');
 
@@ -229,9 +225,8 @@ class Wikula_Controller_User extends Zikula_AbstractController
 
         $tag = FormUtil::getPassedValue('tag'); 
         // Permission check
-        $this->throwForbiddenUnless(
-            ModUtil::apiFunc($this->name, 'Permission', 'canRead', $tag)
-        );
+        ModUtil::apiFunc($this->name, 'Permission', 'canRead', $tag);
+
         $pages = ModUtil::apiFunc(
             $this->name,
             'user',
@@ -256,29 +251,13 @@ class Wikula_Controller_User extends Zikula_AbstractController
      */
     public function backlinks()
     {
-        $tag = FormUtil::getPassedValue('tag');
-        if (empty($tag)) {
-            return LogUtil::registerError(
-                __f('Missing argument [%s]', 'tag'),
-                null,
-                ModUtil::url($this->name, 'user', 'main')
-            );
-        }
-
-                
-        // Permission check
-        $this->throwForbiddenUnless(
-            ModUtil::apiFunc($this->name, 'Permission', 'canRead', $tag)
-        );
+        // Security check will be done by LoadPagesLinkingTo()
         
-
+        $tag = FormUtil::getPassedValue('tag');        
+        ModUtil::apiFunc($this->name, 'User', 'CheckTag', $tag);
         
-        if (strpos($tag, ' ') !== false) {
-            $arguments = array(
-                'tag'  => str_replace(' ', '_', $tag)
-            );
-            $redirecturl = ModUtil::url($this->name, 'user', 'show', $arguments);
-            System::redirect($redirecturl);
+        if( ModUtil::apiFunc($this->name, 'SpecialPage', 'isSpecialPage', $tag) ) {
+            return System::redirect( ModUtil::url($this->name, 'user', 'main', array('tag' => $tag)) );
         }
 
         // Get the variables
