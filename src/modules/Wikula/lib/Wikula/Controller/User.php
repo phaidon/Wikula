@@ -262,7 +262,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
 
         // Get the variables
         $pages = ModUtil::apiFunc($this->name, 'user', 'LoadPagesLinkingTo', $tag);
-
+                
         $this->view->assign('tag',   $tag);
         $this->view->assign('pages', $pages);
         return $this->view->fetch('user/backlinks.tpl');

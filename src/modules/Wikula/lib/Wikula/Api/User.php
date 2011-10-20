@@ -152,19 +152,17 @@ class Wikula_Api_User extends Zikula_AbstractApi
         if (!isset($id) || !is_numeric($id)) {
             return LogUtil::registerArgsError();
         }
-
-        // Permission check
-        // TODO Permissions by ID
-        $this->throwForbiddenUnless(
-            SecurityUtil::checkPermission('Wikula::', "page:$id:", ACCESS_READ),
-            LogUtil::getErrorMsgPermission()
-        );
+        
 
         $page = $this->entityManager->find('Wikula_Entity_Pages', $id);
 
         if ($page === false) {
             return LogUtil::registerError(__('Error! Getting the this page by id failed.'));
         }
+        
+        // Permission check
+        ModUtil::apiFunc($this->name, 'Permission', 'canRead', $page['tag']); 
+
 
         return $page;
 
