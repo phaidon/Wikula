@@ -102,16 +102,23 @@ class Wikula_Installer extends Zikula_AbstractInstaller
                 ModUtil::delVar('pnWikka');
                 return wikula_upgrade('1.1');
 
-            case '2.1':
+            case '2.0':
                 try {
-                    DoctrineUtil::createTablesFromModels($this->name);
+                    DoctrineHelper::createSchema($this->entityManager, array(
+                        'Wikula_Entity_Subscriptions'
+                    ));
                 } catch (Exception $e) {
                     return false;
                 }
                 $this->delVar('hideeditbar');
                 $this->delVar('excludefromhistory');
-                $this->delVar('hidehistory');
-                
+                $this->delVar('geshi_tab_width');
+                $this->delVar('geshi_header');
+                $this->delVar('geshi_line_numbers');
+                $this->delVar('grabcode_button');
+                $this->setVar('subscription', false);
+                $this->setVar('mandatorycomment', false);
+                $this->setVar('single_page_permissions', false);
                 
         }
 
