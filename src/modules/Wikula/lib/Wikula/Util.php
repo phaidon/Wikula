@@ -26,7 +26,8 @@ class Wikula_Util
             'geshi_line_numbers'      => '1',
             'grabcode_button'         => true,
             'subscription'            => false,
-            'mandatorycomment'        => false
+            'mandatorycomment'        => false,
+            'single_page_permissions' => false
         );
     
         return $defaults;

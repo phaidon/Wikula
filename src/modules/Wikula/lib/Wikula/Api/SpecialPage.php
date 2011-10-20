@@ -50,8 +50,8 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
         return $this;
     }
     
-    public function isSpecialPage($args) {
-        return array_key_exists($args['tag'], $this->listpages());
+    public function isSpecialPage($tag) {
+        return array_key_exists($tag, $this->listpages());
     }
     
     public function listpages()

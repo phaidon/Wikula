@@ -30,6 +30,11 @@
         {formintinput id="itemsperpage" size="3"}
     </div>
 
+    <div class="z-formrow">
+        {formlabel for="single_page_permissions" __text='Enable single page permissions'}
+        {formcheckbox id="single_page_permissions"}
+    </div>
+
 </fieldset>
 
 <div class="z-formbuttons z-buttons">

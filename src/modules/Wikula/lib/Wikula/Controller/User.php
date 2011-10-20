@@ -171,103 +171,24 @@ class Wikula_Controller_User extends Zikula_AbstractController
      * @TODO Improve this view with JavaScript sliders
      * @return smarty output
      */
-    public function history($args)
+    public function history()
     {
-        $tag  = FormUtil::getPassedValue('tag');
+        // Security check will be done by LoadRevisions()
         
-        // Permission check
-        $this->throwForbiddenUnless(
-            ModUtil::apiFunc($this->name, 'Permission', 'canRead', $tag)
-        );
+        $tag = FormUtil::getPassedValue('tag');        
+        ModUtil::apiFunc($this->name, 'User', 'CheckTag', $tag);
         
-        
-        // redirect if tag contains spaces
-        if (strpos($tag, ' ') !== false) {
-            $arguments = array(
-                'tag'  => str_replace(' ', '_', $tag),
-            );
-            $redirecturl = ModUtil::url($this->name, 'user', 'show', $arguments);
-            System::redirect($redirecturl);
+        if( ModUtil::apiFunc($this->name, 'SpecialPage', 'isSpecialPage', $tag) ) {
+            return System::redirect( ModUtil::url($this->name, 'user', 'main', array('tag' => $tag)) );
         }
 
-        if (empty($tag)) {
-            return LogUtil::registerError(
-                __f('Missing argument [%s]', 'tag'),
-                null,
-                ModUtil::url($this->name, 'user', 'main')
-            );
-        }
-        
-        $specialPages = ModUtil::apiFunc($this->name, 'SpecialPage', 'listpages');
-        if( array_key_exists($tag, $specialPages)) {
-            return System::redirect(ModUtil::url($this->name, 'user', 'main', array('tag' => $tag)));
-        }
-
-        $pages = ModUtil::apiFunc($this->name, 'user', 'LoadRevisions', array(
+        $revisions = ModUtil::apiFunc($this->name, 'user', 'LoadRevisions', array(
             'tag' => $tag)
         );
 
-        if (!$pages) {
-            return LogUtil::registerError(
-                __f('No %s found.', 'Rev'),
-                null,
-                ModUtil::url($this->name, 'user', 'main')
-            );
-        }
-
-        $objects  = array();
-        $previous = array();
-        foreach ($pages as $page) {
-
-            if (empty($previous)) {
-                // We filter the first one as we don't want to check it
-                $previous = $page;
-                continue;
-            }
-
-            $bodylast = explode("\n", $previous['body']);
-
-            $bodynext = explode("\n", $page['body']);
-
-            $added   = array_diff($bodylast, $bodynext);
-            $deleted = array_diff($bodynext, $bodylast);
-
-            if ($added) {
-                $newcontent = implode("\n", $added)/*."\n"*/;
-            } else {
-                $newcontent = '';
-                $added = false;
-            }
-
-            if ($deleted) {
-                $oldcontent = implode("\n", $deleted)/*."\n"*/;
-            } else {
-                $oldcontent = '';
-                $deleted = false;
-            }
-
-            
-            
-            $objects[] = array(
-                //TODO zikula dateformat
-                'pageAtime'    => $previous['time'],
-                'pageBtime'    => $page['time'],
-                'pageAtimeurl' => urlencode(DateUtil::formatDatetime($previous['time'])),
-                'pageBtimeurl' => urlencode(DateUtil::formatDatetime($page['time'])),
-                'EditedByUser' => $previous['user'],
-                'note'         => $previous['note'],
-                'newcontent'   => $newcontent,
-                'oldcontent'   => $oldcontent,
-                'added'        => $added,
-                'deleted'      => $deleted
-            );
-
-            $previous = $page;
-        }
-
         $this->view->assign('tag',     $tag);
-        $this->view->assign('objects', $objects);
-        $this->view->assign('oldest',  $page);
+        $this->view->assign('objects', $revisions['objects']);
+        $this->view->assign('oldest',  $revisions['oldest']);
         return $this->view->fetch('user/history.tpl');
     }
 

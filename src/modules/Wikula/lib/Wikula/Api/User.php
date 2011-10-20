@@ -222,9 +222,65 @@ class Wikula_Api_User extends Zikula_AbstractApi
         
         // return the results
         if (isset($revisions[0]) && isset($getoldest) && $getoldest) {
-            return $revisions[0];
+            $revisions = $revisions[0];
         }
-            return $revisions; 
+
+        
+        $objects  = array();
+        $previous = array();
+        foreach ($revisions as $page) {
+
+            if (empty($previous)) {
+                // We filter the first one as we don't want to check it
+                $previous = $page;
+                continue;
+            }
+
+            $bodylast = explode("\n", $previous['body']);
+
+            $bodynext = explode("\n", $page['body']);
+
+            $added   = array_diff($bodylast, $bodynext);
+            $deleted = array_diff($bodynext, $bodylast);
+
+            if ($added) {
+                $newcontent = implode("\n", $added)/*."\n"*/;
+            } else {
+                $newcontent = '';
+                $added = false;
+            }
+
+            if ($deleted) {
+                $oldcontent = implode("\n", $deleted)/*."\n"*/;
+            } else {
+                $oldcontent = '';
+                $deleted = false;
+            }
+
+            
+            
+            $objects[] = array(
+                //TODO zikula dateformat
+                'pageAtime'    => $previous['time'],
+                'pageBtime'    => $page['time'],
+                'pageAtimeurl' => urlencode(DateUtil::formatDatetime($previous['time'])),
+                'pageBtimeurl' => urlencode(DateUtil::formatDatetime($page['time'])),
+                'EditedByUser' => $previous['user'],
+                'note'         => $previous['note'],
+                'newcontent'   => $newcontent,
+                'oldcontent'   => $oldcontent,
+                'added'        => $added,
+                'deleted'      => $deleted
+            );
+
+            $previous = $page;
+        }
+
+        
+        return array(
+            'objects' => $objects,
+            'oldest'  => $page
+        );
 
     }
 
@@ -1259,4 +1315,23 @@ class Wikula_Api_User extends Zikula_AbstractApi
         return $pages;
     }
   
+    
+    public function CheckTag($tag = null)
+    {
+        if(is_null($tag)) {
+            $tag = $this->getVar('root_page');
+        }
+        
+        // redirect if tag contains spaces
+        if (strpos($tag, ' ') !== false) {
+            $arguments = array(
+                'tag'  => str_replace(' ', '_', $tag),
+            );
+            $redirecturl = ModUtil::url($this->name, 'user', 'show', $arguments);
+            System::redirect($redirecturl);
+        }
+    }
+    
 }
+
+
