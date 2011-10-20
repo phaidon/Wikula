@@ -80,6 +80,11 @@ class Wikula_Controller_User extends Zikula_AbstractController
         }
         
         
+        if($tag == $this->__('Categories')) {
+            return $this->view->fetch('user/categories.tpl');
+        }
+        
+        
         $specialPages = ModUtil::apiFunc($this->name, 'SpecialPage', 'listpages');
         
         if( array_key_exists($tag, $specialPages)) {
@@ -294,5 +299,41 @@ class Wikula_Controller_User extends Zikula_AbstractController
         $form = FormUtil::newForm($this->name, $this);
         return $form->execute('user/settings.tpl', new Wikula_Handler_Settings());
     }
+    
+    
+    /**
+     * category
+     * 
+     * This functions shows a category.
+     *
+     * @param:post category name of the category that should be shwon
+     * @return smarty output
+     */    
+    public function category()
+    {
+        $category = FormUtil::getPassedValue('category');   
+        
+        $pages = ModUtil::apiFunc($this->name, 'user', 'LoadCategory', $category);
+        
+        $curChar = '';
+        $pagelist = array();
+        foreach ($pages as $page) {
+            $firstChar = strtoupper(substr($page['tag'], 0, 1));
+            if (!preg_match('/[A-Z,a-z]/', $firstChar)) {
+                $firstChar = '#';
+            }
+            if ($firstChar != $curChar) {
+                $curChar = $firstChar;
+            }
+            $pagelist[$firstChar][] = $page;
+        }
+        unset($pages);
+        
+        
+        $this->view->assign('tag',   $category);
+        $this->view->assign('pagelist', $pagelist);
+        return $this->view->fetch('user/category.tpl');
+    }
+    
     
 }

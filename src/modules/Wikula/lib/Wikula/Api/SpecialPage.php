@@ -113,7 +113,6 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
         }
         return call_user_func(array($this, $action), $args);
     }
-
     
 
     public function category($args)

@@ -1320,7 +1320,23 @@ class Wikula_Api_User extends Zikula_AbstractApi
             System::redirect($redirecturl);
         }
     }
+
+    public function LoadCategory($category)
+    {
+        $em = $this->getService('doctrine.entitymanager');
+        $query = $em->createQueryBuilder();
+        $query->select('p')
+              ->from('Wikula_Entity_Pages', 'p')
+              ->where("p.body LIKE :category OR p.body LIKE :category2")
+              ->setParameter('category', "%\nCategory".'PHP')
+              ->setParameter('category2', "%\nCategory".'PHP'."\n%")
+              ->andWhere("p.latest = 'Y'");
+         return $query->getQuery()->getArrayResult(); 
+    }
+    
     
 }
+
+
 
 

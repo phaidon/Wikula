@@ -1,8 +1,16 @@
+{ajaxheader modname='Wikula' filename='tablekit/js/fabtabulous.js'}
+{ajaxheader modname='Wikula' filename='tablekit/js/tablekit.js'}
+{pageaddvar name='stylesheet' value='modules/Wikula/javascript/tablekit/css/style.css'}
+
+
+
+
 {adminheader}
 <div class="z-admin-content-pagetitle">
     {icon type="view" size="small"}
     <h3>{gt text="Page Administration"}</h3>
 </div>
+
 
 <div id="wikkaadmin">
     <form action="{modurl modname='Wikula' type='admin' func='pages'}" class="z-form" method="post" enctype="application/x-www-form-urlencoded">
@@ -29,33 +37,30 @@
         ({gt text='Sorted by:'} <em>{$sort|default:'time'}, {$order|default:'DESC'}</em>)
     </p>
 
-    <table class="z-datatable" summary="List of pages on this server">
+
+
+
+
+
+
+    <table class="z-datatable sortable">
         <thead>
             <tr>
                 <th>&nbsp;</th>
-                {if $order eq 'ASC'}
-                {assign var='neworder' value='DESC'}
-                {else}
-                {assign var='neworder' value='ASC'}
-                {/if}
-                <th><a href="{modurl modname='Wikula' type='admin' func='pages' sort='tag' order=$neworder}" title="Sort by page name">{gt text='Page name'}</a></th>
-
-                <th><a href="{modurl modname='Wikula' type='admin' func='pages' sort='owner' order=$neworder}" title="Sort by page owner">{gt text='Owner'}</a></th>
-                <th><a href="{modurl modname='Wikula' type='admin' func='pages' sort='user' order=$neworder}" title="Sort by last author">{gt text='Latest author'}</a></th>
-                <th><a href="{modurl modname='Wikula' type='admin' func='pages' sort='time' order=$neworder}" title="Sort by edit time">{gt text='Last edit'}</a></th>
+                <th class="sortfirstdesc">{gt text='Page name'}</th>
+                <th>{gt text='Owner'}</th>
+                <th>{gt text='Latest author'}</th>
+                <th>{gt text='Last edit'}</th>
                 <th>{gt text='Note'}</th>
-                {*<th class="number  c1" __title="Hits">{img src='stock_about.png' __alt='Hits'}</th>*}
-                <th class="number  c2" title="Sort by number of revisions">
-                    <a href="{modurl modname='Wikula' type='admin' func='pages' sort='revisions' order=$neworder}" title="Sort by number of revisions">
-                    {img src='stock_book_open.png' __alt='Revisions'}</a>
+                {*<th class="number c1" __title="Hits">{img src='stock_about.png' __alt='Hits'}</th>*}
+                <th class="number c2" title="Sort by number of revisions">
+                    {img src='stock_book_open.png' __alt='Revisions'}
                 </th>
-                <th class="number  c3" title="Comments">
-                    <a href="{modurl modname='Wikula' type='admin' func='pages' sort='comments' order=$neworder}" title="Sort by number of comments">
+                <th class="number c3" title="Comments">
                     {img src='stock_help-agent.png' __alt='Comments'}</a>
                 </th>
                 <th class="number  c4" title="Backlinks">
-                    <a href="{modurl modname='Wikula' type='admin' func='pages' sort='backlinks' order=$neworder}" title="Sort by number of backlinks">
-                    {img src='stock_link.png' __alt='Backlinks'}</a>
+                    {img src='stock_link.png' __alt='Backlinks'}
                 </th>
                 <th class="z-nowrap z-right">{gt text='Actions'}</th>
             </tr>
@@ -98,6 +103,12 @@
             {/foreach}
         </tbody>
     </table>
+
+
+    <script type="text/javascript">
+            var table = new TableKit(table, {options});
+    </script>
+
     {pager show='page' rowcount=$pager.numitems limit=$pager.itemsperpage posvar='startnum' shift=1}
 </div>
 {adminfooter}
