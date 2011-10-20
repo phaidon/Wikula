@@ -401,12 +401,15 @@ class Wikula_Api_User extends Zikula_AbstractApi
     
     public function LoadPages($args)
     {
-        // Permission check
-        ModUtil::apiFunc($this->name, 'Permission', 'canRead', $tag);
-
-        
         extract($args);
         unset($args);
+        
+        if(!isset($tag)) {
+            $tag = null;
+        }
+        
+        // Permission check
+        ModUtil::apiFunc($this->name, 'Permission', 'canRead', $tag);
   
         
         $em = $this->getService('doctrine.entitymanager');
