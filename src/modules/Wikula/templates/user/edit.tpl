@@ -15,12 +15,14 @@
 
     <!-- We need to escape ALL entity refs before display so we display them _as_ entities instead of interpreting them
     // hence htmlspecialchars() instead of htmlspecialchars_ent() which UNescapes entities! -->
-    {notifydisplayhooks eventname='wikula.ui_hooks.editor.display_view' id='body'}
-    <div class="z-formrow">
+    <div class="z-formrow" id="textarea_container">
         {formtextinput id="body" textMode="multiline" rows=4 cols=100 style="width:98%;height:500px;"}
+        {formtextinput id="id" textMode="hidden" size="11" maxLength="11"}
+        <div style="z-index:999">
+        {notifydisplayhooks eventname='wikula.ui_hooks.editor.display_view' id='body'}
+        </div>
     </div>
-    {formtextinput id="id" textMode="hidden" size="11" maxLength="11"}
-
+    
     <!-- note add Edit
     // We need to escape ALL entity refs before display so we display them _as_ entities instead of interpreting them
     // so we use htmlspecialchars on the edit note (as on the body)-->

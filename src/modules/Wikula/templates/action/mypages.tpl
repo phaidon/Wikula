@@ -16,7 +16,7 @@
     {/if}
     {foreach name='mypagespage' item='page' from=$letter}
     &nbsp;&nbsp;&nbsp;
-    <a href="{modurl modname='Wikula' tag=$page.tag|urlencode}" title="{$page.tag}">{$page.tag}</a>
+    <a href="{modurl modname='Wikula' type='user' func='main' tag=$page.tag|urlencode}" title="{$page.tag}">{$page.tag}</a>
     {if $smarty.foreach.mypages.last ne true}
     <br />
     {/if}
