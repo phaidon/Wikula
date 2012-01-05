@@ -30,7 +30,7 @@ class Wikula_Entity_Links2 extends Zikula_EntityAccess
       
     /**
      * @ORM\Id
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=75)
      */
     private $from_tag;
     
@@ -38,7 +38,7 @@ class Wikula_Entity_Links2 extends Zikula_EntityAccess
      * The following are annotations which define the id field.
      *
      * @ORM\Id
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=75)
      */
     private $to_tag;
     

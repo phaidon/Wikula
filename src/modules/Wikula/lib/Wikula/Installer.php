@@ -102,7 +102,7 @@ class Wikula_Installer extends Zikula_AbstractInstaller
                 ModUtil::delVar('pnWikka');
                 return wikula_upgrade('1.1');
 
-            case '2.0':
+            case '1.2':
                 try {
                     DoctrineHelper::createSchema($this->entityManager, array(
                         'Wikula_Entity_Subscriptions'

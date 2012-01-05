@@ -33,7 +33,7 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
      * The following are annotations which define the id field.
      *
      * @ORM\Id
-     * @ORM\Column(type="integer", length=16, unique=true)
+     * @ORM\Column(type="integer", unique=true)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;

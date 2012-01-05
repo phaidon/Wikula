@@ -30,7 +30,7 @@ class Wikula_Entity_Links extends Zikula_EntityAccess
       
     /**
      * @ORM\Id
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=75)
      */
     private $from_tag;
     
