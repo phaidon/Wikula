@@ -2,10 +2,7 @@
 
 <div id="wikulaheader">
     <div class="header">
-        <h2>
-            <a href="{modurl modname=$modinfo.name type='user' func='main'}">{$modinfo.displayname}</a> &#187;
-            <a href="{modurl modname=$modinfo.name type='user' func='main' tag=$tag|urlencode}">{$tag|hyphen2space|safehtml}</a>
-        </h2>
+        {title tag=$tag}
         <div class="z-clearfix">
             <ul class="z-menulinks" style="height: 24px;">
                 {if $isAllowedToEdit}

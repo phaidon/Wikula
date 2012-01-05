@@ -1,13 +1,6 @@
 <div id="wikulaheader">
     <div class="header">
-        <h2>
-            <a href="{modurl modname=$modinfo.name type='user' func='main'}">{$modinfo.displayname}</a> &#187;
-            {gt text="Special_pages" assign=sp}
-            {if $tag != $sp}
-            <a href="{modurl modname=$modinfo.name type='user' func='show' __tag="Special_pages"}">{gt text="Special pages"}</a> &#187;
-            {/if}
-            <a href="{modurl modname=$modinfo.name type='user' func='main' tag=$tag|urlencode}">{$tag|hyphen2space|safehtml}</a>
-        </h2>
+        {specialPageTitle tag=$tag}
         <div class="z-clearfix">
             <ul class="z-menulinks" style="height: 24px;">
                 <li class="z-floatright" style="border-right: none;">

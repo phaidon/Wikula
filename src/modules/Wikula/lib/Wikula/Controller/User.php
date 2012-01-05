@@ -91,6 +91,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
             $content = ModUtil::apiFunc($this->name, 'SpecialPage', 'get', $specialPages[$tag]);
             return $this->view->assign('content', $content)
                               ->assign('tag',     $tag)
+                              ->assign('name',    str_replace('_', ' ', $tag))
                               ->fetch('user/specialPage.tpl');
         }
 
