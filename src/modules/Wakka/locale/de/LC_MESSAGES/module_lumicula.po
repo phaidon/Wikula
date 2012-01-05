@@ -1,0 +1,339 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Zikula component\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-05-31 15:50+0200\n"
+"PO-Revision-Date: 2011-05-31 16:27+0100\n"
+"Last-Translator: Fabian Wuertz <xadras@sidux.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: lib/LuMicuLa/Version.php:20
+msgid "A lightweight markup language editor"
+msgstr "Ein Editor für vereinfachte Auszeichnungssprachen (lightweight markup language)"
+
+#. !url must be different to displayname
+#: lib/LuMicuLa/Version.php:21
+#: lib/LuMicuLa/Version.php:23
+msgid "LuMicuLa"
+msgstr "LuMicuLa"
+
+#: lib/LuMicuLa/Version.php:37
+msgid "LuMicuLa editor"
+msgstr "LuMicuLa-Editor"
+
+#: lib/LuMicuLa/Version.php:42
+msgid "LuMicuLa transform"
+msgstr "LuMicuLa transform"
+
+#: lib/LuMicuLa/Api/Creole.php:56
+#: lib/LuMicuLa/Api/BBCode.php:41
+#: lib/LuMicuLa/Api/Wakka.php:130
+msgid "Page"
+msgstr "Seite"
+
+#: lib/LuMicuLa/Api/Creole.php:56
+#: lib/LuMicuLa/Api/Wakka.php:130
+msgid "Page Title"
+msgstr "Seitentitel"
+
+#: lib/LuMicuLa/Api/Creole.php:61
+#: lib/LuMicuLa/Api/BBCode.php:46
+#: lib/LuMicuLa/Api/Wakka.php:104
+msgid "http://www.example.com"
+msgstr "http://www.beispielseite.de"
+
+#: lib/LuMicuLa/Api/Creole.php:61
+#: lib/LuMicuLa/Api/Wakka.php:104
+msgid "Url Title"
+msgstr "Url Titel"
+
+#: lib/LuMicuLa/Api/Transform.php:501
+msgid "wrote"
+msgstr "hat geschrieben"
+
+#: lib/LuMicuLa/Api/User.php:28
+#: lib/LuMicuLa/Api/User.php:29
+msgid "Code"
+msgstr "Code"
+
+#: lib/LuMicuLa/Api/User.php:33
+#: lib/LuMicuLa/Api/User.php:34
+msgid "No markup"
+msgstr ""
+
+#: lib/LuMicuLa/Api/User.php:38
+msgid "Table"
+msgstr "Table"
+
+#: lib/LuMicuLa/Api/User.php:39
+msgid "table data"
+msgstr "Tabelleninhalt"
+
+#: lib/LuMicuLa/Api/User.php:43
+msgid "Page link"
+msgstr "Seitenverknüpfung"
+
+#: lib/LuMicuLa/Api/User.php:47
+msgid "Web link"
+msgstr "Weblink"
+
+#: lib/LuMicuLa/Api/User.php:51
+msgid "List"
+msgstr "Liste"
+
+#: lib/LuMicuLa/Api/User.php:52
+msgid "list item"
+msgstr ""
+
+#: lib/LuMicuLa/Api/User.php:56
+msgid "Image"
+msgstr "Bild"
+
+#: lib/LuMicuLa/Api/User.php:61
+msgid "YouTube video"
+msgstr "YouTube-Video"
+
+#: lib/LuMicuLa/Api/User.php:67
+msgid "Horrizontal line"
+msgstr ""
+
+#: lib/LuMicuLa/Api/User.php:72
+msgid "box"
+msgstr ""
+
+#: lib/LuMicuLa/Api/User.php:73
+msgid "boxed text"
+msgstr ""
+
+#: lib/LuMicuLa/Api/User.php:77
+msgid "clear"
+msgstr ""
+
+#: lib/LuMicuLa/Api/User.php:82
+msgid "indent"
+msgstr "Einschub"
+
+#: lib/LuMicuLa/Api/User.php:83
+msgid "text"
+msgstr "text"
+
+#: lib/LuMicuLa/Api/User.php:87
+#: lib/LuMicuLa/Api/User.php:88
+msgid "italicized text"
+msgstr "kursiver Text"
+
+#: lib/LuMicuLa/Api/User.php:89
+msgid "i"
+msgstr "k"
+
+#: lib/LuMicuLa/Api/User.php:93
+#: lib/LuMicuLa/Api/User.php:94
+msgid "bolded text"
+msgstr "fetter Text"
+
+#: lib/LuMicuLa/Api/User.php:95
+msgid "b"
+msgstr "f"
+
+#: lib/LuMicuLa/Api/User.php:99
+#: lib/LuMicuLa/Api/User.php:100
+msgid "underlined text"
+msgstr "unterstrichener Text"
+
+#: lib/LuMicuLa/Api/User.php:101
+msgid "u"
+msgstr "u"
+
+#: lib/LuMicuLa/Api/User.php:105
+#: lib/LuMicuLa/Api/User.php:106
+msgid "strikethrough text"
+msgstr "durchgestrichener Text"
+
+#: lib/LuMicuLa/Api/User.php:110
+#: lib/LuMicuLa/Api/User.php:111
+msgid "marked text"
+msgstr "markierter Text"
+
+#: lib/LuMicuLa/Api/User.php:115
+#: lib/LuMicuLa/Api/User.php:116
+msgid "Monospace"
+msgstr "Dicktengleiche Schrift"
+
+#: lib/LuMicuLa/Api/User.php:120
+#: lib/LuMicuLa/Api/User.php:121
+msgid "centered text"
+msgstr "Zentrierter Text"
+
+#: lib/LuMicuLa/Api/User.php:125
+msgid "Font size"
+msgstr "Schriftgrösse"
+
+#: lib/LuMicuLa/Api/User.php:126
+msgid "Large text"
+msgstr "Grosser Text"
+
+#: lib/LuMicuLa/Api/User.php:133
+msgid "Font color"
+msgstr "Schriftfarbe"
+
+#: lib/LuMicuLa/Api/User.php:134
+msgid "colored text"
+msgstr "farbiger Text"
+
+#: lib/LuMicuLa/Api/User.php:141
+msgid "Key"
+msgstr "Taste"
+
+#: lib/LuMicuLa/Api/User.php:142
+msgid "CTR-C"
+msgstr "STR-C"
+
+#: lib/LuMicuLa/Api/User.php:146
+#: lib/LuMicuLa/Api/User.php:147
+msgid "subscripted text"
+msgstr "tiefgestellter Text"
+
+#: lib/LuMicuLa/Api/User.php:151
+#: lib/LuMicuLa/Api/User.php:152
+msgid "superscripted text"
+msgstr "hochgestellter Text"
+
+#: lib/LuMicuLa/Api/User.php:156
+msgid "Headings"
+msgstr "Überschriften"
+
+#: lib/LuMicuLa/Api/User.php:159
+#: lib/LuMicuLa/Api/User.php:160
+#: lib/LuMicuLa/Api/User.php:163
+#: lib/LuMicuLa/Api/User.php:164
+#: lib/LuMicuLa/Api/User.php:167
+#: lib/LuMicuLa/Api/User.php:168
+#: lib/LuMicuLa/Api/User.php:171
+#: lib/LuMicuLa/Api/User.php:172
+#: lib/LuMicuLa/Api/User.php:175
+#: lib/LuMicuLa/Api/User.php:176
+#: templates/editor.tpl:31
+msgid "Heading"
+msgstr "Überschrift"
+
+#: lib/LuMicuLa/Api/User.php:159
+#: lib/LuMicuLa/Api/User.php:163
+#: lib/LuMicuLa/Api/User.php:167
+#: lib/LuMicuLa/Api/User.php:171
+#: lib/LuMicuLa/Api/User.php:175
+msgid "Level"
+msgstr "Level"
+
+#: lib/LuMicuLa/Api/User.php:231
+msgid "Function"
+msgstr "Funktion"
+
+#: lib/LuMicuLa/Api/User.php:233
+msgid "Super tag"
+msgstr ""
+
+#: lib/LuMicuLa/Api/User.php:249
+msgid "Not available"
+msgstr "Nicht vorhanden"
+
+#: lib/LuMicuLa/Api/Admin.php:28
+msgid "Module preferences"
+msgstr "Modull-Konfiguration"
+
+#: lib/LuMicuLa/Api/Admin.php:33
+#: templates/admin/tags.tpl:4
+msgid "Supported tags"
+msgstr "Unterstützte Tags"
+
+#: lib/LuMicuLa/Api/Admin.php:38
+#: templates/admin/modifyconfig.tpl:5
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: lib/LuMicuLa/Handler/ModifyConfig.php:56
+#: lib/LuMicuLa/Handler/Modify.php:115
+msgid "Done! Configuration has been updated"
+msgstr "Erledigt! Die Konfiguration wurde übernommen"
+
+#: lib/LuMicuLa/Handler/Modify.php:25
+msgid "Modify module settings"
+msgstr "Modulleinstellung bearbeiten"
+
+#: lib/LuMicuLa/Handler/Modify.php:36
+#, php-format
+msgid "Article with id %s not found"
+msgstr ""
+
+#: lib/LuMicuLa/Handler/Modify.php:39
+msgid "Create module settings"
+msgstr "Modulleinstellungen erstellen"
+
+#: templates/editor.tpl:15
+msgid "ctrl"
+msgstr "str"
+
+#: templates/admin/modules.tpl:4
+msgid "Modules preferences"
+msgstr ""
+
+#: templates/admin/modules.tpl:8
+msgid "Add module"
+msgstr "Modull hinfügen"
+
+#: templates/admin/tags.tpl:12
+msgid "Preview"
+msgstr "Vorschau"
+
+#: templates/admin/modify.tpl:14
+msgid "Module"
+msgstr "Modull"
+
+#: templates/admin/modify.tpl:20
+msgid "Lightweight markup language"
+msgstr "Vereinfachte Auszeichnungssprache (Lightweight markup language)"
+
+#: templates/admin/modify.tpl:51
+#: templates/admin/modify.tpl:52
+msgid "Smilies"
+msgstr "Smilies"
+
+#: templates/admin/modify.tpl:61
+#: templates/admin/modifyconfig.tpl:28
+msgid "Save"
+msgstr "Spreichern"
+
+#: templates/admin/modify.tpl:62
+#: templates/admin/modifyconfig.tpl:29
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: templates/admin/modify.tpl:68
+#: templates/admin/modifyconfig.tpl:35
+msgid "Visit the LuMicuLa project site"
+msgstr "Die  LuMicuLa Projektseite besuchen"
+
+#: templates/admin/modifyconfig.tpl:16
+msgid "Syntax highlighting"
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:21
+msgid "Javascript pop-ups for images"
+msgstr ""
+
+#~ msgid "Mark"
+#~ msgstr "Hervogehoben"
+
+#~ msgid "Grab code"
+#~ msgstr "Code kopieren"
+
+#~ msgid "http://www.example.com Url Title"
+#~ msgstr "http://www.beispielseite.de Url Title"
