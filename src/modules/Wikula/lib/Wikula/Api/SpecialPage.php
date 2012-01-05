@@ -473,9 +473,13 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
     }
 
     
-    function search()
+    
+    public function textsearch() {
+        return $this->search();
+    }
+    
+    public function search()
     {
-        $dom = ZLanguage::getModuleDomain('Wikula');
         $phrase = FormUtil::getPassedValue('phrase');
 
         // Defaults
