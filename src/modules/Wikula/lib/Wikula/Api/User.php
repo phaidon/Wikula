@@ -894,7 +894,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
         }
         
                 
-        $pagelinks = ModUtil::apiFunc(
+        /*$pagelinks = ModUtil::apiFunc(
             'LuMicuLa',
             'Transform',
             'get_pagelinks',
@@ -903,10 +903,25 @@ class Wikula_Api_User extends Zikula_AbstractApi
                 'tag'     => $tag,
                 'modname' => $this->name
             )
+        );*/
+        
+        
+        $hook = new Zikula_FilterHook(
+            $eventname = 'wikula.filter_hooks.body.filter', 
+            $content = $body
         );
+        $hook->setCaller('WikulaSaver');  
+        $pagelinks = ServiceUtil::getManager()->getService('zikula.hookmanager')
+                                        ->notify($hook)->getData();        
+
+        
         foreach($pagelinks as $pagelink) {
+           $link = array(
+               'from_tag' => $tag,
+               'to_tag'   => $pagelink
+           );
            $d = new Wikula_Entity_Links2();
-           $d->merge($pagelink);
+           $d->merge($link);
            $this->entityManager->persist($d);
            $this->entityManager->flush();
         }

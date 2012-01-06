@@ -77,14 +77,36 @@ class Wakka_HookHandler_Lml extends Zikula_Hook_AbstractHandler
      */
     public static function filter(Zikula_FilterHook $hook)
     {
-        $text = $hook->getData();
-        $text = ModUtil::apiFunc('Wakka', 'transform', 'transform', array(
-            'text'   => $text,
-            'modname' => $hook->getCaller())
-        );        
+        $text = $hook->getData();        
+        
+        
+        if($hook->getCaller() == 'WikulaSaver') {
+            $text = self::getPageLinks($text);
+        } else {
+            $text = ModUtil::apiFunc('Wakka', 'transform', 'transform', array(
+                'text'   => $text,
+                'modname' => $hook->getCaller())
+            );
+        }
+                
         $hook->setData($text);
     }
-
+    
+    private function getPageLinks($text) {
+        $links = array();
+            $pagelinks = array();
+            preg_match_all("/\[\[(.*?)\]\]/", $text, $links);
+            $links = $links[1];
+            foreach($links as $link) {
+                $link = explode(' ', $link);
+                // check if link is a hyperlink
+                if( strstr($link[0], '://' ) ) {
+                    continue;
+                }
+                $pagelinks[] = $link[0];                 
+            }
+            return array_unique($pagelinks);
+    }
 
 
 }

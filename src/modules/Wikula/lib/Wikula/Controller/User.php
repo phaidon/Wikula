@@ -48,7 +48,8 @@ class Wikula_Controller_User extends Zikula_AbstractController
      */
     public function show($args)
     {   
-
+        
+        
         // Get input parameters
         $tag  = isset($args['tag']) ? $args['tag'] : FormUtil::getPassedValue('tag');
         $time = isset($args['time']) ? $args['time'] : FormUtil::getPassedValue('time');
