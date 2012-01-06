@@ -119,6 +119,7 @@ class Wikula_Installer extends Zikula_AbstractInstaller
                 $this->setVar('subscription', false);
                 $this->setVar('mandatorycomment', false);
                 $this->setVar('single_page_permissions', false);
+                HookUtil::registerSubscriberBundles($this->version->getHookSubscriberBundles());
                 
         }
 
