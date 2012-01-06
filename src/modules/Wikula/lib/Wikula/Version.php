@@ -11,6 +11,7 @@ class Wikula_Version extends Zikula_AbstractVersion
 {
     public function getMetaData()
     {
+        $meta = array();
         $meta['name']           = 'Wikula';
         $meta['displayname']    = __('Wikula');
         $meta['oldnames']       = array('pnWikka', 'Wikula');
@@ -37,11 +38,18 @@ class Wikula_Version extends Zikula_AbstractVersion
                                       array('modname'    => 'LuMicuLa', 
                                             'minversion' => '0.0.1', 
                                             'maxversion' => '', 
-                                            'status'     => ModUtil::DEPENDENCY_REQUIRED) 
-                                     );
+                                            'status'     => ModUtil::DEPENDENCY_RECOMMENDED
+                                      ),
+                                      array('modname'    => 'Wakka', 
+                                            'minversion' => '0.0.1', 
+                                            'maxversion' => '', 
+                                            'status'     => ModUtil::DEPENDENCY_RECOMMENDED
+                                      ),
+                                  );
 
         return $meta;
     }
+    
     protected function setupHookBundles()
     {
         $bundle = new Zikula_HookManager_SubscriberBundle($this->name, 'subscriber.wikula.ui_hooks.bottom', 'ui_hooks', $this->__('Wikula bottom area'));
