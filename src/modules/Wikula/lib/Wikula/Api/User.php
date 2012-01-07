@@ -893,6 +893,14 @@ class Wikula_Api_User extends Zikula_AbstractApi
             $this->entityManager->flush();
         }
         
+        
+        $oldcategories = $this->entityManager->getRepository('Wikula_Entity_Categories')
+                                        ->findBy(array('tag' => $tag));
+        foreach($oldcategories as $oldcategory) {
+            $this->entityManager->remove($oldcategory);
+            $this->entityManager->flush();
+        }
+        
                 
         /*$pagelinks = ModUtil::apiFunc(
             'LuMicuLa',
@@ -911,8 +919,10 @@ class Wikula_Api_User extends Zikula_AbstractApi
             $content = $body
         );
         $hook->setCaller('WikulaSaver');  
-        $pagelinks = ServiceUtil::getManager()->getService('zikula.hookmanager')
-                                        ->notify($hook)->getData();        
+        $data = ServiceUtil::getManager()->getService('zikula.hookmanager')
+                                        ->notify($hook)->getData(); 
+        $pagelinks      = $data['links'];
+        $pagecategories = $data['categories'];
 
         
         foreach($pagelinks as $pagelink) {
@@ -926,6 +936,18 @@ class Wikula_Api_User extends Zikula_AbstractApi
            $this->entityManager->flush();
         }
 
+        
+        foreach($pagecategories as $pagecategory) {
+           $category = array(
+               'tag'      => $tag,
+               'category' => $pagecategory
+           );
+           $d = new Wikula_Entity_Categories();
+           $d->merge($category);
+           $this->entityManager->persist($d);
+           $this->entityManager->flush();
+        }
+        
 
         if (!$oldpage) {
             LogUtil::registerStatus(__('New page created!'));

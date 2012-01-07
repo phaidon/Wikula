@@ -656,6 +656,19 @@ border: 1px solid ButtonFace; padding: 1px;  margin: 0px; cursor: pointer; curso
     vertical-align: middle;
 }
 
+
+div.wikula_categories {
+    margin-top: 1em;
+    padding: 0.3em;
+    border-style: solid;
+    border-color: #AAC;
+    border-width: 1px;
+    background-color: #DAEEF7;
+}
+
+
+
+
 /***********************/
 /* --- row & column color --- */
 

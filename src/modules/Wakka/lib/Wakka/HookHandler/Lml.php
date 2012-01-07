@@ -81,7 +81,10 @@ class Wakka_HookHandler_Lml extends Zikula_Hook_AbstractHandler
         
         
         if($hook->getCaller() == 'WikulaSaver') {
-            $text = self::getPageLinks($text);
+            $data = array();
+            $data['links']      = self::getPageLinks($text);
+            $data['categories'] = self::getPageCategories($text);
+            $text = $data;
         } else {
             $text = ModUtil::apiFunc('Wakka', 'transform', 'transform', array(
                 'text'   => $text,
@@ -94,18 +97,31 @@ class Wakka_HookHandler_Lml extends Zikula_Hook_AbstractHandler
     
     private function getPageLinks($text) {
         $links = array();
-            $pagelinks = array();
-            preg_match_all("/\[\[(.*?)\]\]/", $text, $links);
-            $links = $links[1];
-            foreach($links as $link) {
-                $link = explode(' ', $link);
-                // check if link is a hyperlink
-                if( strstr($link[0], '://' ) ) {
-                    continue;
-                }
-                $pagelinks[] = $link[0];                 
+        $pagelinks = array();
+        preg_match_all("/\[\[(.*?)\]\]/", $text, $links);
+        $links = $links[1];
+        foreach($links as $link) {
+            $link = explode(' ', $link);
+            // check if link is a hyperlink
+            if( strstr($link[0], '://' ) or strstr($link[0], '@' ) ) {
+                continue;
             }
-            return array_unique($pagelinks);
+            $pagelinks[] = $link[0];                 
+        }
+        return array_unique($pagelinks);
+    }
+    
+    
+    private function getPageCategories($text) {
+        $categories = array();        
+        preg_match_all("/\n\[\[Category(.*?)\]\]/", $text, $categories);
+        $categories = $categories[1];
+        foreach($categories as $key => $value) {
+            $value = explode(' ', $value);
+            $value = $value[0];
+            $categories[$key] = $value;
+        }
+        return array_unique($categories);
     }
 
 

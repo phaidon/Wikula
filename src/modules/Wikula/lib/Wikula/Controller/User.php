@@ -49,6 +49,8 @@ class Wikula_Controller_User extends Zikula_AbstractController
     public function show($args)
     {   
         
+
+        
         
         // Get input parameters
         $tag  = isset($args['tag']) ? $args['tag'] : FormUtil::getPassedValue('tag');
@@ -77,7 +79,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
                 'raw'  => $raw
             );
             $redirecturl = ModUtil::url($this->name, 'user', 'show', $arguments);
-            System::redirect($redirecturl);
+            return System::redirect($redirecturl);
         }
         
         
@@ -94,6 +96,17 @@ class Wikula_Controller_User extends Zikula_AbstractController
                               ->assign('tag',     $tag)
                               ->assign('name',    str_replace('_', ' ', $tag))
                               ->fetch('user/specialPage.tpl');
+        }
+        
+        
+        if( substr($tag, 0, 8) == 'Category') {
+            $redirecturl = ModUtil::url(
+                $this->name,
+                'category',
+                'show',
+                array( 'category' => substr($tag, 8) )
+            );
+            return System::redirect($redirecturl);
         }
 
 
@@ -125,7 +138,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
         // Resetting session access and previous
         SessionUtil::delVar('wikula_access');
         SessionUtil::setVar('wikula_previous', $tag);
-
+        
         
         // TODO: check if this can be migrated to an action
         // we'll get later revisions too because we want to display the history and the last editors next to the page
@@ -137,6 +150,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
         $datetime = $page['time']->format('Y-m-d H:i:s');
         return $this->view->fetch('user/show.tpl', md5($page['id'].$datetime));
     }
+    
 
     /**
      * edit

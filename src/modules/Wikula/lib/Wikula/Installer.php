@@ -28,6 +28,7 @@ class Wikula_Installer extends Zikula_AbstractInstaller
             DoctrineHelper::createSchema($this->entityManager, array(
                 'Wikula_Entity_Pages',
                 'Wikula_Entity_Links',
+                'Wikula_Entity_Categories',
                 'Wikula_Entity_Subscriptions'
             ));
         } catch (Exception $e) {
@@ -105,6 +106,7 @@ class Wikula_Installer extends Zikula_AbstractInstaller
             case '1.2':
                 try {
                     DoctrineHelper::createSchema($this->entityManager, array(
+                        'Wikula_Entity_Categories',
                         'Wikula_Entity_Subscriptions'
                     ));
                 } catch (Exception $e) {
@@ -135,6 +137,7 @@ class Wikula_Installer extends Zikula_AbstractInstaller
         DoctrineHelper::dropSchema($this->entityManager, array(
             'Wikula_Entity_Pages',
             'Wikula_Entity_Links',
+            'Wikula_Entity_Categories',
             'Wikula_Entity_Subscriptions'
         ));
         HookUtil::unregisterSubscriberBundles($this->version->getHookSubscriberBundles());

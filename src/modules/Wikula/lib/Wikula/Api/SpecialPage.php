@@ -89,10 +89,6 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
                 'action' => 'orphanedpages',
                 'description' => $this->__('list of orphaned pages')
             ),
-            $this->__('All categories')      => array(
-                'action' => 'allcategories',
-                'description' => $this->__('list of all categories')
-            ),
             $this->__('Special_pages')      => array(
                 'action' => 'specialpages',
                 'description' => $this->__('list of special pages')
@@ -209,35 +205,7 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
         $headerletters     = array();
         $pagelist          = array();
 
-        foreach ($pages as $page) {
-            $value = '';
-            if (preg_match("`(=){3,5}([^=\n]+)(=){3,5}`", $page['body'], $value)) {
-                $formatting_tags = array('**', '//', '__', '##', "''", '++', '#%', '@@', '""');
-                $value = str_replace($formatting_tags, '', $value[2]);
-            } else {
-                $value = $page['tag'];
-            }
-            $page['title'] = $value;
-
-            $firstChar = strtoupper(substr($value, 0, 1));
-            if (!preg_match('/[A-Za-z]/', $firstChar)) {
-                $firstChar = '#';
-            }
-
-            if ($firstChar != $currentChar) {
-                $headerletters[] = $firstChar;
-                $currentChar     = $firstChar;
-            }
-
-            if (empty($letter) || $firstChar == $letter) {
-                $pagelist[$firstChar][] = $page;
-
-                if ($username == $page['owner']) {
-                    $user_owns_pages = true;
-                }
-            }
-
-        }
+        $pagelist = $this->letterSort($pages);
 
          $specialPages = $this->listpages();
          foreach( $specialPages as $tag => $value) {
@@ -610,5 +578,44 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
         return $this->view->assign('items', $items)
                           ->fetch('action/orphanedpages.tpl');
     }
+    
+    
+    
+    function letterSort($pages) {
+        $pagelist = array();
+        foreach ($pages as $page) {
+            $value = '';
+            if (preg_match("`(=){3,5}([^=\n]+)(=){3,5}`", $page['body'], $value)) {
+                $formatting_tags = array('**', '//', '__', '##', "''", '++', '#%', '@@', '""');
+                $value = str_replace($formatting_tags, '', $value[2]);
+            } else {
+                $value = $page['tag'];
+            }
+            $page['title'] = $value;
+
+            $firstChar = strtoupper(substr($value, 0, 1));
+            if (!preg_match('/[A-Za-z]/', $firstChar)) {
+                $firstChar = '#';
+            }
+
+            if ($firstChar != $currentChar) {
+                $headerletters[] = $firstChar;
+                $currentChar     = $firstChar;
+            }
+
+            if (empty($letter) || $firstChar == $letter) {
+                $pagelist[$firstChar][] = $page;
+
+                if ($username == $page['owner']) {
+                    $user_owns_pages = true;
+                }
+            }
+
+        }
+        return $pagelist;
+    }
+    
+    
+    
     
 }

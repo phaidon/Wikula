@@ -15,6 +15,7 @@
 class Wakka_Api_Transform extends Zikula_AbstractApi 
 {
 
+    private $categories = array();
     
     
     public function transform($args)
@@ -37,7 +38,7 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
     {
         global $mapcounter;
         $mapcounter = 1;
-
+        
         $args['text'] = str_replace("\r\n", "\n", $args['text']);
 
         // We'll see about that later
@@ -47,7 +48,20 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
         } else {
             $mindmap_pattern = '';
         }
-
+        
+        
+        $args['text'] = preg_replace_callback(
+            "#\n\[\[Category(.*?)\]\]#si",
+            array($this, 'categoryCallback'),
+            $args['text']
+        );
+        // remove hr
+        $length = strlen($args['text']);
+        if( substr($args['text'], $length-4) == '----' ) {
+            $args['text'] = substr($args['text'], 0, $length-4);
+        }
+        
+        
         $args['text'] = preg_replace_callback(
             '/'.
             '%%.*?%%|'.                                                   // code
@@ -93,7 +107,22 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
                         array('tag' => $previous));
         }
     */
-        return $args['text'];
+        
+        
+        if( count($this->categories) > 0) {
+            if( count($this->categories) == 1 ) {
+                $categories = $this->__('Category');
+            } else {
+                $categories = $this->__('Categories');
+            }
+            $categories = '<div class="wikula_categories">'.$categories.': '.implode(', ', $this->categories).'</div>';
+        } else {
+            $categories = '';
+        }
+        
+        
+        
+        return $args['text'].$categories;
     }
 
     /**
@@ -920,6 +949,22 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
             }
         }
         // other elements to be treated go here (tables, images, code sections...)
+    }
+    
+    
+    private function categoryCallback($things)
+    {
+        $things = explode(' ', $things[1]);
+        $category = $things[0];
+        $title  = str_replace('_', ' ', $category);
+        
+        $url = ModUtil::url(
+            'Wikula',
+            'category',
+            'show',
+            array('category' => $category)
+        );
+        $this->categories[] = '<a href="'.$url.'">'.$title.'</a>';
     }
     
     
