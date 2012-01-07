@@ -247,4 +247,69 @@ class Wikula_Controller_Admin extends Zikula_AbstractController
         exit;
     */
     }
+    
+    public function rebuildLinksAndCategoriesTables() {
+        
+        // Permission check
+        $this->throwForbiddenUnless(
+            SecurityUtil::checkPermission('Wikula::', '::', ACCESS_ADMIN),
+            LogUtil::getErrorMsgPermission()
+        );
+        
+        
+        $oldlinks = $this->entityManager->getRepository('Wikula_Entity_Links2')->findAll();
+        foreach($oldlinks as $oldlink) {
+            $this->entityManager->remove($oldlink);
+            $this->entityManager->flush();
+        }
+        
+        $oldcategories = $this->entityManager->getRepository('Wikula_Entity_Categories')->findAll();
+        foreach($oldcategories as $oldcategory) {
+            $this->entityManager->remove($oldcategory);
+            $this->entityManager->flush();
+        }
+        
+        $pages = ModUtil::apiFunc($this->name, 'user', 'LoadAllPages');
+        foreach( $pages as $page ) {
+            $hook = new Zikula_FilterHook(
+                $eventname = 'wikula.filter_hooks.body.filter', 
+                $content = $page['body']
+            );
+            $hook->setCaller('WikulaSaver');  
+            $data = ServiceUtil::getManager()->getService('zikula.hookmanager')
+                                            ->notify($hook)->getData(); 
+            $pagelinks      = $data['links'];
+            $pagecategories = $data['categories'];
+
+            
+            foreach($pagelinks as $pagelink) {
+                $link = array(
+                    'from_tag' => $page['tag'],
+                    'to_tag'   => $pagelink
+                );
+                $d = new Wikula_Entity_Links2();
+                $d->merge($link);
+                $this->entityManager->persist($d);
+                $this->entityManager->flush();
+            }
+            
+
+            foreach($pagecategories as $pagecategory) {
+                $category = array(
+                    'tag'      => $page['tag'],
+                    'category' => $pagecategory
+                );
+                $d = new Wikula_Entity_Categories();
+                $d->merge($category);
+                $this->entityManager->persist($d);
+                $this->entityManager->flush();
+            }
+        }
+
+        
+        $redirecturl = ModUtil::url($this->name, 'admin', 'modifyconfig');
+        return System::redirect($redirecturl);
+        
+    }
+     
 }

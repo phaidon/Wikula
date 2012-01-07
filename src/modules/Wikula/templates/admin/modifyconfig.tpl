@@ -34,7 +34,11 @@
         {formlabel for="single_page_permissions" __text='Enable single page permissions'}
         {formcheckbox id="single_page_permissions"}
     </div>
-
+    
+    <p class="z-formnote">
+        <a href="{modurl modname='Wikula' type='admin' func="rebuildLinksAndCategoriesTables"}">Rebuild links and categories tables.</a>
+    </p>
+    
 </fieldset>
 
 <div class="z-formbuttons z-buttons">
