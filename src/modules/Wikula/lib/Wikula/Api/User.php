@@ -189,8 +189,6 @@ class Wikula_Api_User extends Zikula_AbstractApi
         }
 
         $args['latest'] = false;
-        
-
 
 
         // build the order by
@@ -426,6 +424,11 @@ class Wikula_Api_User extends Zikula_AbstractApi
         
         if(!isset($latest) or $latest) {
             $query->andWhere("p.latest = 'Y'");        
+        }
+        
+        if(!is_null($tag) ) {
+            $query->andWhere('p.tag = :tag')
+                  ->setParameter('tag', $tag);
         }
         
         
