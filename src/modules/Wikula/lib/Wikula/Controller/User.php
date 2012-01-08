@@ -83,13 +83,20 @@ class Wikula_Controller_User extends Zikula_AbstractController
         }
         
         
+        // check if it is category page
         if($tag == $this->__('Categories')) {
-            return $this->view->fetch('user/categories.tpl');
+            $redirecturl = ModUtil::url($this->name, 'category', 'showAll');
+            return System::redirect($redirecturl);
+        }     
+        if( substr($tag, 0, 8) == 'Category') {
+            $args = array( 'category' => substr($tag, 8) );
+            $redirecturl = ModUtil::url( $this->name, 'category', 'show', $args);
+            return System::redirect($redirecturl);
         }
         
         
+        // check if it is category page
         $specialPages = ModUtil::apiFunc($this->name, 'SpecialPage', 'listpages');
-        
         if( array_key_exists($tag, $specialPages)) {
             $content = ModUtil::apiFunc($this->name, 'SpecialPage', 'get', $specialPages[$tag]);
             return $this->view->assign('content', $content)
@@ -99,17 +106,6 @@ class Wikula_Controller_User extends Zikula_AbstractController
         }
         
         
-        if( substr($tag, 0, 8) == 'Category') {
-            $redirecturl = ModUtil::url(
-                $this->name,
-                'category',
-                'show',
-                array( 'category' => substr($tag, 8) )
-            );
-            return System::redirect($redirecturl);
-        }
-
-
         // Get the page
         $page = ModUtil::apiFunc($this->name, 'user', 'LoadPage', array(
             'tag'  => $tag,
@@ -119,20 +115,20 @@ class Wikula_Controller_User extends Zikula_AbstractController
         
         // Validate invalid petition
         if (!$page && !empty($time)) {
-            LogUtil::registerError(__("The page you requested doesn't exists"), null, ModUtil::url($this->name));
+            LogUtil::registerError($this->__("The page you requested doesn't exists"), null, ModUtil::url($this->name));
         }
 
         // Get the latest version
-        if (empty($time)) {
+        /*if (empty($time)) {
             $latest = $page;
         } else {
             $latest = ModUtil::apiFunc($this->name, 'user', 'LoadPage', array('tag' => $tag));
-        }
+        }*/
 
         // Check if this tag doesn't exists
-        if (!$page && !$latest) {
+        if (!$page ) {//&& !$latest) {
             LogUtil::registerStatus(__('The page does not exist yet! do you want to create it? Feel free to participate and be the first who creates content for this page!'));
-            System::redirect(ModUtil::url($this->name, 'user', 'edit', array('tag' => $tag)));
+            //return System::redirect(ModUtil::url($this->name, 'user', 'edit', array('tag' => $tag)));
         }
 
         // Resetting session access and previous

@@ -79,10 +79,10 @@ class Wikula_Api_Search extends Zikula_AbstractApi
                 'module'  => $this->name,
                 'session' => $sessionId
             );
-            $insertResult = DBUtil::insertObject($item, 'search_result');
+            /*$insertResult = DBUtil::insertObject($item, 'search_result');
             if (!$insertResult) {
                 return LogUtil::registerError($this->__('Error! Could not load any articles.'));
-            }
+            }*/
         }
 
         return true;

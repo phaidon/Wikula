@@ -95,68 +95,9 @@ class Wikula_Controller_Admin extends Zikula_AbstractController
         return $form->execute('admin/modifyconfig.tpl', new Wikula_Handler_ModifyConfig());
     }
 
-    public function updateconfig()
-    {
-        // Permission check
-        $this->throwForbiddenUnless(
-            SecurityUtil::checkPermission('Wikula::', '::', ACCESS_ADMIN),
-            LogUtil::getErrorMsgPermission()
-        );
-
-        $root_page    = FormUtil::getPassedValue('root_page');
-        $savewarning  = FormUtil::getPassedValue('savewarning');
-        $hidehistory  = FormUtil::getPassedValue('hidehistory');
-        $itemsperpage = FormUtil::getPassedValue('itemsperpage');
-        $hideeditbar  = FormUtil::getPassedValue('hideeditbar');
-        $excludefromhistory = FormUtil::getPassedValue('excludefromhistory');
-
-        // Initialize the modvars array
-        $modvars = array();
-
-        $modvars['excludefromhistory'] = $excludefromhistory;
-
-        if (empty($hideeditbar)) {
-            $hideeditbar = false;
-        }
-        $modvars['hideeditbar'] = (bool)$hideeditbar;
-
-        if (empty($savewarning)) {
-            $savewarning = false;
-        }
-        $modvars['savewarning'] = (bool)$savewarning;
-
-        if (empty($hidehistory)) {
-            $hidehistory = false;
-        }
-        $modvars['hidehistory'] = (bool)$hidehistory;
-
-
-
-        if (empty($itemsperpage) || !is_numeric($itemsperpage) || (int)$itemsperpage < 1) {
-            $itemsperpage = 25;
-        }
-        $modvars['itemsperpage'] = (int)$itemsperpage;
-
-        if (!empty($root_page)) {
-            $modvars['root_page'] = $root_page;
-        }
-
-        $this->setVars( $modvars);
-
-        $render = pnRender::getInstance($this->name);
-        $this->view->clear_cache();
-
-        LogUtil::registerStatus(__('Done! Module configuration updated.'));
-
-        // TODO Hook
-        //pnModCallHooks('module', 'updateconfig', $this->name, array('module' => $this->name));
-
-        return $this->redirect(ModUtil::url($this->name, 'admin', 'modifyconfig'));
-    }
-
 
     public function delete()
-    {
+    {   
         // Permission check
         $this->throwForbiddenUnless(
             SecurityUtil::checkPermission('Wikula::', '::', ACCESS_DELETE),

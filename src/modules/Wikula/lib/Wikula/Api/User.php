@@ -63,13 +63,11 @@ class Wikula_Api_User extends Zikula_AbstractApi
     public function LoadPage($args)
     {
         
-        extract($args);
-        unset($arg);
-        if (!isset($tag)) {
-            return LogUtil::registerArgsError();
+        if (!isset($args['tag'])) {
+            return LogUtil::registerArgsError($this->__('No tag given!') );
         }
         
-        if (!SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_READ)) {
+        if (!SecurityUtil::checkPermission('Wikula::', 'page::'.$args['tag'], ACCESS_READ)) {
             return LogUtil::registerError(__('You do not have the authorization to read this page!'), 403);
         }
         
@@ -78,18 +76,16 @@ class Wikula_Api_User extends Zikula_AbstractApi
         $qb->select('u')
            ->from('Wikula_Entity_Pages', 'u')
            ->where('u.tag = :tag')
-           ->setParameter('tag', $tag)
+           ->setParameter('tag', $args['tag'])
            ->setMaxResults(1);
 
-        if (isset($time) && !empty($time)) {
+        if (isset($args['time']) && !empty($args['time'])) {
             $qb->andWhere('where', 'u.time = :time')
                ->setParameter('time', $args['time']);
-
         } else {
             $qb->andWhere('u.latest = :latest')
                ->setParameter('latest', 'Y');
         }
-        //$qb->where(implode(' AND ', $where));
 
         
         // return the page or false if failed
@@ -645,8 +641,6 @@ class Wikula_Api_User extends Zikula_AbstractApi
     public function LoadWantedPages($args)
     {
         
-        
-        // TODO remove old DB query 
         $pages0 = $this->LoadAllPages(array());
         $pages  = array();
         foreach ($pages0 as $key => $value) {
@@ -671,49 +665,6 @@ class Wikula_Api_User extends Zikula_AbstractApi
         }
                 
         return $links;
-        
-
-        
-        
-        /*
-
-
-        $sql = 'SELECT DISTINCT '.$linkcol['from_tag'].', '
-                                .$linkcol['to_tag'].', '
-                                .'COUNT('.$linkcol['to_tag'].') as count '
-
-
-                .' ORDER BY count DESC, ';
-
-        //$result =& $dbconn->SelectLimit($sql, $numitems, $startnum-1);
-        $result =& $dbconn->Execute($sql);
-
-        if ($dbconn->ErrorNo() != 0) {
-            return LogUtil::registerError(__('Getting matches for this page failed!').' - '.$dbconn->ErrorMsg());
-        }
-
-        if ($result->EOF) {
-            return LogUtil::registerError(__('No items found.'));
-        }
-        $pages = array();
-
-        for (; !$result->EOF; $result->MoveNext()) {
-
-            list($from_tag, $to_tag, $count) = $result->fields;
-
-            if (SecurityUtil::checkPermission('Wikula::', 'page::'.$to_tag, ACCESS_READ))  {
-            if ($from_tag != 'WantedPages') {
-                $pages[] = array('from_tag' => $from_tag,
-                                'to_tag'   => $to_tag,
-                                'count'    => $count);
-            }
-            }
-
-        }
-
-        $result->Close();
-
-        return $pages; */
 
     }
     
@@ -729,99 +680,16 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
     public function IsOrphanedPage($args)
     {
-        
-        // ToDo Remove old DB query
-        
-        extract($args);
-        unset($args);
-
-        if (!isset($tag)) {
-            return LogUtil::registerArgsError();
-        }
-
-        if (!isset($startnum) || !is_numeric($startnum)) {
-            $startnum = 1;
-        }
-        if (!isset($numitems) || !is_numeric($numitems)) {
-            $numitems = -1;
-        }
-
-        $dbconn  =& pnDBGetConn(true);
-        $table =& DBUtil::getTables();
-
-        $pagetbl = &$table['wikula_pages'];
-        $pagecol = &$table['wikula_pages_column'];
-        $linktbl = &$table['wikula_links'];
-        $linkcol = &$table['wikula_links_colum'];
-
-        $sql = 'SELECT DISTINCT '.$pagecol['tag']
-            .' FROM '.$pagetbl
-            .' LEFT JOIN '.$linktbl.' ON '.$pagecol['tag'].' = '.$linkcol['to_tag']
-            .' WHERE '.$linkcol['to_tag'].' IS NULL '
-            .' AND '.$pagecol['comment_on'].' = "" '
-            .' AND '.$pagecol['tag'].' = "'.DataUtil::formatForStore($tag).'" '
-            .' ORDER BY '.$pagecol['tag'];
-
-        $result =& $dbconn->SelectLimit($sql, $numitems, $startnum-1);
-
-        if ($dbconn->ErrorNo() != 0) {
-            return LogUtil::registerError(__('Getting matches for this page failed!').' - '.$dbconn->ErrorMsg());
-        }
-
-        $pages = array();
-
-        for (; !$result->EOF; $result->MoveNext()) {
-
-            list($tag) = $result->fields;
-
-            if (SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_READ))  {
-                $pages[] = array('tag' => $tag);
-            }
-
-        }
-
-        $result->Close();
-
-        return $pages;
-
+        $tag = $args['tag'];
+        $em = $this->getService('doctrine.entitymanager');
+        $qb = $em->createQueryBuilder();
+        $qb->select('count(l)')
+           ->from('Wikula_Entity_Links2', 'l')
+           ->where('l.to_tag = :tag')
+           ->setParameter('tag', $tag);
+        return $qb->getQuery()->getSingleScalarResult();
     }
-
-    public function DeleteOrphanedPage($args)
-    {
-        
-        extract($args);
-        unset($args);
-
-        if (!isset($tag)) {
-            return LogUtil::registerArgsError();
-        }
-
-        if (!SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_DELETE))  {
-            return LogUtil::registerError(__('You do not have the right to delete this page!'), 403);
-        }
-
-        $table =& DBUtil::getTables();
-
-        $pagecol   =& $table['wikula_pages_column'];
-        $pagewhere = 'WHERE '.$pagecol['tag'].' = "'.DataUtil::formatForStore($tag).'"';
-        if (!DBUtil::deleteWhere('wikula_pages', $pagewhere)) {
-            return LogUtil::registerError(__('Error! Deleting this page failed.'));
-        }
-
-        $linkcol   =& $table['wikula_links_colum'];
-        $linkwhere = 'WHERE '.$linkcol['from_tag'].' = "'.DataUtil::formatForStore($tag).'"';
-        if (!DBUtil::deleteWhere('wikula_links', $linkwhere)) {
-            return LogUtil::registerError(__('Error! Deleting links for this page failed.'));
-        }
-
-        $aclscol   =& $table['wikula_acls_column'];
-        $aclswhere = 'WHERE '.$aclscol['page_tag'].' = "'.DataUtil::formatForStore($tag).'"';
-        if (!DBUtil::deleteWhere('wikula_acls', $aclswhere)) {
-            return LogUtil::registerError(__('Error! Deleting ACLS for this page failed.'));
-        }
-
-        return LogUtil::registerStatus(__('Done! Page deleted with success.'));
-    }
+    
 
     public function SavePage($args)
     {

@@ -236,8 +236,7 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
                 
         $page = $this->entityManager->find('Wikula_Entity_Pages', $id);
         $this->entityManager->remove($page);
-        $this->entityManager->flush();
-        
+        $this->entityManager->flush();        
         
         return true;
     }
