@@ -34,17 +34,17 @@ class Wikula_Entity_Subscriptions extends Zikula_EntityAccess
      * @ORM\Column(type="integer", length=16, unique=true)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $uid;
 
-    public function getid()
+    public function getuid()
     {
-        return $this->id;
+        return $this->uid;
     }
     
 
-    public function setid($id)
+    public function setuid($uid)
     {
-        $this->id = $id;
+        $this->uid = $uid;
     }
 
 }

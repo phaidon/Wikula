@@ -16,6 +16,7 @@
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 
 /**
@@ -59,9 +60,10 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
     
     
     /**
-     * The following are annotations which define the id field.
+     * The following are annotations which define the time field.
      *
      * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="update")
      */
     private $time;
     

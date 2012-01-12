@@ -739,7 +739,6 @@ class Wikula_Api_User extends Zikula_AbstractApi
             'tag'    => $tag,
             'body'   => $body,
             'note'   => DataUtil::formatForStore($note),
-            'time'   => DateUtil::getDatetime(),
             'owner'  => $owner,
             'user'   => $user,
             'latest' => 'Y'
@@ -772,18 +771,6 @@ class Wikula_Api_User extends Zikula_AbstractApi
             $this->entityManager->flush();
         }
         
-                
-        /*$pagelinks = ModUtil::apiFunc(
-            'LuMicuLa',
-            'Transform',
-            'get_pagelinks',
-            array(
-                'content' => $body,
-                'tag'     => $tag,
-                'modname' => $this->name
-            )
-        );*/
-        
         
         $hook = new Zikula_FilterHook(
             $eventname = 'wikula.filter_hooks.body.filter', 
@@ -795,36 +782,39 @@ class Wikula_Api_User extends Zikula_AbstractApi
         $pagelinks      = $data['links'];
         $pagecategories = $data['categories'];
 
-        
-        foreach($pagelinks as $pagelink) {
-           $link = array(
-               'from_tag' => $tag,
-               'to_tag'   => $pagelink
-           );
-           $d = new Wikula_Entity_Links2();
-           $d->merge($link);
-           $this->entityManager->persist($d);
-           $this->entityManager->flush();
+
+        if( isset($pagelinks) and is_array($pagelinks) ) {
+            foreach($pagelinks as $pagelink) {
+            $link = array(
+                'from_tag' => $tag,
+                'to_tag'   => $pagelink
+            );
+            $d = new Wikula_Entity_Links2();
+            $d->merge($link);
+            $this->entityManager->persist($d);
+            $this->entityManager->flush();
+            }
         }
 
-        
-        foreach($pagecategories as $pagecategory) {
-           $category = array(
-               'tag'      => $tag,
-               'category' => $pagecategory
-           );
-           $d = new Wikula_Entity_Categories();
-           $d->merge($category);
-           $this->entityManager->persist($d);
-           $this->entityManager->flush();
+        if( isset($pagecategories) and is_array($pagecategories) ) {
+            foreach($pagecategories as $pagecategory) {
+                $category = array(
+                    'tag'      => $tag,
+                    'category' => $pagecategory
+                );
+                $d = new Wikula_Entity_Categories();
+                $d->merge($category);
+                $this->entityManager->persist($d);
+                $this->entityManager->flush();
+            }
         }
         
 
         if (!$oldpage) {
-            LogUtil::registerStatus(__('New page created!'));
+             LogUtil::registerStatus(__('New page created!'));
              ModUtil::apiFunc($this->name, 'user', 'NotificateNewPage', $tag);
         } else {
-            LogUtil::registerStatus(__('New revision saved!'));
+             LogUtil::registerStatus(__('New revision saved!'));
              ModUtil::apiFunc($this->name, 'user', 'NotificateNewRevsion', $tag);
         }
 
@@ -852,21 +842,27 @@ class Wikula_Api_User extends Zikula_AbstractApi
         $subject = $this->__('Wiki update');
 
 
-        // find all subscriptions
-        $em = $this->getService('doctrine.entitymanager');
-        $query = $em->createQuery('SELECT u FROM Wikula_Entity_Subscriptions u');        
-        $users = $query->getArrayResult();
         
+        
+        $em = $this->getService('doctrine.entitymanager');
+        $qb = $em->createQueryBuilder();
+        $qb->select('s')
+           ->from('Wikula_Entity_Subscriptions', 's');
+        $query = $qb->getQuery();
+        $users = $query->getArrayResult();
+                
         // send emails        
         foreach($users as $user) {
             $uid = $user['uid'];
             $toaddress = UserUtil::getVar('email', $uid);
-            ModUtil::apiFunc('Mailer', 'user', 'sendmessage', array(
-                'toaddress' => $toaddress,
-                'subject'   => $subject,
-                'body'      => $message,
-                'html'      => true
-            ));
+            if(!empty($toaddress)) {
+                ModUtil::apiFunc('Mailer', 'user', 'sendmessage', array(
+                    'toaddress' => $toaddress,
+                    'subject'   => $subject,
+                    'body'      => $message,
+                    'html'      => true
+                ));
+            }
         }
         return true;
         
@@ -882,14 +878,13 @@ class Wikula_Api_User extends Zikula_AbstractApi
         $em = $this->getService('doctrine.entitymanager');
         $qb = $em->createQueryBuilder();
         $qb->from('Wikula_Entity_Pages', 'p')
+           ->select('p')
            ->where("p.user = :user AND p.latest = 'N'")
            ->setParameter('user', UserUtil::getVar('uname'))
-           ->orderBy('time desc')
-           ->setMaxResults($limit = 1)
-           ->setParameter('newlatest', 'N');
+           ->orderBy('p.time', 'desc')
+           ->setMaxResults(1);
         $query = $qb->getQuery();
         $lastEdit = $query->getArrayResult();
-        
 
         $notification = false;
         if(count($lastEdit) == 0 ) {
@@ -912,7 +907,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
                 $notification = true;
             }
         }
-
+        
         
 
         if($notification) {
@@ -926,19 +921,25 @@ class Wikula_Api_User extends Zikula_AbstractApi
             
             // find all subscriptions
             $em = $this->getService('doctrine.entitymanager');
-            $query = $em->createQuery('SELECT u FROM Wikula_Entity_Subscriptions u');        
+            $qb = $em->createQueryBuilder();
+            $qb->select('s')
+               ->from('Wikula_Entity_Subscriptions', 's');
+            $query = $qb->getQuery();
             $users = $query->getArrayResult();
-        
+            
+                    
             // send emails
             foreach($users as $user) {
                 $uid = $user['uid'];
                 $toaddress = UserUtil::getVar('email', $uid);
-                ModUtil::apiFunc('Mailer', 'user', 'sendmessage', array(
-                    'toaddress' => $toaddress,
-                    'subject'   => $subject,
-                    'body'      => $message,
-                    'html'      => true
-                ));
+                if($toaddress) {
+                    ModUtil::apiFunc('Mailer', 'user', 'sendmessage', array(
+                        'toaddress' => $toaddress,
+                        'subject'   => $subject,
+                        'body'      => $message,
+                        'html'      => true
+                    ));
+                }
             }
         }
     }
