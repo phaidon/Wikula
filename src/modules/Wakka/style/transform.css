@@ -848,3 +848,15 @@ div.sidenote_warning .sidenote_title {
   border-color: #FFD324;
   color: #BB330C;
 }
+
+
+.indexBox {
+    background-color: #e6e6ff;
+    border: 1px solid #9bb8d9 !important;
+    color: #27427D !important;
+    margin: 5px !important;
+    padding: 10px !important;
+    float:left;
+    line-height: 1.5em;
+    font-size: smaller;
+}

@@ -16,6 +16,7 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
 {
 
     private $categories = array();
+    private $headings = array();
     
     
     public function transform($args)
@@ -101,12 +102,7 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
 
         // we're cutting the lasts <br />
         $args['text'] = preg_replace('/<br \/>$/', '', $args['text']);
-    /*
-        if ($linktracking && ($previous = SessionUtil::getVar('wikula_previous'))) {
-            pnModAPIFunc('wikula', 'user', 'WriteLinkTable',
-                        array('tag' => $previous));
-        }
-    */
+
         
         
         if( count($this->categories) > 0) {
@@ -122,8 +118,86 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
         
         
         
-        return $args['text'].$categories;
+        $indexBox = self::indexBox($args['text']);
+        
+        return $indexBox.$args['text'].$categories;
     }
+    
+    
+    
+    private function indexBox($text) {
+        
+        
+        if(!$this->getVar('showIndex', false) ) {
+            return '';
+        }
+        
+        $headings = array();
+        preg_match_all('/\<h(.*?)\<\/a\>/si', $text, $headings);
+        
+        
+        if( count($headings[1]) == 0 ) {
+            return '';
+        }
+            
+        PageUtil::addVar('javascript', 'prototype');
+        $indexBox = '<center>Contens '.
+                    '<a href="#" onClick="$(\'innerIndexBox\').toggle()">['.
+                    $this->__('hide').
+                    ']</a></center><div id="innerIndexBox"><br />';
+        $h = array();
+        $h[1] = 1;
+        $h[2] = 1;
+        $h[3] = 1;
+        $h[4] = 1;
+        $h[5] = 1;
+        $prelevel = 0;
+
+        foreach($headings[1] as $value) {
+
+            $tmparray1 = explode(' ', $value);
+            $tmparray2 = explode('>', $value);
+            $level = $tmparray1[0];
+            $title = $tmparray2[2];
+
+            if($level <= $prelevel ) {
+                $h[$level]++;
+
+                if($level < 5 ) {
+                    $h[5] = 1;
+                }
+                if($level < 4 ) {
+                    $h[4] = 1;
+                }
+                if($level < 3 ) {
+                    $h[3] = 1;
+                }
+                if($level < 2 ) {
+                    $h[2] = 1;
+                }
+
+            }
+
+            if($level != $prelevel) {
+                $number = '';
+                $spaces = '';
+                for($i = 1; $i < $level; $i++ ) {
+                    $number .= $h[$i].'.';
+                    $spaces .= '&nbsp;&nbsp;&nbsp;&nbsp;';
+                }
+            }
+
+            $titleNS = str_replace(' ', '_', $title);
+            $indexBox .= $spaces.'<a href="#hn_'.$titleNS.'">'.$number.$h[$level].' '.$title.'</a><br />';
+
+            $prelevel = $level;
+        }
+
+        return '<div class="indexBox">'.$indexBox.'</div></div>'.
+                '<div class="z-clearfix"></div>';
+        
+    }
+    
 
     /**
     * Callback transform Wikka function
@@ -134,6 +208,7 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
     */
     private function wakka2callback($things)
     {
+        
         $cr     = "\n";
         $thing  = $things[0];
         $result = '';

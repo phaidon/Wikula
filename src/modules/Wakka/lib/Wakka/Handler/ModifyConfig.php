@@ -36,7 +36,8 @@ class Wakka_Handler_ModifyConfig extends Zikula_Form_AbstractHandler
         );
         $view->assign('editors', $editors);
         $view->assign('editor', $this->getVar('editor', 'wakka100'));
-
+        $view->assign('showIndex', $this->getVar('showIndex', false));
+        
         return true;
     }
 
