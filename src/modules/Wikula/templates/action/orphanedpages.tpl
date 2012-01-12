@@ -2,18 +2,11 @@
     <p class="z-informationmsg">
         {gt text='The following list shows those pages held in the Wiki that are not linked to on any other pages.'}
     </p>
+    
+    
+    
     {if !empty($items)}
-        <ul>
-            {foreach from=$items item='item'}
-                {if $item.tag}
-                    <li>
-                        <a href="{modurl modname='Wikula' type='user' func='main' tag=$item.tag|urlencode}" title="{$item.tag|safehtml}">
-                            {$item.tag|hyphen2space|safehtml}
-                        </a>
-                    </li>
-                {/if}
-            {/foreach}
-        </ul>
+        {letterList pages=$items}
     {else}
         <ul>
             <li>

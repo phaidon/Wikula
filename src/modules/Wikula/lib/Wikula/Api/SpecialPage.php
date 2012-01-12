@@ -111,59 +111,6 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
     }
     
 
-    public function category($args)
-    {
-        $tag     = (isset($args['page']) && !empty($args['page'])) ? $args['page'] : FormUtil::getPassedValue('tag', ModUtil::getVar('Wikula', 'root_page'));
-        $col     = (isset($args['col']) && !empty($args['col'])) ? $args['col'] : 1;
-        $full    = (isset($args['full']) && !empty($args['full'])) ? 1 : 0;
-        $compact = (isset($args['compact']) && !empty($args['compact'])) ? 1 : 0;
-        $notitle = (isset($args['notitle']) && !empty($args['notitle'])) ? 1 : 0;
-
-
-        // if page is empty
-        if (empty($tag) or $tag = $this->__('AllCategories')) {
-            // CategoryCategory page as default
-            $tag = $this->__('CategoryCategory');
-        }
-
-
-        $pages = ModUtil::apiFunc($this->name, 'user', 'FullCategoryTextSearch',
-                              array('phrase' => $tag));
-
-
-        if (!$pages) {
-            return false;
-        }
-
-        // Delete the not authorized pages or the page itself
-        foreach ($pages as $key => $page) {
-            if ($page['page_tag'] == $tag || !SecurityUtil::checkPermission('Wikula::', 'page::'.$page['page_tag'], ACCESS_READ)) {
-                unset($pages[$key]);
-            }
-        }
-
-        $total = count($pages);
-        if ($col >= $total) {
-            $col = $total;
-        }
-        $int = floor(($total / $col));
-        $endcell = $col - ($total - ($int * $col));
-
-
-        $assign = array(
-            'pages'   => $pages,
-            'tag'     => $tag,
-            'col'     => $col,
-            'full'    => $full,
-            'compact' => $compact,
-            'notitle' => $notitle,
-            'total'   => $total,
-            'endcell' => $endcell
-        );
-        return $this->view->assign('action_cc', $assign)
-                          ->fetch('action/categorycategory.tpl');
-
-    }
     
     public function specialpages($args)
     {
@@ -199,45 +146,9 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
         if (!$pages) {
             return __('No pages found!');
         }
-
-        $currentChar       = '';
-        $user_owns_pages   = false;
-        $headerletters     = array();
-        $pagelist          = array();
-
-        $pagelist = $this->letterSort($pages);
-
-         $specialPages = $this->listpages();
-         foreach( $specialPages as $tag => $value) {
-
-            $page = array(
-                'tag'   => $tag,
-                'owner' => __('(Public)'),
-                'title' => str_replace("_", " ", $tag)
-            );
-
-            $firstChar = strtoupper(substr($tag, 0, 1));
-            if (!preg_match('/[A-Za-z]/', $firstChar)) {
-                $firstChar = '#';
-            }
-            if ($firstChar != $currentChar) {
-                $headerletters[] = $firstChar;
-                $currentChar     = $firstChar;
-            }
-
-            $pagelist[$firstChar][] = $page;
-         }
-
-        $headerletters = array_unique($headerletters);
-        sort($headerletters);
-
-        ksort($pagelist);
-
-        $this->view->assign('currentpage',   $currentpage);
-        $this->view->assign('headerletters', $headerletters);
-        $this->view->assign('pagelist',      $pagelist);
-        $this->view->assign('username',      $username);
-        $this->view->assign('userownspages', $user_owns_pages);
+        
+        
+        $this->view->assign('pages', $pages);
 
         return $this->view->fetch('action/pageindex.tpl');
     }
@@ -258,24 +169,8 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
         }
 
 
-
-        $curChar = '';
-        $pagelist = array();
-
-        foreach ($pages['pages'] as $page) {
-            $firstChar = strtoupper(substr($page['tag'], 0, 1));
-            if (!preg_match('/[A-Z,a-z]/', $firstChar)) {
-                $firstChar = '#';
-            }
-            if ($firstChar != $curChar) {
-                $curChar = $firstChar;
-            }
-            $pagelist[$firstChar][] = $page;
-        }
-        unset($pages['pages']);
-
-        return $this->view->assign('pagelist',  $pagelist)
-                          ->assign('pagecount', count($pagelist))
+        return $this->view->assign('pages',  $pages['pages'])
+                          ->assign('pagecount', count($pages['pages']))
                           ->assign('count',     $pages['count'])
                           ->assign('total',     $pages['total'])
                           ->fetch('action/mypages.tpl', $uname.$pages['count']);
@@ -578,43 +473,6 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
         return $this->view->assign('items', $items)
                           ->fetch('action/orphanedpages.tpl');
     }
-    
-    
-    
-    function letterSort($pages) {
-        $pagelist = array();
-        foreach ($pages as $page) {
-            $value = '';
-            if (preg_match("`(=){3,5}([^=\n]+)(=){3,5}`", $page['body'], $value)) {
-                $formatting_tags = array('**', '//', '__', '##', "''", '++', '#%', '@@', '""');
-                $value = str_replace($formatting_tags, '', $value[2]);
-            } else {
-                $value = $page['tag'];
-            }
-            $page['title'] = $value;
-
-            $firstChar = strtoupper(substr($value, 0, 1));
-            if (!preg_match('/[A-Za-z]/', $firstChar)) {
-                $firstChar = '#';
-            }
-
-            if ($firstChar != $currentChar) {
-                $headerletters[] = $firstChar;
-                $currentChar     = $firstChar;
-            }
-
-            if (empty($letter) || $firstChar == $letter) {
-                $pagelist[$firstChar][] = $page;
-
-                if ($username == $page['owner']) {
-                    $user_owns_pages = true;
-                }
-            }
-
-        }
-        return $pagelist;
-    }
-    
     
     
     
