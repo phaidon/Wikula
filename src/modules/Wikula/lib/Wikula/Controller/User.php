@@ -114,8 +114,8 @@ class Wikula_Controller_User extends Zikula_AbstractController
        
         
         // Validate invalid petition
-        if (!$page && !empty($time)) {
-            LogUtil::registerError($this->__("The page you requested doesn't exists"), null, ModUtil::url($this->name));
+        if (!$page) {
+            return;
         }
 
         // Get the latest version

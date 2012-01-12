@@ -94,6 +94,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
         if(count($result) > 0) {
             return $result[0];
         } else {
+            LogUtil::registerError($this->__f('Could not load the page with the tag %', $tag) );
             return false;
         }
         
