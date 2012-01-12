@@ -114,8 +114,8 @@ class Wikula_Controller_User extends Zikula_AbstractController
        
         
         // Validate invalid petition
-        if (!$page) {
-            return;
+        if (!$page && !empty($time)) {
+            return LogUtil::registerError($this->__("The page you requested doesn't exists"), null, ModUtil::url($this->name));
         }
 
         // Get the latest version
@@ -128,7 +128,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
         // Check if this tag doesn't exists
         if (!$page ) {//&& !$latest) {
             LogUtil::registerStatus(__('The page does not exist yet! do you want to create it? Feel free to participate and be the first who creates content for this page!'));
-            //return System::redirect(ModUtil::url($this->name, 'user', 'edit', array('tag' => $tag)));
+            return System::redirect(ModUtil::url($this->name, 'user', 'edit', array('tag' => $tag)));
         }
 
         // Resetting session access and previous
