@@ -8,7 +8,7 @@
  * @subpackage Wikula
  */
 
-function smarty_function_title($params, &$smarty)
+function smarty_function_wikulaPageTitle($params, &$smarty)
 {
     
     $dom = ZLanguage::getModuleDomain('Wikula');
@@ -43,5 +43,5 @@ function smarty_function_title($params, &$smarty)
     }
     
     PageUtil::setVar('title', implode($title, '::'));
-    return '<h2>'.implode($output, ' &#187; ').'</h2>';
+    return DataUtil::formatForDisplayHTML('<h2>'.implode($output, ' &#187; ').'</h2>');
 }

@@ -2,7 +2,7 @@
 
 <div id="wikulaheader">
     <div class="header">
-        {title tag=$tag}
+        {wikulaPageTitle tag=$tag}
         <div class="z-clearfix">
             <ul class="z-menulinks" style="height: 24px;">
                 {if $isAllowedToEdit}
