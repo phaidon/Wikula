@@ -2,6 +2,9 @@
 {pageaddvar name="javascript" value="modules/Wakka/editor/wikkaedit100/wikkaedit_search.js"}
 {pageaddvar name="javascript" value="modules/Wakka/editor/wikkaedit100/wikkaedit_actions.js"}
 {pageaddvar name="javascript" value="modules/Wakka/editor/wikkaedit100/wikkaedit.js"}
+{pageaddvar name="stylesheet" value="modules/Wakka/editor/wikkaedit100/wikkaedit.css"}
+
+
 
 <script type="text/javascript">
     // ===== run wikkaedit =====

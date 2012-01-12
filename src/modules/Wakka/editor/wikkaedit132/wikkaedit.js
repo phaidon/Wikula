@@ -28,8 +28,6 @@
 
 // ===== initialization =====
 WikkaEdit.prototype.init = function() {
-	// load CSS
-        document.write("<link rel=\"stylesheet\" type=\"text/css\" href=\""+window.location.pnbaseURL+"modules/wakka/editor/wikkaedit132/wikkaedit.css\" />");
 
 	// init data
 	this.we_actionsMenuEnabled = (typeof(this.contextualHelp) != "undefined");

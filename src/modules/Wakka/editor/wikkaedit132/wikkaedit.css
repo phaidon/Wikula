@@ -76,6 +76,7 @@
 	border: 1px solid #CCCCCC;
 	background-color: #F0F0EE;
 	padding: 2px;
+        z-index:999;
 }
 
 .smimage {
