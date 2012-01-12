@@ -1,3 +1,12 @@
+<script type="text/javascript">
+    var pageEdited = false;
+    window.onbeforeunload = function () {
+        if(pageEdited) {
+            return 'Are you sure?'
+        }
+    };
+</script>
+
 {include file='user/menu.tpl' tag=$tag}
 
 {form cssClass="z-form z-linear"}
@@ -16,7 +25,7 @@
     <!-- We need to escape ALL entity refs before display so we display them _as_ entities instead of interpreting them
     // hence htmlspecialchars() instead of htmlspecialchars_ent() which UNescapes entities! -->
     <div class="z-formrow" id="textarea_container">
-        {formtextinput id="body" textMode="multiline" rows=4 cols=100 style="width:98%;height:500px;"}
+        {formtextinput id="body" textMode="multiline" rows=4 cols=100 style="width:98%;height:500px;" onChange="pageEdited=true"}
         {formtextinput id="id" textMode="hidden" size="11" maxLength="11"}
         <div style="z-index:999">
         {notifydisplayhooks eventname='wikula.ui_hooks.editor.display_view' id='body'}
