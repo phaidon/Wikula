@@ -44,11 +44,11 @@
     <!--//finish-->
 
     <div class="z-formbuttons z-buttons">
-        {formbutton class="z-bt-ok"                    commandName="save"    __text="Save"}
+        {formbutton class="z-bt-ok"                    commandName="save"    __text="Save"    onClick="pageEdited=false;"}
         {formbutton class="z-bt-icon wikula-bt-clone"  commandName="clone"   __text="Clone"}
         {formbutton class="z-bt-edit"                  commandName="rename"  __text="Rename"}
-        {formbutton class="z-bt-preview"               commandName="preview" __text="Preview"}
-        {formbutton class="z-bt-cancel"                commandName="cancel"  __text="Cancel"}
+        {formbutton class="z-bt-preview"               commandName="preview" __text="Preview" onClick="pageEdited=false;"}
+        {formbutton class="z-bt-cancel"                commandName="cancel"  __text="Cancel"  onClick="pageEdited=false;"}
     </div>
 
 </div>
