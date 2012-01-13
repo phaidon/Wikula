@@ -64,10 +64,10 @@
             {foreach item='item' from=$items}
             <tr class="{cycle values="z-odd,z-even"}">
                 <td><input type="checkbox" name="id_10356" title="Select {$item.tag}" /></td>
-                <td><a href="{modurl modname='Wikula' tag=$item.tag|urlencode}" title="{$item.tag}">{$item.tag}</a></td>
+                <td><a href="{modurl modname='Wikula' type='user' func='show' tag=$item.tag|urlencode}" title="{$item.tag}">{$item.tag}</a></td>
                 <td>
                     {if $item.owner neq '(Public)'}
-                    <a href="{modurl modname='Wikula' tag='MyPages' uname=$item.owner|urlencode}" title="{$item.owner|safehtml}">
+                    <a href="{modurl modname='Wikula' type='user' func='show' tag='MyPages' uname=$item.owner|urlencode}" title="{$item.owner|safehtml}">
                         {/if}
                         {$item.owner}
                         {if $item.owner neq '(Public)'}
@@ -80,18 +80,18 @@
                 {*<td class="number  c1">0</td>*}
                 {*modapifunc modname='Wikula' type='admin' func='CountRevisions' tag=$item.tag assign='revcount'*}
                 <td class="number  c2">
-                    <a href="{modurl modname='Wikula' func='history' tag=$item.tag|urlencode}" title="Display History for UserAdmin ({$item.revisions})">{$item.revisions}</a>
+                    <a href="{modurl modname='Wikula' type='user' func='history' tag=$item.tag|urlencode}" title="Display History for UserAdmin ({$item.revisions})">{$item.revisions}</a>
                 </td>
                 {*modapifunc modname='EZComments' type='user' func='countitems' mod='Wikula' objectid=$item.tag assign='comcount'*}
                 <td class="number  c3">
-                    <a href="{modurl modname='Wikula' tag=$item.tag|urlencode}" title="Display comments for {$item.tag} ({$item.comments})">{$item.comments}</a>
+                    <a href="{modurl modname='Wikula' type='user' func='show' tag=$item.tag|urlencode}" title="Display comments for {$item.tag} ({$item.comments})">{$item.comments}</a>
                 </td>
                 {*modapifunc modname='Wikula' type='user' func='CountBackLinks' tag=$item.tag assign='blcount'*}
                 <td class="number  c4">
-                    <a href="{modurl modname='Wikula' func='backlinks' tag=$item.tag|urlencode}" title="Display pages linking to {$item.tag} ({$item.backlinks})">{$item.backlinks}</a>
+                    <a href="{modurl modname='Wikula' type='user' func='backlinks' tag=$item.tag|urlencode}" title="Display pages linking to {$item.tag} ({$item.backlinks})">{$item.backlinks}</a>
                 </td>
                 <td class="z-nowrap z-right">
-                    <a href="{modurl modname='Wikula' func='edit' tag=$item.tag|urlencode}" title="Edit {$item.tag}">{icon type="xedit" size="extrasmall"}</a>
+                    <a href="{modurl modname='Wikula' type='user' func='edit' tag=$item.tag|urlencode}" title="Edit {$item.tag}">{icon type="xedit" size="extrasmall"}</a>
                     <a href="{modurl modname='Wikula' type='admin' func='delete' tag=$item.tag|urlencode}" title="Delete {$item.tag}">{icon type="delete" size="extrasmall"}</a>
                 </td>
             </tr>

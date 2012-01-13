@@ -241,34 +241,101 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         return true;
     }
 
-    public function setlatest($args)
+    public function setlatest($tag)
     {
+        $em = $this->getService('doctrine.entitymanager');
         
-        $pages = $args['pages'];
-
-        if (empty($pages) or !is_array($pages)) {
-            return false;
+        
+        // check if there is still a latest revision
+        $qb = $em->createQueryBuilder();
+        $qb->select('p.id')
+           ->from('Wikula_Entity_Pages', 'p')
+           ->where("p.tag = :tag and p.latest = 'Y'")
+           ->setParameter('tag', $tag)
+           ->setMaxResults(1);
+        $query = $qb->getQuery();
+        $result = $query->getArrayResult();
+        if(count($result) > 0 ) {
+            return;
+        }        
+        
+        
+        // get newest revision
+        $qb = $em->createQueryBuilder();
+        $qb->select('p.id, p.body')
+           ->from('Wikula_Entity_Pages', 'p')
+           ->where("p.tag = :tag")
+           ->setParameter('tag', $tag)
+           ->orderBy('p.time', 'desc')
+           ->setMaxResults(1);
+        $query = $qb->getQuery();
+        $result = $query->getArrayResult();
+        if(count($result) == 0 ) {
+            return;
         }
+        
+        
+        
+        // set newest revision active 
+        $id   = $result[0]['id'];
+        $text = $result[0]['body'];
+        $qb = $em->createQueryBuilder();
+        $qb->update('Wikula_Entity_Pages', 'p')
+           ->where("p.id = :id")
+           ->setParameter('id', $id)
+           ->set('p.latest', "'Y'");
+        $query = $qb->getQuery();
+        $query->getArrayResult();
 
-        $count   = 1;
+        ModUtil::apiFunc(
+            $this->name,
+            'user',
+            'updateLinksAndCategories',
+            array(
+                'tag'  => $tag,
+                'text' => $text
+            )
+        );
+                
+        return;
+    }
+    
+    
+    public function deletepage($tag)
+    {
 
-        foreach ($pages as $page) {
-            if ($count == 1) {
-                $value = 'Y';
-            } else {
-                $value = 'N';
-            }
-
-            $updates['latest'] = DataUtil::formatForStore($value);
-            
-            $page = $this->entityManager->find('Tag_Entity_Tag', $page['id']);
-            $page->merge($updates);
-            $this->entityManager->persist($page);
+        if (empty($tag)) {
+            return LogUtil::registerArgsError();
+        }
+                
+        // remove page (all revisions)
+        $page = $this->entityManager->getRepository('Wikula_Entity_Pages')
+                        ->findBy(array('tag' => $tag));
+        foreach($page as $revision) {
+            $this->entityManager->remove($revision);
             $this->entityManager->flush();
-
-            $count++;
         }
-
+        
+        
+        // remove links 
+        $page = $this->entityManager->getRepository('Wikula_Entity_Links2')
+                        ->findBy(array('from_tag' => $tag));
+        foreach($page as $revision) {
+            $this->entityManager->remove($revision);
+            $this->entityManager->flush();
+        }
+        
+        
+        // remove categories 
+        $page = $this->entityManager->getRepository('Wikula_Entity_Categories')
+                        ->findBy(array('tag' => $tag));
+        foreach($page as $revision) {
+            $this->entityManager->remove($revision);
+            $this->entityManager->flush();
+        }
+        
         return true;
     }
+
+    
 }

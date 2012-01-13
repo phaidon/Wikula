@@ -140,7 +140,7 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
         ));
         
         $url = ModUtil::url($this->name, 'user', 'main', array('tag' => $this->_tag));
-        return true;//$view->redirect($url);            
+        return $view->redirect($url);            
 
     }
 

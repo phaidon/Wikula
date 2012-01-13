@@ -62,7 +62,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
     */
     public function LoadPage($args)
     {
-        
+                
         if (!isset($args['tag'])) {
             return LogUtil::registerArgsError($this->__('No tag given!') );
         }
@@ -71,32 +71,58 @@ class Wikula_Api_User extends Zikula_AbstractApi
             return LogUtil::registerError(__('You do not have the authorization to read this page!'), 403);
         }
         
+        
         $em = $this->getService('doctrine.entitymanager');
         $qb = $em->createQueryBuilder();
-        $qb->select('u')
-           ->from('Wikula_Entity_Pages', 'u')
-           ->where('u.tag = :tag')
+        $qb->select('p')
+           ->from('Wikula_Entity_Pages', 'p')
+           ->where("p.tag = :tag")
            ->setParameter('tag', $args['tag'])
            ->setMaxResults(1);
 
-        if (isset($args['time']) && !empty($args['time'])) {
-            $qb->andWhere('where', 'u.time = :time')
-               ->setParameter('time', $args['time']);
-        } else {
-            $qb->andWhere('u.latest = :latest')
-               ->setParameter('latest', 'Y');
-        }
 
+        if (isset($args['time']) && !empty($args['time'])) {
+            $qb->andWhere('where', 'p.time = :time')
+               ->setParameter('time', $args['time']); 
+        } else {
+            $qb->andWhere("p.latest = 'Y'");
+            
+        }
         
         // return the page or false if failed
         $query = $qb->getQuery();
         $result = $query->getArrayResult();
-        if(count($result) > 0) {
-            return $result[0];
-        } else {
+        if( count($result) == 0) {
             return false;
+        } else {
+            return $result[0];
         }
         
+
+    }
+    
+    
+    public function LoadRevisions0($tag) {
+                        
+        if (!isset($tag)) {
+            return LogUtil::registerArgsError($this->__('No tag given!') );
+        }
+        
+        if (!SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_READ)) {
+            return LogUtil::registerError(__('You do not have the authorization to read this page!'), 403);
+        }
+        
+        $em = $this->getService('doctrine.entitymanager');
+        $qb = $em->createQueryBuilder();
+        $qb->select('p')
+           ->from('Wikula_Entity_Pages', 'p')
+           ->where('p.tag = :tag')
+           ->setParameter('tag', $tag)
+           ->orderBy('p.time', 'DESC');
+
+
+        // return the page or false if failed
+        return $qb->getQuery()->getArrayResult();
 
     }
 
@@ -755,59 +781,10 @@ class Wikula_Api_User extends Zikula_AbstractApi
         }
 
 
-        // add links to other page into the link table
-        $oldlinks = $this->entityManager->getRepository('Wikula_Entity_Links2')
-                                        ->findBy(array('from_tag' => $tag));
-        foreach($oldlinks as $oldlink) {
-            $this->entityManager->remove($oldlink);
-            $this->entityManager->flush();
-        }
-        
-        
-        $oldcategories = $this->entityManager->getRepository('Wikula_Entity_Categories')
-                                        ->findBy(array('tag' => $tag));
-        foreach($oldcategories as $oldcategory) {
-            $this->entityManager->remove($oldcategory);
-            $this->entityManager->flush();
-        }
-        
-        
-        $hook = new Zikula_FilterHook(
-            $eventname = 'wikula.filter_hooks.body.filter', 
-            $content = $body
-        );
-        $hook->setCaller('WikulaSaver');  
-        $data = ServiceUtil::getManager()->getService('zikula.hookmanager')
-                                        ->notify($hook)->getData(); 
-        $pagelinks      = $data['links'];
-        $pagecategories = $data['categories'];
-
-
-        if( isset($pagelinks) and is_array($pagelinks) ) {
-            foreach($pagelinks as $pagelink) {
-            $link = array(
-                'from_tag' => $tag,
-                'to_tag'   => $pagelink
-            );
-            $d = new Wikula_Entity_Links2();
-            $d->merge($link);
-            $this->entityManager->persist($d);
-            $this->entityManager->flush();
-            }
-        }
-
-        if( isset($pagecategories) and is_array($pagecategories) ) {
-            foreach($pagecategories as $pagecategory) {
-                $category = array(
-                    'tag'      => $tag,
-                    'category' => $pagecategory
-                );
-                $d = new Wikula_Entity_Categories();
-                $d->merge($category);
-                $this->entityManager->persist($d);
-                $this->entityManager->flush();
-            }
-        }
+        $this->updateLinksAndCategories( array(
+            'tag'  => $tag,
+            'text' => $body
+        ) );
         
 
         if (!$oldpage) {
@@ -824,6 +801,71 @@ class Wikula_Api_User extends Zikula_AbstractApi
         
         return true;
     }
+    
+    
+    public function updateLinksAndCategories($args) {
+        
+        $tag  = $args['tag'];
+        $text = $args['text'];
+        
+        // remove old links
+        $oldlinks = $this->entityManager->getRepository('Wikula_Entity_Links2')
+                                        ->findBy(array('from_tag' => $tag));
+        foreach($oldlinks as $oldlink) {
+            $this->entityManager->remove($oldlink);
+            $this->entityManager->flush();
+        }
+        
+        // remove old categories
+        $oldcategories = $this->entityManager->getRepository('Wikula_Entity_Categories')
+                                        ->findBy(array('tag' => $tag));
+        foreach($oldcategories as $oldcategory) {
+            $this->entityManager->remove($oldcategory);
+            $this->entityManager->flush();
+        }
+        
+        // get new links and categories from the hook
+        $hook = new Zikula_FilterHook(
+            'wikula.filter_hooks.body.filter', 
+            $text
+        );
+        $hook->setCaller('WikulaSaver');  
+        $data = ServiceUtil::getManager()->getService('zikula.hookmanager')
+                                        ->notify($hook)->getData(); 
+        $pagelinks      = $data['links'];
+        $pagecategories = $data['categories'];
+
+
+        // set new links
+        if( isset($pagelinks) and is_array($pagelinks) ) {
+            foreach($pagelinks as $pagelink) {
+            $link = array(
+                'from_tag' => $tag,
+                'to_tag'   => $pagelink
+            );
+            $d = new Wikula_Entity_Links2();
+            $d->merge($link);
+            $this->entityManager->persist($d);
+            $this->entityManager->flush();
+            }
+        }
+
+        // set new categories
+        if( isset($pagecategories) and is_array($pagecategories) ) {
+            foreach($pagecategories as $pagecategory) {
+                $category = array(
+                    'tag'      => $tag,
+                    'category' => $pagecategory
+                );
+                $d = new Wikula_Entity_Categories();
+                $d->merge($category);
+                $this->entityManager->persist($d);
+                $this->entityManager->flush();
+            }
+        }
+        
+    }
+    
 
 
     public function NotificateNewPage($tag)
