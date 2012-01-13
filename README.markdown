@@ -1,10 +1,10 @@
-Work (doctrine2) in progress! Wikula is broken at the moment
-
 Wikula
-=======
+=========
 
-Wikula is a full featured wiki module for Zikula. 
+Wikula is a full featured wiki module for Zikula.
 
--->Note<-- It's a alpha version. So please just use it for testing  purposes.
+In this repository you can find the beta version 2.0.0. It is for Zikula >= 1.3.0. The version for Zikula < 1.3.0 can found here:
+https://github.com/phaidon/Wikula/downloads or
+https://github.com/chrishildebrandt/wikula
 
--->Note2<-- The downward compatibility ist not ready yet! So please do not update an existing Wikula module!
+At the moment it's beta version, so please use it just for testing purposes.
