@@ -229,6 +229,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
 
         $this->view->assign('pages', $pages);
 
+        
         return $this->view->fetch('xml/recentchanges.tpl');
     }
 
@@ -247,9 +248,10 @@ class Wikula_Controller_User extends Zikula_AbstractController
         $pages = ModUtil::apiFunc(
             $this->name,
             'user',
-            'LoadRevisions',
-            array('tag' => $tag)
+            'LoadRevisions0',
+            $tag
         );
+                
         
         $this->view->force_compile = true;
         $this->view->assign('tag',   $tag);
