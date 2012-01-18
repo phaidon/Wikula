@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright Wikula Team 2011
  *
@@ -7,7 +6,7 @@
  * Contributor Agreements and licensed to You under the following license:
  *
  * @license GNU/GPLv3 (or at your option, any later version).
- * @package Piwik
+ * @package Wikula
  * @link https://github.com/phaidon/Wikula
  *
  * Please see the NOTICE file distributed with this source code for further
@@ -16,12 +15,22 @@
 
 use Doctrine\ORM\Query;
 
+/**
+ * The user system-level and database-level functions for the Wikula module.
+ * 
+ * @package Wikula
+ */
 class Wikula_Api_User extends Zikula_AbstractApi
 {
     private $_em;
     
     
-    function __autoload($class_name) {
+    /**
+     * This function loads the common file.
+     */
+    function __autoload($class_name)
+    {
+        unset($class_name);
         require_once 'modules/Wikula/lib/Wikula/Common.php';
         $this->_em = $this->getService('doctrine.entitymanager');
     }
@@ -53,7 +62,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
         return ModUtil::apiFunc($this->name, 'Permission', 'canEdit', $args['tag']); 
     }
 
-    /**
+   /**
     * Load a wiki page with the given tag
     *
     * @param string $args['tag'] tag of the wiki page to get

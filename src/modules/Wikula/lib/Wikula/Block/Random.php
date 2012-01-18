@@ -1,19 +1,30 @@
 <?php
+
 /**
- * Wikula
+ * Copyright Wikula Team 2011
  *
- * @copyright  (c) Wikula Development Team
- * @link       https://github.com/phaidon/Wikula/
- * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
- * category    Zikula_3rdParty_Modules
- * @subpackage Wiki
- * @subpackage Wikula
+ * This work is contributed to the Zikula Foundation under one or more
+ * Contributor Agreements and licensed to You under the following license:
+ *
+ * @license GNU/GPLv3 (or at your option, any later version).
+ * @package Wikula
+ * @link https://github.com/phaidon/Wikula
+ *
+ * Please see the NOTICE file distributed with this source code for further
+ * information regarding copyright and licensing.
  */
 
+/**
+ * A random block.
+ * 
+ * @package Wikula
+ */
 class Wikula_Block_Random extends Zikula_Controller_AbstractBlock
 {
     /**
-     * Initialise block
+     * Initialise block.
+     *
+     * @return void
      */
     public function init()
     {
@@ -22,9 +33,9 @@ class Wikula_Block_Random extends Zikula_Controller_AbstractBlock
     }
 
     /**
-     * Get information on block
-     * 
-     * @return       array       The block information
+     * Get information on block.
+     *
+     * @return array The block information
      */
     public function info()
     {
@@ -39,10 +50,11 @@ class Wikula_Block_Random extends Zikula_Controller_AbstractBlock
     }
 
     /**
-     * Display block
-     * 
-     * @param        array       $blockinfo     a blockinfo structure
-     * @return       output      the rendered bock
+     * Display block.
+     *
+     * @param array $blockInfo A blockinfo structure.
+     *
+     * @return string|void The rendered block.
      */
     public function display($blockinfo)
     {

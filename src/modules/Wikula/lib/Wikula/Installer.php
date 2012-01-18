@@ -1,25 +1,39 @@
 <?php
+
 /**
- * Wikula
+ * Copyright Wikula Team 2011
  *
- * @copyright  (c) Wikula Development Team
- * @link       https://github.com/phaidon/Wikula/
- * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
- * category    Zikula_3rdParty_Modules
- * @subpackage Wiki
- * @subpackage Wikula
+ * This work is contributed to the Zikula Foundation under one or more
+ * Contributor Agreements and licensed to You under the following license:
+ *
+ * @license GNU/GPLv3 (or at your option, any later version).
+ * @package Wikula
+ * @link https://github.com/phaidon/Wikula
+ *
+ * Please see the NOTICE file distributed with this source code for further
+ * information regarding copyright and licensing.
  */
 
-
+/**
+ * Provides module installation and upgrade services for the Wikula module.
+ * 
+ * @package Wikula
+ */
 class Wikula_Installer extends Zikula_AbstractInstaller
 {
 
+    /**
+     * This function loads the common file.
+     */
     function __autoload($class_name) {
+        unset($class_name);
         require_once 'modules/Wikula/lib/Wikula/Common.php';
     }
 
     /**
-     * Wikula install function
+     * Initialise the Wikula module.
+     *
+     * @return bool True on success, false otherwise.
      */
     public function install()
     {        
@@ -46,7 +60,14 @@ class Wikula_Installer extends Zikula_AbstractInstaller
     }
 
     /**
-     * Wikula upgrade function
+     * Upgrade the users module from an older version.
+     *
+     * This function must consider all the released versions of the module!
+     * If the upgrade fails at some point, it returns the last upgraded version.
+     *
+     * @param string $oldVersion Version number string to upgrade from.
+     *
+     * @return mixed True on success, last valid version string or false if fails.
      */
     public function upgrade($oldversion)
     {
@@ -129,7 +150,11 @@ class Wikula_Installer extends Zikula_AbstractInstaller
     }
 
     /**
-     * Wikula uninstall function
+     * Delete the users module.
+     *
+     * Since the users module should never be deleted we'all always return false here.
+     *
+     * @return bool false
      */
     public function uninstall()
     {
@@ -157,8 +182,6 @@ class Wikula_Installer extends Zikula_AbstractInstaller
      *
      * @return void
      */
-    
-    
     public function defaultdata()
     {
         /// default Settings

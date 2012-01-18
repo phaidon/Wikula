@@ -7,15 +7,21 @@
  * Contributor Agreements and licensed to You under the following license:
  *
  * @license GNU/GPLv3 (or at your option, any later version).
- * @package Piwik
+ * @package Wikula
  * @link https://github.com/phaidon/Wikula
  *
  * Please see the NOTICE file distributed with this source code for further
  * information regarding copyright and licensing.
  */
 
+/**
+ * The user system-level and database-level functions for the Wikula module.
+ * 
+ * @package Wikula
+ */
 class Wikula_Api_Admin extends Zikula_AbstractApi
 {
+
     /**
      * get available admin panel links
      *

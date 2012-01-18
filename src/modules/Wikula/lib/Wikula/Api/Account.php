@@ -7,17 +7,22 @@
  * Contributor Agreements and licensed to You under the following license:
  *
  * @license GNU/GPLv3 (or at your option, any later version).
- * @package Piwik
+ * @package Wikula
  * @link https://github.com/phaidon/Wikula
  *
  * Please see the NOTICE file distributed with this source code for further
  * information regarding copyright and licensing.
  */
 
+/**
+ * The Account API provides links for modules on the "user account page"; this class provides them for the Users module.
+ * 
+ * @package Wikula
+ */
 class Wikula_Api_Account extends Zikula_AbstractApi 
 {
 
-    /**
+   /**
     * Return an array of items to show in the your account panel
     *
     * @return   array   array of items, or false on failure

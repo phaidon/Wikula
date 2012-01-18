@@ -7,20 +7,32 @@
  * Contributor Agreements and licensed to You under the following license:
  *
  * @license GNU/GPLv3 (or at your option, any later version).
- * @package Piwik
+ * @package Wikula
  * @link https://github.com/phaidon/Wikula
  *
  * Please see the NOTICE file distributed with this source code for further
  * information regarding copyright and licensing.
  */
 
+/**
+ * This class provides a handler to modify the module settings.
+ * 
+ * @package Wikula
+ */
 class Wikula_Handler_ModifyConfig  extends Zikula_Form_AbstractHandler
 {
 
+    /**
+     * Setup form.
+     *
+     * @param Zikula_Form_View $view Current Zikula_Form_View instance.
+     *
+     * @return boolean
+     */
     function initialize(Zikula_Form_View $view)
     {
-        $this->view->caching = false;
-        $this->view->assign($this->getVars());
+        $view->caching = false;
+        $view->assign($this->getVars());
         $editors[] = array(
             'text' => $this->__('Simple'),
             'value' => 'simple'
@@ -29,11 +41,18 @@ class Wikula_Handler_ModifyConfig  extends Zikula_Form_AbstractHandler
             'text' => $this->__('Advanced'),
             'value' => 'advanced'
         );
-        $this->view->assign('editors', $editors);
+        $view->assign('editors', $editors);
         return true;
     }
 
-
+    /**
+     * Handle form submission.
+     *
+     * @param Zikula_Form_View $view  Current Zikula_Form_View instance.
+     * @param array            &$args Args.
+     *
+     * @return boolean
+     */
     function handleCommand(Zikula_Form_View $view, &$args)
     {
         if ($args['commandName'] == 'cancel') {

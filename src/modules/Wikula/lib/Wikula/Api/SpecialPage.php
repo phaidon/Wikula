@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright Wikula Team 2011
  *
@@ -7,16 +6,22 @@
  * Contributor Agreements and licensed to You under the following license:
  *
  * @license GNU/GPLv3 (or at your option, any later version).
- * @package Piwik
+ * @package Wikula
  * @link https://github.com/phaidon/Wikula
  *
  * Please see the NOTICE file distributed with this source code for further
  * information regarding copyright and licensing.
  */
 
+/**
+ * Special page api class
+ *
+ * @package Wikula
+ */
 class Wikula_Api_SpecialPage extends Zikula_AbstractApi
 {
-        /**
+    
+    /**
      * Instance of Zikula_View.
      *
      * @var Zikula_View
@@ -50,10 +55,24 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
         return $this;
     }
     
+    /**
+     * Check if a page is a special page
+     *
+     * @param tag of page
+     *
+     * @return bool
+     */
     public function isSpecialPage($tag) {
         return array_key_exists($tag, $this->listpages());
     }
     
+    
+    /**
+     * List all special pages
+     *
+     *
+     * @return array
+     */
     public function listpages()
     {
         return array(
@@ -96,23 +115,13 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
         );
     }
     
-    public function get($args)
-    {
-        $action = $args['action'];
-        if ($action == 'allcategories') {
-            $categories =  ModUtil::apiFunc($this->name, 'page', 'category', array(
-                'compact' => 1,
-                'notitle' => 1
-            ));
-            return $this->view->assign('categories', $categories)
-                            ->fetch('action/allcategories.tpl');
-        }
-        return call_user_func(array($this, $action), $args);
-    }
-    
 
-    
-    public function specialpages($args)
+    /**
+     * It returns the specialpages page 
+     *
+     * @return string HTML string containing the rendered template.
+     */
+    public function specialpages()
     {
         
         $specialpages = $this->listpages();
@@ -122,7 +131,12 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
         
     }
     
-    
+    /**
+     * It returns the pageindex page 
+     *
+     * @param array page args
+     * @return string HTML string containing the rendered template.
+     */
     public function pageindex($args)
     {
         $letter      = (isset($args['letter'])) ? $args['letter'] : FormUtil::getPassedValue('letter');
@@ -153,7 +167,12 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
         return $this->view->fetch('action/pageindex.tpl');
     }
     
-    public function mypages($args)
+    /**
+     * It returns the mypages page 
+     *
+     * @return string HTML string containing the rendered template.
+     */
+    public function mypages()
     {
         if (!UserUtil::isLoggedIn()) {
             return __("You are not logged in, the list of pages you own couldn't be retrieved.");
@@ -165,7 +184,7 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
                               array('uname' => $uname));
 
         if (!$pages) {
-            return __('No pages found!');
+            return $this->__('No pages found!');
         }
 
 
@@ -176,7 +195,11 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
                           ->fetch('action/mypages.tpl', $uname.$pages['count']);
     }
     
-    
+    /**
+     * It returns the RecentChanges page 
+     *
+     * @return string HTML string containing the rendered template.
+     */
     function RecentChanges()
     {
         $max   = (int)ModUtil::getVar('Wikula', 'itemsperpage', 50);
@@ -212,7 +235,11 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
         return $this->view->fetch('action/recentchanges.tpl');
     }
     
-    
+    /**
+     * It returns the RecentChanges page 
+     *
+     * @return string HTML string containing the rendered template.
+     */
     function highscores()
     {
         $em = $this->getService('doctrine.entitymanager');
@@ -261,6 +288,11 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
                           ->fetch('action/highscores.tpl');
     }
 
+    /**
+     * It returns the mychanges page 
+     *
+     * @return string HTML string containing the rendered template.
+     */
     function mychanges()
     {
         if (!UserUtil::isLoggedIn()) {
@@ -336,11 +368,20 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
     }
 
     
-    
+    /**
+     * It redirecst the textsearch to the search page
+     *
+     * @return string HTML string containing the rendered template.
+     */
     public function textsearch() {
         return $this->search();
     }
     
+    /**
+     * It returns the search page 
+     *
+     * @return string HTML string containing the rendered template.
+     */
     public function search()
     {
         $phrase = FormUtil::getPassedValue('phrase');
@@ -380,10 +421,13 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
         return $this->view->fetch('action/textsearch.tpl');
     }   
 
-    
+    /**
+     * It returns the TextSearchExpanded page 
+     *
+     * @return string HTML string containing the rendered template.
+     */
     function TextSearchExpanded()
     {
-        $dom = ZLanguage::getModuleDomain('Wikula');
         $phrase = FormUtil::getPassedValue('phrase');
 
         // Defaults
@@ -428,7 +472,12 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
 
         return $this->view->fetch('action/textsearchexpanded.tpl');
     }
-
+    
+    /**
+     * It returns the wantedpages page 
+     *
+     * @return string HTML string containing the rendered template.
+     */
     function wantedpages($args)
     {
         // default
@@ -465,7 +514,12 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
         return $this->view->fetch('action/wantedpages.tpl');
     }
     
-    function OrphanedPages($args)
+    /**
+     * It returns the OrphanedPages page 
+     *
+     * @return string HTML string containing the rendered template.
+     */
+    function OrphanedPages()
     {
         SessionUtil::setVar('linktracking', 0);
 

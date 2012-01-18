@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright Wikula Team 2011
  *
@@ -7,15 +6,21 @@
  * Contributor Agreements and licensed to You under the following license:
  *
  * @license GNU/GPLv3 (or at your option, any later version).
- * @package Piwik
+ * @package Wikula
  * @link https://github.com/phaidon/Wikula
  *
  * Please see the NOTICE file distributed with this source code for further
  * information regarding copyright and licensing.
  */
 
+/**
+ * This class provides a handler to clone wiki pages.
+ * 
+ * @package Wikula
+ */
 class Wikula_Handler_CloneTag  extends Zikula_Form_AbstractHandler
 {
+    
     /**
      * tag.
      *
@@ -25,6 +30,13 @@ class Wikula_Handler_CloneTag  extends Zikula_Form_AbstractHandler
      */
     private $_tag;
     
+    /**
+     * Setup form.
+     *
+     * @param Zikula_Form_View $view Current Zikula_Form_View instance.
+     *
+     * @return boolean
+     */
     function initialize(Zikula_Form_View $view)
     {
         
@@ -58,19 +70,23 @@ class Wikula_Handler_CloneTag  extends Zikula_Form_AbstractHandler
             return LogUtil::registerError(__("The page you requested doesn't exists"), null, ModUtil::url($this->name, 'user', 'show'));
         }
         
-       
-        
-        
         // build the output 
-        $this->view->assign('tag',  $this->_tag);
-        $this->view->assign('note', $this->__f('Cloned from %s', $this->_tag));
-        $this->view->assign('mandatorycomment', $this->getVar('mandatorycomment', false));
+        $view->assign('tag',  $this->_tag);
+        $view->assign('note', $this->__f('Cloned from %s', $this->_tag));
+        $view->assign('mandatorycomment', $this->getVar('mandatorycomment', false));
 
  
         return true;
     }
 
-
+    /**
+     * Handle form submission.
+     *
+     * @param Zikula_Form_View $view  Current Zikula_Form_View instance.
+     * @param array            &$args Args.
+     *
+     * @return boolean
+     */
     function handleCommand(Zikula_Form_View $view, &$args)
     {
 

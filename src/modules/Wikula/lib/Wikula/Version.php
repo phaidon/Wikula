@@ -1,14 +1,30 @@
 <?php
 /**
- * Wikula
+ * Copyright Wikula Team 2011
  *
- * @copyright (c) Wikula Development Team
- * @link      https://github.com/phaidon/Wikula/
- * @license   GNU/GPL - http://www.gnu.org/copyleft/gpl.html
+ * This work is contributed to the Zikula Foundation under one or more
+ * Contributor Agreements and licensed to You under the following license:
+ * @package Wikula
+ * @license GNU/GPLv2 (or at your option, any later version).
+ * @link https://github.com/phaidon/Wikula
+ *
+ * Please see the NOTICE file distributed with this source code for further
+ * information regarding copyright and licensing.
  */
 
+/**
+ * Provides metadata for this module to the Extensions module.
+ * 
+ * @package Wikula
+ */
 class Wikula_Version extends Zikula_AbstractVersion
 {
+    
+    /**
+     * Assemble and return module metadata.
+     *
+     * @return array Module metadata.
+     */
     public function getMetaData()
     {
         $meta = array();
@@ -50,6 +66,11 @@ class Wikula_Version extends Zikula_AbstractVersion
         return $meta;
     }
     
+    /**
+     * Define the hook bundles supported by this module.
+     *
+     * @return void
+     */
     protected function setupHookBundles()
     {
         $bundle = new Zikula_HookManager_SubscriberBundle($this->name, 'subscriber.wikula.ui_hooks.bottom', 'ui_hooks', $this->__('Wikula bottom area'));

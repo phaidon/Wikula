@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright Wikula Team 2011
  *
@@ -7,21 +6,33 @@
  * Contributor Agreements and licensed to You under the following license:
  *
  * @license GNU/GPLv3 (or at your option, any later version).
- * @package Piwik
+ * @package Wikula
  * @link https://github.com/phaidon/Wikula
  *
  * Please see the NOTICE file distributed with this source code for further
  * information regarding copyright and licensing.
  */
 
-
-require_once 'modules/Wikula/lib/Wikula/Common.php';
-
-
+/**
+ * Access to (administrative) user-initiated actions for the Wikula module.
+ * 
+ * @package Wikula
+ */
 class Wikula_Controller_Admin extends Zikula_AbstractController
 {
+    /**
+     * Loads common values at the beginning
+     *
+     */
+    function __autoload($class_name) {
+        unset($class_name);
+        require_once 'modules/Wikula/lib/Wikula/Common.php';
+    }
 
-
+    /**
+     * This function is a forward to the show function. 
+     *
+     */  
     public function main()
     {
         $url = ModUtil::url($this->name, 'admin', 'pages');
@@ -30,8 +41,12 @@ class Wikula_Controller_Admin extends Zikula_AbstractController
     }
     
     
-    
-    public function stat() {
+    /**
+     * stats function
+     * 
+     * @return string HTML string containing the rendered template.
+     */  
+    public function stats() {
         // Permission check
         $this->throwForbiddenUnless(
             SecurityUtil::checkPermission('Wikula::', '::', ACCESS_ADMIN),
@@ -47,7 +62,11 @@ class Wikula_Controller_Admin extends Zikula_AbstractController
         return $this->view->fetch('admin/main.tpl');
     }
     
-
+    /**
+     * This functions shows all wiki pages
+     * 
+     * @return string HTML string containing the rendered template.
+     */  
     public function pages()
     {
         
@@ -97,19 +116,33 @@ class Wikula_Controller_Admin extends Zikula_AbstractController
         return $this->view->fetch('admin/pageadmin.tpl', $order . $sort . $startnum);
     }
 
+    /**
+     * This functions returns the modifiy config hander.
+     * 
+     * @return string HTML string containing the rendered template.
+     */  
     public function modifyconfig()
     {
         $form = FormUtil::newForm($this->name, $this);
         return $form->execute('admin/modifyconfig.tpl', new Wikula_Handler_ModifyConfig());
     }
 
-
+    /**
+     * This functions returns the delete hander.
+     * 
+     * @return string HTML string containing the rendered template.
+     */ 
     public function delete()
     {   
         $form = FormUtil::newForm($this->name, $this);
         return $form->execute('admin/deletepages.tpl', new Wikula_Handler_Delete());
     }
     
+    /**
+     * This functions rebuilds the links and categories database tables.
+     * 
+     * @return string HTML string containing the rendered template.
+     */ 
     public function rebuildLinksAndCategoriesTables() {
         
         // Permission check
@@ -134,8 +167,8 @@ class Wikula_Controller_Admin extends Zikula_AbstractController
         $pages = ModUtil::apiFunc($this->name, 'user', 'LoadAllPages');
         foreach( $pages as $page ) {
             $hook = new Zikula_FilterHook(
-                $eventname = 'wikula.filter_hooks.body.filter', 
-                $content = $page['body']
+                'wikula.filter_hooks.body.filter', 
+                $page['body']
             );
             $hook->setCaller('WikulaSaver');  
             $data = ServiceUtil::getManager()->getService('zikula.hookmanager')

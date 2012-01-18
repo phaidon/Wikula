@@ -7,19 +7,25 @@
  * Contributor Agreements and licensed to You under the following license:
  *
  * @license GNU/GPLv3 (or at your option, any later version).
- * @package Piwik
+ * @package Wikula
  * @link https://github.com/phaidon/Wikula
  *
  * Please see the NOTICE file distributed with this source code for further
  * information regarding copyright and licensing.
  */
 
+/**
+ * A RecentChanges block.
+ * 
+ * @package Wikula
+ */
 class Wikula_Block_RecentChanges extends Zikula_Controller_AbstractBlock
 {
+    
     /**
-     * initialise block
+     * Initialise block.
      *
-     * @author       Mateo Tibaquirá
+     * @return void
      */
     public function init()
     {
@@ -28,10 +34,9 @@ class Wikula_Block_RecentChanges extends Zikula_Controller_AbstractBlock
     }
 
     /**
-     * get information on block
+     * Get information on block.
      *
-     * @author       Mateo Tibaquirá
-     * @return       array       The block information
+     * @return array The block information
      */
     public function info()
     {
@@ -46,11 +51,11 @@ class Wikula_Block_RecentChanges extends Zikula_Controller_AbstractBlock
     }
 
     /**
-     * display block
+     * Display block.
      *
-     * @author       Mateo Tibaquirá
-     * @param        array       $blockinfo     a blockinfo structure
-     * @return       output      the rendered bock
+     * @param array $blockInfo A blockinfo structure.
+     *
+     * @return string|void The rendered block.
      */
     public function display($blockinfo)
     {

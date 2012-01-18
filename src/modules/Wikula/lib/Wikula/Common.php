@@ -1,13 +1,16 @@
 <?php
 /**
- * Wikula
+ * Copyright Wikula Team 2011
  *
- * @copyright  (c) Wikula Development Team
- * @link       https://github.com/phaidon/Wikula/
- * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
- * category    Zikula_3rdParty_Modules
- * @subpackage Wiki
- * @subpackage Wikula
+ * This work is contributed to the Zikula Foundation under one or more
+ * Contributor Agreements and licensed to You under the following license:
+ *
+ * @license GNU/GPLv3 (or at your option, any later version).
+ * @package Wikula
+ * @link https://github.com/phaidon/Wikula
+ *
+ * Please see the NOTICE file distributed with this source code for further
+ * information regarding copyright and licensing.
  */
 
 // load the system tags defines if exists

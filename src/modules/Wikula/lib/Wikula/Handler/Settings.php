@@ -7,17 +7,36 @@
  * Contributor Agreements and licensed to You under the following license:
  *
  * @license GNU/GPLv3 (or at your option, any later version).
- * @package Piwik
+ * @package Wikula
  * @link https://github.com/phaidon/Wikula
  *
  * Please see the NOTICE file distributed with this source code for further
  * information regarding copyright and licensing.
  */
 
+/**
+ * This class provides a handler to modify the user module settings.
+ * 
+ * @package Wikula
+ */
 class Wikula_Handler_Settings  extends Zikula_Form_AbstractHandler
 {
+    /**
+     * subscription
+     *
+     * User uid
+     *
+     * @var int
+     */
     private $_subscription;
 
+    /**
+     * Setup form.
+     *
+     * @param Zikula_Form_View $view Current Zikula_Form_View instance.
+     *
+     * @return boolean
+     */
     function initialize(Zikula_Form_View $view)
     {
         // Permission check
@@ -27,18 +46,25 @@ class Wikula_Handler_Settings  extends Zikula_Form_AbstractHandler
         
         $this->_subscription = $this->entityManager->find('Wikula_Entity_Subscriptions', UserUtil::getVar('uid'));
         if ($this->_subscription) {
-            $this->view->assign('subscribe', true);
+            $view->assign('subscribe', true);
         } else {
-            $this->view->assign('subscribe', false);
+            $view->assign('subscribe', false);
             $this->_subscription = new Wikula_Entity_Subscriptions();
         }
         
-        $this->view->caching = false;
+        $view->caching = false;
         
         return true;
     }
 
-
+    /**
+     * Handle form submission.
+     *
+     * @param Zikula_Form_View $view  Current Zikula_Form_View instance.
+     * @param array            &$args Args.
+     *
+     * @return boolean
+     */
     function handleCommand(Zikula_Form_View $view, &$args)
     {
         if ($args['commandName'] == 'cancel') {
