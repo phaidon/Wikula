@@ -43,7 +43,7 @@
     
     {if $showeditnote}
         <p class="z-informationmsg">
-            {$editnote}
+            {$editnote|notifyfilters:'wikula.filter_hooks.body.filter'}
         </p>
     {/if}
         
