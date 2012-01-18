@@ -54,7 +54,6 @@ class Wikula_Block_RecentChanges extends Zikula_Controller_AbstractBlock
      */
     public function display($blockinfo)
     {
-        $dom = ZLanguage::getModuleDomain('Wikula');
         if (!SecurityUtil::checkPermission('Wikula:recentchangesblock', $blockinfo['bid'].'::', ACCESS_READ)) {
             return false;
         }
@@ -75,21 +74,20 @@ class Wikula_Block_RecentChanges extends Zikula_Controller_AbstractBlock
         $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadRecentlyChanged', array('numitems' => $vars['numitems']));
 
         if (!$pages) {
-            return __('There are no recent changes', $dom);
+            return $this->__('There are no recent changes');
         }
 
         $curday = '';
         $pagelist = array();
         foreach ($pages as $page)
         {
-            list($day, $time) = explode(' ', $page['time']);
-            if ($day != $curday) {
-                $dateformatted = date(__('D, d M Y', $dom), strtotime($day));
-                $curday = $day;
+            if ($page['time']->getTimestamp() != $curday) {
+                $dateformatted = $page['time']->format('D, d M Y');
+                $curday = $page['time']->getTimestamp();
             }
 
             if ($page['user'] == System::getVar('anonymous')) {
-                $page['user'] .= ' ('.__('anonymous user', $dom).')'; // anonymous user
+                $page['user'] .= ' ('.$this->__('anonymous user').')'; // anonymous user
             }
 
             $pagelist[$dateformatted][] = $page;
@@ -113,7 +111,6 @@ class Wikula_Block_RecentChanges extends Zikula_Controller_AbstractBlock
      */
     public function modify($blockinfo)
     {
-        $dom = ZLanguage::getModuleDomain('Wikula');
         // Get current content
         $vars = BlockUtil::varsFromContent($blockinfo['content']);
 
@@ -139,7 +136,6 @@ class Wikula_Block_RecentChanges extends Zikula_Controller_AbstractBlock
      */
     public function update($blockinfo)
     {
-        $dom = ZLanguage::getModuleDomain('Wikula');
         // Get current content
         $vars = BlockUtil::varsFromContent($blockinfo['content']);
 

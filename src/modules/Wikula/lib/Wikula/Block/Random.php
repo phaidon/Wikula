@@ -67,33 +67,26 @@ class Wikula_Block_Random extends Zikula_Controller_AbstractBlock
         PageUtil::AddVar('stylesheet', ThemeUtil::getModuleStylesheet('Wikula'));
 
         // get random article
-        $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadAllPages');
-        $id = rand(1,(count($pages)+1))-1;
-        $page = $pages[$id];
+        $pages = ModUtil::apiFunc($this->name, 'user', 'LoadAllPages');
+        $id = rand(0,count($pages)-1);
+        $page = $pages[$id];        
 
         if (empty($page)) {
             return false;
         }
         
-        extract($page);
-
-        if (SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_COMMENT) || $tag == __('SandBox', $dom)) {
+        if (SecurityUtil::checkPermission('Wikula::', 'page::'.$page['tag'], ACCESS_COMMENT) ) {
             $canedit = true;
         } else {
             $canedit = false;
         }
 
-        SessionUtil::setVar('wikula_previous', $tag);
+        SessionUtil::setVar('wikula_previous', $page['tag']);
         $this->view->setCaching(false);
-        $this->view->assign('latest',   1);
-        $this->view->assign('tag',      $tag);
+        $this->view->assign($page);
         $this->view->assign('canedit',  $canedit);
-        $this->view->assign('body',     $page['body']);
-        $this->view->assign('time',     $page['time']);
-        $this->view->assign('user',     $page['user']);
-        $this->view->assign('owner',    $page['owner']);
 
-        $content = $this->view->fetch('block/random.tpl', md5($page['id'].$page['time']));
+        $content = $this->view->fetch('block/random.tpl');
 
         // Populate block info and pass to theme
         $blockinfo['content'] = $content;
