@@ -64,6 +64,11 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
         // build the output 
         $this->view->assign($page);
         $this->view->assign('mandatorycomment', $this->getVar('mandatorycomment', false));
+        $showeditnote = $this->getVar('showeditnote', false);
+        $this->view->assign('showeditnote', $showeditnote);
+        if($showeditnote) {
+            $this->view->assign('editnote', $this->getVar('editnote', ''));
+        }
         
         
         return true;

@@ -39,9 +39,15 @@
     <div class="z-formrow">
         {formtextinput id="note" size="40" maxLength="40" style="width: 98%;" mandatory="$mandatorycomment"}
     </div>
-
-    <br />
     <!--//finish-->
+    
+    {if $showeditnote}
+        <p class="z-informationmsg">
+            {$editnote}
+        </p>
+    {/if}
+        
+    </div>
 
     <div class="z-formbuttons z-buttons">
         {formbutton class="z-bt-ok"                    commandName="save"    __text="Save"    onClick="pageEdited=false;"}

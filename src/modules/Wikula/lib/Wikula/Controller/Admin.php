@@ -24,7 +24,14 @@ class Wikula_Controller_Admin extends Zikula_AbstractController
 
     public function main()
     {
-        
+        $url = ModUtil::url($this->name, 'admin', 'pages');
+        return System::redirect($url);
+
+    }
+    
+    
+    
+    public function stat() {
         // Permission check
         $this->throwForbiddenUnless(
             SecurityUtil::checkPermission('Wikula::', '::', ACCESS_ADMIN),
@@ -39,6 +46,7 @@ class Wikula_Controller_Admin extends Zikula_AbstractController
 
         return $this->view->fetch('admin/main.tpl');
     }
+    
 
     public function pages()
     {

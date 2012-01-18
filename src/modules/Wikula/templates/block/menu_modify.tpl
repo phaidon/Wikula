@@ -5,7 +5,9 @@
     <label for="menupages">{gt text='Menu pages'}</label>
     <select multiple="multiple" id="menupages" class="chzn-select" name="menupages[]">
         {foreach from=$pages item="page"}
-        <option value="{$page.tag}" {if in_array($page.tag, $menupages)}selected="selected"{/if} >{$page.tag}</option>
+            <option value="{$page.tag}" {if in_array($page.tag, $menupages)}selected="selected"{/if} >
+                {$page.tag}
+            </option>
         {/foreach}
     </select>
 </div>
