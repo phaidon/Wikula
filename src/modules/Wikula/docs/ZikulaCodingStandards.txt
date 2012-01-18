@@ -1,0 +1,123 @@
+Zikula Coding Standards
+
+Indenting
+
+Use an indent of 4 spaces, with no tabs.
+
+Control Structures
+
+These include if, for, while, switch, etc. Here is an example if statement, since it is the most complicated of them:
+
+if ((condition1) || (condition2)) {
+    action1;
+} elseif ((condition3) && (condition4)) {
+    action2;
+} else {
+    defaultaction;
+}
+Control statements should have one space between the control keyword and opening parenthesis, to distinguish them from function calls.
+
+You are strongly encouraged to always use curly braces, even in situations where they are technically optional. Having them increases readability and decreases the likelihood of logic errors being introduced when new lines are added.
+
+For switch statements:
+
+switch (condition) {
+    case 1:
+        action1;
+        break;
+
+    case 2:
+        action2;
+        break;
+
+    default:
+        defaultaction;
+        break;
+}
+Function Calls
+
+Functions should be called with no spaces between the function name, the opening parenthesis, and the first parameter; spaces between commas and each parameter, and no space between the last parameter, the closing parenthesis, and the semicolon. Here's an example:
+
+$var = foo($bar, $baz, $quux);
+Class Structures
+
+class Foo
+{
+    public function __construct()
+    {
+        // ...
+    }
+}
+Function Definitions
+
+Function declarations follow the "one true brace" convention:
+
+function fooFunction($arg1, $arg2 = '')
+{
+    if (condition) {
+        statement;
+    }
+
+    return $val;
+}
+Arguments with default values go at the end of the argument list. Always attempt to return a meaningful value from a function if one is appropriate. Here is a slightly longer example:
+
+function connect(&$dsn, $persistent = false)
+{
+    if (is_array($dsn)) {
+        $dsninfo = &$dsn;
+    } else {
+        $dsninfo = DB::parseDSN($dsn);
+    }
+
+    if (!$dsninfo || !$dsninfo['phptype']) {
+        return $this->raiseError();
+    }
+
+    return true;
+}
+Comments
+
+Inline documentation for classes should follow the phpDocumentor convention, similar to Javadoc. More information about phpDocumentor can be found here:  http://www.phpdoc.org/
+
+Non-documentation comments are strongly encouraged. A general rule of thumb is that if you look at a section of code and think "Wow, I don't want to try and describe that", you need to comment it before you forget how it works.
+
+C style comments (/* */) and standard C++ comments are both fine. Use of Perl/shell style comments # is forbidden.
+
+@author tags are forbidden for several reasons. Firstly they can convey code ownership which can prevent collaboration on code since others may feel the code shouldn't be touched without permission from the @author. Second, the question comes at what point should @author be placed - do you 'earn the right' for a bug fix, feature, or major overhaul? This becomes tedious. The tags also serves no useful purpose to show who actually coded stuff. The original author may have long since moved on. VCS blame and code history will show who coded or changed what in any given file so author tags are irrelevant. In terms of credit, version control shows the history of who committed and contributed what so credit is built in to the version control. For these reasons, and more, the author tags, or mention of authors in comments are not acceptable.
+
+Including Code
+
+Anywhere you are unconditionally including a class file, use require_once(). Anywhere you are conditionally including a class file (for example, factory methods), use include_once(). Either of these will ensure that class files are included only once. They share the same file list, so you don't need to worry about mixing them - a file included with require_once() will not be included again by include_once().
+
+Note: include_once() and require_once() are statements, not functions. You don't need parentheses around the filename to be included.
+
+PHP Code Tags
+
+Always use <?php ?> to delimit PHP code, not the <? ?> shorthand. This is required for Zikula compliance and is also the most portable way to include PHP code on differing operating systems and setups.
+
+For files containing php code only the closing tag ?> should be excluded to prevent any trailing whitespace from being treated as valid output.
+
+Header Comment Blocks
+
+All source code files in the core Zikula distribution should contain the following comment block as the header:
+
+**
+ * Copyright Zikula Foundation 2009 - Zikula Application Framework
+ *
+ * This work is contributed to the Zikula Foundation under one or more
+ * Contributor Agreements and licensed to You under the following license:
+ *
+ * @license GNU/LGPLv3 (or at your option, any later version).
+ * @package Zikula
+ *
+ * Please see the NOTICE file distributed with this source code for further
+ * information regarding copyright and licensing.
+ */
+Example URLs
+
+Use "example.com" for all example URLs, per  http://tools.ietf.org/html/rfc2606 RFC 2606.
+
+Naming Conventions
+
+Generally speaking, the names of classes, functions and variables should always be descriptive enough to easily tell the reader about what they are used for.
