@@ -21,6 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * Annotations define the entity mappings to database.
  *
+ * @package Wikula
  * @ORM\Entity
  * @ORM\Table(name="wikula_categories")
  */
@@ -40,23 +41,41 @@ class Wikula_Entity_Categories extends Zikula_EntityAccess
      */
     private $category;
     
-    
+    /**
+     * Get tag
+     * 
+     * @return string
+     */
     public function gettag()
     {
         return $this->tag;
     }
     
+    /**
+     * Set tag
+     * 
+     * @param string
+     */
     public function settag($tag)
     {
         $this->tag = $tag;
     }
     
-        public function getcategory()
+    /**
+     * Get category
+     * 
+     * @return string
+     */
+    public function getcategory()
     {
         return $this->category;
     }
     
-    
+    /**
+     * Set category
+     * 
+     * @param string
+     */
     public function setcategory($category)
     {
         $this->category = $category;

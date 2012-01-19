@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright Wikula Team 2011
  *
@@ -14,9 +13,19 @@
  * information regarding copyright and licensing.
  */
 
+/**
+ * Permissions api class
+ *
+ * @package Wikula
+ */
 class Wikula_Api_Permission extends Zikula_AbstractApi 
 {
 
+    /**
+     * Check if a user has the right to read a wiki page
+     *
+     * @param string tag of the wiki page
+     */
     public function canRead($tag = null)
     {
         $instance = $this->getInstance($tag);
@@ -25,20 +34,33 @@ class Wikula_Api_Permission extends Zikula_AbstractApi
         );  
     }
     
-    
+    /**
+     * Check if a user has the right to edit a wiki page
+     *
+     * @param string tag of the wiki page
+     */
     public function canEdit($tag = null)
     {
         $instance = $this->getInstance($tag);
         return SecurityUtil::checkPermission('Wikula::', $instance, ACCESS_COMMENT);
     }
     
-    
+    /**
+     * Check if a user has the right to moderate a wiki page
+     *
+     * @param string tag of the wiki page
+     */
     public function canModerate($tag = null)
     {
         $instance = $this->getInstance($tag);
         return SecurityUtil::checkPermission('Wikula::', $instance, ACCESS_EDIT);
     }
     
+    /**
+     * Get the instance of a wiki page
+     *
+     * @param string tag of the wiki page
+     */
     private function getInstance($tag)
     {
         if($this->getVar('single_page_permissions', false) and !is_null($tag)) {

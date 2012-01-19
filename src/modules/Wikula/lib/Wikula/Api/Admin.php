@@ -15,7 +15,7 @@
  */
 
 /**
- * The user system-level and database-level functions for the Wikula module.
+ * Admin api class.
  * 
  * @package Wikula
  */
@@ -25,7 +25,6 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
     /**
      * get available admin panel links
      *
-     * @author Mateo Tibaquirá
      * @return array array of admin links
      */
     public function getlinks()
@@ -52,12 +51,17 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         return $links;
     }
 
+    /**
+     * get all owners
+     *
+     * @return array array of owners
+     */
     public function GetOwners()
     {
         
         $pages = ModUtil::apiFunc($this->name, 'user', 'LoadPages' );
         $owners = array();
-        foreach ($pages as $key => $value) {
+        foreach ($pages as $value) {
             $owners[$value['owner']] = $value['owner'];
         }
 
@@ -65,6 +69,7 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
             return LogUtil::registerError(__('Error! Get owners failed.'));
         }
 
+        $items = array();
         $items['owners']      = $owners;
         $items['ownerscount'] = sizeof($owners);
 
@@ -72,7 +77,8 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
     }
 
     /**
-     *
+     * PageIndex
+     * 
      * @return unknown
      */
     public function PageIndex()
@@ -136,7 +142,12 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         return $render->fetch('wikula_admin_pages.tpl', $tag.$letter);
     }
 
-
+    /**
+     * This function returns all pages. 
+     * 
+     * @param array input arguments
+     * @return array wiki pages
+     */
     public function getall($args)
     {
         
@@ -208,6 +219,12 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         return $pages;
     }
 
+    /**
+     * This function counts the revisions of a wiki page. 
+     * 
+     * @param array input arguments
+     * @return int number of revisions
+     */
     public function CountRevisions($args = array())
     {
         if (!isset($args['tag']) || empty($args['tag'])) {
@@ -221,17 +238,19 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
            ->where('p.tag = :to_tag')
            ->setParameter('to_tag', $args['tag']);
         $query = $qb->getQuery();
-        return $query->getSingleScalarResult();
-        
-        
-
+        $pagecount = $query->getSingleScalarResult();
         if ($pagecount === false) {
             return LogUtil::registerError(__('Error! Count the revisions for this page failed.'));
         }
-
         return $pagecount;
     }
 
+    /**
+     * This function deletes a revision by id. 
+     * 
+     * @param array input arguments
+     * @return bool
+     */
     public function deletepageid($args)
     {
         $id  = $args['id'];
@@ -247,6 +266,12 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         return true;
     }
 
+    /**
+     * This function set the newest revision active. 
+     * 
+     * @param string tag of a wiki page
+     * @return bool
+     */
     public function setlatest($tag)
     {
         $em = $this->getService('doctrine.entitymanager');
@@ -306,7 +331,12 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         return;
     }
     
-    
+    /**
+     * This function deletes a wiki pages with all revisions. 
+     * 
+     * @param string tag of a wiki page
+     * @return bool
+     */
     public function deletepage($tag)
     {
 

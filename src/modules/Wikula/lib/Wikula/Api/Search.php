@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright Wikula Team 2011
  *
@@ -14,13 +13,17 @@
  * information regarding copyright and licensing.
  */
 
-
+/**
+ * Search api class
+ *
+ * @package Wikula
+ */
 class Wikula_Api_Search extends Zikula_AbstractApi
 {
 
     /**
      * Search plugin info
-     **/
+     */
     public function info()
     {
         return array(
@@ -31,7 +34,7 @@ class Wikula_Api_Search extends Zikula_AbstractApi
 
     /**
      * Search form component
-     **/
+     */
     public function options($args)
     {
         if (SecurityUtil::checkPermission('Wikula::', '::', ACCESS_READ)) {
@@ -46,7 +49,7 @@ class Wikula_Api_Search extends Zikula_AbstractApi
 
     /**
      * Search plugin main function
-     **/
+     */
     public function search($args)
     {
         // Permission check

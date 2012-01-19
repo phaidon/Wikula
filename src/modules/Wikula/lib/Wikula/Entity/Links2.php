@@ -21,6 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * Annotations define the entity mappings to database.
  *
+ * @package Wikula
  * @ORM\Entity
  * @ORM\Table(name="wikula_links")
  */
@@ -42,23 +43,41 @@ class Wikula_Entity_Links2 extends Zikula_EntityAccess
      */
     private $to_tag;
     
-    
+    /**
+     * Get from_tag
+     * 
+     * @return string
+     */
     public function getfrom_tag()
     {
         return $this->from_tag;
     }
     
+    /**
+     * Set from_tag
+     * 
+     * @param string
+     */
     public function setfrom_tag($from_tag)
     {
         $this->from_tag = $from_tag;
     }
     
-        public function getto_tag()
+    /**
+     * Get to_tag
+     * 
+     * @return string
+     */
+    public function getto_tag()
     {
         return $this->to_tag;
     }
     
-    
+    /**
+     * Set to_tag
+     * 
+     * @param string
+     */
     public function setto_tag($to_tag)
     {
         $this->to_tag = $to_tag;

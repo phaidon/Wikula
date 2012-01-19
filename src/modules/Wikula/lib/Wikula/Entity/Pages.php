@@ -24,6 +24,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * Annotations define the entity mappings to database.
  *
+ * @package Wikula
  * @ORM\Entity
  * @ORM\Table(name="wikula_pages")
  */
@@ -112,13 +113,21 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
      */
     private $handler = 'page';
 
-    
+    /**
+     * Construction function
+     *
+     * @return int uid 
+     */
     public function __construct()
     {
         $this->links = new Doctrine\Common\Collections\ArrayCollection();
     }
 
-    
+    /**
+     * Returns the links of the wiki page
+     * 
+     * @return array 
+     */
     public function getLinks()
     {
         $links = $this->links;
@@ -129,50 +138,72 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
         return $to;
     }
     
-    
+    /**
+     * Get tag
+     * 
+     * @return string 
+     */
     public function getTag()
     {
         return $this->tag;
     }
     
-    
+    /**
+     * Set note
+     */
     public function setNote($note)
     {
         $this->note = $note;
     }
     
+    /**
+     * Set tag
+     */
     public function setTag($tag)
     {
         $this->tag = $tag;
     }
     
+    /**
+     * Set body
+     */
     public function setBody($body)
     {
         $this->body = $body;
     }
     
-    
+    /**
+     * Set time
+     */
     public function setTime($time)
     {
         $this->time = new \DateTime($time);
     }
     
+    /**
+     * Set user
+     */
     public function setUser($user)
     {
         $this->user = $user;
     }
     
+    /**
+     * Set owner
+     */
     public function setOwner($owner)
     {
         $this->owner = $owner;
     }
     
-        public function setLatest($latest)
+    /**
+     * Set latest
+     */
+    public function setLatest($latest)
     {
         $this->latest = $latest;
     }
 
-    
     
     
 }

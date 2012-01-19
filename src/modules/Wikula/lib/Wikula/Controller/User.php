@@ -153,7 +153,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
      * 
      * This function edits a wiki page.
      *     
-     * @param:post tag name of the wiki page
+     * @param string $_POST['tag'] name of the wiki page
      * @return smarty output
      */
     public function edit()
@@ -265,7 +265,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
      * This function displays a list of internal pages linking to the current 
      * page.
      * 
-     * @param:post tag name of the wiki page
+     * @param string $_POST['tag'] name of the wiki page
      * @return smarty output
      */
     public function backlinks()
@@ -292,7 +292,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
      * 
      * This function clones a wiki page and save a copy of it as a new page.
      *      
-     * @param:post tag name of the wiki page
+     * @param string $_POST['tag'] name of the wiki page
      * @return smarty output
      */
     public function cloneTag()
@@ -320,7 +320,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
      * 
      * This functions shows a category.
      *
-     * @param:post category name of the category that should be shwon
+     * @param string $_POST[category'] name of the category that should be shwon
      * @return smarty output
      */    
     public function category()
