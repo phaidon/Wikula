@@ -1,9 +1,9 @@
 {pageaddvar name="javascript" value="prototype"}
 
 
-<strong><a href="#" onClick="showAllLetters()" title="{gt text='All'}">{gt text='All'}</a></strong>
+<strong><a href="#" onclick="showAllLetters()" title="{gt text='All'}">{gt text='All'}</a></strong>
 {foreach item='letter' from=$headerletters}
-&nbsp;&nbsp;<strong><a href="#" onClick="showLetter('{$letter}')" title="{$letter|safehtml}">{$letter|safehtml}</a></strong>
+&nbsp;&nbsp;<strong><a href="#" onclick="showLetter('{$letter}')" title="{$letter|safehtml}">{$letter|safehtml}</a></strong>
 {/foreach}
 <br /><br />
 

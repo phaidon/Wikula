@@ -46,7 +46,7 @@
     
     <div class="z-formrow">
         {formlabel for="showeditnote" __text='Show a (license) note'}
-        {formcheckbox id="showeditnote" onChange="Zikula.checkboxswitchdisplaystate('showeditnote', 'editnote_container', true)"}
+        {formcheckbox id="showeditnote" onchange="Zikula.checkboxswitchdisplaystate('showeditnote', 'editnote_container', true)"}
     </div>
         
     <div id="editnote_container">
