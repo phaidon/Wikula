@@ -23,22 +23,21 @@ function smarty_function_wikulaPageTitle($params, &$smarty)
     $dom = ZLanguage::getModuleDomain('Wikula');
     $tag    = $params['tag'];
     $action = FormUtil::getPassedValue('func');
-    $name   = ModUtil::getName();
-    $info   = ModUtil::getInfoFromName($name);
+    $info   = ModUtil::getInfoFromName('Wikula');
         
     // hyphen2space
     $nicetag = str_replace('_', ' ', $tag);
     
     $output = array();
     $title  = array();
-    $output[] = '<a href="'.ModUtil::url($name, 'user', 'main').'">'.$info['displayname'].'</a>';
+    $output[] = '<a href="'.ModUtil::url('Wikula', 'user', 'main').'">'.$info['displayname'].'</a>';
     $title[]  = $info['displayname'];
     $title[]  = $nicetag;
 
     if($action == 'main') {
         $output[] = $nicetag;
     } else {
-        $output[] = '<a href="'.ModUtil::url($name, 'user', 'main', array('tag' => $tag)).'">'.$nicetag.'</a>';
+        $output[] = '<a href="'.ModUtil::url('Wikula', 'user', 'main', array('tag' => $tag)).'">'.$nicetag.'</a>';
         if ( $action == 'history' ) {
             $output[] = __('history', $dom);
             $title[]  = __('history', $dom);
