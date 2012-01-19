@@ -1,7 +1,7 @@
 <div class="z-clearfix">
     <ul class="z-menulinks" style="height: 24px;">
         <li>
-            <a href="{modurl modname=$modinfo.name type='category' func='showAll' __tag='Categories'}" title="{gt text='Categories'}">
+            <a href="{modurl modname=$modinfo.name type='user' func='categories'}" title="{gt text='Categories'}">
                 {gt text='Categories'}
             </a>
         </li>                

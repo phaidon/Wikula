@@ -1035,8 +1035,8 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
         
         $url = ModUtil::url(
             'Wikula',
+            'user',
             'category',
-            'show',
             array('category' => $category)
         );
         $this->categories[] = '<a href="'.$url.'">'.$title.'</a>';

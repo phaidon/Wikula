@@ -48,8 +48,10 @@ class Wakka_HookHandler_Lml extends Zikula_Hook_AbstractHandler
         $textfieldname = $hook->getId();
         
         if(empty($textfieldname)) {
-           $textfieldname = 'textfield';
-        } 
+           $textfieldname = 'body';
+        }
+        
+        
 
         $this->view->assign('textfieldname', $textfieldname)
                    ->assign('baseurl',       System::getBaseUrl());

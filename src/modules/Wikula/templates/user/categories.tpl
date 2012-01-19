@@ -13,6 +13,6 @@
 
 <ul style="margin-left:20px">
     {foreach from=$categories item="category"}
-        <li><a href="{modurl modname='Wikula' type='category' func='show' category=$category.category}">{$category.category}</a></li>
+        <li><a href="{modurl modname=$modinfo.name type='user' func='category' category=$category.category}">{$category.category}</a></li>
     {/foreach}
 </ul>

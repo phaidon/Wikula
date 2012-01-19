@@ -6,7 +6,7 @@
 
 <script type="text/javascript">
     // ===== run wikkaedit =====
-    var varWikkaEdit = new WikkaEdit(document.getElementById("body"));
+    var varWikkaEdit = new WikkaEdit(document.getElementById("{{$textfieldname}}"));
     //if (varWikkaEdit.browserSupported())
     varWikkaEdit.init();
 </script>

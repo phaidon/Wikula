@@ -314,40 +314,61 @@ class Wikula_Controller_User extends Zikula_AbstractController
         return $form->execute('user/settings.tpl', new Wikula_Handler_Settings());
     }
     
+
     
     /**
-     * category
-     * 
-     * This functions shows a category.
+     * Displays the wiki pages of a given category.
      *
-     * @param string $_POST[category'] name of the category that should be shwon
+     * @param string $args['category'] Name of the category.
      * @return smarty output
-     */    
-    public function category()
-    {
-        $category = FormUtil::getPassedValue('category');   
-        
-        $pages = ModUtil::apiFunc($this->name, 'user', 'LoadCategory', $category);
-        
-        $curChar = '';
-        $pagelist = array();
-        foreach ($pages as $page) {
-            $firstChar = strtoupper(substr($page['tag'], 0, 1));
-            if (!preg_match('/[A-Z,a-z]/', $firstChar)) {
-                $firstChar = '#';
-            }
-            if ($firstChar != $curChar) {
-                $curChar = $firstChar;
-            }
-            $pagelist[$firstChar][] = $page;
+     */
+    public function category($args)
+    {   
+        // Get input parameters
+        $category  = isset($args['category']) ? $args['category'] : FormUtil::getPassedValue('category');
+
+        if (empty($category)) {
+            return LogUtil::registerError($this->__('No category specified!'));
         }
-        unset($pages);
         
-        
-        $this->view->assign('tag',   $category);
-        $this->view->assign('pagelist', $pagelist);
-        return $this->view->fetch('user/category.tpl');
+        // get pages of a category
+        $em = $this->getService('doctrine.entitymanager');
+        $qb = $em->createQueryBuilder();
+        $qb->select('c.tag')
+           ->from('Wikula_Entity_Categories', 'c')
+           ->where('c.category = :category')
+           ->setParameter('category', $category)
+           ->orderBy('c.tag');
+        $pages = $qb->getQuery()->getArrayResult();
+
+        return $this->view->assign('category', $category)
+                          ->assign('pages', $pages)
+                          ->fetch('user/category.tpl');
     }
+    
+    
+    
+    /**
+     * Displays a list of all categories
+     *
+     * @return smarty output
+     */
+    public function categories()
+    {   
+
+        // get a list of all categoriess
+        $em = $this->getService('doctrine.entitymanager');
+        $qb = $em->createQueryBuilder();
+        $qb->select('c.category')
+           ->from('Wikula_Entity_Categories', 'c')
+           ->groupBy('c.category')
+           ->orderBy('c.category');
+        $categories = $qb->getQuery()->getArrayResult();
+ 
+        return $this->view->assign('categories', $categories)
+                          ->fetch('user/categories.tpl');
+    }
+    
     
     
 }

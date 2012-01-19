@@ -4,7 +4,7 @@
             <a href="{modurl modname=$modinfo.name type='user' func='main'}">
                 {$modinfo.displayname}
             </a> &#187;
-            <a href="{modurl modname=$modinfo.name type='category' func='showAll'}">
+            <a href="{modurl modname=$modinfo.name type='user' func='categories'}">
                 {gt text="Categories"}</a> &#187;
             {$category|hyphen2space|safehtml}</a>
         </h2>
