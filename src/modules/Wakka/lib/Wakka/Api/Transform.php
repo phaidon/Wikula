@@ -141,8 +141,8 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
         }
             
         PageUtil::addVar('javascript', 'prototype');
-        $indexBox = '<div class="z-center">Contens '.
-                    '<a href="#" onClick="$(\'innerIndexBox\').toggle()">['.
+        $indexBox = '<div class="z-center">Contents '.
+                    '<a href="#" onclick="$(\'innerIndexBox\').toggle()">['.
                     $this->__('hide').
                     ']</a></div><div id="innerIndexBox"><br />';
         $h = array();
@@ -193,8 +193,8 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
             $prelevel = $level;
         }
 
-        return '<div class="z-clearfix indexBox">'.$indexBox.'</div></div>'.
-               '<div class="z-clearfix"></div>';
+        return '<div class="indexBox">'.$indexBox.'</div></div>'.
+               '<div class="z-clearer"></div>';
         
     }
     
