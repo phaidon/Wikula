@@ -528,6 +528,28 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
                           ->fetch('action/orphanedpages.tpl');
     }
     
+    /**
+     * Returns the content of a special page
+     *
+     * @return string HTML string containing the rendered template.
+     */
+    public function get($args)
+    {
+        $action = $args['action'];	  	
+        if ($action == 'allcategories') {	  	
+            $categories =  ModUtil::apiFunc($this->name, 'page', 'category', array(
+                'compact' => 1,
+                'notitle' => 1
+            ));
+	  	
+            return $this->view->assign('categories', $categories)  	
+                               ->fetch('action/allcategories.tpl');
+	  	
+        }
+        return call_user_func(array($this, $action), $args);
+
+    }
+    
     
     
 }

@@ -85,20 +85,24 @@ class Wikula_Controller_User extends Zikula_AbstractController
         
         // check if it is category page
         if($tag == $this->__('Categories')) {
-            $redirecturl = ModUtil::url($this->name, 'category', 'showAll');
+            $redirecturl = ModUtil::url($this->name, 'user', 'categories');
             return System::redirect($redirecturl);
         }     
         if( substr($tag, 0, 8) == 'Category') {
             $args = array( 'category' => substr($tag, 8) );
-            $redirecturl = ModUtil::url( $this->name, 'category', 'show', $args);
+            $redirecturl = ModUtil::url( $this->name, 'user', 'category', $args);
             return System::redirect($redirecturl);
         }
         
         
-        // check if it is category page
+        // check if it is special page
         $specialPages = ModUtil::apiFunc($this->name, 'SpecialPage', 'listpages');
+        
+        
+        
+        
         if( array_key_exists($tag, $specialPages)) {
-            $content = ModUtil::apiFunc($this->name, 'SpecialPage', 'get', $specialPages[$tag]);
+            $content = ModUtil::apiFunc($this->name, 'SpecialPage', 'get', $specialPages[$tag]);            
             return $this->view->assign('content', $content)
                               ->assign('tag',     $tag)
                               ->assign('name',    str_replace('_', ' ', $tag))
