@@ -126,7 +126,6 @@ class Wakka_HookHandler_Lml extends Zikula_Hook_AbstractHandler
         foreach($categories as $key => $value) {
             $value = explode(' ', $value);
             $value = $value[0];
-            LogUtil::registerStatus('x'.$value.'x');
             $categories[$key] = $value;
         }
         return array_unique($categories);
