@@ -42,11 +42,11 @@
                 {else}
                     {assign var='neworder' value='ASC'}
                 {/if}
-                <th><a href="{modurl modname='Wikula' type='admin' func='pages' orderBy='tag'   orderDirection=$neworder q=$q itemsperpage=$itemsperpage}" title="Sort by page name">{gt text='Page name'}</a></th>
+                <th class="z-nowrap"><a href="{modurl modname='Wikula' type='admin' func='pages' orderBy='tag' orderDirection=$neworder q=$q itemsperpage=$itemsperpage}" title="Sort by page name">{gt text='Page name'}</a></th>
 
-                <th><a href="{modurl modname='Wikula' type='admin' func='pages' orderBy='owner' orderDirection=$neworder q=$q itemsperpage=$itemsperpage}" title="Sort by page owner">{gt text='Owner'}</a></th>
-                <th><a href="{modurl modname='Wikula' type='admin' func='pages' orderBy='user'  orderDirection=$neworder q=$q itemsperpage=$itemsperpage}" title="Sort by last author">{gt text='Latest author'}</a></th>
-                <th><a href="{modurl modname='Wikula' type='admin' func='pages' orderBy='time'  orderDirection=$neworder q=$q itemsperpage=$itemsperpage}" title="Sort by edit time">{gt text='Last edit'}</a></th>
+                <th class="z-nowrap"><a href="{modurl modname='Wikula' type='admin' func='pages' orderBy='owner' orderDirection=$neworder q=$q itemsperpage=$itemsperpage}" title="Sort by page owner">{gt text='Owner'}</a></th>
+                <th class="z-nowrap"><a href="{modurl modname='Wikula' type='admin' func='pages' orderBy='user'  orderDirection=$neworder q=$q itemsperpage=$itemsperpage}" title="Sort by last author">{gt text='Latest author'}</a></th>
+                <th class="z-nowrap"><a href="{modurl modname='Wikula' type='admin' func='pages' orderBy='time'  orderDirection=$neworder q=$q itemsperpage=$itemsperpage}" title="Sort by edit time">{gt text='Last edit'}</a></th>
                 <th>{gt text='Note'}</th>
                 {*<th class="number  c1" __title="Hits">{img src='stock_about.png' __alt='Hits'}</th>*}
                 <th class="number  c2" title="Sort by number of revisions">
@@ -71,8 +71,8 @@
             {foreach item='item' from=$items}
             <tr class="{cycle values="z-odd,z-even"}">
                 <td><input type="checkbox" name="id_10356" title="Select {$item.tag}" /></td>
-                <td><a href="{modurl modname='Wikula' type='user' func='show' tag=$item.tag|urlencode}" title="{$item.tag}">{$item.tag}</a></td>
-                <td>
+                <td class="z-nowrap"><a href="{modurl modname='Wikula' type='user' func='show' tag=$item.tag|urlencode}" title="{$item.tag}">{$item.tag}</a></td>
+                <td class="z-nowrap">
                     {if $item.owner neq '(Public)'}
                     <a href="{modurl modname='Wikula' type='user' func='show' tag='MyPages' uname=$item.owner|urlencode}" title="{$item.owner|safehtml}">
                         {/if}
@@ -81,9 +81,9 @@
                     </a>
                     {/if}
                 </td>
-                <td>{$item.user|profilelinkbyuname}</td>
-                <td class="time">{$item.time|dateformat}</td>
-                <td class="time" title="[{$item.note}]">{$item.note|default:"[Empty note]"}</td>
+                <td class="z-nowrap">{$item.user|profilelinkbyuname}</td>
+                <td class="z-nowrap">{$item.time|dateformat}</td>
+                <td title="[{$item.note}]">{$item.note|default:"[Empty note]"}</td>
                 {*<td class="number  c1">0</td>*}
                 {*modapifunc modname='Wikula' type='admin' func='CountRevisions' tag=$item.tag assign='revcount'*}
                 <td class="number  c2">

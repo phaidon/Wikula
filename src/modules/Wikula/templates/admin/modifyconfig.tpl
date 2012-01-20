@@ -20,7 +20,6 @@
         {formcheckbox id="subscription"}
     </div>
 
-
     <div class="z-formrow">
         {formlabel for="itemsperpage" __text='Items per page'}
         {formintinput id="itemsperpage" size="3"}
@@ -30,36 +29,32 @@
         {formlabel for="single_page_permissions" __text='Enable single page permissions'}
         {formcheckbox id="single_page_permissions"}
     </div>
-    
+
     <p class="z-formnote">
         <a href="{modurl modname='Wikula' type='admin' func="rebuildLinksAndCategoriesTables"}">Rebuild links and categories tables.</a>
     </p>
-    
 </fieldset>
-    
+
 <fieldset>
     <legend>{gt text='Page edit'}</legend>
     <div class="z-formrow">
         {formlabel for="mandatorycomment" __text='Page edit comments are mandatory'}
         {formcheckbox id="mandatorycomment"}
     </div>
-    
+
     <div class="z-formrow">
         {formlabel for="showeditnote" __text='Show a (license) note'}
         {formcheckbox id="showeditnote" onchange="Zikula.checkboxswitchdisplaystate('showeditnote', 'editnote_container', true)"}
     </div>
-        
+
     <div id="editnote_container">
-        <div class="z-formrow" id="textarea_container">
-            {formlabel for="editnote" text=' '}
-            {formtextinput  textMode="multiline" id="editnote"}
+        <div class="z-linear" id="textarea_container">
+            {formtextinput  textMode="multiline" id="editnote" rows='5' cols='60'}
             <div style="z-index:999">
                 {notifydisplayhooks eventname='wikula.ui_hooks.editor.display_view' id='editnote'}
             </div>
         </div>
     </div>
-
-    
 </fieldset>
 
 <div class="z-formbuttons z-buttons">
@@ -68,7 +63,6 @@
 </div>
 
 {/form}
-
 
 <script type="text/javascript">
 
