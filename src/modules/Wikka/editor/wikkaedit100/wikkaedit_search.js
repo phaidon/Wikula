@@ -210,7 +210,7 @@ WikkaEdit.prototype.showSearchWindow = function() {
 
 	// window title (and close button)
 	html += "<div id='sr_window_title'>Search / Replace</div>";
-	html += "<div style='position:absolute;left:479px;top:1px' onclick='varWikkaEdit.hideSearchWindow();'><img src='modules/Wakka/editor/wikkaedit/images/close_window.png'></div>";
+	html += "<div style='position:absolute;left:479px;top:1px' onclick='varWikkaEdit.hideSearchWindow();'><img src='modules/Wiakka/editor/wikkaedit/images/close_window.png'></div>";
 
 	html += "<div style='position:absolute;left:10px;top:"+(y+10)+"px;width:480px;height:"+(this.we_replace?61:40)+"px;border:1px solid gray;-moz-border-radius:7px'></div>";
 	html += "<div style='position:absolute;left:20px;top:"+y+"px;background-color:#f0f0ee;padding:0 3px 0 3px'><table border='0' cellspacing='0' cellpadding='0'><tr><td><input type='radio' id='sr_radio_search' name='sr_radio_sr' onclick='varWikkaEdit.srRadioSearchReplaceClick(this,false);'"+(this.we_replace?"":" checked")+"></td><td><label for='sr_radio_search'>Search</label></td><td width='10'></td><td><input type='radio' id='sr_radio_replace' name='sr_radio_sr' onclick='varWikkaEdit.srRadioSearchReplaceClick(this,true);'"+(this.we_replace?" checked":"")+"></td><td><label for='sr_radio_replace'>Replace</label></td></tr></table></div>";

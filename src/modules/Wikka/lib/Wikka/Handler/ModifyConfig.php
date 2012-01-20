@@ -4,14 +4,14 @@
  * Copyright Wikula Team 2011
  *
  * @license GNU/LGPLv3 (or at your option, any later version).
- * @package Wakka
+ * @package Wikka
  * @link http://code.zikula.org/Wikula
  *
  * Please see the NOTICE file distributed with this source code for further
  * information regarding copyright and licensing.
  */
 
-class Wakka_Handler_ModifyConfig extends Zikula_Form_AbstractHandler
+class Wikka_Handler_ModifyConfig extends Zikula_Form_AbstractHandler
 {
 
     function initialize(Zikula_Form_View $view)
@@ -22,12 +22,12 @@ class Wakka_Handler_ModifyConfig extends Zikula_Form_AbstractHandler
 
         $editors = array(
             0 => array(
-                    'value' => 'wakka100',
-                    'text'  => 'WakkaEdit v.1.0.0'
+                    'value' => 'wikka100',
+                    'text'  => 'WikkaEdit v.1.0.0'
                  ),
             1 => array(
-                    'value' => 'wakka132',
-                    'text'  => 'WakkaEdit v.1.3.2'
+                    'value' => 'wikka132',
+                    'text'  => 'WikkaEdit v.1.3.2'
                  ),
             2 =>  array(
                     'value' => 'wikiedit',
@@ -35,7 +35,7 @@ class Wakka_Handler_ModifyConfig extends Zikula_Form_AbstractHandler
                  )
         );
         $view->assign('editors', $editors);
-        $view->assign('editor', $this->getVar('editor', 'wakka100'));
+        $view->assign('editor', $this->getVar('editor', 'wikka100'));
         $view->assign('showIndex', $this->getVar('showIndex', false));
         
         
@@ -59,7 +59,7 @@ class Wakka_Handler_ModifyConfig extends Zikula_Form_AbstractHandler
         }
 
         // Security check
-        if (!SecurityUtil::checkPermission('Wakka::', '::', ACCESS_ADMIN)) {
+        if (!SecurityUtil::checkPermission('Wikka::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
 

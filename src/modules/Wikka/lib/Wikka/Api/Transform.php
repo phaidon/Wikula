@@ -5,14 +5,14 @@
  * Copyright Wikula Team 2011
  *
  * @license GNU/LGPLv3 (or at your option, any later version).
- * @package Wakka
+ * @package Wikka
  * @link http://code.zikula.org/Wikula
  *
  * Please see the NOTICE file distributed with this source code for further
  * information regarding copyright and licensing.
  */
 
-class Wakka_Api_Transform extends Zikula_AbstractApi 
+class Wikka_Api_Transform extends Zikula_AbstractApi 
 {
 
     private $categories = array();
@@ -23,20 +23,20 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
     public function transform($args)
     {   
         PageUtil::addVar('stylesheet', 'modules/'.$this->name.'/style/transform.css');
-        return $this->wakka($args);
+        return $this->wikka($args);
     }
     
     
 
 
    /**
-    * Wakka formater
+    * Wikka formater
     *
     * @param string $args['text'] text to wiki-format
-    * @param string $args['method'] (optional) legacy Wakka state
+    * @param string $args['method'] (optional) legacy Wikka state
     * @return wiki-formatted text
     */
-    private function wakka($args)
+    private function wikka($args)
     {
         global $mapcounter;
         $mapcounter = 1;
@@ -93,12 +93,12 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
             '\\&([#a-zA-Z0-9]+;)?|'.                                      // ampersands! Track single ampersands or any htmlentity-like (&...;)
             "\n".                                                         // new line
             '/ms',
-             array($this, 'wakka2callback'),
+             array($this, 'wikka2callback'),
             $args['text']
         );
 
         // close open tags
-        $args['text'] .= $this->wakka2callback('closetags');
+        $args['text'] .= $this->wikka2callback('closetags');
 
         $args['text'] = preg_replace_callback(
             '#('.
@@ -106,7 +106,7 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
             // other elements to be treated go here
             ')#ms',
 
-            array($this, 'wakka3callback'),
+            array($this, 'wikka3callback'),
             $args['text']
         );
 
@@ -212,10 +212,9 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
     * Callback transform Wikka function
     *
     * @param string $things match with the patterns defined
-    * @see wikula_userapi_wakka
     * @return HTML transformation
     */
-    private function wakka2callback($things)
+    private function wikka2callback($things)
     {
         
         $cr     = "\n";
@@ -465,7 +464,7 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
             $trigger_table = $trigger_rowgroup = 0;
 
             // and remember to parse what we got.
-            return $close_part.$this->wakka2callback($things);
+            return $close_part.$this->wikka2callback($things);
         }
 
         // convert HTML thingies
@@ -650,6 +649,7 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
             // if configuration path isn't set, make sure we'll get an invalid path so we
             // don't match anything in the home directory
             // check if a language (and starting line) has been specified
+            $language = '';
             if (preg_match('/^'.PATTERN_OPEN_BRACKET.PATTERN_FORMATTER.PATTERN_LINE_NUMBER.PATTERN_FILENAME.PATTERN_CLOSE_BRACKET.PATTERN_CODE.'$/s', $code, $matches)) {
                 $language = isset($matches[1]) ? $matches[1] : null;
                 $start    = isset($matches[3]) ? $matches[3] : null;
@@ -679,8 +679,7 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
             $output = $this->highlight(array(
                         'sourcecode' => $code,
                         'language'   => $language,
-                        'start'      => $start
-                        ));
+                      ));
             
             
             
@@ -979,7 +978,7 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
     * @param    array    $things    required: matches of the regex in the preg_replace_callback
     * @return    string    heading with an id attribute
     */
-    private function wakka3callback($things)
+    private function wikka3callback($things)
     {
         
         $thing = $things[1];
@@ -1329,14 +1328,14 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
            
         switch ($highlighter) {
             case 'geshi':
-                include_once('modules/Wakka/lib/vendor/geshi/geshi.php');                        
+                include_once('modules/Wikka/lib/vendor/geshi/geshi.php');                        
                 $geshi = new GeSHi($args['sourcecode'], $args['language']);
                 $geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS);
                 $geshi->set_header_type(GESHI_HEADER_PRE);
                 $output = $geshi->parse_code(); 
                 break;
             case 'prettify':
-                $path = 'modules/Wakka/lib/vendor/prettify/';
+                $path = 'modules/Wikka/lib/vendor/prettify/';
                 PageUtil::addVar('javascript', $path.'prettify.js');
                 PageUtil::addVar('stylesheet', $path.'prettify.css');
                 PageUtil::addVar('header', '<script type="text/javascript">Event.observe(window, \'load\', prettyPrint);</script>');
@@ -1344,7 +1343,7 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
                 $output = '<code class="prettyprint linenums:1">'.$output.'</code>';
                 break;
             case 'syntaxhighlighter':
-                $path = 'modules/Wakka/lib/vendor/syntaxhighlighter/';
+                $path = 'modules/Wikka/lib/vendor/syntaxhighlighter/';
                 PageUtil::addVar('javascript', $path.'scripts/shCore.js');
                 PageUtil::addVar('javascript', $path.'scripts/shBrushJScript.js');
                 PageUtil::addVar('stylesheet', $path.'styles/shCoreDefault.css');

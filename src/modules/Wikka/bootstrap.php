@@ -6,8 +6,7 @@
  * @link       http://code.zikula.org/wikula/
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * category    Zikula_3rdParty_Modules
- * @subpackage Wiki
- * @subpackage Wikula
+ * @subpackage Wikka
  */
 
 
@@ -86,17 +85,3 @@ if (!defined('PATTERN_CLOSE_A_ALONE')) define('PATTERN_CLOSE_A_ALONE', '</a>(?!<
 if (!defined('PATTERN_START_OF_STRING_ALONE')) define('PATTERN_START_OF_STRING_ALONE', '^(?!<a )');
 
 if (!defined('ID_LENGTH')) define('ID_LENGTH', 10); // @@@ maybe make length configurable
-
-
-
-
-// legacy stuff (to review)
-/*
-function GetPageTag() { return FormUtil::getPassedValue('tag'); }
-//function GetPageTime() { return $this->page['time']; }
-function GetMethod() { return FormUtil::getPassedValue('method'); }
-function GetConfigValue($name) { return pnModGetVar('wikula', $name); }
-function GetWakkaName() { return pnModGetVar('wikula', 'waka_name'); }
-function GetWakkaVersion() { return pnModGetVar('wikula', WAKA_VERSION); }
-*/
-
