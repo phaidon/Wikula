@@ -74,6 +74,7 @@ class Wikula_Handler_CloneTag  extends Zikula_Form_AbstractHandler
         
         // build the output 
         $view->assign('tag',  $this->_tag);
+        $view->assign('to',   $this->_tag);
         $view->assign('note', $this->__f('Cloned from %s', $this->_tag));
         $view->assign('mandatorycomment', $this->getVar('mandatorycomment', false));
 
@@ -111,21 +112,20 @@ class Wikula_Handler_CloneTag  extends Zikula_Form_AbstractHandler
             return false;
         }
         $data = $view->getValues();
-        extract($data); //$to, $edit, $note
         
 
         // Validate the choosen pagename
-        if (!ModUtil::apiFunc($modname, 'user', 'isValidPagename', array('tag' => $this->_tag))) {
+        if (!ModUtil::apiFunc($modname, 'user', 'isValidPagename', array('tag' => $data['to']))) {
             return LogUtil::registerError($this->__('That page name is not valid'));
         }
         
         // check if the page already exists
-        if (ModUtil::apiFunc($modname, 'user', 'PageExists', array('tag' => $this->_tag))) {
+        if (ModUtil::apiFunc($modname, 'user', 'PageExists', array('tag' => $data['to']))) {
             return LogUtil::registerError($this->__('This page does already exist'));
         }
 
         // check if has access to create it
-        if (!SecurityUtil::checkPermission('Wikula::', 'page::'.$this->_tag, ACCESS_EDIT)) {
+        if (!SecurityUtil::checkPermission('Wikula::', 'page::'.$data['to'], ACCESS_EDIT)) {
             return LogUtil::registerError($this->__('You do not have the authorization to edit this page!'));
         }
 
@@ -133,18 +133,18 @@ class Wikula_Handler_CloneTag  extends Zikula_Form_AbstractHandler
         // proceed to page cloning
         $page = ModUtil::apiFunc($modname, 'user', 'LoadPage', array('tag' => $this->_tag));
         $newpage = array(
-            'tag'  => $to,
+            'tag'  => $data['to'],
             'body' => $page['body'],
-            'note' => $note
+            'note' => $data['note']
         );
 
         if (ModUtil::apiFunc($modname, 'user', 'SavePage', $newpage)) {
             // redirect
-            if ($edit) {
-                return $view->redirect(ModUtil::url($modname, 'user', 'edit', array('tag' => $this->_tag)));
+            if ($data['edit']) {
+                return $view->redirect(ModUtil::url($modname, 'user', 'edit', array('tag' => $data['to'])));
             } else {
-                LogUtil::registerStatus(__('Clone created successfully'));
-                return $view->redirect(ModUtil::url($modname, 'user', 'show', array('tag' => $this->_tag)));
+                LogUtil::registerStatus($this->__('Clone created successfully'));
+                return $view->redirect(ModUtil::url($modname, 'user', 'show', array('tag' => $data['to'])));
             }
         }
         
