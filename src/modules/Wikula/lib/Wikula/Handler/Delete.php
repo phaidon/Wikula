@@ -38,6 +38,7 @@ class Wikula_Handler_Delete  extends Zikula_Form_AbstractHandler
      */
     function initialize(Zikula_Form_View $view)
     {
+        $modname = 'Wikula';
         $this->tag = FormUtil::getPassedValue('tag', null, "GET", FILTER_SANITIZE_STRING);   
         
         // Permission check
@@ -46,7 +47,7 @@ class Wikula_Handler_Delete  extends Zikula_Form_AbstractHandler
         }
         
              
-        $revisions = ModUtil::apiFunc( $this->name, 'user', 'LoadRevisions0', $this->tag);
+        $revisions = ModUtil::apiFunc( $modname, 'user', 'LoadRevisions0', $this->tag);
         
         
         // build the output 
@@ -69,9 +70,11 @@ class Wikula_Handler_Delete  extends Zikula_Form_AbstractHandler
      */
     function handleCommand(Zikula_Form_View $view, &$args)
     {
+        $modname = 'Wikula';
+        
         // cancel
         //--------------------------
-        $url = ModUtil::url( $this->name, 'admin', 'pages');
+        $url = ModUtil::url( $modname, 'admin', 'pages');
         if ($args['commandName'] == 'cancel') {
             return $view->redirect($url);
         }
@@ -98,18 +101,18 @@ class Wikula_Handler_Delete  extends Zikula_Form_AbstractHandler
         }
         
         if( $itemsToRemoveCount == count($data['revisionids']) ) {
-            ModUtil::apiFunc($this->name, 'admin', 'deletepage', $this->tag);
+            ModUtil::apiFunc($modname, 'admin', 'deletepage', $this->tag);
             LogUtil::registerStatus( $this->__('Page deleted') );
             return $view->redirect($url);
         }
         
         foreach ($itemsToRemove as $id) {
-            ModUtil::apiFunc($this->name, 'admin', 'deletepageid', array('id' => $id));
+            ModUtil::apiFunc($modname, 'admin', 'deletepageid', array('id' => $id));
         }
         
 
 
-        ModUtil::apiFunc($this->name, 'admin', 'setlatest', $this->tag);
+        ModUtil::apiFunc($modname, 'admin', 'setlatest', $this->tag);
 
         LogUtil::registerStatus($this->__('Revisions deleted'));
 

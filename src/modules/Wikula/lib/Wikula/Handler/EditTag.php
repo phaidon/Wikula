@@ -38,10 +38,11 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
      */
     function initialize(Zikula_Form_View $view)
     {
+        $modname = 'Wikula';
         $this->_tag = FormUtil::getPassedValue('tag', null, "GET", FILTER_SANITIZE_STRING);   
         
         // Permission check
-        if (!ModUtil::apiFunc($this->name, 'Permission', 'canEdit', $this->_tag)) {
+        if (!ModUtil::apiFunc($modname, 'Permission', 'canEdit', $this->_tag)) {
             throw new Zikula_Exception_Forbidden(LogUtil::getErrorMsgPermission());
         }
         
@@ -51,16 +52,16 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
             $arguments = array(
                 'tag'  => str_replace(' ', '_', $this->_tag),
             );
-            $redirecturl = ModUtil::url($this->name, 'user', 'show', $arguments);
+            $redirecturl = ModUtil::url($modname, 'user', 'show', $arguments);
             System::redirect($redirecturl);
         }
         
-        $specialPages = ModUtil::apiFunc($this->name, 'SpecialPage', 'listpages');
+        $specialPages = ModUtil::apiFunc($modname, 'SpecialPage', 'listpages');
         if( array_key_exists($this->_tag, $specialPages)) {
-            return $view->redirect(ModUtil::url($this->name, 'user', 'main', array('tag' => $this->_tag)));
+            return $view->redirect(ModUtil::url($modname, 'user', 'main', array('tag' => $this->_tag)));
         }
         
-        $page = ModUtil::apiFunc($this->name, 'user', 'LoadPage', array(
+        $page = ModUtil::apiFunc($modname, 'user', 'LoadPage', array(
             'tag'  => $this->_tag,
         ));
         if($page) {
@@ -94,11 +95,13 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
      */
     function handleCommand(Zikula_Form_View $view, &$args)
     {
+        $modname = 'Wikula';
+        
         // cancel
         //--------------------------
         if ($args['commandName'] == 'cancel') {
             $url = ModUtil::url(
-                $this->name,
+                $modname,
                 'user',
                 'show',
                 array('tag' => $this->_tag) 
@@ -106,7 +109,7 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
             return $view->redirect($url);
         } else if ($args['commandName'] == 'clone') {
                 $url = ModUtil::url(
-                $this->name,
+                $modname,
                 'user',
                 'cloneTag',
                 array('tag' => $this->_tag) 
@@ -114,7 +117,7 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
             return $view->redirect($url);
         } else if ($args['commandName'] == 'rename') {
                 $url = ModUtil::url(
-                $this->name,
+                $modname,
                 'user',
                 'renameTag',
                 array('tag' => $this->_tag) 
@@ -145,7 +148,7 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
         // store
         //--------------------------
         // check for overwriting
-        $previousid = ModUtil::apiFunc($this->name, 'user', 'PageExists', array('tag' => $this->_tag));
+        $previousid = ModUtil::apiFunc($modname, 'user', 'PageExists', array('tag' => $this->_tag));
         
         
         if ($previousid && $previousid != $data['id']) {
@@ -154,14 +157,14 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
             );
         }
         unset($data['id']);
-        $store = ModUtil::apiFunc($this->name, 'user', 'SavePage', array(
+        $store = ModUtil::apiFunc($modname, 'user', 'SavePage', array(
             'tag'      => $this->_tag,
             'body'     => $data['body'],
             'note'     => $data['note'],
             'tracking' => true
         ));
         
-        $url = ModUtil::url($this->name, 'user', 'main', array('tag' => $this->_tag));
+        $url = ModUtil::url($modname, 'user', 'main', array('tag' => $this->_tag));
         return $view->redirect($url);            
 
     }

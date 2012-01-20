@@ -39,10 +39,11 @@ class Wikula_Handler_RenameTag  extends Zikula_Form_AbstractHandler
      */
     function initialize(Zikula_Form_View $view)
     {
+        $modname = 'Wikula';
         $this->_tag = FormUtil::getPassedValue('tag', null, "GET", FILTER_SANITIZE_STRING);
         
         // Permission check
-        if (!ModUtil::apiFunc($this->name, 'Permission', 'canModerate', $this->_tag)) {
+        if (!ModUtil::apiFunc($modname, 'Permission', 'canModerate', $this->_tag)) {
             throw new Zikula_Exception_Forbidden(LogUtil::getErrorMsgPermission());
         }
         
@@ -53,20 +54,20 @@ class Wikula_Handler_RenameTag  extends Zikula_Form_AbstractHandler
             $arguments = array(
                 'tag'  => str_replace(' ', '_', $this->_tag),
             );
-            $redirecturl = ModUtil::url($this->name, 'user', 'show', $arguments);
+            $redirecturl = ModUtil::url($modname, 'user', 'show', $arguments);
             System::redirect($redirecturl);
         }
         
         // redirect if tag is a special page
-        $specialPages = ModUtil::apiFunc($this->name, 'SpecialPage', 'listpages');
+        $specialPages = ModUtil::apiFunc($modname, 'SpecialPage', 'listpages');
         if( array_key_exists($this->_tag, $specialPages)) {
-            return $view->redirect(ModUtil::url($this->name, 'user', 'main', array('tag' => $this->_tag)));
+            return $view->redirect(ModUtil::url($modname, 'user', 'main', array('tag' => $this->_tag)));
         }
         
         
         // check if page exists
-        if (!ModUtil::apiFunc($this->name, 'user', 'PageExists', array('tag' => $this->_tag))) {
-            return LogUtil::registerError(__("The page you requested doesn't exists"), null, ModUtil::url($this->name, 'user', 'show'));
+        if (!ModUtil::apiFunc($modname, 'user', 'PageExists', array('tag' => $this->_tag))) {
+            return LogUtil::registerError(__("The page you requested doesn't exists"), null, ModUtil::url($modname, 'user', 'show'));
         }
         
         
@@ -86,13 +87,13 @@ class Wikula_Handler_RenameTag  extends Zikula_Form_AbstractHandler
      */
     function handleCommand(Zikula_Form_View $view, &$args)
     {
-
+        $modname = 'Wikula';
         
         // cancel
         //--------------------------
         if ($args['commandName'] == 'cancel') {
             $url = ModUtil::url(
-                $this->name,
+                $modname,
                 'user',
                 'main',
                 array('tag' => $this->_tag) 
@@ -110,12 +111,12 @@ class Wikula_Handler_RenameTag  extends Zikula_Form_AbstractHandler
         
 
         // Validate the choosen pagename
-        if (!ModUtil::apiFunc($this->name, 'user', 'isValidPagename', array('tag' => $to))) {
+        if (!ModUtil::apiFunc($modname, 'user', 'isValidPagename', array('tag' => $to))) {
             return LogUtil::registerError($this->__('That page name is not valid'));
         }
         
         // check if the page already exists
-        if (ModUtil::apiFunc($this->name, 'user', 'PageExists', array('tag' => $to))) {
+        if (ModUtil::apiFunc($modname, 'user', 'PageExists', array('tag' => $to))) {
             return LogUtil::registerError($this->__('This page does already exist'));
         }
 
@@ -137,7 +138,7 @@ class Wikula_Handler_RenameTag  extends Zikula_Form_AbstractHandler
                 
 
         LogUtil::registerStatus(__('Rename successfully'));
-        return $view->redirect(ModUtil::url($this->name, 'user', 'show', array('tag' => $to)));
+        return $view->redirect(ModUtil::url($modname, 'user', 'show', array('tag' => $to)));
 
     }
 }
