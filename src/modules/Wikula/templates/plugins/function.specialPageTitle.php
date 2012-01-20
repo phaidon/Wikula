@@ -47,5 +47,5 @@ function smarty_function_specialPageTitle($params, &$smarty)
     }
     
     PageUtil::setVar('title', implode($title, '::'));
-    return '<h2>'.implode($output, ' &#187; ').'</h2>';   
+    return DataUtil::formatForDisplayHTML('<h2>'.implode($output, ' &#187; ').'</h2>');
 }

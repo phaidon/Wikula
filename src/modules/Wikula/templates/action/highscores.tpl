@@ -1,6 +1,4 @@
 {if $items}
-
-
 <table class="z-datatable">
     <thead>
         <tr>
