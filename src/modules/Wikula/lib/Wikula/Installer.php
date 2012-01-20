@@ -75,6 +75,7 @@ class Wikula_Installer extends Zikula_AbstractInstaller
             // version pnWikka 1.0 for PostNuke .7x
             // to Wikula 1.1 for Zikula 1.x
             case '1.0':
+            case '1.1':
                 // rename the tables
                 $tables = DBUtil::metaTables();
                 if (in_array('pnwikka_pages', $tables) && !DBUtil::renameTable('pnwikka_pages', 'wikula_pages')) {
@@ -87,14 +88,20 @@ class Wikula_Installer extends Zikula_AbstractInstaller
                     return false;
                 }
 
-                // change the WikiHelp and ReleaseNotes public pages
-                $tables = pnDBGetTables();
-                $column = $tables['wikula_pages_column'];
-                $sqls[] = "UPDATE $tables[wikula_pages] SET $column[tag] = '".__('WikiHelp')."' WHERE $column[tag] = 'WikkaDocumentation'";
-                $sqls[] = "UPDATE $tables[wikula_pages] SET $column[tag] = '".__('ReleaseNotes')."' WHERE $column[tag] = 'WikkaReleaseNotes'";
-                foreach ($sqls as $sql) {
-                    if (!DBUtil::executeSQL($sql)) {
-                        return LogUtil::registerError (__('Error! Table update failed.'));
+                // drop table prefix
+                $prefix = $this->serviceManager['prefix'];
+                $connection = Doctrine_Manager::getInstance()->getConnection('default');
+                $sqlStatements[] = 'RENAME TABLE ' . $prefix . '_wikula_pages' . " TO wikula_pages";
+                $sqlStatements[] = 'RENAME TABLE ' . $prefix . '_wikula_links' . " TO wikula_links";
+                $sqlStatements[] = 'RENAME TABLE ' . $prefix . '_wikula_referrers' . " TO wikula_referrers";
+                $sqlStatements[] = "UPDATE `wikula_pages` SET `tag` = '".__('WikiHelp')."' WHERE `tag` = 'WikkaDocumentation'";
+                $sqlStatements[] = "UPDATE `wikula_pages` SET `tag` = '".__('ReleaseNotes')."' WHERE `tag` = 'WikkaReleaseNotes'";
+
+                foreach ($sqlStatements as $sql) {
+                    $stmt = $connection->prepare($sql);
+                    try {
+                        $stmt->execute();
+                    } catch (Exception $e) {
                     }
                 }
 
@@ -122,7 +129,6 @@ class Wikula_Installer extends Zikula_AbstractInstaller
                 // save them and delete the old pnWikka variables
                 $this->setVars($wikulavars);
                 ModUtil::delVar('pnWikka');
-                return wikula_upgrade('1.1');
 
             case '1.2':
                 try {
@@ -143,7 +149,6 @@ class Wikula_Installer extends Zikula_AbstractInstaller
                 $this->setVar('mandatorycomment', false);
                 $this->setVar('single_page_permissions', false);
                 HookUtil::registerSubscriberBundles($this->version->getHookSubscriberBundles());
-                
         }
 
         return true;
