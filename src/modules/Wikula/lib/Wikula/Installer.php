@@ -166,6 +166,8 @@ class Wikula_Installer extends Zikula_AbstractInstaller
                     
                 }
                 
+                DBUtil::dropTable('wikula_referrers');
+                
                 HookUtil::registerSubscriberBundles($this->version->getHookSubscriberBundles());
         }
 

@@ -35,32 +35,11 @@ class Wikula_Controller_Admin extends Zikula_AbstractController
      */  
     public function main()
     {
-        $url = ModUtil::url($this->name, 'admin', 'pages');
+        $url = ModUtil::url($this->name, 'admin', 'modifyconfig');
         return System::redirect($url);
 
     }
     
-    
-    /**
-     * stats function
-     * 
-     * @return string HTML string containing the rendered template.
-     */  
-    public function stats() {
-        // Permission check
-        $this->throwForbiddenUnless(
-            SecurityUtil::checkPermission('Wikula::', '::', ACCESS_ADMIN),
-            LogUtil::getErrorMsgPermission()
-        );
-
-        $pagecount = ModUtil::apiFunc($this->name, 'user', 'CountAllPages');
-        $owners    = ModUtil::apiFunc($this->name, 'admin', 'GetOwners');
-
-        $this->view->assign('pagecount', $pagecount);
-        $this->view->assign($owners);
-
-        return $this->view->fetch('admin/main.tpl');
-    }
     
     /**
      * This functions shows all wiki pages
