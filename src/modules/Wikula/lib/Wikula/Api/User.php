@@ -769,7 +769,8 @@ class Wikula_Api_User extends Zikula_AbstractApi
      */
     public function LoadOrphanedPages($args)
     {
-        $args['orphaned'] = true;        
+        $args['orphaned'] = true;
+        $args['orderBy'] = 'p.tag';  
         return $this->LoadPages($args);
     }
     
