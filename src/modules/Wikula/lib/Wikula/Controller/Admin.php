@@ -76,38 +76,33 @@ class Wikula_Controller_Admin extends Zikula_AbstractController
             LogUtil::getErrorMsgPermission()
         );
 
-        $q            = FormUtil::getPassedValue('q');
-        $sort         = FormUtil::getPassedValue('sort');
-        $order        = FormUtil::getPassedValue('order');
-        $startnum     = FormUtil::getPassedValue('startnum');
-        $itemsperpage = FormUtil::getPassedValue('itemsperpage');
+        $args = array();
+        $args['q']              = FormUtil::getPassedValue('q'); // search
+        $args['orderBy']        = FormUtil::getPassedValue('orderBy');
+        $args['orderDirection'] = FormUtil::getPassedValue('orderDirection');
+        $args['startnum']       = FormUtil::getPassedValue('startnum');
+        $args['itemsperpage']   = FormUtil::getPassedValue('itemsperpage');
 
-        if (empty($itemsperpage) || !is_numeric($itemsperpage)) {
-            $itemsperpage = $this->getVar('itemsperpage');
+        if (empty($args['itemsperpage']) || !is_numeric($args['itemsperpage'])) {
+            $args['itemsperpage'] = $this->getVar('itemsperpage');
         }
-        if (empty($startnum) || !is_numeric($startnum)) {
-            $startnum = 1;
+        if (empty($args['startnum']) || !is_numeric($args['startnum'])) {
+            $args['startnum'] = 1;
         }
 
-        $items = ModUtil::apiFunc($this->name, 'admin', 'getall', array(
-            'sort'     => $sort,
-            'order'    => $order,
-            'startnum' => $startnum,
-            'numitems' => $itemsperpage,
-            'q'        => $q
-        ));
+        
+        
+        $items = ModUtil::apiFunc($this->name, 'admin', 'getall', $args);
 
-        $total = ModUtil::apiFunc($this->name, 'user', 'CountAllPages');
+        $total = $items['count'];
+        $items = $items['pages'];
 
 
-        $this->view->assign('sort',         $sort);
-        $this->view->assign('order',        $order);
-        $this->view->assign('itemcount',    count($items));
-        $this->view->assign('total',        $total);
-        $this->view->assign('items',        $items);
-        $this->view->assign('startnum',     $startnum);
-        $this->view->assign('itemsperpage', $itemsperpage);
-        $this->view->assign('pageroptions', array(5, 10, 20, 30, 40, 50, 100, 200, 300, 400, 500));
+
+        $this->view->assign('total',          $total);
+        $this->view->assign('items',          $items);;
+        $this->view->assign('pageroptions',   array(5, 10, 20, 30, 40, 50, 100, 200, 300, 400, 500));
+        $this->view->assign($args);
 
 
         $this->view->assign('pager', array('numitems'     => $total,

@@ -150,46 +150,18 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
      */
     public function getall($args)
     {
-        
 
-
-        if ($args['sort'] == 'revisions' ||
-            $args['sort'] == 'comments'  ||
-            $args['sort'] == 'backlinks') {
-            $args['sortby'] = 'id';
-        }
-
-        if (!isset($args['sort']) || empty($args['sort'])) {
-            $args['sortby']  = 'time';
-        } else {
-            $args['sortby']  = $args['sort'];
-        }
-
-        if (isset($col) and !array_key_exists($args['sortby'], $col)) {
-            $args['sortby']  = 'time';
-        }
-        if ($args['order'] <> 'ASC' && $args['order'] <> 'DESC') {
-            if (empty($args['sortby'])) {
-                $args['order'] = 'ASC';
-            } else {
-                $args['order'] = 'DESC';
-            }
+        if ($args['orderBy'] == 'revisions' ||
+            $args['orderBy'] == 'comments'  ||
+            $args['orderBy'] == 'backlinks') {
+            $orderBy = $args['orderBy'];
+            unset($args['orderBy']);
         }
         
-        //$qy->orderBy($sortby.' '.$order);
-
-        //$qy->where('latest = ?', array('Y'));
-
-        $search  = '';
-        $boolean = '';
-        if (isset($q) && !empty($q)) {
-            //$qy->addWhere('tag LIKE ?', array('%'.$q.'%'));
-        }
-
-
+        
         $pages = ModUtil::apiFunc($this->name, 'user', 'LoadPages', $args);
-        
-
+        $count = $pages['count'];
+        $pages = $pages['pages'];
 
         foreach ($pages as $pageID => $pageTab) {
             $pages[$pageID]['revisions'] = ModUtil::apiFunc($this->name, 'admin', 'CountRevisions', array('tag' => $pageTab['tag']));
@@ -206,17 +178,18 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         }
 
 
-        if ($args['sort'] == 'revisions' ||
-            $args['sort'] == 'comments'  ||
-            $args['sort'] == 'backlinks') {
+        if (isset($orderBy)) {
             $sortAarr = array();
             foreach($pages as $res) {
-                $sortAarr[] = $res[$args['sort']];
+                $sortAarr[] = $res[$orderBy];
             }
-            array_multisort($sortAarr, (($args['order'] == 'ASC') ? SORT_ASC : SORT_DESC), SORT_NUMERIC, $pages);
+            array_multisort($sortAarr, (($args['orderDirection'] == 'ASC') ? SORT_ASC : SORT_DESC), SORT_NUMERIC, $pages);
         }
 
-        return $pages;
+        return array(
+            'pages' => $pages,
+            'count' => $count
+        );
     }
 
     /**

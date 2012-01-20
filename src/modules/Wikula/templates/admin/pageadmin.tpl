@@ -5,7 +5,7 @@
 </div>
 
 <div id="wikkaadmin">
-    <form action="{modurl modname='Wikula' type='admin' func='pages'}" class="z-form" method="post" enctype="application/x-www-form-urlencoded">
+    <form action="{modurl modname='Wikula' type='admin' func='pages' orderBy=$orderBy orderDirection=$orderDirection}" class="z-form" method="post" enctype="application/x-www-form-urlencoded">
         <fieldset>
             <legend>{gt text='Filter view'}</legend>
             <div class="z-clearfix">
@@ -17,7 +17,7 @@
                 </div>
                 <div class="z-floatleft">
                     <label for="wikula_q">{gt text='Search page:'}</label>
-                    <input type="text" id="wikula_q" name="q" title="{gt text='Enter search string:'}" size="20" maxlength="50" value="" />
+                    <input type="text" id="wikula_q" name="q" title="{gt text='Enter search string:'}" size="20" maxlength="50" value="{$q}" />
                     <span class="z-buttons"><input class="z-bt-small z-bt-filter" type="submit" value="{gt text='Submit'}" /></span>
                 </div>
             </div>
@@ -33,29 +33,32 @@
         <thead>
             <tr>
                 <th>&nbsp;</th>
-                {if $order eq 'ASC'}
-                {assign var='neworder' value='DESC'}
+                {if $orderDirection eq 'ASC'}
+                    {assign var='neworder' value='DESC'}
                 {else}
-                {assign var='neworder' value='ASC'}
+                    {assign var='neworder' value='ASC'}
                 {/if}
-                <th><a href="{modurl modname='Wikula' type='admin' func='pages' sort='tag' order=$neworder}" title="Sort by page name">{gt text='Page name'}</a></th>
+                <th><a href="{modurl modname='Wikula' type='admin' func='pages' orderBy='tag'   orderDirection=$neworder q=$q itemsperpage=$itemsperpage}" title="Sort by page name">{gt text='Page name'}</a></th>
 
-                <th><a href="{modurl modname='Wikula' type='admin' func='pages' sort='owner' order=$neworder}" title="Sort by page owner">{gt text='Owner'}</a></th>
-                <th><a href="{modurl modname='Wikula' type='admin' func='pages' sort='user' order=$neworder}" title="Sort by last author">{gt text='Latest author'}</a></th>
-                <th><a href="{modurl modname='Wikula' type='admin' func='pages' sort='time' order=$neworder}" title="Sort by edit time">{gt text='Last edit'}</a></th>
+                <th><a href="{modurl modname='Wikula' type='admin' func='pages' orderBy='owner' orderDirection=$neworder q=$q itemsperpage=$itemsperpage}" title="Sort by page owner">{gt text='Owner'}</a></th>
+                <th><a href="{modurl modname='Wikula' type='admin' func='pages' orderBy='user'  orderDirection=$neworder q=$q itemsperpage=$itemsperpage}" title="Sort by last author">{gt text='Latest author'}</a></th>
+                <th><a href="{modurl modname='Wikula' type='admin' func='pages' orderBy='time'  orderDirection=$neworder q=$q itemsperpage=$itemsperpage}" title="Sort by edit time">{gt text='Last edit'}</a></th>
                 <th>{gt text='Note'}</th>
                 {*<th class="number  c1" __title="Hits">{img src='stock_about.png' __alt='Hits'}</th>*}
                 <th class="number  c2" title="Sort by number of revisions">
-                    <a href="{modurl modname='Wikula' type='admin' func='pages' sort='revisions' order=$neworder}" title="Sort by number of revisions">
-                    {img src='stock_book_open.png' __alt='Revisions'}</a>
+                    <a href="{modurl modname='Wikula' type='admin' func='pages' orderBy='revisions' orderDirection=$neworder q=$q itemsperpage=$itemsperpage}" title="Sort by number of revisions">
+                        {img src='stock_book_open.png' __alt='Revisions'}
+                    </a>
                 </th>
                 <th class="number  c3" title="Comments">
-                    <a href="{modurl modname='Wikula' type='admin' func='pages' sort='comments' order=$neworder}" title="Sort by number of comments">
-                    {img src='stock_help-agent.png' __alt='Comments'}</a>
+                    <a href="{modurl modname='Wikula' type='admin' func='pages' orderBy='comments' orderDirection=$neworder q=$q itemsperpage=$itemsperpage}" title="Sort by number of comments">
+                        {img src='stock_help-agent.png' __alt='Comments'}
+                    </a>
                 </th>
                 <th class="number  c4" title="Backlinks">
-                    <a href="{modurl modname='Wikula' type='admin' func='pages' sort='backlinks' order=$neworder}" title="Sort by number of backlinks">
-                    {img src='stock_link.png' __alt='Backlinks'}</a>
+                    <a href="{modurl modname='Wikula' type='admin' func='pages' orderBy='backlinks' orderDirection=$neworder q=$q itemsperpage=$itemsperpage}" title="Sort by number of backlinks">
+                        {img src='stock_link.png' __alt='Backlinks'}
+                    </a>
                 </th>
                 <th class="z-nowrap z-right">{gt text='Actions'}</th>
             </tr>
@@ -98,6 +101,6 @@
             {/foreach}
         </tbody>
     </table>
-    {pager show='page' rowcount=$pager.numitems limit=$pager.itemsperpage posvar='startnum' shift=1}
+    {pager show='page' rowcount=$total limit=$itemsperpage posvar='startnum' shift=1}
 </div>
 {adminfooter}

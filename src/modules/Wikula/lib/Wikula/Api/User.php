@@ -242,7 +242,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
         // build the order by
         if (!isset($args['orderby'])) {
-            $args['orderBy'] = 'p.time';
+            $args['orderBy'] = 'time';
         } else {
             $args['orderBy'] = $orderby;
         }
@@ -449,11 +449,11 @@ class Wikula_Api_User extends Zikula_AbstractApi
     public function LoadAllPages($args)
     {
         
-        $args['orderBy'] = 'p.tag';         
+        $args['orderBy'] = 'tag';         
         $pages = $this->LoadPages($args);
 
         if ($pages === false) {
-            return LogUtil::registerError(__('Error! Getting all pages failed.'));
+            return LogUtil::registerError($this->__('Error! Getting all pages failed.'));
         }
 
         return $pages;
@@ -489,6 +489,12 @@ class Wikula_Api_User extends Zikula_AbstractApi
         }
 
         
+        
+        if(!empty($args['q'])) {
+            $query->andWhere("p.tag LIKE :q")
+                  ->setParameter('q', '%'.$args['q'].'%');        
+        }
+        
         if(!isset($args['latest']) or $args['latest']) {
             $query->andWhere("p.latest = 'Y'");        
         }
@@ -499,10 +505,10 @@ class Wikula_Api_User extends Zikula_AbstractApi
         }
         
         if(isset($args['orderBy']) ) {
-            if (empty($args['orderdir'])) {
-                $args['orderdir'] = 'ASC';
+            if (empty($args['orderDirection'])) {
+                $args['orderDirection'] = 'ASC';
             }
-            $query->orderBy($args['orderBy'], $args['orderdir']);
+            $query->orderBy('p.'.$args['orderBy'], $args['orderDirection']);
         }
         
         
@@ -514,7 +520,25 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
         }
         
-        return $query->getQuery()->getArrayResult();               
+        
+        $query = $query->getQuery();  
+        
+        // Paginator
+        if (isset($args['itemsperpage']) and is_numeric($args['itemsperpage'])) {
+            if (empty($args['startnum'])) {
+                $args['startnum'] = 1;
+            }
+            $count = \DoctrineExtensions\Paginate\Paginate::getTotalQueryResults($query);
+            $paginateQuery = \DoctrineExtensions\Paginate\Paginate::getPaginateQuery($query, $args['startnum'] -1 , $args['itemsperpage']); // Step 2 and 3
+            return array(
+                'pages' => $paginateQuery->getArrayResult(),
+                'count' => $count
+            );
+        } else {
+            // No paginator
+            return $query->getArrayResult();
+        }
+        
     }
     
     /**
