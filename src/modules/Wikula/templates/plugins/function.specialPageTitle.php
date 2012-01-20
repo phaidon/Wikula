@@ -22,15 +22,14 @@ function smarty_function_specialPageTitle($params, &$smarty)
     
     $dom = ZLanguage::getModuleDomain('Wikula');
     $tag    = $params['tag'];
-    $name   = ModUtil::getName();
-    $info   = ModUtil::getInfoFromName($name);
+    $info   = ModUtil::getInfoFromName('Wikula');
         
     // hyphen2space
     $nicetag = str_replace('_', ' ', $tag);
     
     $output = array();
     $title  = array();
-    $output[] = '<a href="'.ModUtil::url($name, 'user', 'main').'">'.$info['displayname'].'</a>';
+    $output[] = '<a href="'.ModUtil::url('Wikula', 'user', 'main').'">'.$info['displayname'].'</a>';
     $title[]  = $info['displayname'];
     $title[]  = __('Special pages', $dom);
 
@@ -38,7 +37,7 @@ function smarty_function_specialPageTitle($params, &$smarty)
         $output[] = __('Special pages', $dom);
     } else {
         $output[] = '<a href="'.
-                    ModUtil::url($name, 'user', 'main', array('tag' => __('Special_pages', $dom) ) ).
+                    ModUtil::url('Wikula', 'user', 'main', array('tag' => __('Special_pages', $dom) ) ).
                     '">'.
                     __('Special pages', $dom).
                     '</a>';
