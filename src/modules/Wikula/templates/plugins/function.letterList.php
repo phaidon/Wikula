@@ -44,10 +44,8 @@ function smarty_function_letterList($params, &$smarty)
                 $user_owns_pages = true;
             }
         }
-
     }
- 
-    
+
     return $smarty->assign('pagelist', $pagelist)
                   ->assign('headerletters', $headerletters)
                   ->fetch('plugins/letterList.tpl');
