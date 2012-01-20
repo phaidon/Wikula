@@ -40,18 +40,15 @@
 
     {if $currentchar neq $firstchar}
     {assign var='currentchar' value=$firstchar}
-    <dl class="letter" id="{$firstchar}">
-    <dt><strong>{$firstchar}</strong></dt>
     {/if}
-
+    
+    <dl class="letter" id="{$firstchar}">
+        <dt><strong>{$firstchar}</strong></dt>
         {foreach name='mypagespage' item='page' from=$letter}
         <dd>
             <a href="{modurl modname='Wikula' type='user' func='show' tag=$page.tag|urlencode}" title="{$page.tag|safetext}">{$page.tag|safetext}</a>
         </dd>
         {/foreach}
-
-    {if $smarty.foreach.mypages.last ne true}
     </dl>
-    {/if}
 
 {/foreach}
