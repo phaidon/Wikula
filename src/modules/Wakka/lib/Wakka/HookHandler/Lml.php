@@ -118,9 +118,15 @@ class Wakka_HookHandler_Lml extends Zikula_Hook_AbstractHandler
         $categories = array();        
         preg_match_all("/\n\[\[Category(.*?)\]\]/", $text, $categories);
         $categories = $categories[1];
+        $categories2 = array();        
+        preg_match_all("/\nCategory([a-zA-Z0-9]*+)/", $text, $categories2);
+        $categories2 = $categories2[1];
+        $categories = array_merge($categories, $categories2);
+        
         foreach($categories as $key => $value) {
             $value = explode(' ', $value);
             $value = $value[0];
+            LogUtil::registerStatus('x'.$value.'x');
             $categories[$key] = $value;
         }
         return array_unique($categories);

@@ -369,6 +369,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
            ->orderBy('c.category');
         $categories = $qb->getQuery()->getArrayResult();
  
+        
         return $this->view->assign('categories', $categories)
                           ->fetch('user/categories.tpl');
     }

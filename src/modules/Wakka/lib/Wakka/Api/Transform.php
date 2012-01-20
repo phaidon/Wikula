@@ -56,6 +56,12 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
             array($this, 'categoryCallback'),
             $args['text']
         );
+        $args['text'] = preg_replace_callback(
+            "#\nCategory([a-zA-Z0-9]*+)#si",
+            array($this, 'categoryCallback'),
+            $args['text']
+        );
+
         // remove hr
         $length = strlen($args['text']);
         if( substr($args['text'], $length-4) == '----' ) {
