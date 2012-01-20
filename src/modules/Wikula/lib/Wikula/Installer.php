@@ -91,6 +91,7 @@ class Wikula_Installer extends Zikula_AbstractInstaller
                 // drop table prefix
                 $prefix = $this->serviceManager['prefix'];
                 $connection = Doctrine_Manager::getInstance()->getConnection('default');
+                $sqlStatements = array();
                 $sqlStatements[] = 'RENAME TABLE ' . $prefix . '_wikula_pages' . " TO wikula_pages";
                 $sqlStatements[] = 'RENAME TABLE ' . $prefix . '_wikula_links' . " TO wikula_links";
                 $sqlStatements[] = 'RENAME TABLE ' . $prefix . '_wikula_referrers' . " TO wikula_referrers";
@@ -148,6 +149,23 @@ class Wikula_Installer extends Zikula_AbstractInstaller
                 $this->setVar('subscription', false);
                 $this->setVar('mandatorycomment', false);
                 $this->setVar('single_page_permissions', false);
+                $root_page = $this->getVar('root_page', '');
+                $root_page = str_replace(' ', '_', $root_page);
+                $this->setVar('root_page', $root_page);
+                
+                $em = $this->getService('doctrine.entitymanager');
+                $pages = $em->getRepository('Wikula_Entity_Pages')->findAll();
+                foreach($pages as $page) {
+                    $tag = $page->getTag();
+                    $newtag = str_replace(' ', '_', $tag);
+                    if($tag != $newtag) {                        
+                        $page->setTag($newtag);
+                        $em->persist($page);
+                        $em->flush();
+                    }
+                    
+                }
+                
                 HookUtil::registerSubscriberBundles($this->version->getHookSubscriberBundles());
         }
 
