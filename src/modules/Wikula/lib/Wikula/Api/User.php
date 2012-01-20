@@ -15,6 +15,8 @@
 
 use Doctrine\ORM\Query;
 
+require_once 'modules/Wikula/lib/Wikula/Common.php';
+
 /**
  * User api class.
  * 
@@ -31,7 +33,6 @@ class Wikula_Api_User extends Zikula_AbstractApi
     function __autoload($class_name)
     {
         unset($class_name);
-        require_once 'modules/Wikula/lib/Wikula/Common.php';
         $this->_em = $this->getService('doctrine.entitymanager');
     }
     

@@ -72,7 +72,8 @@ class Wikula_Handler_RenameTag  extends Zikula_Form_AbstractHandler
         
         
         // build the output 
-        $view->assign('tag',  $this->_tag);
+        $view->assign('tag', $this->_tag);
+        $view->assign('to',  $this->_tag);
  
         return true;
     }
@@ -107,16 +108,15 @@ class Wikula_Handler_RenameTag  extends Zikula_Form_AbstractHandler
             return false;
         }
         $data = $view->getValues();
-        extract($data); //$to, $edit, $note
         
 
         // Validate the choosen pagename
-        if (!ModUtil::apiFunc($modname, 'user', 'isValidPagename', array('tag' => $to))) {
+        if (!ModUtil::apiFunc($modname, 'user', 'isValidPagename', array('tag' => $data['to']))) {
             return LogUtil::registerError($this->__('That page name is not valid'));
         }
         
         // check if the page already exists
-        if (ModUtil::apiFunc($modname, 'user', 'PageExists', array('tag' => $to))) {
+        if (ModUtil::apiFunc($modname, 'user', 'PageExists', array('tag' => $data['to']))) {
             return LogUtil::registerError($this->__('This page does already exist'));
         }
 
@@ -126,19 +126,42 @@ class Wikula_Handler_RenameTag  extends Zikula_Form_AbstractHandler
         }
 
        
-        // set all other revisions to old
-        $em = $this->getService('doctrine.entitymanager');
+        // rename page
+        $em = ServiceUtil::getService('doctrine.entitymanager');
         $qb = $em->createQueryBuilder();
         $qb->update('Wikula_Entity_Pages', 'p')
            ->where('p.tag = :tag')
            ->setParameter('tag', $this->_tag)
-           ->set('p.tag', $to);
+           ->set('p.tag', "'".$data['to']."'");
         $query = $qb->getQuery();
-        $result = $query->getArrayResult();
+        $query->execute();
+        
+        
+        // rename links
+        $em = ServiceUtil::getService('doctrine.entitymanager');
+        $qb = $em->createQueryBuilder();
+        $qb->update('Wikula_Entity_Links2', 'l')
+           ->where('l.from_tag = :from_tag')
+           ->setParameter('from_tag', $this->_tag)
+           ->set('l.from_tag', "'".$data['to']."'");
+        $query = $qb->getQuery();
+        $query->execute();
+        
+        
+        // rename categories
+        $em = ServiceUtil::getService('doctrine.entitymanager');
+        $qb = $em->createQueryBuilder();
+        $qb->update('Wikula_Entity_Categories', 'c')
+           ->where('c.tag = :tag')
+           ->setParameter('tag', $this->_tag)
+           ->set('c.tag', "'".$data['to']."'");
+        $query = $qb->getQuery();
+        $query->execute();
                 
 
-        LogUtil::registerStatus(__('Rename successfully'));
-        return $view->redirect(ModUtil::url($modname, 'user', 'show', array('tag' => $to)));
+        LogUtil::registerStatus($this->__('Rename successfully'));
+        $url = ModUtil::url($modname, 'user', 'show', array('tag' => $data['to']));
+        return $view->redirect($url);
 
     }
 }
