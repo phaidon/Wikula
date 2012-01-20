@@ -241,16 +241,14 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
         // build the order by
         if (!isset($args['orderby'])) {
-            $args['orderBy'] = 'time';
+            $args['orderBy'] = 'p.time';
         } else {
             $args['orderBy'] = $orderby;
         }
         if (!isset($args['orderdir']) || !in_array(strtoupper($args['orderdir']), array('ASC', 'DESC'))) {
-            $args['orderBy'] .= ' DESC';
-        } else {
-            $args['orderBy'] .= ' '.strtoupper($orderdir);
+            $args['orderdir'] = 'DESC';
         }
-
+        
         // check if we want to get the latest only
         if (isset($getoldest) && $getoldest) {
             $args['orderBy'] = $args['time'].' DESC';
@@ -500,7 +498,10 @@ class Wikula_Api_User extends Zikula_AbstractApi
         }
         
         if(isset($args['orderBy']) ) {
-            $query->orderBy($args['orderBy']);
+            if (empty($args['orderdir'])) {
+                $args['orderdir'] = 'DESC';
+            }
+            $query->orderBy($args['orderBy'], $args['orderdir']);
         }
         
         
