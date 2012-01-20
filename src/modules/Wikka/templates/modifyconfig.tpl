@@ -25,7 +25,13 @@
     
 <fieldset>
     <div class="z-formrow">
-        {formlabel for="syntaxHighlighter" __text="Syntax highlighting"}
+        {formlabel for="syntaxHighlighter" __text="Syntax highlighting" id="syntaxHighlighterLabel"}
+        <script type="text/javascript">
+            var defaultTooltip2 = new Zikula.UI.Tooltip(
+                                    $('syntaxHighlighterLabel'),
+                                    '{{img src='code_highlighting.jpg' alt='' modname=$modinfo.name}}'
+                                  );
+        </script>            
         {formdropdownlist id="syntaxHighlighter" items=$syntaxHighlighters}
     </div>
 
