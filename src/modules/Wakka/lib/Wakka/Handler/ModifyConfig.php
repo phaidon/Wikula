@@ -38,6 +38,15 @@ class Wakka_Handler_ModifyConfig extends Zikula_Form_AbstractHandler
         $view->assign('editor', $this->getVar('editor', 'wakka100'));
         $view->assign('showIndex', $this->getVar('showIndex', false));
         
+        
+        $syntaxHighlighters = array(
+            array('value' => 'none',              'text' => $this->__('None')),
+            array('value' => 'prettify',          'text' => 'Google-Code-Prettify'),
+            array('value' => 'geshi',             'text' => 'GeSHi'),
+            array('value' => 'syntaxhighlighter', 'text' => 'SyntaxHighlighter'),
+        );
+        $view->assign('syntaxHighlighters', $syntaxHighlighters);
+        
         return true;
     }
 

@@ -22,6 +22,15 @@
 
 </fieldset>
 
+    
+<fieldset>
+    <div class="z-formrow">
+        {formlabel for="syntaxHighlighter" __text="Syntax highlighting"}
+        {formdropdownlist id="syntaxHighlighter" items=$syntaxHighlighters}
+    </div>
+
+</fieldset>    
+    
 <div class="z-formbuttons z-buttons">
     {formbutton class="z-bt-ok" commandName="save" __text="Save"}
     {formbutton class="z-bt-cancel" commandName="cancel" __text="Cancel"}

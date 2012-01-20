@@ -17,6 +17,7 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
 
     private $categories = array();
     private $headings = array();
+    private $codeblocks = array();
     
     
     public function transform($args)
@@ -39,6 +40,9 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
     {
         global $mapcounter;
         $mapcounter = 1;
+        
+        
+        
         
         $args['text'] = str_replace("\r\n", "\n", $args['text']);
 
@@ -121,9 +125,7 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
         } else {
             $categories = '';
         }
-        
-        
-        
+                
         $indexBox = self::indexBox($args['text']);
         
         return $indexBox.$args['text'].$categories;
@@ -199,6 +201,7 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
             $prelevel = $level;
         }
 
+        
         return '<div class="indexBox">'.$indexBox.'</div></div>'.
                '<div class="z-clearer"></div>';
         
@@ -646,8 +649,6 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
             $code = $matches[1];
             // if configuration path isn't set, make sure we'll get an invalid path so we
             // don't match anything in the home directory
-            $geshi_hi_path = 'modules/wikula/pnincludes/geshi/geshi';
-            $wikka_hi_path = 'modules/wikula/pnincludes/formatters';
             // check if a language (and starting line) has been specified
             if (preg_match('/^'.PATTERN_OPEN_BRACKET.PATTERN_FORMATTER.PATTERN_LINE_NUMBER.PATTERN_FILENAME.PATTERN_CLOSE_BRACKET.PATTERN_CODE.'$/s', $code, $matches)) {
                 $language = isset($matches[1]) ? $matches[1] : null;
@@ -660,53 +661,39 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
             // Note: unlike trim(), this preserves any tabs at the start of the first "real" line
             $code = preg_replace('/^\s*\n+|\n+\s*$/', '', $code);
 
-            // check if GeSHi path is set and we have a GeSHi hilighter for this language
-            $geshi_path = is_dir('modules/wikula/pnincludes/geshi/');
 
-            if (isset($language) && $geshi_path && file_exists("{$geshi_hi_path}/{$language}.php")) {
-                // check if specified filename is valid and generate code block header
-                if (isset($filename) && strlen($filename) > 0 && strlen($invalid) == 0) {
-                    // TODO: use central regex library for filename validation
-                    $valid_filename = $filename;
-                    // create code block header
-                    $output .= '<div class="code_header">';
-                    // display filename and start line, if specified
-                    $output .= $filename;
-                    if (strlen($start) > 0) {
-                        $output .= ' (line '.$start.')';
-                    }
-                    $output .= '</div>'.$cr;
+            // check if specified filename is valid and generate code block header
+            if (isset($filename) && strlen($filename) > 0 && strlen($invalid) == 0) {
+                // TODO: use central regex library for filename validation
+                $valid_filename = $filename;
+                // create code block header
+                $output .= '<div class="code_header">';
+                // display filename and start line, if specified
+                $output .= $filename;
+                if (strlen($start) > 0) {
+                    $output .= ' (line '.$start.')';
                 }
-                // use GeSHi for hilighting
-                $output = ModUtil::apiFunc($this->name, 'user', 'GeSHi_Highlight',
-                                    array('sourcecode' => $code,
-                                            'language'   => $language,
-                                            'start'      => $start));
-
-            } elseif (isset($language) && isset($wikka_hi_path) && file_exists("{$wikka_hi_path}/{$language}.php")) {
-                // check Wikka highlighter path is set and if we have an internal Wikka hilighter
-                // use internal Wikka hilighter
-                $output  = '<div class="code">'.$cr;
-                include("{$wikka_hi_path}/{$language}.php");
-                $output .= $code.$cr;
-                $output .= '</div>'.$cr;
-
-            } else {
-                // no language defined or no formatter found: make default code block;
-                $output = '<div class="code">'.$cr;
-                $output .= '<pre>'.htmlspecialchars($code, ENT_QUOTES).'</pre>'.$cr;
                 $output .= '</div>'.$cr;
             }
+            // use GeSHi for hilighting
+            $output = $this->highlight(array(
+                        'sourcecode' => $code,
+                        'language'   => $language,
+                        'start'      => $start
+                        ));
+            
+            
+            
 
             // display grab button if option is set in the config file
-            if ($this->getVar('grabcode_button', true)) {
+            /*if ($this->getVar('grabcode_button', true)) {
                 // build form
                 $output .= '<form method="post" action="'.ModUtil::url($this->name, 'user', 'grabcode').'">
                             <input type="submit" name="save" class="grabcode" value="'.$this->__('Grab code').'" title="'.$this->__('Grab code').'" />
                             <input type="hidden" name="filename" value="'.urlencode($valid_filename).'" />
                             <input type="hidden" name="code" value="'.urlencode(nl2br($code)).'" />
                             </form>';
-            }
+            }*/
 
             return $output;
 
@@ -1328,6 +1315,53 @@ class Wakka_Api_Transform extends Zikula_AbstractApi
         // return the Action result
         return ModUtil::apiFunc('Wikula', 'SpecialPage', strtolower($action), $vars);
     }
+    
+    
+    public function highlight($args)
+    {
+        if(empty($args['language'])) {
+            $args['language'] = 'php';
+        }
+        if(empty($args['sourcecode'])) {
+            return '';
+        }
+        $highlighter = $this->getVar('syntaxHighlighter');
+           
+        switch ($highlighter) {
+            case 'geshi':
+                include_once('modules/Wakka/lib/vendor/geshi/geshi.php');                        
+                $geshi = new GeSHi($args['sourcecode'], $args['language']);
+                $geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS);
+                $geshi->set_header_type(GESHI_HEADER_PRE);
+                $output = $geshi->parse_code(); 
+                break;
+            case 'prettify':
+                $path = 'modules/Wakka/lib/vendor/prettify/';
+                PageUtil::addVar('javascript', $path.'prettify.js');
+                PageUtil::addVar('stylesheet', $path.'prettify.css');
+                PageUtil::addVar('header', '<script type="text/javascript">Event.observe(window, \'load\', prettyPrint);</script>');
+                $output = str_replace("\n", '<br />', $args['sourcecode']);
+                $output = '<code class="prettyprint linenums:1">'.$output.'</code>';
+                break;
+            case 'syntaxhighlighter':
+                $path = 'modules/Wakka/lib/vendor/syntaxhighlighter/';
+                PageUtil::addVar('javascript', $path.'scripts/shCore.js');
+                PageUtil::addVar('javascript', $path.'scripts/shBrushJScript.js');
+                PageUtil::addVar('stylesheet', $path.'styles/shCoreDefault.css');
+                PageUtil::addVar('header', '<script type="text/javascript">SyntaxHighlighter.all()</script>');                
+                $output = '<pre class="brush: js">'.$args['sourcecode'].'</pre>';
+                break;
+            default:
+                // no language defined or no formatter found: make default code block;
+                $cr = "\n";
+                $output = '<div class="code">'.$cr;
+                $output .= '<pre>'.htmlspecialchars($args['sourcecode'], ENT_QUOTES).'</pre>'.$cr;
+                $output .= '</div>'.$cr;
+                break;
+        }
+        
+        return $output;
+    } 
 
     
 }
