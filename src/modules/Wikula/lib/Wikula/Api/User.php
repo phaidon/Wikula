@@ -512,7 +512,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
         }
         
         
-        if (isset($args['startnum']) and is_numeric($args['$startnum']) and $$args['startnum'] > 1) {
+        if (isset($args['startnum']) and is_numeric($args['startnum']) and $args['startnum'] > 1) {
             $query->setFirstResult($args['startnum']-1);
         }
         if (isset($args['numitems']) and is_numeric($args['numitems']) and $args['numitems'] > 0) {

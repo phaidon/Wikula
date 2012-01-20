@@ -25,8 +25,12 @@
     </form>
 
     <p class="wiki_amount">
-        {gt text='Records'} ({$total}): {$startnum}-{math equation='x+y' x=$startnum y=$itemcount-1}
-        ({gt text='Sorted by:'} <em>{$sort|default:'time'}, {$order|default:'DESC'}</em>)
+        {math equation='x+y' x=$startnum y=$itemsperpage-1 assign='endnum'}
+        {if $endnum > $total}
+            {assign value=$total var='endnum'}
+        {/if}
+        {gt text='Records'} ({$total}): {$startnum}-{$endnum}
+        ({gt text='Order by:'} <em>{$orderBy|default:'time'}, {$orderDirection|default:'DESC'}</em>)
     </p>
 
     <table class="z-datatable" summary="List of pages on this server">
