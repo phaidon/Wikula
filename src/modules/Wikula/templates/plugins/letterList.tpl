@@ -36,17 +36,14 @@
 </p>
 
 {assign var='currentchar' value=''}
-{foreach name='mypages' item='letter' from=$pagelist key='firstchar'}
+{foreach name='mypages' item='tags' from=$pagelist key='firstchar'}
 
-    {if $currentchar neq $firstchar}
-    {assign var='currentchar' value=$firstchar}
-    {/if}
     
     <dl class="letter" id="{$firstchar}">
         <dt><strong>{$firstchar}</strong></dt>
-        {foreach name='mypagespage' item='page' from=$letter}
+        {foreach name='mypagespage' item='tag' from=$tags}
         <dd>
-            <a href="{modurl modname='Wikula' type='user' func='show' tag=$page.tag|urlencode}" title="{$page.tag|safetext}">{$page.tag|safetext}</a>
+            <a href="{modurl modname='Wikula' type='user' func='show' tag=$tag|urlencode}" title="{$tag|safetext}">{$tag|safetext}</a>
         </dd>
         {/foreach}
     </dl>

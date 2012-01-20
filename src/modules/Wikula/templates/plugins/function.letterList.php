@@ -18,34 +18,24 @@
  */
 function smarty_function_letterList($params, &$smarty)
 {
-    $currentChar = '';
-    $headerletters = array();
     $pagelist = array();
     
     
     foreach ($params['pages'] as $page) {
-        $value = $page['tag'];
-        $page['title'] = $value;
+        $tag = $page['tag'];
 
-        $firstChar = strtoupper(substr($value, 0, 1));
+        $firstChar = strtoupper(substr($tag, 0, 1));
         if (!preg_match('/[A-Za-z]/', $firstChar)) {
             $firstChar = '#';
         }
 
-        if ($firstChar != $currentChar) {
-            $headerletters[] = $firstChar;
-            $currentChar     = $firstChar;
-        }
+        $pagelist[$firstChar][] = $tag;
 
-        if (empty($letter) || $firstChar == $letter) {
-            $pagelist[$firstChar][] = $page;
-
-            if (array_key_exists('owner', $page) and System::getVar('uname') == $page['owner']) {
-                $user_owns_pages = true;
-            }
-        }
+        
     }
-
+    
+    $headerletters = array_keys($pagelist);
+    
     return $smarty->assign('pagelist', $pagelist)
                   ->assign('headerletters', $headerletters)
                   ->fetch('plugins/letterList.tpl');

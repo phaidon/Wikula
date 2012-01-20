@@ -470,15 +470,12 @@ class Wikula_Api_User extends Zikula_AbstractApi
      */
     public function LoadPages($args)
     {
-        extract($args);
-        unset($args);
-        
-        if(!isset($tag)) {
-            $tag = null;
+        if (!isset($args['tag'])) {
+            $args['tag'] = null;
         }
         
         // Permission check
-        ModUtil::apiFunc($this->name, 'Permission', 'canRead', $tag);
+        ModUtil::apiFunc($this->name, 'Permission', 'canRead', $args['tag']);
   
         
         $em = $this->getService('doctrine.entitymanager');
@@ -487,31 +484,35 @@ class Wikula_Api_User extends Zikula_AbstractApi
               ->from('Wikula_Entity_Pages', 'p');
                 
         
-        if(isset($orphaned) and  $orphaned) { 
+        if (isset($args['orphaned']) and  $args['orphaned']) { 
             $query->leftJoin('p.links', 'l');
             $query->where("p.links IS EMPTY");    
         }
 
         
-        if(!isset($latest) or $latest) {
+        if(!isset($args['latest']) or $args['latest']) {
             $query->andWhere("p.latest = 'Y'");        
         }
         
-        if(!is_null($tag) ) {
+        if(!is_null($args['tag']) ) {
             $query->andWhere('p.tag = :tag')
-                  ->setParameter('tag', $tag);
+                  ->setParameter('tag', $args['tag']);
+        }
+        
+        if(isset($args['orderBy']) ) {
+            $query->orderBy($args['orderBy']);
         }
         
         
-        if (isset($startnum) and is_numeric($startnum) and $startnum > 1) {
-            $query->setFirstResult($offset = $startnum-1);
+        if (isset($args['startnum']) and is_numeric($args['$startnum']) and $$args['startnum'] > 1) {
+            $query->setFirstResult($args['startnum']-1);
         }
-        if (isset($numitems) and is_numeric($numitems) and $numitems > 0) {
-            $query->setMaxResults($limit = $numitems);
+        if (isset($args['numitems']) and is_numeric($args['numitems']) and $args['numitems'] > 0) {
+            $query->setMaxResults($args['numitems']);
 
         }
         
-        return $query->getQuery()->getArrayResult();                
+        return $query->getQuery()->getArrayResult();               
     }
     
     /**
