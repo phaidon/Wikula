@@ -22,7 +22,7 @@
         <li>
             (<a href="{modurl modname='Wikula' type='user' func='main'    tag=$page.tag|urlencode id=$page.id}" title="{gt text='Revisions'}">{$page.timeformatted}</a>)
             (<a href="{modurl modname='Wikula' type='user' func='history' tag=$page.tag|urlencode}" title="{$page.tag} {gt text='History'}">{gt text='History'}</a>)
-             <a href="{modurl modname='Wikula' type='user' func='show'    tag=$page.tag|urlencode}" title="{$page.tag}">{$page.tag}</a>
+             <a href="{modurl modname='Wikula' type='user' func='show'    tag=$page.tag|urlencode}" title="{$page.tag}">{$page.tag|hyphen2space}</a>
             {if !$alpha}
             &nbsp;<span class="pagenote">[&nbsp;{$page.note}&nbsp;]</span>
             {/if}
