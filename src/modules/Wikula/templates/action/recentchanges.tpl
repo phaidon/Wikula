@@ -11,10 +11,10 @@
     <ul>
         {foreach from=$pages item='page'}
         <li>
-            (<a href="{modurl modname='Wikula' type='user' func='main'    tag=$page.tag|urlencode time=$page.time|dateformat|urlencode}" title="{gt text='Recent Changes Revisions'}">{$page.timeformatted}</a>)
+            ({$page.timeformatted})
             [<a href="{modurl modname='Wikula' type='user' func='history' tag=$page.tag|urlencode}" title="{$page.tag} {gt text='History'}">{gt text='History'}</a>] -
-             <a href="{modurl modname='Wikula' type='user' func='main'    tag=$page.tag|urlencode}" title="{$page.tag}">{$page.tag}</a>
-            &rArr; {$page.user} <span class="pagenote">[ {$page.note} ]</span>
+             <a href="{modurl modname='Wikula' type='user' func='show'    tag=$page.tag|urlencode}" title="{$page.tag}">{$page.tag}</a>
+            &rArr; {$page.user|profilelinkbyuname} <span class="pagenote">[ {$page.note} ]</span>
         </li>
         {foreachelse}
         <li>&nbsp;</li>
