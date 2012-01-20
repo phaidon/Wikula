@@ -33,13 +33,8 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         $links = array();
         if (SecurityUtil::checkPermission('Wikula::', '::', ACCESS_ADMIN)) {
             $links[] = array(
-                'url' => ModUtil::url('Wikula', 'admin', 'main'),
-                'text' => __('Main'),
-                'class' => 'z-icon-es-home'
-            );
-            $links[] = array(
                 'url' => ModUtil::url('Wikula', 'admin', 'pages'),
-                'text' =>  __('Pages'),
+                'text' =>  __('Wiki pages'),
                 'class' => 'z-icon-es-view'
             );
             $links[] = array(
