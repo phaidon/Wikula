@@ -500,7 +500,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
         
         if(isset($args['orderBy']) ) {
             if (empty($args['orderdir'])) {
-                $args['orderdir'] = 'DESC';
+                $args['orderdir'] = 'ASC';
             }
             $query->orderBy($args['orderBy'], $args['orderdir']);
         }
