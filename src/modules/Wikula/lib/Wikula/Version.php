@@ -56,7 +56,7 @@ class Wikula_Version extends Zikula_AbstractVersion
                                             'maxversion' => '', 
                                             'status'     => ModUtil::DEPENDENCY_RECOMMENDED
                                       ),
-                                      array('modname'    => 'Wakka', 
+                                      array('modname'    => 'Wikka', 
                                             'minversion' => '0.0.1', 
                                             'maxversion' => '', 
                                             'status'     => ModUtil::DEPENDENCY_RECOMMENDED
