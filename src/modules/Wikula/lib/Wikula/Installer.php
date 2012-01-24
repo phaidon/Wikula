@@ -54,6 +54,14 @@ class Wikula_Installer extends Zikula_AbstractInstaller
         $this->defaultdata();
 
         HookUtil::registerSubscriberBundles($this->version->getHookSubscriberBundles());
+        $hookManager = ServiceUtil::getService('zikula.hookmanager'); 
+        if (ModUtil::available('Wikka')) {
+            $hookManager->bindSubscriber(  'subscriber.wikula.filter_hooks.body', 'provider.wikka.filter_hooks.lml');
+            $hookManager->bindSubscriber(  'subscriber.wikula.ui_hooks.editor', 'provider.wikka.ui_hooks.lml');
+        } else if (ModUtil::available('LuMicuLa')) {
+            $hookManager->bindSubscriber(   'subscriber.wikula.filter_hooks.body', 'provider.lumicula.filter_hooks.lml');
+            $hookManager->bindSubscriber(   'subscriber.wikula.ui_hooks.editor', 'provider.lumicula.ui_hooks.lml');
+        }
 
 
         return true;
@@ -169,6 +177,18 @@ class Wikula_Installer extends Zikula_AbstractInstaller
                 DBUtil::dropTable('wikula_referrers');
                 
                 HookUtil::registerSubscriberBundles($this->version->getHookSubscriberBundles());
+                $this->defaultdata();
+
+                HookUtil::registerSubscriberBundles($this->version->getHookSubscriberBundles());
+                $hookManager = ServiceUtil::getService('zikula.hookmanager'); 
+                if (ModUtil::available('Wikka')) {
+                    $hookManager->bindSubscriber(  'subscriber.wikula.filter_hooks.body', 'provider.wikka.filter_hooks.lml');
+                    $hookManager->bindSubscriber(  'subscriber.wikula.ui_hooks.editor', 'provider.wikka.ui_hooks.lml');
+                } else if (ModUtil::available('LuMicuLa')) {
+                    $hookManager->bindSubscriber(   'subscriber.wikula.filter_hooks.body', 'provider.lumicula.filter_hooks.lml');
+                    $hookManager->bindSubscriber(   'subscriber.wikula.ui_hooks.editor', 'provider.lumicula.ui_hooks.lml');
+                }
+
         }
 
         return true;
