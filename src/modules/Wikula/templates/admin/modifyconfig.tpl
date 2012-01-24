@@ -30,13 +30,28 @@
         {formcheckbox id="single_page_permissions"}
     </div>
 
-    <p class="z-formnote">
-        <a href="{modurl modname='Wikula' type='admin' func="rebuildLinksAndCategoriesTables"}">Rebuild links and categories tables.</a>
-    </p>
 </fieldset>
 
+{if $editor == 'none'}
+    <p class="z-errormsg">
+        {gt text="There is no editor set! Without editor Wikula is very limited!"}
+    </p>    
+{/if}
+    
 <fieldset>
-    <legend>{gt text='Page edit'}</legend>
+    <legend>{gt text='Editor'}</legend>
+    <div class="z-formrow">
+        {formlabel for="editor" __text="Editor"}
+        {formdropdownlist id="editor" items=$editors}
+        {if $editor != 'none'}
+            <em>
+                <a href="{modurl modname=$editor type="admin" func="main"}">
+                   {gt text="Editor settings"}
+                </a>
+            </em>
+        {/if}
+    </div>
+    
     <div class="z-formrow">
         {formlabel for="mandatorycomment" __text='Page edit comments are mandatory'}
         {formcheckbox id="mandatorycomment"}
@@ -57,6 +72,34 @@
     </div>
 </fieldset>
 
+{if $engine == 'none'}
+    <p class="z-errormsg">
+        {gt text="There is no engine set! Without engine Wikula is very limited!"}
+    </p>    
+{/if}
+            
+<fieldset>
+    <legend>{gt text='Engine'}</legend>
+    <div class="z-formrow">
+        {formlabel for="engine" __text="Engine"}
+        {formdropdownlist id="engine" items=$engines}
+        {if $editor != 'none'}
+            <em>
+                <a href="{modurl modname=$engine type="admin" func="main"}">
+                   {gt text="Engine settings"}
+                </a>
+            </em>
+        {/if}
+    </div>
+
+    <p class="z-formnote">
+        <a href="{modurl modname='Wikula' type='admin' func="rebuildLinksAndCategoriesTables"}">Rebuild links and categories tables.</a>
+    </p>
+
+</fieldset>            
+            
+            
+            
 <div class="z-formbuttons z-buttons">
     {formbutton class="z-bt-ok" commandName="save" __text="Save"}
     {formbutton class="z-bt-cancel" commandName="cancel" __text="Cancel"}
