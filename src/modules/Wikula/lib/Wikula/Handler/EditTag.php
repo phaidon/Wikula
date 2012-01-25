@@ -68,7 +68,6 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
             $page['note'] = '';
         } else {
             $page = array(
-                'tag'  => $this->_tag,
                 'note' => $this->__('Initial Insert')
             );
         }

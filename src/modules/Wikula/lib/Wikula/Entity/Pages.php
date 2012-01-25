@@ -139,15 +139,26 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
     }
     
     /**
-     * Get tag
+     * Get all
      * 
      * @return string 
      */
-    public function getTag()
+    public function toArray()
     {
-        return $this->tag;
+        return array(
+            'id'     => $this->id,
+            'tag'    => $this->tag,
+            'latest' => $this->latest,
+            'body'   => $this->body,
+            'user'   => $this->user,
+            'time'   => $this->time,
+            'owner'  => $this->owner,
+            'note'   => $this->note,
+        );
+            
     }
     
+
     /**
      * Set note
      */

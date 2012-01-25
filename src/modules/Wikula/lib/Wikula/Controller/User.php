@@ -53,29 +53,21 @@ class Wikula_Controller_User extends Zikula_AbstractController
     {   
         
         // Get input parameters
-        $tag  = isset($args['tag']) ? $args['tag'] : FormUtil::getPassedValue('tag');
-        $time = isset($args['time']) ? $args['time'] : FormUtil::getPassedValue('time');
-        $raw  = isset($args['raw']) ? $args['raw'] : FormUtil::getPassedValue('raw');
+        $tag = isset($args['tag']) ? $args['tag'] : FormUtil::getPassedValue('tag', null);
+        $rev = isset($args['rev']) ? $args['rev'] : FormUtil::getPassedValue('rev', null);
+        $raw = isset($args['raw']) ? $args['raw'] : FormUtil::getPassedValue('raw');
         unset($args);
         
-        if(empty($tag)) {
+        if(is_null($tag)) {
             $tag = $this->getVar('root_page');
-        }
-
-        
-        // Permission check
-        ModUtil::apiFunc($this->name, 'Permission', 'canRead', $tag);        
-        
-        
-        if (empty($time)) {
-            $time = null;
-        }
+        }        
+       
         
         // redirect if tag contains spaces
         if (strpos($tag, ' ') !== false) {
             $arguments = array(
                 'tag'  => str_replace(' ', '_', $tag),
-                'time' => $time,
+                'rev' =>  $rev,
                 'raw'  => $raw
             );
             $redirecturl = ModUtil::url($this->name, 'user', 'show', $arguments);
@@ -97,10 +89,6 @@ class Wikula_Controller_User extends Zikula_AbstractController
         
         // check if it is special page
         $specialPages = ModUtil::apiFunc($this->name, 'SpecialPage', 'listpages');
-        
-        
-        
-        
         if( array_key_exists($tag, $specialPages)) {
             $content = ModUtil::apiFunc($this->name, 'SpecialPage', 'get', $specialPages[$tag]);            
             return $this->view->assign('content', $content)
@@ -108,47 +96,39 @@ class Wikula_Controller_User extends Zikula_AbstractController
                               ->assign('name',    str_replace('_', ' ', $tag))
                               ->fetch('user/specialPage.tpl');
         }
-        
+       
         
         // Get the page
         $page = ModUtil::apiFunc($this->name, 'user', 'LoadPage', array(
-            'tag'  => $tag,
-            'time' => $time)
+            'tag' => $tag,
+            'rev' => $rev)
         );
-       
+        
+        
         
         // Validate invalid petition
-        if (!$page && !empty($time)) {
-            return LogUtil::registerError($this->__("The page you requested doesn't exists"), null, ModUtil::url($this->name));
-        }
-
-        // Get the latest version
-        /*if (empty($time)) {
-            $latest = $page;
-        } else {
-            $latest = ModUtil::apiFunc($this->name, 'user', 'LoadPage', array('tag' => $tag));
-        }*/
-
-        // Check if this tag doesn't exists
-        if (!$page ) {//&& !$latest) {
+        if (!$page) {
+            if (!is_null($rev)) {
+                return LogUtil::registerError($this->__("The page revision you requested doesn't exists"));
+            }
             LogUtil::registerStatus(__('The page does not exist yet! do you want to create it? Feel free to participate and be the first who creates content for this page!'));
             return System::redirect(ModUtil::url($this->name, 'user', 'edit', array('tag' => $tag)));
         }
-
-        // Resetting session access and previous
-        SessionUtil::delVar('wikula_access');
-        SessionUtil::setVar('wikula_previous', $tag);
         
         
         // TODO: check if this can be migrated to an action
         // we'll get later revisions too because we want to display the history and the last editors next to the page
 
-        $this->view->assign('tag',      $tag);
-        $this->view->assign('time',     $time);
-        $this->view->assign('showpage', $page);
         
-        $datetime = $page['time']->format('Y-m-d H:i:s');
-        return $this->view->fetch('user/show.tpl', md5($page['id'].$datetime));
+        if($raw) {
+            $page['body'] = htmlspecialchars($page['body']);
+            echo str_replace("\n", "<br />", $page['body']);
+            System::shutDown();
+        }
+        
+        $this->view->assign($page);
+        
+        return $this->view->fetch('user/show.tpl');
     }
     
 

@@ -23,21 +23,7 @@ require_once 'modules/Wikula/lib/Wikula/Common.php';
  * @package Wikula
  */
 class Wikula_Api_User extends Zikula_AbstractApi
-{
-    private $_em;
-    
-    
-    /**
-     * This function loads the common file.
-     */
-    function __autoload($class_name)
-    {
-        unset($class_name);
-        $this->_em = $this->getService('doctrine.entitymanager');
-    }
-    
- 
-    
+{   
     
     /**
      * Validate a PageName
@@ -89,29 +75,19 @@ class Wikula_Api_User extends Zikula_AbstractApi
         
         
         $em = $this->getService('doctrine.entitymanager');
-        $qb = $em->createQueryBuilder();
-        $qb->select('p')
-           ->from('Wikula_Entity_Pages', 'p')
-           ->where("p.tag = :tag")
-           ->setParameter('tag', $args['tag'])
-           ->setMaxResults(1);
 
 
-        if (isset($args['time']) && !empty($args['time'])) {
-            $qb->andWhere('where', 'p.time = :time')
-               ->setParameter('time', $args['time']); 
+        if (isset($args['rev']) && !empty($args['rev'])) {
+            return $em->getRepository('Wikula_Entity_Pages')
+                      ->findOneBy(array('tag' => $args['tag'], 'id' => $args['rev']))
+                      ->toArray();
         } else {
-            $qb->andWhere("p.latest = 'Y'");
-            
-        }
-        
-        // return the page or false if failed
-        $query = $qb->getQuery();
-        $result = $query->getArrayResult();
-        if( count($result) == 0) {
-            return false;
-        } else {
-            return $result[0];
+            $result = $em->getRepository('Wikula_Entity_Pages')
+                      ->findOneBy(array('tag' => $args['tag'], 'latest' => 'Y'));
+            if($result) {
+                $result = $result->toArray();
+            }
+            return $result;
         }
         
 
