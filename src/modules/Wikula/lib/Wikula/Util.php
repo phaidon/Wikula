@@ -39,13 +39,10 @@ class Wikula_Util extends Zikula_AbstractVersion
             'itemsperpage'            => 25,
             'langinstall'             => ZLanguage::getLanguageCode(),
             'double_doublequote_html' => 'safe',
-            'geshi_tab_width'         => 4,
-            'geshi_header'            => '',
-            'geshi_line_numbers'      => '1',
-            'grabcode_button'         => true,
             'subscription'            => false,
             'mandatorycomment'        => false,
-            'single_page_permissions' => false
+            'single_page_permissions' => false,
+            'ajaxsearch'              => true
         );
     
         return $defaults;

@@ -53,39 +53,41 @@ class Wikula_Api_Search extends Zikula_AbstractApi
     public function search($args)
     {
         // Permission check
-         ModUtil::apiFunc($this->name, 'Permission', 'canRead');
+        ModUtil::apiFunc($this->name, 'Permission', 'canRead');
 
         $search = $args['q'];
         
-       $pages = ModUtil::apiFunc('Wikula', 'user', 'FullTextSearch', array('phrase' => $search));
+        $pages = ModUtil::apiFunc('Wikula', 'user', 'LoadPages', array('q' => $search));
        
        
         $sessionId = session_id();
         
         foreach ($pages as $page)
         {
+            $hook = new Zikula_FilterHook(
+                'wikula.filter_hooks.body.filter', 
+                $page['body']
+            );
+            $text = ServiceUtil::getManager()->getService('zikula.hookmanager')
+                                            ->notify($hook)->getData(); 
             
-            preg_match("/(.{0,120}$search.{0,120})/is", $page['page_body'], $matches);
+            // mark search phrase and truncate it
+            preg_match("/(.{0,120}$search.{0,120})/is", $text, $matches);
             $text = $matches[0];
             
-            if( ModUtil::available('LuMicuLa') ) {
-                $text =  ModUtil::apiFunc('LuMicuLa', 'user', 'transform', array(
-                    'text'   => $text)
-                );
-            }
             
             $item = array(
-                'title'   => $page['page_tag'],
+                'title'   => $page['tag'],
                 'text'    => $text,
-                'extra'   => $page['page_tag'],
-                'created' => $page['page_time'],
+                'extra'   => $page['tag'],
+                'created' => $page['time']->format('Y-m-d'),
                 'module'  => $this->name,
                 'session' => $sessionId
             );
-            /*$insertResult = DBUtil::insertObject($item, 'search_result');
+            $insertResult = DBUtil::insertObject($item, 'search_result');
             if (!$insertResult) {
                 return LogUtil::registerError($this->__('Error! Could not load any articles.'));
-            }*/
+            }
         }
 
         return true;

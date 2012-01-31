@@ -14,6 +14,11 @@
         {formlabel for="root_page" __text='Root Page'}
         {formtextinput id="root_page" size="20" maxLength="64"}
     </div>
+    <div class="z-formrow">
+        {formlabel for="ajaxsearch" __text='Live search'}
+        {formcheckbox id="ajaxsearch"}
+        <em class="z-formnote z-sub">{gt text="Improve search experience, but needs more performance."}</em>
+    </div>
 
     <div class="z-formrow">
         {formlabel for="subscription" __text='Enable subscribtions'}

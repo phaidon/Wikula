@@ -23,3 +23,5 @@
 <script type="text/javascript">
     liveWikulaSearch('wikula_phrase');
 </script>
+
+{include file='user/search.tpl'}
