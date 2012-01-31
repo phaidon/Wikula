@@ -158,13 +158,13 @@ WikkaEdit.prototype.genToolbar = function() {
 	for(var i in this.we_buttons) {
 		switch (this.we_buttons[i].type) {
 			case "button" :		// button
-				html += "<img class=\"toolbutton\" src=\""+window.location.pnbaseURL+"modules/Wikka/editor/wikkaedit100/images/" + this.refToName(i) + ".gif\" alt=\"" + this.refToName(i) + "\" title=\"" + this.we_buttons[i].title + "\" onclick=\"varWikkaEdit.toolbarButtonClick(this, '" + this.refToName(i) + "');\"" + ie6_hover + " />";
+				html += "<img class=\"toolbutton\" src=\""+Zikula.Config.baseURL+"modules/Wikka/editor/wikkaedit100/images/" + this.refToName(i) + ".gif\" alt=\"" + this.refToName(i) + "\" title=\"" + this.we_buttons[i].title + "\" onclick=\"varWikkaEdit.toolbarButtonClick(this, '" + this.refToName(i) + "');\"" + ie6_hover + " />";
 				break;
 			case "submenu" :	// submenu
-				html += "<img class=\"toolbutton\" src=\""+window.location.pnbaseURL+"modules/Wikka/editor/wikkaedit100/images/submenu.gif\" alt=\"submenu\" title=\"" + this.we_buttons[i].title + "\" onclick=\"varWikkaEdit.toolbarButtonClick(this, '" + this.refToName(i) + "');\"" + ie6_hover + " />";
+				html += "<img class=\"toolbutton\" src=\""+Zikula.Config.baseURL+"modules/Wikka/editor/wikkaedit100/images/submenu.gif\" alt=\"submenu\" title=\"" + this.we_buttons[i].title + "\" onclick=\"varWikkaEdit.toolbarButtonClick(this, '" + this.refToName(i) + "');\"" + ie6_hover + " />";
 				break;
 			case "separator" :	// separator
-				html += "<img class=\"toolseparator\" src=\""+window.location.pnbaseURL+"modules/Wikka/editor/wikkaedit100/images/separator.gif\" alt=\"|\" />";
+				html += "<img class=\"toolseparator\" src=\""+Zikula.Config.baseURL+"modules/Wikka/editor/wikkaedit100/images/separator.gif\" alt=\"|\" />";
 				break;
 			default :
 				alert("genToolbar() : unknown type (" + this.we_buttons[i].type + ")");
@@ -177,7 +177,7 @@ WikkaEdit.prototype.genToolbar = function() {
 		html += "<span class='actiontitle'>Actions</span>";
 		for(i in this.we_categs) {
 			if (this.we_categs[i].title != null)	// hidden actions don't have a title
-				html += "<span class=\"toolbutton\" style='margin-left:20px; padding:2px 5px 3px 6px' onclick=\"varWikkaEdit.toolbarCategClick('" + i + "', this);\">" + this.we_categs[i].title + "<img src='"+window.location.pnbaseURL+"modules/Wikka/editor/wikkaedit100/images/submenu.gif' style='vertical-align:middle'/></span>";
+				html += "<span class=\"toolbutton\" style='margin-left:20px; padding:2px 5px 3px 6px' onclick=\"varWikkaEdit.toolbarCategClick('" + i + "', this);\">" + this.we_categs[i].title + "<img src='"+Zikula.Config.baseURL+"modules/Wikka/editor/wikkaedit100/images/submenu.gif' style='vertical-align:middle'/></span>";
 		}
 	}
 
@@ -242,7 +242,7 @@ WikkaEdit.prototype.toolbarButtonClick = function(obj, buttonName, submenuName) 
 
 // ===== show formatting rules (open a new window) =====
 WikkaEdit.prototype.showFormattingRules = function() {
-	var newUrl = window.location.pnbaseURL+window.location.entrypoint+"?module=wikula&tag=FormattingRules";
+	var newUrl = Zikula.Config.baseURL+window.location.entrypoint+"?module=wikula&tag=FormattingRules";
 	//newUrl = newUrl.replace(/[a-zA-Z0-9]+\/edit.*$/, );
 	window.open(newUrl, "wikka_formatting_rules");
 }
@@ -349,7 +349,7 @@ WikkaEdit.prototype.toggleSubmenu = function(obj, newSubmenu, isAction) {
 		if (!isAction) {
 			for(i in this.we_buttons[this.nameToRef(newSubmenu)].we_buttons) {
 				html += "<div class=\"smbutton\" onclick=\"varWikkaEdit.toolbarButtonClick(this, '" + this.refToName(i) + "', '" + newSubmenu + "');\">";
-				html += "<img class=\"smimage\" src=\""+window.location.pnbaseURL+"modules/Wikka/editor/wikkaedit100/images/" + this.refToName(i) + ".gif\" alt=\"" + this.refToName(i) + "\"" + ie6_hover + " />";
+				html += "<img class=\"smimage\" src=\""+Zikula.Config.baseURL+"modules/Wikka/editor/wikkaedit100/images/" + this.refToName(i) + ".gif\" alt=\"" + this.refToName(i) + "\"" + ie6_hover + " />";
 				html += this.we_buttons[this.nameToRef(newSubmenu)].we_buttons[i].title;
 				html += "</div>";
 			}
@@ -357,7 +357,7 @@ WikkaEdit.prototype.toggleSubmenu = function(obj, newSubmenu, isAction) {
 			for(i in this.we_actions) {
 				if (this.we_actions[i].we_categ == newSubmenu) {
 					html += "<div class=\"smbutton\" onclick=\"varWikkaEdit.toolbarActionClick('" + i + "');\"" + (this.we_actions[i].we_summary == null ? "" : " title=\"" + this.we_actions[i].we_summary + "\"") + ">";
-					html += "<img class=\"smimage\" src=\""+window.location.pnbaseURL+"modules/Wikka/editor/wikkaedit100/images/actions/" + this.we_actions[i].we_name + ".gif\" alt=\"" + this.we_actions[i].we_name + "\"" + ie6_hover + " />";
+					html += "<img class=\"smimage\" src=\""+Zikula.Config.baseURL+"modules/Wikka/editor/wikkaedit100/images/actions/" + this.we_actions[i].we_name + ".gif\" alt=\"" + this.we_actions[i].we_name + "\"" + ie6_hover + " />";
 					html += this.we_actions[i].we_title;
 					html += "</div>";
 				}

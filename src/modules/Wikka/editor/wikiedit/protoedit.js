@@ -109,7 +109,7 @@ ProtoEdit.prototype.createToolbar = function (id, width, height, readOnly) {
     html += ' <td class="btns-"><div id="' + btn.name + '_' + id + '" onmouseover=\'this.className="btn-hover";\' '
           + 'onmouseout=\'this.className="btn-";\' class="btn-" '
           + 'onclick="this.className=\'btn-pressed\';' + btn.actionName + '('//\'' + id + '\', ' 
-          + btn.actionParams + ')"><img src="' + document.location.pnbaseURL + this.imagesPath 
+          + btn.actionParams + ')"><img src="' + Zikula.Config.baseURL + this.imagesPath 
           + btn.name + '.gif" ' + wh + ' alt="' + btn.desc + '" title="' + btn.desc 
           + '"></div></td>\n';
   }

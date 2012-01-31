@@ -1210,8 +1210,7 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
 
         } else {
             // it's a Wiki link!
-            $pageid = ModUtil::apiFunc('Wikula', 'user', 'PageExists',
-                                array('tag' => $args['tag']));
+            $pageid = ModUtil::apiFunc('Wikula', 'user', 'PageExists', $args['tag']);
 
             $linktable = SessionUtil::getVar('linktable');
             if (is_array(unserialize($linktable))) {
