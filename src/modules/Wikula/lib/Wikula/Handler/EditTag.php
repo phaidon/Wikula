@@ -27,7 +27,9 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
      *
      * @var string
      */
-    private $_tag;
+    private $tag = null;
+    
+    
     
     /**
      * Setup form.
@@ -39,30 +41,31 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
     function initialize(Zikula_Form_View $view)
     {
         $modname = 'Wikula';
-        $this->_tag = FormUtil::getPassedValue('tag', null, "GET", FILTER_SANITIZE_STRING);   
+        $this->tag = FormUtil::getPassedValue('tag', null, "GET", FILTER_SANITIZE_STRING);
+     
         
         // Permission check
-        if (!ModUtil::apiFunc($modname, 'Permission', 'canEdit', $this->_tag)) {
+        if (!ModUtil::apiFunc($modname, 'Permission', 'canEdit', $this->tag)) {
             throw new Zikula_Exception_Forbidden(LogUtil::getErrorMsgPermission());
         }
         
         
         // redirect if tag contains spaces
-        if (strpos($this->_tag, ' ') !== false) {
+        if (strpos($this->tag, ' ') !== false) {
             $arguments = array(
-                'tag'  => str_replace(' ', '_', $this->_tag),
+                'tag'  => str_replace(' ', '_', $this->tag),
             );
             $redirecturl = ModUtil::url($modname, 'user', 'show', $arguments);
             System::redirect($redirecturl);
         }
         
         $specialPages = ModUtil::apiFunc($modname, 'SpecialPage', 'listpages');
-        if( array_key_exists($this->_tag, $specialPages)) {
-            return $view->redirect(ModUtil::url($modname, 'user', 'main', array('tag' => $this->_tag)));
+        if( array_key_exists($this->tag, $specialPages)) {
+            return $view->redirect(ModUtil::url($modname, 'user', 'main', array('tag' => $this->tag)));
         }
         
         $page = ModUtil::apiFunc($modname, 'user', 'LoadPage', array(
-            'tag'  => $this->_tag,
+            'tag'  => $this->tag,
         ));
         if($page) {
             $page['note'] = '';
@@ -70,6 +73,7 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
             $page = array(
                 'note' => $this->__('Initial Insert')
             );
+            $view->assign('tag', $this->tag);
         }
      
         // build the output 
@@ -103,7 +107,7 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
                 $modname,
                 'user',
                 'show',
-                array('tag' => $this->_tag) 
+                array('tag' => $this->tag) 
             );
             return $view->redirect($url);
         } else if ($args['commandName'] == 'clone') {
@@ -111,7 +115,7 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
                 $modname,
                 'user',
                 'cloneTag',
-                array('tag' => $this->_tag) 
+                array('tag' => $this->tag) 
             );
             return $view->redirect($url);
         } else if ($args['commandName'] == 'rename') {
@@ -119,7 +123,7 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
                 $modname,
                 'user',
                 'renameTag',
-                array('tag' => $this->_tag) 
+                array('tag' => $this->tag) 
             );
             return $view->redirect($url);
         }
@@ -147,7 +151,7 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
         // store
         //--------------------------
         // check for overwriting
-        $previousid = ModUtil::apiFunc($modname, 'user', 'PageExists', array('tag' => $this->_tag));
+        $previousid = ModUtil::apiFunc($modname, 'user', 'PageExists', $this->tag);
         
         
         if ($previousid && $previousid != $data['id']) {
@@ -157,13 +161,13 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
         }
         unset($data['id']);
         $store = ModUtil::apiFunc($modname, 'user', 'SavePage', array(
-            'tag'      => $this->_tag,
+            'tag'      => $this->tag,
             'body'     => $data['body'],
             'note'     => $data['note'],
             'tracking' => true
         ));
         
-        $url = ModUtil::url($modname, 'user', 'main', array('tag' => $this->_tag));
+        $url = ModUtil::url($modname, 'user', 'main', array('tag' => $this->tag));
         return $view->redirect($url);            
 
     }

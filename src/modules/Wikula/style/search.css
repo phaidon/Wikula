@@ -1,0 +1,30 @@
+#wikula_search {
+    margin: 1em 0 1em 0;
+}
+
+#wikula_search {
+    position: absolute;
+    width: 25em;
+    background-color: white;
+    border: 1px solid #888;
+    margin: 16px 0 0 0;
+    padding: 0;
+    z-index:9999;
+}
+
+#wikula_search ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+#wikula_search ul li.selected {
+    background-color: #ffb;
+}
+
+#wikula_search ul li {
+    cursor: pointer;
+    margin: 0;
+    padding: 3px 0 3px 3px;
+}

@@ -130,10 +130,8 @@ class Wikula_Api_User extends Zikula_AbstractApi
      * @param $args['tag'] tag of the page to check
      * @return id of the page, false if doesn't exists
      */
-    public function PageExists($args)
+    public function PageExists($tag)
     {
-        $tag = $args['tag'];
-        unset($arg);
         if (!isset($tag)) {
             return LogUtil::registerArgsError();
         }
@@ -471,6 +469,11 @@ class Wikula_Api_User extends Zikula_AbstractApi
                   ->setParameter('q', '%'.$args['q'].'%');        
         }
         
+        if(!empty($args['s'])) {
+            $query->andWhere("p.tag LIKE :s")
+                  ->setParameter('s', $args['s'].'%');        
+        }
+        
         if(!isset($args['latest']) or $args['latest']) {
             $query->andWhere("p.latest = 'Y'");        
         }
@@ -706,25 +709,16 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
 
         // ToDo: Rewrite page permission
-        foreach ($result as $value) {
-           extract($value);
+        foreach ($result as $key => $value) {
 
-            if (SecurityUtil::checkPermission('Wikula::', 'page::'.$tag, ACCESS_READ))  {
-                $pages[] = array(
-                    'page_id'         => $id,
-                    'page_tag'        => $tag,
-                    'page_time'       => $time,
-                    'page_body'       => $body,
-                    'page_owner'      => $owner,
-                    'page_user'       => $user,
-                    'page_handler'    => $handler
-                );
+            if (!SecurityUtil::checkPermission('Wikula::', 'page::'.$value['tag'], ACCESS_READ))  {
+                unset($result[$key]);
             }
 
         }
         
                 
-        return $pages;
+        return $result;
 
     }
 
@@ -1240,8 +1234,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
         } else {
             // it's a Wiki link!
-            $pageid =  ModUtil::apiFunc($this->name, 'user', 'PageExists',
-                                array('tag' => $args['tag']));
+            $pageid =  ModUtil::apiFunc($this->name, 'user', 'PageExists', $args['tag']);
 
             $linktable = SessionUtil::getVar('linktable');
             if (is_array(unserialize($linktable))) {

@@ -20,7 +20,7 @@ function smarty_function_wikulaPageTitle($params, &$smarty)
 {
     unset($smarty);
     
-    $dom = ZLanguage::getModuleDomain('Wikula');
+    $dom    = ZLanguage::getModuleDomain('Wikula');
     $tag    = $params['tag'];
     $action = FormUtil::getPassedValue('func');
     $info   = ModUtil::getInfoFromName('Wikula');

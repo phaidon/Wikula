@@ -16,3 +16,10 @@
         </li>
     </ul>
 </div>
+                
+{ajaxheader modname=$modinfo.name filename='search.js' ui=true}
+{pageaddvar name='stylesheet' value='modules/Wikula/style/search.css'}
+<div id="wikula_search"></div>
+<script type="text/javascript">
+    liveWikulaSearch('wikula_phrase');
+</script>

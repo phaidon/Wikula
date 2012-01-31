@@ -386,6 +386,8 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
     {
         $phrase = FormUtil::getPassedValue('phrase');
 
+        $phrase = str_replace($this->__('containing...'), '', $phrase);
+        
         // Defaults
         $result   = array();
         $notfound = false;

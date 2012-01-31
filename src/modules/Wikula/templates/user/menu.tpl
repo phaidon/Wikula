@@ -20,7 +20,7 @@
                     <form class="z-form" action="{modurl modname=$modinfo.name type='user' func='main' __tag='Search'}" method="post" enctype="application/x-www-form-urlencoded">
                         <div>
                             <input id="wikula_phrase" name="phrase" size="12" class="wikula_searchbox"/>
-                            <button id="searchButton" type="submit" name="button" class="wikula_searchbutton">{img src='search.png' alt='' modname=$modinfo.name width="14" height="14"}</button>
+                            <button id="searchButton" type="submit" name="button" class="wikula_searchbutton">{img src='search.png' alt='' modname=$modinfo.name width="14" height="14"}</button>   
                         </div>
                     </form>
                 </li>
@@ -29,3 +29,11 @@
         {insert name='getstatusmsg'}
     </div>
 </div>
+    
+    
+{ajaxheader modname=$modinfo.name filename='search.js' ui=true}
+{pageaddvar name='stylesheet' value='modules/Wikula/style/search.css'}
+<div id="wikula_search"></div>
+<script type="text/javascript">
+    liveWikulaSearch('wikula_phrase');
+</script>

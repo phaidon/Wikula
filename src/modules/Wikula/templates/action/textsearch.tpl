@@ -10,12 +10,16 @@
 
 {if !$notfound AND !empty($phrase)}
 <p>{gt text='Search result: <strong>%1$s matches</strong> for <strong>%2$s</strong>' tag1=$resultcount|safehtml tag2=$phrase|safehtml}</p>
+
 <ol>
-    {foreach from=$results item='result'}
-    <li>
-        <a href="{modurl modname='Wikula' type='user' func='main' tag=$result.page_tag|safehtml}" title="{$result.page_tag|safehtml}">{$result.page_tag|safehtml}</a>
-    </li>
-    {/foreach}
+{foreach from=$results item='result'}
+<li>
+    <a href="{modurl modname='Wikula' type='user' func='main' tag=$result.tag|safehtml}" title="{$result.tag|safehtml}">
+        {$result.tag|safehtml}
+    </a><br />
+    {$result.body|notifyfilters:'wikula.filter_hooks.body.filter'|teaser}
+</li>
+{/foreach}
 </ol>
 <br />
 {modurl modname='Wikula' type='user' func='main' tag=$TextSearchExpandedTag phrase=$phrase assign='searchurl'}
