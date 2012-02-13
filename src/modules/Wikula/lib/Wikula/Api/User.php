@@ -160,15 +160,16 @@ class Wikula_Api_User extends Zikula_AbstractApi
         require_once 'modules/Wikula/lib/vendor/Text_Diff/Diff/Renderer.php';
         require_once 'modules/Wikula/lib/vendor/Text_Diff/Diff/Renderer/unified.php';
 
-        //$lines1 = array('gg', 'hallo welt');
-        //$lines2 = array('gg',"hallo welt 2", "tt", "gg");
-
         $diff     = new Text_Diff('auto', array($lines1, $lines2));
         $renderer = new Text_Diff_Renderer_Unified(
         );
         $text = $renderer->render($diff);
         $diff = explode("\n", $text);
         array_shift($diff);
+        end($diff);
+        if (current($diff) == '') {
+           array_pop($diff);
+        }
         return $diff;
     }
 
