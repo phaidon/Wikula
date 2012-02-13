@@ -14,6 +14,7 @@
  * This function modifies a perma link.
  *
  * @param string $text Text.
+ * @param string $search Phrase to highlight.
  * 
  * @return string
  */

@@ -1306,7 +1306,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
      * 
      * @param string $tag Tag of a wiki page.
      * 
-     * @return void
+     * @return statement
      */
     public function CheckTag($tag = null)
     {

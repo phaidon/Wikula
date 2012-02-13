@@ -200,7 +200,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
         $a = FormUtil::getPassedValue('a', null); 
         $b = FormUtil::getPassedValue('b', null); 
         
-        if(is_null($a) && is_null($b) && count($revisions) > 2) {
+        if (is_null($a) && is_null($b) && count($revisions) > 2) {
             reset($revisions); 
             $newestrevision = current($revisions);
             $b = $newestrevision['id'];
