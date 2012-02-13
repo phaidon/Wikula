@@ -88,7 +88,7 @@
     <div class="z-formrow">
         {formlabel for="engine" __text="Engine"}
         {formdropdownlist id="engine" items=$engines}
-        {if $editor != 'none'}
+        {if $engine != 'none'}
             <em>
                 <a href="{modurl modname=$engine type="admin" func="main"}">
                    {gt text="Engine settings"}
@@ -101,7 +101,23 @@
         <a href="{modurl modname='Wikula' type='admin' func="rebuildLinksAndCategoriesTables"}">Rebuild links and categories tables.</a>
     </p>
 
-</fieldset>            
+</fieldset>
+    
+    
+<fieldset>
+    <legend>{gt text='Discussion'}</legend>
+    <div class="z-formrow">
+        {formlabel for="discussion" __text="Discussion module"}
+        {formdropdownlist id="discussionModule" items=$discussionModules}
+        {if $discussionModule != 'none'}
+            <em>
+                <a href="{modurl modname=$discussionModule type="admin" func="main"}">
+                   {gt text="Discussion module settings"}
+                </a>
+            </em>
+        {/if}
+    </div>
+</fieldset> 
             
             
             

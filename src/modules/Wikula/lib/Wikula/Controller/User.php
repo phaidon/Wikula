@@ -159,6 +159,25 @@ class Wikula_Controller_User extends Zikula_AbstractController
         return $form->execute('user/rename.tpl', new Wikula_Handler_RenameTag());
     }
     
+    
+    /**
+     * discuss
+     * 
+     * This function shows the discussion of a wiki page.
+     *
+     * @return smarty output
+     */
+    public function discuss()
+    {
+        // Security check will be done by LoadRevisions()
+        $tag = FormUtil::getPassedValue('tag');        
+        ModUtil::apiFunc($this->name, 'User', 'CheckTag', $tag);
+        
+        return $this->view->assign('tag', $tag)
+                          ->fetch('user/discuss.tpl');
+        
+    }
+    
     /**
      * history
      * 

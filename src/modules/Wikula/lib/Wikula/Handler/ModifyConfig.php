@@ -96,6 +96,31 @@ class Wikula_Handler_ModifyConfig  extends Zikula_Form_AbstractHandler
         $view->assign('engines', $engines);
         
         
+        
+        // get discussion modules
+        $discussionModule = 'none';
+        $discussionHook = HookUtil::getBindingsFor('subscriber.wikula.ui_hooks.discuss');
+        foreach ($discussionHook as $value) {
+            if ($value['areaname'] == 'provider.ezcomments.ui_hooks.comments') {
+                $discussionModule = 'EZComments';
+                break;
+            }
+        }
+        $discussionModules = array();
+        $discussionModules[] = array(
+            'text' => 'None',
+            'value' => 'none'
+        );
+        if (ModUtil::available('EZComments')) {
+            $discussionModules[] = array(
+                'text' => 'EZComments',
+                'value' => 'EZComments'
+            );
+        }
+        $view->assign('discussionModule',  $discussionModule);
+        $view->assign('discussionModules', $discussionModules);
+        
+        
         return true;
     }
 
@@ -143,7 +168,7 @@ class Wikula_Handler_ModifyConfig  extends Zikula_Form_AbstractHandler
         unset($data['editor']);
 
         
-        // set editor
+        // set engine
         $hookManager = ServiceUtil::getService('zikula.hookmanager');        
         switch ($data['engine']) {
             case 'none':
@@ -157,6 +182,21 @@ class Wikula_Handler_ModifyConfig  extends Zikula_Form_AbstractHandler
             case 'LuMicuLa':
                 $hookManager->bindSubscriber(   'subscriber.wikula.filter_hooks.body', 'provider.lumicula.filter_hooks.lml');
                 $hookManager->unbindSubscriber( 'subscriber.wikula.filter_hooks.body', 'provider.wikka.filter_hooks.lml');
+                break;
+        }
+        unset($data['engine']);
+        
+        
+        // set discussion module
+        $hookManager = ServiceUtil::getService('zikula.hookmanager');        
+        switch ($data['discussionModule']) {
+            case 'none':
+                $hookManager->unbindSubscriber('subscriber.wikula.ui_hooks.discuss', 'provider.ezcomments.ui_hooks.comments');
+                $this->setVar('discussion_is_available', false);
+                break;
+            case 'EZComments':
+                $hookManager->bindSubscriber(  'subscriber.wikula.ui_hooks.discuss', 'provider.ezcomments.ui_hooks.comments');
+                $this->setVar('discussion_is_available', true);
                 break;
         }
         unset($data['engine']);

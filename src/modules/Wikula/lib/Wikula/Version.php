@@ -92,5 +92,13 @@ class Wikula_Version extends Zikula_AbstractVersion
         );
         $bundle->addEvent('filter', 'wikula.filter_hooks.body.filter');
         $this->registerHookSubscriberBundle($bundle);
+        
+        $bundle = new Zikula_HookManager_SubscriberBundle(
+            $this->name,
+            'subscriber.wikula.ui_hooks.discuss',
+            'ui_hooks', $this->__('Wikula discussion area')
+            );
+        $bundle->addEvent('display_view', 'wikula.ui_hooks.discuss.display_view');
+        $this->registerHookSubscriberBundle($bundle);
     }
 }

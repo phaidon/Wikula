@@ -38,7 +38,8 @@ class Wikula_Util extends Zikula_AbstractVersion
             'subscription'            => false,
             'mandatorycomment'        => false,
             'single_page_permissions' => false,
-            'ajaxsearch'              => true
+            'ajaxsearch'              => true,
+            'discussion_is_available' => false,
         );
     
         return $defaults;
