@@ -17,17 +17,15 @@ class Wikula_Api_Account extends Zikula_AbstractApi
 {
     /**
      * Return an array of items to show in the your account panel
-     *
-     * @param mixed $args Not used.
      * 
      * @return array Indexed array of items.
      */
-    public function getall($args)
+    public function getall()
     {
         $items = array();
         if (
             UserUtil::isLoggedIn() &&
-            SecurityUtil::checkPermission('Wikula::', '::', ACCESS_READ) &&∂ 
+            SecurityUtil::checkPermission('Wikula::', '::', ACCESS_READ) &&
             $this->getVar('subscription', false)
         ) {
             // Create an array of links to return
