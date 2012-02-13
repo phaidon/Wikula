@@ -125,6 +125,52 @@ class Wikula_Api_User extends Zikula_AbstractApi
         return $qb->getQuery()->getArrayResult();
 
     }
+    
+    /**
+     * This functions diffs two revisions of a Wiki page
+     * 
+     * @param array $args Arguments.
+     * 
+     * @return mixed
+     */
+    public function DiffRevisions($args) {
+        
+        if (!isset($args['rev1']) || !isset($args['rev2']) || !isset($args['revisions'])) {
+            return null;
+        }
+        
+        if ($args['rev1'] == $args['rev2'] ) {
+            return null;
+        }
+        
+        foreach ($args['revisions'] as $revision) {        
+            if ($revision['id'] == $args['rev1']) {
+                $lines1 = explode("\n", $revision['body']);
+            } else if ($revision['id'] == $args['rev2']) {
+                $lines2 = explode("\n", $revision['body']);
+            } else {
+                continue;
+            }
+            if (isset($lines1) && isset($lines2)) {
+                break;
+            }
+        }
+              
+        require_once 'modules/Wikula/lib/vendor/Text_Diff/Diff.php';
+        require_once 'modules/Wikula/lib/vendor/Text_Diff/Diff/Renderer.php';
+        require_once 'modules/Wikula/lib/vendor/Text_Diff/Diff/Renderer/unified.php';
+
+        //$lines1 = array('gg', 'hallo welt');
+        //$lines2 = array('gg',"hallo welt 2", "tt", "gg");
+
+        $diff     = new Text_Diff('auto', array($lines1, $lines2));
+        $renderer = new Text_Diff_Renderer_Unified(
+        );
+        $text = $renderer->render($diff);
+        $diff = explode("\n", $text);
+        array_shift($diff);
+        return $diff;
+    }
 
 
     /**
@@ -1276,6 +1322,12 @@ class Wikula_Api_User extends Zikula_AbstractApi
             $redirecturl = ModUtil::url($this->name, 'user', 'show', $arguments);
             System::redirect($redirecturl);
         }
+        
+        // redirect if tag contains spaces
+        if (ModUtil::apiFunc($this->name, 'SpecialPage', 'isSpecialPage', $tag) ) {
+            return System::redirect( ModUtil::url($this->name, 'user', 'main', array('tag' => $tag)) );
+        }
+
     }
     
 }

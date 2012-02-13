@@ -917,3 +917,15 @@ button.wikula_searchbutton {
     background: url("../../../images/icons/extrasmall/editcopy.png") 10px 50% no-repeat, -webkit-gradient(linear, left top, left bottom, from(#cfcfcf), to(#fafafa)) repeat scroll 0 0 transparent; /*webkit*/
     background: url("../../../images/icons/extrasmall/editcopy.png") 10px 50% no-repeat, linear-gradient(#cfcfcf, #fafafa); /*CSS3*/
 }
+
+.wikula-diff-insert {
+    background-color: #DDFFDD
+}
+
+.wikula-diff-delete {
+    background-color: #FFDDDD
+}
+
+.wikula-diff-nochange {
+    background-color: #F8F8FF
+}

@@ -168,29 +168,83 @@ class Wikula_Controller_User extends Zikula_AbstractController
      */
     public function history()
     {
-        // TODO: Implement the time parameter?
-        // TODO: Add a paginator?
-        // TODO: Improve this view with JavaScript sliders
-        
         // Security check will be done by LoadRevisions()
-        
         $tag = FormUtil::getPassedValue('tag');        
         ModUtil::apiFunc($this->name, 'User', 'CheckTag', $tag);
         
-        if (ModUtil::apiFunc($this->name, 'SpecialPage', 'isSpecialPage', $tag) ) {
-            return System::redirect( ModUtil::url($this->name, 'user', 'main', array('tag' => $tag)) );
+        
+        
+        
+        $revisions = ModUtil::apiFunc($this->name, 'user', 'LoadRevisions0', $tag);
+
+        // compare two revisions
+        $a = FormUtil::getPassedValue('a', null); 
+        $b = FormUtil::getPassedValue('b', null); 
+        
+        if(is_null($a) && is_null($b) && count($revisions) > 2) {
+            reset($revisions); 
+            $newestrevision = current($revisions);
+            $b = $newestrevision['id'];
+            next($revisions);
+            $secondnewestrevision = current($revisions);
+            $a = $secondnewestrevision['id'];
         }
-
-        $revisions = ModUtil::apiFunc($this->name, 'user', 'LoadRevisions', array(
-            'tag' => $tag)
-        );
-
-        $this->view->assign('tag',     $tag);
-        $this->view->assign('objects', $revisions['objects']);
-        $this->view->assign('oldest',  $revisions['oldest']);
-        return $this->view->fetch('user/history.tpl');
+        
+        $diff = ModUtil::apiFunc(
+                    $this->name,
+                    'user',
+                    'DiffRevisions',
+                    array(
+                        'rev1'      => $a,
+                        'rev2'      => $b,
+                        'revisions' => $revisions
+                    )
+                );
+        
+        
+        return $this->view->assign('tag',       $tag)
+                          ->assign('revisions', $revisions)
+                          ->assign('a',         $a)
+                          ->assign('b',         $b)
+                          ->assign('diff',      $diff)
+                          ->fetch('user/history.tpl');
     }
 
+    
+    function diff($old, $new){
+	$maxlen = 0;
+	foreach($old as $oindex => $ovalue){
+		$nkeys = array_keys($new, $ovalue);
+		foreach($nkeys as $nindex){
+			$matrix[$oindex][$nindex] = isset($matrix[$oindex - 1][$nindex - 1]) ?
+				$matrix[$oindex - 1][$nindex - 1] + 1 : 1;
+			if($matrix[$oindex][$nindex] > $maxlen){
+				$maxlen = $matrix[$oindex][$nindex];
+				$omax = $oindex + 1 - $maxlen;
+				$nmax = $nindex + 1 - $maxlen;
+			}
+		}	
+	}
+	if($maxlen == 0) return array(array('d'=>$old, 'i'=>$new));
+	return array_merge(
+		diff(array_slice($old, 0, $omax), array_slice($new, 0, $nmax)),
+		array_slice($new, $nmax, $maxlen),
+		diff(array_slice($old, $omax + $maxlen), array_slice($new, $nmax + $maxlen)));
+}
+
+function htmlDiff($old, $new){
+	$ret = '';
+	$diff = diff(explode(' ', $old), explode(' ', $new));
+	foreach($diff as $k){
+		if(is_array($k))
+			$ret .= (!empty($k['d'])?"<del>".implode(' ',$k['d'])."</del> ":'').
+				(!empty($k['i'])?"<ins>".implode(' ',$k['i'])."</ins> ":'');
+		else $ret .= $k . ' ';
+	}
+	return $ret;
+}
+    
+    
     /**
      * XML output of the recent changes of the specified page
      *
