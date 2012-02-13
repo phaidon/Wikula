@@ -700,9 +700,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
     public function Search($args)
     {
         
-        $phrase = DataUtil::formatForStore($args['phrase']);
-        unset($args);
-        if (!isset($phrase)) {
+        if (!isset($args['phrase'])) {
             return LogUtil::registerArgsError();
         }
         
@@ -714,14 +712,20 @@ class Wikula_Api_User extends Zikula_AbstractApi
            ->from('Wikula_Entity_Pages', 'p')
            ->orderBy('p.time', 'DESC')
            ->where("p.latest = 'Y'" )
-           ->andWhere( $qb->expr()->like('p.tag', '?1') )
-           ->setParameter(1, '%'.$phrase.'%');
+           ->setParameter('tag', '%'.$args['phrase'].'%');
+        if (isset($args['fulltextsearch']) && $args['fulltextsearch']) {
+            $qb->andWhere(
+                    $qb->expr()->orx(
+                        $qb->expr()->like('p.body', ':tag'),
+                        $qb->expr()->like('p.tag',  ':tag')
+                    )
+                );
+        } else {
+            $qb->andWhere( $qb->expr()->like('p.tag', ':tag'));
+        }
         $query = $qb->getQuery();
         $result = $query->getArrayResult();
        
-        
-        $pages = array();
-
 
         // ToDo: Rewrite page permission
         foreach ($result as $key => $value) {
@@ -729,8 +733,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
                 unset($result[$key]);
             }
         }
-        
-                
+                 
         return $result;
 
     }

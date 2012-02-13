@@ -17,11 +17,10 @@
  * 
  * @return string
  */
-function smarty_modifier_teaser($text)
+function smarty_modifier_teaser($text, $search)
 {
     $text = strip_tags($text);
-    if (strlen($text) > 100) {
-        $text = preg_replace('/\s+?(\S+)?$/', '', substr($text, 0, 100)).'...';
-    }
-    return $text;
+    $text = DataUtil::formatForDisplay($text);
+    $contextSize = 100;
+    return StringUtil::highlightWords($text, $search, $contextSize);
 }

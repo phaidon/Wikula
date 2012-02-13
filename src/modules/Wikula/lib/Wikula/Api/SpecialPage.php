@@ -376,7 +376,8 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
      */
     public function search()
     {
-        $phrase = FormUtil::getPassedValue('phrase');
+        $phrase         = FormUtil::getPassedValue('phrase');
+        $fulltextsearch = FormUtil::getPassedValue('fulltextsearch', false);
 
         $phrase = str_replace($this->__('containing...'), '', $phrase);
         
@@ -389,8 +390,15 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
         if (!empty($phrase)) {
             $phrase = trim($phrase);
 
-            $result = ModUtil::apiFunc($this->name, 'user', 'Search',
-                                   array('phrase' => $phrase));
+            $result = ModUtil::apiFunc(
+                          $this->name,
+                          'user',
+                          'Search',
+                          array(
+                              'phrase'         => $phrase,
+                              'fulltextsearch' => $fulltextsearch
+                          )
+                      );
 
             if (empty($result)) {
                 $notfound = true;
@@ -402,69 +410,26 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
                 $oneword  = true;
             }
         }
-
+        
         // create the output
 
-        $this->view->assign('phrase',                 $phrase);
-        $this->view->assign('results',                $result);
-        $this->view->assign('resultcount',            count($result));
-        $this->view->assign('notfound',               $notfound);
-        $this->view->assign('oneword',                $oneword);
-        $this->view->assign('TextSearchExpandedTag',  $this->__('TextSearchExpanded'));
-
-        return $this->view->fetch('action/textsearch.tpl');
+        return $this->view->assign('phrase',         $phrase)
+                          ->assign('results',        $result)
+                          ->assign('resultcount',    count($result))
+                          ->assign('notfound',       $notfound)
+                          ->assign('oneword',        $oneword)
+                          ->assign('fulltextsearch', $fulltextsearch)
+                          ->fetch('action/search.tpl');
     }   
 
     /**
      * It returns the TextSearchExpanded page 
      *
-     * @return string HTML string containing the rendered template.
+     * @return statement
      */
     function TextSearchExpanded()
     {
-        $phrase = FormUtil::getPassedValue('phrase');
-
-        // Defaults
-        $result   = array();
-        $notfound = false;
-
-        // Process the query
-        if (!empty($phrase)) {
-            $phrase = trim($phrase);
-
-            $result = ModUtil::apiFunc($this->name, 'user', 'FullTextSearch',
-                                   array('phrase' => $phrase));
-
-            if (empty($result)) {
-                $notfound = true;
-            } else {
-                $search = str_replace('"', '', $phrase);
-                $search = preg_quote($search, '/');
-                foreach ($result as $i => $item) {
-                    preg_match("/(.{0,120}$search.{0,120})/is", $item['page_body'], $matchString);
-
-                    $text = ModUtil::apiFunc($this->name, 'user', 'htmlspecialchars_ent',
-                                         array('text' => isset($matchString[0]) ? $matchString[0] : ''));
-
-                    $result[$i]['matchtext'] = preg_replace("/($search)/i",
-                                                            "<span style=\"color:green;\"><b>$1</b></span>",
-                                                            $text,
-                                                            -1);
-
-                }
-            }
-        }
-
-        // create the output
-
-
-        $this->view->assign('phrase',                 $phrase);
-        $this->view->assign('results',                $result);
-        $this->view->assign('resultcount',            count($result));
-        $this->view->assign('notfound',               $notfound);
-        $this->view->assign('TextSearchExpandedTag',  $this->__('TextSearchExpanded'));
-
-        return $this->view->fetch('action/textsearchexpanded.tpl');
+        return $this->search();
     }
     
     /**
