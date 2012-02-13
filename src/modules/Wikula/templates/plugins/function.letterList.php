@@ -2,9 +2,6 @@
 /**
  * Copyright Wikula Team 2011
  *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
- *
  * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikula
  * @link https://github.com/phaidon/Wikula
@@ -15,11 +12,15 @@
 
 /**
  * This function sorts a list by letter.
+ *
+ * @param array $params Plugin parameters.
+ * @param mixed $smarty Smarty.
+ * 
+ * @return string
  */
-function smarty_function_letterList($params, &$smarty)
+function smarty_function_letterList($params, $smarty)
 {
     $pagelist = array();
-    
     
     foreach ($params['pages'] as $page) {
         $tag = $page['tag'];

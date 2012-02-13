@@ -2,9 +2,6 @@
 /**
  * Copyright Wikula Team 2011
  *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
- *
  * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikula
  * @link https://github.com/phaidon/Wikula
@@ -19,8 +16,6 @@ require_once 'modules/Wikula/lib/Wikula/Common.php';
 
 /**
  * User api class.
- * 
- * @package Wikula
  */
 class Wikula_Api_User extends Zikula_AbstractApi
 {   
@@ -28,7 +23,8 @@ class Wikula_Api_User extends Zikula_AbstractApi
     /**
      * Validate a PageName
      * 
-     * @param array input arguments
+     * @param array $args Arguments.
+     * 
      * @return true
      */
     public function isValidPagename($args)
@@ -43,8 +39,9 @@ class Wikula_Api_User extends Zikula_AbstractApi
     /**
      * Check access to edit a page
      * 
-     * @param array input arguments
-     * @return bool
+     * @param array $args Arguments.
+     * 
+     * @return boolean
      */
     public function isAllowedToEdit($args)
     {
@@ -58,8 +55,13 @@ class Wikula_Api_User extends Zikula_AbstractApi
     /**
      * Load a wiki page with the given tag
      *
-     * @param string $args['tag'] tag of the wiki page to get
-     * @param string $args['time'] (optional) update time, latest page if not defined
+     * Parameters passed in the $args array:
+     * -------------------------------------
+     * string $args['tag'] Tag of the wiki page to get
+     * string $args['time'] (Optional) Update time, latest page if not defined
+     * 
+     * @param array $args Page arguments.
+     * 
      * @return array wiki page data
      */
     public function LoadPage($args)
@@ -84,7 +86,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
         } else {
             $result = $em->getRepository('Wikula_Entity_Pages')
                       ->findOneBy(array('tag' => $args['tag'], 'latest' => 'Y'));
-            if($result) {
+            if ($result) {
                 $result = $result->toArray();
             }
             return $result;
@@ -96,8 +98,9 @@ class Wikula_Api_User extends Zikula_AbstractApi
     /**
      * Load a all revisions of a wiki page
      *
-     * @param string $tag tag of the wiki page
-     * @return array list of all revisions of a wiki page
+     * @param string $tag Tag of the wiki page.
+     * 
+     * @return array list of all revisions of a wiki page.
      */
     public function LoadRevisions0($tag) {
                         
@@ -126,8 +129,9 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
     /**
      * Check if a page exist
-     *
-     * @param $args['tag'] tag of the page to check
+     * 
+     * @param string $tag Tag of the wiki page.
+     * 
      * @return id of the page, false if doesn't exists
      */
     public function PageExists($tag)
@@ -137,7 +141,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
         }
         
         $specialPages = ModUtil::apiFunc($this->name, 'SpecialPage', 'listpages');
-        if(array_key_exists($tag, $specialPages)) {
+        if (array_key_exists($tag, $specialPages)) {
             return true;
         }
         
@@ -153,7 +157,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
         $query = $qb->getQuery();
         $result = $query->getArrayResult();
-        if(!$result) {
+        if (!$result) {
             return false;
         }
         return $result[0]['id'];
@@ -163,15 +167,12 @@ class Wikula_Api_User extends Zikula_AbstractApi
     /**
      * Load a wiki page revision by id
      *
-     * @param string $args['id'] if of a wiki page revision
+     * @param integer $id If of a wiki page revision.
+     * 
      * @return array wiki page revision
      */
-    public function LoadPagebyId($args)
+    public function LoadPagebyId($id)
     {
-        
-        $id = $args['id'];
-        unset($args);
-
         if (!isset($id) || !is_numeric($id)) {
             return LogUtil::registerArgsError();
         }
@@ -194,13 +195,18 @@ class Wikula_Api_User extends Zikula_AbstractApi
     /**
      * Get the Revisions of a Wiki Page
      *
-     * @param string $args['tag']
-     * @param string $args['startnum'] (optional) start offset
-     * @param string $args['numitems'] (optional) number of items to fetch
-     * @param string $args['orderby'] (optional) sort by fieldname
-     * @param string $args['orderdir'] (optional) sort direction (ASC or DESC)
-     * @param string $args['loadbody'] (optional) flag to include the body in the results
-     * @param string $args['getoldest'] (optional) flag to fetch the oldes revision only
+     * Parameters passed in the $args array:
+     * -------------------------------------
+     * string $args['tag'].
+     * string $args['startnum'] (optional) start offset.
+     * string $args['numitems'] (optional) number of items to fetch.
+     * string $args['orderby'] (optional) sort by fieldname.
+     * string $args['orderdir'] (optional) sort direction (ASC or DESC).
+     * string $args['loadbody'] (optional) flag to include the body in the results.
+     * string $args['getoldest'] (optional) flag to fetch the oldes revision only.
+     * 
+     * @param array $args Page arguments.
+     * 
      * @return array of revisions
      */
     public function LoadRevisions($args)
@@ -257,14 +263,14 @@ class Wikula_Api_User extends Zikula_AbstractApi
             $deleted = array_diff($bodynext, $bodylast);
 
             if ($added) {
-                $newcontent = implode("\n", $added)/*."\n"*/;
+                $newcontent = implode("\n", $added); //."\n"
             } else {
                 $newcontent = '';
                 $added = false;
             }
 
             if ($deleted) {
-                $oldcontent = implode("\n", $deleted)/*."\n"*/;
+                $oldcontent = implode("\n", $deleted);//."\n"
             } else {
                 $oldcontent = '';
                 $deleted = false;
@@ -300,7 +306,8 @@ class Wikula_Api_User extends Zikula_AbstractApi
     /**
      * Load wiki pages that link to a given wiki page
      *
-     * @param string tag of a wiki page
+     * @param string $tag Tag of a wiki page.
+     * 
      * @return array wiki pages
      */
     public function LoadPagesLinkingTo($tag)
@@ -328,8 +335,9 @@ class Wikula_Api_User extends Zikula_AbstractApi
     /**
      * Count back links of a wiki page
      *
-     * @param string tag of a wiki page
-     * @return int number of backlinks
+     * @param string $tag Tag of a wiki page.
+     * 
+     * @return integer Number of backlinks.
      */
     public function CountBackLinks($tag)
     {
@@ -350,8 +358,9 @@ class Wikula_Api_User extends Zikula_AbstractApi
     /**
      * Load the recently changed pages
      *
-     * @param unknown_type $args
-     * @return unknown
+     * @param array $args Wiki page arguments.
+     * 
+     * @return array Revisions.
      */
     public function LoadRecentlyChanged($args)
     {
@@ -370,10 +379,10 @@ class Wikula_Api_User extends Zikula_AbstractApi
         
         
         
-        if (isset($startnum) and is_numeric($startnum) and $startnum > 1) {
+        if (isset($startnum) && is_numeric($startnum) && $startnum > 1) {
             $query->setFirstResult($offset = $startnum-1);
         }
-        if (isset($numitems) and is_numeric($numitems) and $numitems > 0) {
+        if (isset($numitems) && is_numeric($numitems) && $numitems > 0) {
             $query->setMaxResults($limit = $numitems);
 
         }    
@@ -388,11 +397,10 @@ class Wikula_Api_User extends Zikula_AbstractApi
         }
 
         
-        if(!empty($formated) and $formated) {
+        if (!empty($formated) && $formated) {
             $curday = '';
             $pagelist = array();
-            foreach ($revisions as $page)
-            {
+            foreach ($revisions as $page) {
                 $day  = $page['time']->format('Y-m-d');
                 if ($day != $curday) {
                     $dateformatted = $page['time']->format('D, d M Y');
@@ -417,7 +425,8 @@ class Wikula_Api_User extends Zikula_AbstractApi
     /**
      * Load all wiki pages
      *
-     * @param array input arguments
+     * @param array $args Arguments.
+     * 
      * @return array wiki pages
      */
     public function LoadAllPages($args)
@@ -438,7 +447,8 @@ class Wikula_Api_User extends Zikula_AbstractApi
     /**
      * Load all wiki pages
      *
-     * @param array input arguments
+     * @param array $args Arguments.
+     * 
      * @return array wiki pages
      */
     public function LoadPages($args)
@@ -457,33 +467,33 @@ class Wikula_Api_User extends Zikula_AbstractApi
               ->from('Wikula_Entity_Pages', 'p');
                 
         
-        if (isset($args['orphaned']) and  $args['orphaned']) { 
+        if (isset($args['orphaned']) &&  $args['orphaned']) { 
             $query->leftJoin('p.links', 'l');
             $query->where("p.links IS EMPTY");    
         }
 
         
         
-        if(!empty($args['q'])) {
+        if (!empty($args['q'])) {
             $query->andWhere("p.tag LIKE :q")
                   ->setParameter('q', '%'.$args['q'].'%');        
         }
         
-        if(!empty($args['s'])) {
+        if (!empty($args['s'])) {
             $query->andWhere("p.tag LIKE :s")
                   ->setParameter('s', $args['s'].'%');        
         }
         
-        if(!isset($args['latest']) or $args['latest']) {
+        if (!isset($args['latest']) || $args['latest']) {
             $query->andWhere("p.latest = 'Y'");        
         }
         
-        if(!is_null($args['tag']) ) {
+        if (!is_null($args['tag']) ) {
             $query->andWhere('p.tag = :tag')
                   ->setParameter('tag', $args['tag']);
         }
         
-        if(isset($args['orderBy']) ) {
+        if (isset($args['orderBy']) ) {
             if (empty($args['orderDirection'])) {
                 $args['orderDirection'] = 'ASC';
             }
@@ -491,10 +501,10 @@ class Wikula_Api_User extends Zikula_AbstractApi
         }
         
         
-        if (isset($args['startnum']) and is_numeric($args['startnum']) and $args['startnum'] > 1) {
+        if (isset($args['startnum']) && is_numeric($args['startnum']) && $args['startnum'] > 1) {
             $query->setFirstResult($args['startnum']-1);
         }
-        if (isset($args['numitems']) and is_numeric($args['numitems']) and $args['numitems'] > 0) {
+        if (isset($args['numitems']) && is_numeric($args['numitems']) && $args['numitems'] > 0) {
             $query->setMaxResults($args['numitems']);
 
         }
@@ -503,7 +513,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
         $query = $query->getQuery();  
         
         // Paginator
-        if (isset($args['itemsperpage']) and is_numeric($args['itemsperpage'])) {
+        if (isset($args['itemsperpage']) && is_numeric($args['itemsperpage'])) {
             if (empty($args['startnum'])) {
                 $args['startnum'] = 1;
             }
@@ -523,7 +533,8 @@ class Wikula_Api_User extends Zikula_AbstractApi
     /**
      * Load all wiki pages edited by a user
      *
-     * @param array input arguments
+     * @param array $args Arguments.
+     * 
      * @return array wiki pages
      */
     public function LoadAllPagesEditedByUser($args)
@@ -554,10 +565,10 @@ class Wikula_Api_User extends Zikula_AbstractApi
         $query = $qb->getQuery();
 
         
-        if (isset($startnum) and is_numeric($startnum) and $startnum > 1) {
+        if (isset($startnum) && is_numeric($startnum) && $startnum > 1) {
             $query->setFirstResult($offset = $startnum-1);
         }
-        if (isset($numitems) and is_numeric($numitems) and $numitems > 0) {
+        if (isset($numitems) && is_numeric($numitems) && $numitems > 0) {
             $query->setMaxResults($limit = $numitems);
 
         }    
@@ -595,10 +606,16 @@ class Wikula_Api_User extends Zikula_AbstractApi
     /**
      * Load all the pages owned by a specific User
      *
-     * @param string  $args['uname'] username to search
-     * @param integer $args['startnum'] (optional) start point
-     * @param integer $args['numitems'] (optional) number of items to fetch
-     * @param integer $args['justcount'] (optional) flag to perform just a page count and not return the wiki pages
+     * Parameters passed in the $args array:
+     * -------------------------------------
+     * string  $args['uname'] username to search.
+     * integer $args['startnum'] (optional) start point.
+     * integer $args['numitems'] (optional) number of items to fetch.
+     * integer $args['justcount'] (optional) flag to perform just a page count and not return the wiki pages.
+     * 
+     * @param array $args Pages arguments.
+     * 
+     * @return arrray Wiki pages.
      */
     public function LoadAllPagesOwnedByUser($args)
     {
@@ -618,8 +635,6 @@ class Wikula_Api_User extends Zikula_AbstractApi
         if (!isset($orderdir) || !in_array(strtoupper($orderdir), array('ASC', 'DESC'))) {
             $orderdir = 'ASC';
         }
-
-        
                  
         $em = $this->getService('doctrine.entitymanager');
         $qb = $em->createQueryBuilder();
@@ -630,17 +645,15 @@ class Wikula_Api_User extends Zikula_AbstractApi
            ->setParameter('owner', $uname);
         
         
-        if (isset($startnum) and is_numeric($startnum) and $startnum > 1) {
+        if (isset($startnum) && is_numeric($startnum) && $startnum > 1) {
             $query->setFirstResult($offset = $startnum-1);
         }
-        if (isset($numitems) and is_numeric($numitems) and $numitems > 0) {
+        if (isset($numitems) && is_numeric($numitems) && $numitems > 0) {
             $query->setMaxResults($limit = $numitems);
         }  
 
         
-
-       
-       if ($justcount) {
+        if ($justcount) {
             $qb->select('count(p.id) as num');
             $query = $qb->getQuery();
             $count = $query->getSingleScalarResult();
@@ -668,7 +681,8 @@ class Wikula_Api_User extends Zikula_AbstractApi
     /**
      * Redirect to search() function
      *
-     * @param array input arguments
+     * @param array $args Arguments.
+     * 
      * @return wiki pages
      */
     public function FullTextSearch($args)
@@ -679,7 +693,8 @@ class Wikula_Api_User extends Zikula_AbstractApi
     /**
      * Search for a wiki page
      *
-     * @param array input arguments
+     * @param array $args Arguments.
+     * 
      * @return wiki pages
      */
     public function Search($args)
@@ -710,11 +725,9 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
         // ToDo: Rewrite page permission
         foreach ($result as $key => $value) {
-
-            if (!SecurityUtil::checkPermission('Wikula::', 'page::'.$value['tag'], ACCESS_READ))  {
+            if (!SecurityUtil::checkPermission('Wikula::', 'page::'.$value['tag'], ACCESS_READ)) {
                 unset($result[$key]);
             }
-
         }
         
                 
@@ -747,7 +760,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
         
 
         foreach ($links as $key => $value) {
-            if(in_array($value['to_tag'], $pages)) {
+            if (in_array($value['to_tag'], $pages)) {
                 unset($links[$key]);
                 unset($pages[$key]); 
             }
@@ -761,7 +774,9 @@ class Wikula_Api_User extends Zikula_AbstractApi
     /**
      * Returns all orphaned pages
      *
-     * @return wiki pages
+     * @param array $args Pages arguments.
+     * 
+     * @return array Wiki pages.
      */
     public function LoadOrphanedPages($args)
     {
@@ -774,8 +789,9 @@ class Wikula_Api_User extends Zikula_AbstractApi
     /**
      * Check if a wiki page is orphaned
      *
-     * @param string tag of a wiki page
-     * @return bool
+     * @param string $tag Tag of a wiki page.
+     * 
+     * @return boolean
      */
     public function IsOrphanedPage($tag)
     {
@@ -791,8 +807,9 @@ class Wikula_Api_User extends Zikula_AbstractApi
     /**
      * Save a new revision of a wiki page
      *
-     * @param array input arguments
-     * @return bool
+     * @param array $args Arguments.
+     * 
+     * @return boolean
      */
     public function SavePage($args)
     {
@@ -882,8 +899,9 @@ class Wikula_Api_User extends Zikula_AbstractApi
     /**
      * Update links and categories
      *
-     * @param array input arguments
-     * @return bool
+     * @param array $args Arguments.
+     * 
+     * @return boolean
      */
     public function updateLinksAndCategories($args) {
         
@@ -893,7 +911,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
         // remove old links
         $oldlinks = $this->entityManager->getRepository('Wikula_Entity_Links2')
                                         ->findBy(array('from_tag' => $tag));
-        foreach($oldlinks as $oldlink) {
+        foreach ($oldlinks as $oldlink) {
             $this->entityManager->remove($oldlink);
             $this->entityManager->flush();
         }
@@ -901,7 +919,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
         // remove old categories
         $oldcategories = $this->entityManager->getRepository('Wikula_Entity_Categories')
                                         ->findBy(array('tag' => $tag));
-        foreach($oldcategories as $oldcategory) {
+        foreach ($oldcategories as $oldcategory) {
             $this->entityManager->remove($oldcategory);
             $this->entityManager->flush();
         }
@@ -919,22 +937,22 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
 
         // set new links
-        if( isset($pagelinks) and is_array($pagelinks) ) {
-            foreach($pagelinks as $pagelink) {
-            $link = array(
-                'from_tag' => $tag,
-                'to_tag'   => $pagelink
-            );
-            $d = new Wikula_Entity_Links2();
-            $d->merge($link);
-            $this->entityManager->persist($d);
-            $this->entityManager->flush();
+        if (isset($pagelinks) && is_array($pagelinks) ) {
+            foreach ($pagelinks as $pagelink) {
+                $link = array(
+                    'from_tag' => $tag,
+                    'to_tag'   => $pagelink
+                );
+                $d = new Wikula_Entity_Links2();
+                $d->merge($link);
+                $this->entityManager->persist($d);
+                $this->entityManager->flush();
             }
         }
 
         // set new categories
-        if( isset($pagecategories) and is_array($pagecategories) ) {
-            foreach($pagecategories as $pagecategory) {
+        if (isset($pagecategories) && is_array($pagecategories) ) {
+            foreach ($pagecategories as $pagecategory) {
                 $category = array(
                     'tag'      => $tag,
                     'category' => $pagecategory
@@ -945,6 +963,7 @@ class Wikula_Api_User extends Zikula_AbstractApi
                 $this->entityManager->flush();
             }
         }
+        return true;
         
     }
     
@@ -952,13 +971,14 @@ class Wikula_Api_User extends Zikula_AbstractApi
     /**
      * Notificate user about a new wiki page
      *
-     * @param string tag of a wiki page
-     * @return bool
+     * @param string $tag Tag of a wiki page.
+     * 
+     * @return boolean
      */
     public function NotificateNewPage($tag)
     {
 
-        if (empty($tag) or !$this->getVar('subscription') ) {
+        if (empty($tag) || !$this->getVar('subscription') ) {
             return false;
         }
 
@@ -981,10 +1001,10 @@ class Wikula_Api_User extends Zikula_AbstractApi
         $users = $query->getArrayResult();
                 
         // send emails        
-        foreach($users as $user) {
+        foreach ($users as $user) {
             $uid = $user['uid'];
             $toaddress = UserUtil::getVar('email', $uid);
-            if(!empty($toaddress)) {
+            if (!empty($toaddress)) {
                 ModUtil::apiFunc('Mailer', 'user', 'sendmessage', array(
                     'toaddress' => $toaddress,
                     'subject'   => $subject,
@@ -1000,12 +1020,13 @@ class Wikula_Api_User extends Zikula_AbstractApi
     /**
      * Notificate user about a new wiki page revision
      *
-     * @param string tag of a wiki page
-     * @return bool
+     * @param string $tag Tag of a wiki page.
+     * 
+     * @return boolean
      */
     public function NotificateNewRevsion($tag)
     {
-        if (empty($tag) or !$this->getVar('subscription') ) {
+        if (empty($tag) || !$this->getVar('subscription') ) {
             return false;
         }
 
@@ -1021,30 +1042,30 @@ class Wikula_Api_User extends Zikula_AbstractApi
         $lastEdit = $query->getArrayResult();
 
         $notification = false;
-        if(count($lastEdit) == 0 ) {
+        if (count($lastEdit) == 0 ) {
             $notification = true;
         } else {
             $lastEdit = $lastEdit[0]['time'];
             $timeDiff = DateUtil::getDatetimeDiff($lastEdit, DateUtil::getDatetime());
             $minutesSinceLastEdit = 0;
-            if(array_key_exists('m', $timeDiff) ) {
+            if (array_key_exists('m', $timeDiff) ) {
                 $minutesSinceLastEdit = $timeDiff['m'];
             }
-            if(array_key_exists('h', $timeDiff) ) {
+            if (array_key_exists('h', $timeDiff) ) {
                 $minutesSinceLastEdit = $minutesSinceLastEdit + $timeDiff['h'] * 60;
 
             }
-            if(array_key_exists('d', $timeDiff) ) {
+            if (array_key_exists('d', $timeDiff) ) {
                 $minutesSinceLastEdit = $minutesSinceLastEdit + $timeDiff['d'] * 60 * 24;
             }
-            if($minutesSinceLastEdit > 20) {
+            if ($minutesSinceLastEdit > 20) {
                 $notification = true;
             }
         }
         
         
 
-        if($notification) {
+        if ($notification) {
             $view = Zikula_View::getInstance($this->name, false);
             $view->assign('baseUrl', System::getBaseUrl());
             $view->assign('tag', $tag);
@@ -1063,10 +1084,10 @@ class Wikula_Api_User extends Zikula_AbstractApi
             
                     
             // send emails
-            foreach($users as $user) {
+            foreach ($users as $user) {
                 $uid = $user['uid'];
                 $toaddress = UserUtil::getVar('email', $uid);
-                if($toaddress) {
+                if ($toaddress) {
                     ModUtil::apiFunc('Mailer', 'user', 'sendmessage', array(
                         'toaddress' => $toaddress,
                         'subject'   => $subject,
@@ -1079,97 +1100,15 @@ class Wikula_Api_User extends Zikula_AbstractApi
     }
 
 
-
-    /**
-     * ReadInterWikiConfig
-     */
-    public function ReadInterWikiConfig()
-    {
-        
-        static $interwiki = array();
-
-        if (!empty($interwiki)) {
-            return $interwiki;
-        }
-
-        if (file_exists('modules/Wikula/pnincludes/interwiki.conf') && $lines = file('modules/Wikula/pnincludes/interwiki.conf')) {
-            foreach($lines as $line) {
-                if ($line = trim($line)) {
-                    list($wikiName, $wikiUrl) = explode(' ', trim($line));
-
-                    $interwiki[strtoupper($wikiName)] = $wikiUrl;
-                }
-            }
-        } else {
-            $interwiki['WIKULA'] = 'https://github.com/phaidon/Wikula/wiki/';
-            $interwiki['ZIKULA'] = 'http://community.zikula.org/index.php?module=Wikula&tag=';
-        }
-
-        return $interwiki;
-
-    }
-
-    /**
-     * AddInterWiki
-     */
-    public function AddInterWiki($args)
-    {
-        
-        extract($args);
-        unset($args);
-
-        if (!isset($wikiname) || !isset($wikiurl)) {
-            return LogUtil::registerError(__('Adding InterWiki failed due to missing arguments!'));
-        }
-
-        $interwiki = unserialize($this->getVar('interwiki'));
-
-        if (!is_array($interwiki)) {
-            $interwiki = array();
-            $interwiki[strtoupper($wikiname)] = $wikiurl;
-
-        } elseif (!isset($interwiki[strtoupper($wikiname)])) {
-            $interwiki[strtoupper($wikiname)] = $wikiurl;
-        }
-
-        if (!$this->setVar('interwiki', serialize($interwiki))) {
-            return LogUtil::registerError(__('Adding interwiki failed!'));
-        }
-
-        return LogUtil::registerStatus(__('Interwiki added with success!'));
-    }
-
-    /**
-     * GetInterWikiUrl
-     */
-    public function GetInterWikiUrl($args)
-    {
-        
-        extract($args);
-        unset($args);
-
-        if (!isset($name) || !isset($tag)) {
-            return LogUtil::registerError(__('Error! Invalid arguments.'));
-        }
-
-        $interwiki =  ModUtil::apiFunc($this->name, 'user', 'ReadInterWikiConfig');
-
-        if (!$interwiki || !is_array($interwiki)) {
-            return 'http://'.$tag;
-        }
-
-        if (isset($interwiki[strtoupper($name)])) {
-            return $interwiki[strtoupper($name)].$tag;
-        }
-
-        return 'http://'.$tag; //avoid xss by putting http:// in front of JavaScript:()
-
-    }
-
     /**
      * Build a wiki link code
+     * 
+     * @param array $args Link array.
+     *
      * @todo needs rework
      * @todo can we index all the Links and check if exists in the DB once?
+     * 
+     * @return string
      */
     public function Link($args)
     {
@@ -1261,6 +1200,10 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
     /**
      * Action
+     * 
+     * @param array $args Action array.
+     * 
+     * @return mixed
      */
     public function Action($args)
     {
@@ -1311,10 +1254,14 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
     /**
      * Check if a tag is valid 
+     * 
+     * @param string $tag Tag of a wiki page.
+     * 
+     * @return void
      */
     public function CheckTag($tag = null)
     {
-        if(is_null($tag)) {
+        if (is_null($tag)) {
             $tag = $this->getVar('root_page');
         }
         

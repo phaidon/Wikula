@@ -2,9 +2,6 @@
 /**
  * Copyright Wikula Team 2011
  *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
- *
  * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikula
  * @link https://github.com/phaidon/Wikula
@@ -15,8 +12,6 @@
 
 /**
  * This class provides a handler to delete wiki pages.
- * 
- * @package Wikula
  */
 class Wikula_Handler_Delete  extends Zikula_Form_AbstractHandler
 {
@@ -35,6 +30,8 @@ class Wikula_Handler_Delete  extends Zikula_Form_AbstractHandler
      * @param Zikula_Form_View $view Current Zikula_Form_View instance.
      *
      * @return boolean
+     * 
+     * @throws Zikula_Exception_Forbidden If the current user does not have adequate permissions to perform this function.
      */
     function initialize(Zikula_Form_View $view)
     {
@@ -90,17 +87,17 @@ class Wikula_Handler_Delete  extends Zikula_Form_AbstractHandler
         $itemsToRemove = array();
         $itemsToRemoveCount = 0;
         foreach ($data['revisionids'] as $id => $value) {
-            if($value) {
+            if ($value) {
                 $itemsToRemove[] = $id;
                 $itemsToRemoveCount++;                
             }
         }
         
-        if($itemsToRemoveCount == 0) {
+        if ($itemsToRemoveCount == 0) {
             return $view->redirect($url);
         }
         
-        if( $itemsToRemoveCount == count($data['revisionids']) ) {
+        if ($itemsToRemoveCount == count($data['revisionids']) ) {
             ModUtil::apiFunc($modname, 'admin', 'deletepage', $this->tag);
             LogUtil::registerStatus( $this->__('Page deleted') );
             return $view->redirect($url);

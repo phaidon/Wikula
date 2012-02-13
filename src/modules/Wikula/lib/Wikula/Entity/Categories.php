@@ -1,10 +1,6 @@
 <?php
-
 /**
  * Copyright Wikula Team 2011
- *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
  *
  * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikula
@@ -21,7 +17,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * Annotations define the entity mappings to database.
  *
- * @package Wikula
  * @ORM\Entity
  * @ORM\Table(name="wikula_categories")
  */
@@ -30,12 +25,18 @@ class Wikula_Entity_Categories extends Zikula_EntityAccess
     
       
     /**
+     * Tag
+     * 
+     * @var string
      * @ORM\Id
      * @ORM\Column(type="string", length=75)
      */
     private $tag;
     
     /**
+     * Category
+     * 
+     * @var string
      * @ORM\Id
      * @ORM\Column(type="string", length=75)
      */
@@ -45,6 +46,7 @@ class Wikula_Entity_Categories extends Zikula_EntityAccess
      * Get tag
      * 
      * @return string
+     * 
      */
     public function gettag()
     {
@@ -54,11 +56,14 @@ class Wikula_Entity_Categories extends Zikula_EntityAccess
     /**
      * Set tag
      * 
-     * @param string
+     * @param string $tag Tag.
+     * 
+     * @return boolean
      */
     public function settag($tag)
     {
         $this->tag = $tag;
+        return true;
     }
     
     /**
@@ -74,11 +79,14 @@ class Wikula_Entity_Categories extends Zikula_EntityAccess
     /**
      * Set category
      * 
-     * @param string
+     * @param string $category Category.
+     * 
+     * @return boolean
      */
     public function setcategory($category)
     {
         $this->category = $category;
+        return true;
     }
 
 }

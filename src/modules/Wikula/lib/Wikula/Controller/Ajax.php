@@ -2,9 +2,6 @@
 /**
  * Copyright Wikula Team 2011
  *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
- *
  * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikula
  * @link https://github.com/phaidon/Wikula
@@ -15,8 +12,6 @@
 
 /**
  * Access to (non-administrative) ajax-initiated actions for the Wikula module.
- * 
- * @package Wikula
  */
 class Wikula_Controller_Ajax extends Zikula_AbstractController
 {

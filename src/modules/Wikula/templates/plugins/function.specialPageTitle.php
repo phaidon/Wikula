@@ -2,9 +2,6 @@
 /**
  * Copyright Wikula Team 2011
  *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
- *
  * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikula
  * @link https://github.com/phaidon/Wikula
@@ -15,8 +12,13 @@
 
 /**
  * This function sets he title of a special page.
+ * 
+ * @param array $params Plugin parameters.
+ * @param mixed $smarty Smarty.
+ * 
+ * @return string
  */
-function smarty_function_specialPageTitle($params, &$smarty)
+function smarty_function_specialPageTitle($params, $smarty)
 {
     unset($smarty);
     
@@ -33,7 +35,7 @@ function smarty_function_specialPageTitle($params, &$smarty)
     $title[]  = $info['displayname'];
     $title[]  = __('Special pages', $dom);
 
-    if($tag == __('Special_pages', $dom) ) {
+    if ($tag == __('Special_pages', $dom)) {
         $output[] = __('Special pages', $dom);
     } else {
         $output[] = '<a href="'.

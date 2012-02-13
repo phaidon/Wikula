@@ -2,9 +2,6 @@
 /**
  * Copyright Wikula Team 2011
  *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
- *
  * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikula
  * @link https://github.com/phaidon/Wikula
@@ -15,6 +12,10 @@
 
 /**
  * This function modifies hypens to spaces.
+ *
+ * @param string $text Text.
+ * 
+ * @return string
  */
 function smarty_modifier_hyphen2space($text)
 {

@@ -2,10 +2,7 @@
 /**
  * Copyright Wikula Team 2011
  *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
- *
- * @license GNU/LGPLv3 (or at your option, any later version).
+ * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikula
  * @link https://github.com/phaidon/Wikula
  *
@@ -15,14 +12,13 @@
 
 /**
  * Search api class
- *
- * @package Wikula
  */
 class Wikula_Api_Search extends Zikula_AbstractApi
 {
-
     /**
-     * Search plugin info
+     * Return Search plugin info
+     *
+     * @return array An array containing information for the searc API.
      */
     public function info()
     {
@@ -33,7 +29,15 @@ class Wikula_Api_Search extends Zikula_AbstractApi
     }
 
     /**
-     * Search form component
+     * Render the search form component for Users.
+     *
+     * Parameters passed in the $args array:
+     * -------------------------------------
+     * boolean 'active' Indicates that the Users module is an active part of the search(?).
+     * 
+     * @param array $args All parameters passed to this function.
+     *
+     * @return string The rendered template for the Users search component.
      */
     public function options($args)
     {
@@ -48,7 +52,16 @@ class Wikula_Api_Search extends Zikula_AbstractApi
     }
 
     /**
-     * Search plugin main function
+     * Perform a search.
+     *
+     * Parameters passed in the $args array:
+     * -------------------------------------
+     * ? $args['q'] ?.
+     * ? $args[?]   ?.
+     * 
+     * @param array $args All parameters passed to this function.
+     *
+     * @return bool True on success or null result, false on error.
      */
     public function search($args)
     {
@@ -62,8 +75,7 @@ class Wikula_Api_Search extends Zikula_AbstractApi
        
         $sessionId = session_id();
         
-        foreach ($pages as $page)
-        {
+        foreach ($pages as $page) {
             $hook = new Zikula_FilterHook(
                 'wikula.filter_hooks.body.filter', 
                 $page['body']
@@ -95,10 +107,18 @@ class Wikula_Api_Search extends Zikula_AbstractApi
 
 
     /**
-     * Do last minute access checking and assign URL to items
+     * Do last minute access checking and assign URL to items.
      *
      * Access checking is ignored since access check has
-     * already been done. But we do add a URL to the found user
+     * already been done. But we do add a URL to the found user.
+     *
+     * Parameters passed in the $args array:
+     * -------------------------------------
+     * array $args['datarow'] ?.
+     * 
+     * @param array $args The search results.
+     *
+     * @return bool True.
      */
     public function search_check($args)
     {

@@ -1,10 +1,6 @@
 <?php
-
 /**
  * Copyright Wikula Team 2011
- *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
  *
  * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikula
@@ -21,7 +17,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * Annotations define the entity mappings to database.
  *
- * @package Wikula
  * @ORM\Entity
  * @ORM\Table(name="wikula_links")
  */
@@ -30,6 +25,9 @@ class Wikula_Entity_Links2 extends Zikula_EntityAccess
     
       
     /**
+     * From tag
+     * 
+     * @var string
      * @ORM\Id
      * @ORM\Column(type="string", length=75)
      */
@@ -38,6 +36,7 @@ class Wikula_Entity_Links2 extends Zikula_EntityAccess
     /**
      * The following are annotations which define the id field.
      *
+     * @var string
      * @ORM\Id
      * @ORM\Column(type="string", length=75)
      */
@@ -56,11 +55,14 @@ class Wikula_Entity_Links2 extends Zikula_EntityAccess
     /**
      * Set from_tag
      * 
-     * @param string
+     * @param string $from_tag From tag.
+     * 
+     * @return boolean
      */
     public function setfrom_tag($from_tag)
     {
         $this->from_tag = $from_tag;
+        return true;
     }
     
     /**
@@ -76,11 +78,14 @@ class Wikula_Entity_Links2 extends Zikula_EntityAccess
     /**
      * Set to_tag
      * 
-     * @param string
+     * @param string $to_tag To tag.
+     * 
+     * @return boolean
      */
     public function setto_tag($to_tag)
     {
         $this->to_tag = $to_tag;
+        return true;
     }
 
 }

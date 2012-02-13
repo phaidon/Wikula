@@ -2,10 +2,8 @@
 /**
  * Copyright Wikula Team 2011
  *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
+ * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikula
- * @license GNU/GPLv2 (or at your option, any later version).
  * @link https://github.com/phaidon/Wikula
  *
  * Please see the NOTICE file distributed with this source code for further
@@ -14,8 +12,6 @@
 
 /**
  * Provides metadata for this module to the Extensions module.
- * 
- * @package Wikula
  */
 class Wikula_Version extends Zikula_AbstractVersion
 {

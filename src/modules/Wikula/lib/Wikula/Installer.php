@@ -1,10 +1,6 @@
 <?php
-
 /**
  * Copyright Wikula Team 2011
- *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
  *
  * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikula
@@ -17,23 +13,27 @@
 /**
  * Provides module installation and upgrade services for the Wikula module.
  * 
- * @package Wikula
  */
 class Wikula_Installer extends Zikula_AbstractInstaller
 {
 
     /**
      * This function loads the common file.
+     * 
+     * @return boolean True on success, false otherwise.
      */
-    function __autoload($class_name) {
-        unset($class_name);
+    function __autoload() {
         require_once 'modules/Wikula/lib/Wikula/Common.php';
+        return true;
     }
 
     /**
      * Initialise the Wikula module.
      *
-     * @return bool True on success, false otherwise.
+     * This function is only ever called once during the lifetime of a particular
+     * module instance.
+     * 
+     * @return boolean True on success, false otherwise.
      */
     public function install()
     {        
@@ -73,7 +73,7 @@ class Wikula_Installer extends Zikula_AbstractInstaller
      * This function must consider all the released versions of the module!
      * If the upgrade fails at some point, it returns the last upgraded version.
      *
-     * @param string $oldVersion Version number string to upgrade from.
+     * @param string $oldversion Version number string to upgrade from.
      *
      * @return mixed True on success, last valid version string or false if fails.
      */
@@ -111,6 +111,7 @@ class Wikula_Installer extends Zikula_AbstractInstaller
                     try {
                         $stmt->execute();
                     } catch (Exception $e) {
+                        LogUtil::registerError($e);
                     }
                 }
 
@@ -163,10 +164,10 @@ class Wikula_Installer extends Zikula_AbstractInstaller
                 
                 $em = $this->getService('doctrine.entitymanager');
                 $pages = $em->getRepository('Wikula_Entity_Pages')->findAll();
-                foreach($pages as $page) {
+                foreach ($pages as $page) {
                     $tag = $page->getTag();
                     $newtag = str_replace(' ', '_', $tag);
-                    if($tag != $newtag) {                        
+                    if ($tag != $newtag) {                        
                         $page->setTag($newtag);
                         $em->persist($page);
                         $em->flush();
@@ -225,7 +226,7 @@ class Wikula_Installer extends Zikula_AbstractInstaller
      * This function is only ever called once during the lifetime of a particular
      * module instance.
      *
-     * @return void
+     * @return boolean
      */
     public function defaultdata()
     {
@@ -239,7 +240,7 @@ class Wikula_Installer extends Zikula_AbstractInstaller
         // Defines each record and save it in the DB
         $uname = DataUtil::formatForStore(UserUtil::getVar('uname'));
         // Insert the default pages
-        $body = $this->__("Welcome to your Wiki!");
+        $body = $this->__('Welcome to your Wiki!');
         $record = array(
             'tag'    => DataUtil::formatForStore($root_page),
             'body'   => $body,

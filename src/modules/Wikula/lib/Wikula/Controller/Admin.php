@@ -2,9 +2,6 @@
 /**
  * Copyright Wikula Team 2011
  *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
- *
  * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikula
  * @link https://github.com/phaidon/Wikula
@@ -15,23 +12,23 @@
 
 /**
  * Access to (administrative) user-initiated actions for the Wikula module.
- * 
- * @package Wikula
  */
 class Wikula_Controller_Admin extends Zikula_AbstractController
 {
     /**
      * Loads common values at the beginning
      *
+     * @return boolean
      */
-    function __autoload($class_name) {
-        unset($class_name);
+    function __autoload() {
         require_once 'modules/Wikula/lib/Wikula/Common.php';
+        return true;
     }
 
     /**
      * This function is a forward to the show function. 
      *
+     * @return redirect
      */  
     public function main()
     {
@@ -123,19 +120,19 @@ class Wikula_Controller_Admin extends Zikula_AbstractController
         
         
         $oldlinks = $this->entityManager->getRepository('Wikula_Entity_Links2')->findAll();
-        foreach($oldlinks as $oldlink) {
+        foreach ($oldlinks as $oldlink) {
             $this->entityManager->remove($oldlink);
             $this->entityManager->flush();
         }
         
         $oldcategories = $this->entityManager->getRepository('Wikula_Entity_Categories')->findAll();
-        foreach($oldcategories as $oldcategory) {
+        foreach ($oldcategories as $oldcategory) {
             $this->entityManager->remove($oldcategory);
             $this->entityManager->flush();
         }
         
         $pages = ModUtil::apiFunc($this->name, 'user', 'LoadAllPages');
-        foreach( $pages as $page ) {
+        foreach ($pages as $page) {
             $hook = new Zikula_FilterHook(
                 'wikula.filter_hooks.body.filter', 
                 $page['body']
@@ -147,7 +144,7 @@ class Wikula_Controller_Admin extends Zikula_AbstractController
             $pagecategories = $data['categories'];
 
             
-            foreach($pagelinks as $pagelink) {
+            foreach ($pagelinks as $pagelink) {
                 $link = array(
                     'from_tag' => $page['tag'],
                     'to_tag'   => $pagelink
@@ -159,7 +156,7 @@ class Wikula_Controller_Admin extends Zikula_AbstractController
             }
             
 
-            foreach($pagecategories as $pagecategory) {
+            foreach ($pagecategories as $pagecategory) {
                 $category = array(
                     'tag'      => $page['tag'],
                     'category' => $pagecategory

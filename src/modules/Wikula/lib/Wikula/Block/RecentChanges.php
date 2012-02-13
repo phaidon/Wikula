@@ -1,10 +1,6 @@
 <?php
-
 /**
  * Copyright Wikula Team 2011
- *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
  *
  * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikula
@@ -16,12 +12,9 @@
 
 /**
  * A RecentChanges block.
- * 
- * @package Wikula
  */
 class Wikula_Block_RecentChanges extends Zikula_Controller_AbstractBlock
 {
-    
     /**
      * Initialise block.
      *
@@ -53,7 +46,7 @@ class Wikula_Block_RecentChanges extends Zikula_Controller_AbstractBlock
     /**
      * Display block.
      *
-     * @param array $blockInfo A blockinfo structure.
+     * @param array $blockinfo A blockinfo structure.
      *
      * @return string|void The rendered block.
      */
@@ -84,8 +77,7 @@ class Wikula_Block_RecentChanges extends Zikula_Controller_AbstractBlock
 
         $curday = '';
         $pagelist = array();
-        foreach ($pages as $page)
-        {
+        foreach ($pages as $page) {
             if ($page['time']->getTimestamp() != $curday) {
                 $dateformatted = $page['time']->format('D, d M Y');
                 $curday = $page['time']->getTimestamp();
@@ -110,9 +102,9 @@ class Wikula_Block_RecentChanges extends Zikula_Controller_AbstractBlock
     /**
      * modify block settings
      *
-     * @author       Mateo Tibaquirá
-     * @param        array       $blockinfo     a blockinfo structure
-     * @return       output      the bock form
+     * @param array $blockinfo A blockinfo structure.
+     * 
+     * @return output The bock form
      */
     public function modify($blockinfo)
     {
@@ -135,9 +127,9 @@ class Wikula_Block_RecentChanges extends Zikula_Controller_AbstractBlock
     /**
      * update block settings
      *
-     * @author       Mateo Tibaquirá
-     * @param        array       $blockinfo     a blockinfo structure
-     * @return       $blockinfo  the modified blockinfo structure
+     * @param array $blockinfo A blockinfo structure.
+     * 
+     * @return $blockinfo The modified blockinfo structure.
      */
     public function update($blockinfo)
     {

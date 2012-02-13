@@ -2,9 +2,6 @@
 /**
  * Copyright Wikula Team 2011
  *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
- *
  * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikula
  * @link https://github.com/phaidon/Wikula
@@ -20,7 +17,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * Annotations define the entity mappings to database.
  *
- * @package Wikula
  * @ORM\Entity
  * @ORM\Table(name="wikula_subscriptions")
  */
@@ -30,6 +26,7 @@ class Wikula_Entity_Subscriptions extends Zikula_EntityAccess
     /**
      * The following are annotations which define the id field.
      *
+     * @var integer
      * @ORM\Id
      * @ORM\Column(type="integer", length=16, unique=true)
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -39,7 +36,7 @@ class Wikula_Entity_Subscriptions extends Zikula_EntityAccess
     /**
      * Return the uid field
      *
-     * @return int uid 
+     * @return integer uid 
      */
     public function getuid()
     {
@@ -49,10 +46,15 @@ class Wikula_Entity_Subscriptions extends Zikula_EntityAccess
 
     /**
      * Set the uid field
+     * 
+     * @param integer $uid User id.
+     * 
+     * @return boolean
      */
     public function setuid($uid)
     {
         $this->uid = $uid;
+        return true;
     }
 
 }

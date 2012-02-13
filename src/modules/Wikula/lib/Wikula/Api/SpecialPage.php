@@ -2,9 +2,6 @@
 /**
  * Copyright Wikula Team 2011
  *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
- *
  * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikula
  * @link https://github.com/phaidon/Wikula
@@ -15,12 +12,9 @@
 
 /**
  * Special page api class
- *
- * @package Wikula
  */
 class Wikula_Api_SpecialPage extends Zikula_AbstractApi
-{
-    
+{   
     /**
      * Instance of Zikula_View.
      *
@@ -58,18 +52,16 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
     /**
      * Check if a page is a special page
      *
-     * @param tag of page
+     * @param string $tag Tag of page.
      *
-     * @return bool
+     * @return boolean
      */
     public function isSpecialPage($tag) {
         return array_key_exists($tag, $this->listpages());
     }
-    
-    
+     
     /**
      * List all special pages
-     *
      *
      * @return array
      */
@@ -134,7 +126,8 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
     /**
      * It returns the pageindex page 
      *
-     * @param array page args
+     * @param array $args Arguments.
+     * 
      * @return string HTML string containing the rendered template.
      */
     public function pageindex($args)
@@ -151,7 +144,7 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
         // Check if this view is cached
         $this->view->cacheid = $username.$currentpage.$letter;
         if ($this->view->is_cached('action/pageindex.tpl')) {
-           return $this->view->fetch('action/pageindex.tpl');
+            return $this->view->fetch('action/pageindex.tpl');
         }
 
         // If not, build it
@@ -212,8 +205,7 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
 
         $curday = '';
         $pagelist = array();
-        foreach ($pages as $page)
-        {            
+        foreach ($pages as $page) {            
             $day = $page['time']->format('Y-m-d');
             if ($day != $curday) {
                 $dateformatted = $page['time']->format('D, d M Y');
@@ -269,14 +261,14 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
         $total['pages']     = 0;
         $i = 1;
 
-        foreach($revisions as $revision) {
+        foreach ($revisions as $revision) {
             $total['revisions'] += $revision['number'];
             $user = $revision['user'];
             $items[$user]['revisions'] = $revision['number'];
             $items[$user]['i'] = $i;
             $i++;
         }
-        foreach($pages as $page) {
+        foreach ($pages as $page) {
             $total['pages'] += $page['number'];
             $user = $page['user'];
             $items[$user]['pages'] =  $page['number'];
@@ -406,7 +398,7 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
 
             // check if searched phrase exists as tag
             // only do this check if searched phrase is only one word and if there is no space in it
-            if (strpos($phrase, ' ') !== false)  {
+            if (strpos($phrase, ' ') !== false) {
                 $oneword  = true;
             }
         }
@@ -478,6 +470,8 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
     /**
      * It returns the wantedpages page 
      *
+     * @param array $args Arguments.
+     * 
      * @return string HTML string containing the rendered template.
      */
     function wantedpages($args)
@@ -533,6 +527,8 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
     /**
      * Returns the content of a special page
      *
+     * @param array $args Arguments.
+     * 
      * @return string HTML string containing the rendered template.
      */
     public function get($args)
@@ -543,10 +539,9 @@ class Wikula_Api_SpecialPage extends Zikula_AbstractApi
                 'compact' => 1,
                 'notitle' => 1
             ));
-	  	
+
             return $this->view->assign('categories', $categories)  	
                                ->fetch('action/allcategories.tpl');
-	  	
         }
         return call_user_func(array($this, $action), $args);
 

@@ -1,10 +1,6 @@
 <?php
-
 /**
  * Copyright Wikula Team 2011
- *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
  *
  * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikula
@@ -16,8 +12,6 @@
 
 /**
  * This class provides a handler to modify the module settings.
- * 
- * @package Wikula
  */
 class Wikula_Handler_ModifyConfig  extends Zikula_Form_AbstractHandler
 {
@@ -39,7 +33,7 @@ class Wikula_Handler_ModifyConfig  extends Zikula_Form_AbstractHandler
         // get editors
         $editor = 'none';
         $editorHook = HookUtil::getBindingsFor('subscriber.wikula.ui_hooks.editor');
-        foreach ($editorHook as  $value) {
+        foreach ($editorHook as $value) {
             if ($value['areaname'] == 'provider.lumicula.ui_hooks.lml') {
                 $editor = 'LuMicuLa';
                 break;
@@ -72,7 +66,7 @@ class Wikula_Handler_ModifyConfig  extends Zikula_Form_AbstractHandler
         // get engines
         $engine = 'none';
         $engineHook = HookUtil::getBindingsFor('subscriber.wikula.filter_hooks.body');
-        foreach ($engineHook as  $value) {
+        foreach ($engineHook as $value) {
             if ($value['areaname'] == 'provider.lumicula.filter_hooks.lml') {
                 $engine = 'LuMicuLa';
                 break;

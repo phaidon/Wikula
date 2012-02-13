@@ -2,9 +2,6 @@
 /**
  * Copyright Wikula Team 2011
  *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
- *
  * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikula
  * @link https://github.com/phaidon/Wikula
@@ -15,8 +12,6 @@
 
 /**
  * This class provides a handler to edit wiki pages.
- * 
- * @package Wikula
  */
 class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
 {
@@ -37,6 +32,8 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
      * @param Zikula_Form_View $view Current Zikula_Form_View instance.
      *
      * @return boolean
+     * 
+     * @throws Zikula_Exception_Forbidden If the current user does not have adequate permissions to perform this function.
      */
     function initialize(Zikula_Form_View $view)
     {
@@ -60,14 +57,14 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
         }
         
         $specialPages = ModUtil::apiFunc($modname, 'SpecialPage', 'listpages');
-        if( array_key_exists($this->tag, $specialPages)) {
+        if (array_key_exists($this->tag, $specialPages)) {
             return $view->redirect(ModUtil::url($modname, 'user', 'main', array('tag' => $this->tag)));
         }
         
         $page = ModUtil::apiFunc($modname, 'user', 'LoadPage', array(
             'tag'  => $this->tag,
         ));
-        if($page) {
+        if ($page) {
             $page['note'] = '';
         } else {
             $page = array(
@@ -81,7 +78,7 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
         $view->assign('mandatorycomment', $this->getVar('mandatorycomment', false));
         $showeditnote = $this->getVar('showeditnote', false);
         $view->assign('showeditnote', $showeditnote);
-        if($showeditnote) {
+        if ($showeditnote) {
             $view->assign('editnote', $this->getVar('editnote', ''));
         }
         
@@ -141,7 +138,7 @@ class Wikula_Handler_EditTag  extends Zikula_Form_AbstractHandler
         
         // preview
         //--------------------------
-        if ($args['commandName'] == 'preview'){
+        if ($args['commandName'] == 'preview') {
             $view->assign("preview", $data['body']);
             return true;
         }

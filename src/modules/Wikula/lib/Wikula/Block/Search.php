@@ -1,10 +1,6 @@
 <?php
-
 /**
  * Copyright Wikula Team 2011
- *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
  *
  * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikula
@@ -16,12 +12,9 @@
 
 /**
  * A search block.
- * 
- * @package Wikula
  */
 class Wikula_Block_Search extends Zikula_Controller_AbstractBlock
 {
-
     /**
      * Initialise block.
      *
@@ -55,7 +48,7 @@ class Wikula_Block_Search extends Zikula_Controller_AbstractBlock
     /**
      * Display block.
      *
-     * @param array $blockInfo A blockinfo structure.
+     * @param array $blockinfo A blockinfo structure.
      *
      * @return string|void The rendered block.
      */

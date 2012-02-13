@@ -1,10 +1,6 @@
 <?php
-
 /**
  * Copyright Wikula Team 2011
- *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
  *
  * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikula
@@ -16,12 +12,9 @@
 
 /**
  * Admin api class.
- * 
- * @package Wikula
  */
 class Wikula_Api_Admin extends Zikula_AbstractApi
 {
-
     /**
      * get available admin panel links
      *
@@ -29,7 +22,6 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
      */
     public function getlinks()
     {
-        
         $links = array();
         if (SecurityUtil::checkPermission('Wikula::', '::', ACCESS_ADMIN)) {
             $links[] = array(
@@ -97,7 +89,7 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         $headerletters     = array();
 
         if ($pages) {
-            foreach($pages as $page) {
+            foreach ($pages as $page) {
 
                 $page_owner = $page['owner'];
 
@@ -140,7 +132,8 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
     /**
      * This function returns all pages. 
      * 
-     * @param array input arguments
+     * @param array $args Arguments.
+     * 
      * @return array wiki pages
      */
     public function getall($args)
@@ -161,7 +154,7 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         foreach ($pages as $pageID => $pageTab) {
             $pages[$pageID]['revisions'] = ModUtil::apiFunc($this->name, 'admin', 'CountRevisions', array('tag' => $pageTab['tag']));
             $pages[$pageID]['backlinks'] = ModUtil::apiFunc($this->name, 'user',  'CountBackLinks', $pageTab['tag']);
-            if( ModUtil::available('EZComments')) {
+            if (ModUtil::available('EZComments')) {
                 $commentsCount = ModUtil::apiFunc('EZComments', 'user', 'countitems', array(
                     'mod' => $this->name,
                     'objectid' => $pageTab['tag']
@@ -175,7 +168,7 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
 
         if (isset($orderBy)) {
             $sortAarr = array();
-            foreach($pages as $res) {
+            foreach ($pages as $res) {
                 $sortAarr[] = $res[$orderBy];
             }
             array_multisort($sortAarr, (($args['orderDirection'] == 'ASC') ? SORT_ASC : SORT_DESC), SORT_NUMERIC, $pages);
@@ -190,7 +183,8 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
     /**
      * This function counts the revisions of a wiki page. 
      * 
-     * @param array input arguments
+     * @param array $args Arguments.
+     * 
      * @return int number of revisions
      */
     public function CountRevisions($args = array())
@@ -216,8 +210,9 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
     /**
      * This function deletes a revision by id. 
      * 
-     * @param array input arguments
-     * @return bool
+     * @param array $args Arguments.
+     * 
+     * @return boolean
      */
     public function deletepageid($args)
     {
@@ -237,8 +232,9 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
     /**
      * This function set the newest revision active. 
      * 
-     * @param string tag of a wiki page
-     * @return bool
+     * @param string $tag Tag of a wiki page.
+     * 
+     * @return boolean
      */
     public function setlatest($tag)
     {
@@ -254,8 +250,8 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
            ->setMaxResults(1);
         $query = $qb->getQuery();
         $result = $query->getArrayResult();
-        if(count($result) > 0 ) {
-            return;
+        if (count($result) > 0 ) {
+            return false;
         }        
         
         
@@ -269,7 +265,7 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
            ->setMaxResults(1);
         $query = $qb->getQuery();
         $result = $query->getArrayResult();
-        if(count($result) == 0 ) {
+        if (count($result) == 0 ) {
             return;
         }
         
@@ -302,8 +298,9 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
     /**
      * This function deletes a wiki pages with all revisions. 
      * 
-     * @param string tag of a wiki page
-     * @return bool
+     * @param string $tag Tag of a wiki page.
+     * 
+     * @return boolean
      */
     public function deletepage($tag)
     {
@@ -315,7 +312,7 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         // remove page (all revisions)
         $page = $this->entityManager->getRepository('Wikula_Entity_Pages')
                         ->findBy(array('tag' => $tag));
-        foreach($page as $revision) {
+        foreach ($page as $revision) {
             $this->entityManager->remove($revision);
             $this->entityManager->flush();
         }
@@ -324,7 +321,7 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         // remove links 
         $page = $this->entityManager->getRepository('Wikula_Entity_Links2')
                         ->findBy(array('from_tag' => $tag));
-        foreach($page as $revision) {
+        foreach ($page as $revision) {
             $this->entityManager->remove($revision);
             $this->entityManager->flush();
         }
@@ -333,7 +330,7 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
         // remove categories 
         $page = $this->entityManager->getRepository('Wikula_Entity_Categories')
                         ->findBy(array('tag' => $tag));
-        foreach($page as $revision) {
+        foreach ($page as $revision) {
             $this->entityManager->remove($revision);
             $this->entityManager->flush();
         }

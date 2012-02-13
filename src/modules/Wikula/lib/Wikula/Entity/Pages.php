@@ -1,13 +1,9 @@
 <?php
-
 /**
  * Copyright Wikula Team 2011
  *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
- *
  * @license GNU/GPLv3 (or at your option, any later version).
- * @package Piwik
+ * @package Wikula
  * @link https://github.com/phaidon/Wikula
  *
  * Please see the NOTICE file distributed with this source code for further
@@ -18,13 +14,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-
 /**
  * Wikula links entity class.
  *
  * Annotations define the entity mappings to database.
  *
- * @package Wikula
  * @ORM\Entity
  * @ORM\Table(name="wikula_pages")
  */
@@ -34,6 +28,7 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
     /**
      * The following are annotations which define the id field.
      *
+     * @var integer
      * @ORM\Id
      * @ORM\Column(type="integer", unique=true)
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -43,6 +38,7 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
     /**
      * The following are annotations which define the id field.
      *
+     * @var string
      * @ORM\Column(type="string", length=75)
      */
     private $tag;
@@ -51,6 +47,7 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
     /**
      * links
      *
+     * @var Wikula_Entity_Links
      * @ORM\OneToMany(targetEntity="Wikula_Entity_Links", 
      *                mappedBy="to_tag", cascade={"all"}, 
      *                orphanRemoval=true)
@@ -63,6 +60,7 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
     /**
      * The following are annotations which define the time field.
      *
+     * @var datetime
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="update")
      */
@@ -72,6 +70,7 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
     /**
      * The following are annotations which define the id field.
      *
+     * @var text
      * @ORM\Column(type="text")
      */
     private $body;
@@ -80,6 +79,7 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
     /**
      * The following are annotations which define the id field.
      *
+     * @var string
      * @ORM\Column(type="string", length=75)
      */
     private $owner;   
@@ -88,6 +88,7 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
     /**
      * The following are annotations which define the id field.
      *
+     * @var string
      * @ORM\Column(type="string", length=75)
      */
     private $user; 
@@ -95,6 +96,7 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
     /**
      * The following are annotations which define the id field.
      *
+     * @var string
      * @ORM\Column(type="string", length=1)
      */
     private $latest = 'N'; 
@@ -102,6 +104,7 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
     /**
      * The following are annotations which define the id field.
      *
+     * @var string
      * @ORM\Column(type="string", length=100)
      */
     private $note; 
@@ -109,18 +112,18 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
     /**
      * The following are annotations which define the id field.
      *
+     * @var string
      * @ORM\Column(type="string", length=30)
      */
     private $handler = 'page';
 
     /**
      * Construction function
-     *
-     * @return int uid 
      */
     public function __construct()
     {
         $this->links = new Doctrine\Common\Collections\ArrayCollection();
+        return true;
     }
 
     /**
@@ -132,7 +135,7 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
     {
         $links = $this->links;
         $to = array();
-        foreach($links as $link) {
+        foreach ($links as $link) {
             $to[] = $link->getto_tag();
         }
         return $to;
@@ -161,58 +164,93 @@ class Wikula_Entity_Pages extends Zikula_EntityAccess
 
     /**
      * Set note
+     * 
+     * @param string $note Note.
+     * 
+     * @return boolean
      */
     public function setNote($note)
     {
         $this->note = $note;
+        return true;
     }
     
     /**
      * Set tag
+     * 
+     * @param string $tag Tag.
+     * 
+     * @return boolean
      */
     public function setTag($tag)
     {
         $this->tag = $tag;
+        return true;
     }
     
     /**
      * Set body
+     * 
+     * @param string $body Body.
+     * 
+     * @return boolean
      */
     public function setBody($body)
     {
         $this->body = $body;
+        return true;
     }
     
     /**
      * Set time
+     * 
+     * @param datetime $time Time.
+     * 
+     * @return boolean 
      */
     public function setTime($time)
     {
         $this->time = new \DateTime($time);
+        return true;
     }
     
     /**
      * Set user
+     * 
+     * @param string $user User.
+     * 
+     * @return boolean 
      */
     public function setUser($user)
     {
         $this->user = $user;
+        return true;
     }
     
     /**
      * Set owner
+     * 
+     * @param string $owner Owner.
+     * 
+     * @return boolean 
      */
     public function setOwner($owner)
     {
         $this->owner = $owner;
+        return true;
     }
     
     /**
      * Set latest
+     * 
+     * @param string $latest Latest.
+     * 
+     * @return boolean 
      */
     public function setLatest($latest)
     {
         $this->latest = $latest;
+        return true;
     }
 
     

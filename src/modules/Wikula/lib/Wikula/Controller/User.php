@@ -2,9 +2,6 @@
 /**
  * Copyright Wikula Team 2011
  *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
- *
  * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikula
  * @link https://github.com/phaidon/Wikula
@@ -15,8 +12,6 @@
 
 /**
  * Access to (non-administrative) user-initiated actions for the Wikula module.
- * 
- * @package Wikula
  */
 class Wikula_Controller_User extends Zikula_AbstractController
 {
@@ -25,9 +20,11 @@ class Wikula_Controller_User extends Zikula_AbstractController
      * 
      * Loads common values at the beginning
      *
+     * @return boolean
      */
-    function __autoload($class_name) {
+    function __autoload() {
         require_once 'modules/Wikula/lib/Wikula/Common.php';
+        return true;
     }
 
     /**
@@ -35,6 +32,9 @@ class Wikula_Controller_User extends Zikula_AbstractController
      * 
      * This function is a forward to the show function. 
      *
+     * @param array $args Arguments.
+     * 
+     * @return statement
      */    
     public function main($args)
     {
@@ -46,7 +46,8 @@ class Wikula_Controller_User extends Zikula_AbstractController
      * 
      * Displays a wiki page
      *
-     * @param string $args['tag'] Tag of the wiki page to show
+     * @param array $args Arguments.
+     * 
      * @return smarty output
      */
     public function show($args)
@@ -58,7 +59,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
         $raw = isset($args['raw']) ? $args['raw'] : FormUtil::getPassedValue('raw');
         unset($args);
         
-        if(is_null($tag)) {
+        if (is_null($tag)) {
             $tag = $this->getVar('root_page');
         }        
        
@@ -76,11 +77,11 @@ class Wikula_Controller_User extends Zikula_AbstractController
         
         
         // check if it is category page
-        if($tag == $this->__('Categories')) {
+        if ($tag == $this->__('Categories')) {
             $redirecturl = ModUtil::url($this->name, 'user', 'categories');
             return System::redirect($redirecturl);
         }     
-        if( substr($tag, 0, 8) == 'Category') {
+        if (substr($tag, 0, 8) == 'Category') {
             $args = array( 'category' => substr($tag, 8) );
             $redirecturl = ModUtil::url( $this->name, 'user', 'category', $args);
             return System::redirect($redirecturl);
@@ -89,7 +90,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
         
         // check if it is special page
         $specialPages = ModUtil::apiFunc($this->name, 'SpecialPage', 'listpages');
-        if( array_key_exists($tag, $specialPages)) {
+        if (array_key_exists($tag, $specialPages)) {
             $content = ModUtil::apiFunc($this->name, 'SpecialPage', 'get', $specialPages[$tag]);            
             return $this->view->assign('content', $content)
                               ->assign('tag',     $tag)
@@ -120,7 +121,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
         // we'll get later revisions too because we want to display the history and the last editors next to the page
 
         
-        if($raw) {
+        if ($raw) {
             $page['body'] = htmlspecialchars($page['body']);
             echo str_replace("\n", "<br />", $page['body']);
             System::shutDown();
@@ -136,8 +137,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
      * edit
      * 
      * This function edits a wiki page.
-     *     
-     * @param string $_POST['tag'] name of the wiki page
+     * 
      * @return smarty output
      */
     public function edit()
@@ -162,22 +162,22 @@ class Wikula_Controller_User extends Zikula_AbstractController
     /**
      * history
      * 
-     * This function shows the history of a wiki page
+     * This function shows the history of a wiki page.
      *
-     * @param string $args['tag'] tag of the page
-     * @TODO Implement the time parameter?
-     * @TODO Add a paginator?
-     * @TODO Improve this view with JavaScript sliders
      * @return smarty output
      */
     public function history()
     {
+        // TODO: Implement the time parameter?
+        // TODO: Add a paginator?
+        // TODO: Improve this view with JavaScript sliders
+        
         // Security check will be done by LoadRevisions()
         
         $tag = FormUtil::getPassedValue('tag');        
         ModUtil::apiFunc($this->name, 'User', 'CheckTag', $tag);
         
-        if( ModUtil::apiFunc($this->name, 'SpecialPage', 'isSpecialPage', $tag) ) {
+        if (ModUtil::apiFunc($this->name, 'SpecialPage', 'isSpecialPage', $tag) ) {
             return System::redirect( ModUtil::url($this->name, 'user', 'main', array('tag' => $tag)) );
         }
 
@@ -249,7 +249,6 @@ class Wikula_Controller_User extends Zikula_AbstractController
      * This function displays a list of internal pages linking to the current 
      * page.
      * 
-     * @param string $_POST['tag'] name of the wiki page
      * @return smarty output
      */
     public function backlinks()
@@ -259,7 +258,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
         $tag = FormUtil::getPassedValue('tag');        
         ModUtil::apiFunc($this->name, 'User', 'CheckTag', $tag);
         
-        if( ModUtil::apiFunc($this->name, 'SpecialPage', 'isSpecialPage', $tag) ) {
+        if (ModUtil::apiFunc($this->name, 'SpecialPage', 'isSpecialPage', $tag) ) {
             return System::redirect( ModUtil::url($this->name, 'user', 'main', array('tag' => $tag)) );
         }
 
@@ -275,8 +274,7 @@ class Wikula_Controller_User extends Zikula_AbstractController
      * clone tag
      * 
      * This function clones a wiki page and save a copy of it as a new page.
-     *      
-     * @param string $_POST['tag'] name of the wiki page
+     *
      * @return smarty output
      */
     public function cloneTag()
@@ -303,7 +301,8 @@ class Wikula_Controller_User extends Zikula_AbstractController
     /**
      * Displays the wiki pages of a given category.
      *
-     * @param string $args['category'] Name of the category.
+     * @param array $args Arguments.
+     * 
      * @return smarty output
      */
     public function category($args)

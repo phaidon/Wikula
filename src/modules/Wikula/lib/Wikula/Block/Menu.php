@@ -2,9 +2,6 @@
 /**
  * Copyright Wikula Team 2011
  *
- * This work is contributed to the Zikula Foundation under one or more
- * Contributor Agreements and licensed to You under the following license:
- *
  * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikula
  * @link https://github.com/phaidon/Wikula
@@ -15,8 +12,6 @@
 
 /**
  * A menu block.
- * 
- * @package Wikula
  */
 class Wikula_Block_Menu extends Zikula_Controller_AbstractBlock
 {
@@ -54,7 +49,7 @@ class Wikula_Block_Menu extends Zikula_Controller_AbstractBlock
     /**
      * Display block.
      *
-     * @param array $blockInfo A blockinfo structure.
+     * @param array $blockinfo A blockinfo structure.
      *
      * @return string|void The rendered block.
      */
@@ -89,8 +84,9 @@ class Wikula_Block_Menu extends Zikula_Controller_AbstractBlock
     /**
      * Modify block settings
      * 
-     * @param        array       $blockinfo     a blockinfo structure
-     * @return       output      the bock form
+     * @param array $blockinfo A blockinfo structure.
+     * 
+     * @return output The bock form.
      */
     public function modify($blockinfo)
     {
@@ -115,8 +111,9 @@ class Wikula_Block_Menu extends Zikula_Controller_AbstractBlock
     /**
      * Update block settings
      * 
-     * @param        array       $blockinfo     a blockinfo structure
-     * @return       $blockinfo  the modified blockinfo structure
+     * @param array $blockinfo A blockinfo structure.
+     * 
+     * @return $blockinfo The modified blockinfo structure.
      */
     public function update($blockinfo)
     {
