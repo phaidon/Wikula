@@ -125,8 +125,11 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
         } else {
             $categories = '';
         }
-                
+        
+        
+        
         $indexBox = self::indexBox($args['text']);
+
         
         return $indexBox.$args['text'].$categories;
     }
@@ -905,13 +908,13 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
             // mind map xml
             $maptemp = $mapcounter;
             $mapcounter++;
-            //return pnGetBaseUrl();
-            //$mapurl = pnModUrl('wikula', 'user', 'mindmap');
-            //return pnModAPIFunc('wikula', 'user', 'Action', array('action' => 'mindmap', 'url' => 'index.php?module=wikula&ampfunc=mindmap&amp;tag='.$tag.'&amp;mapcounter='.$maptemp));
-            //return pnModAPIFunc('wikula', 'user', 'Action', array('action' => 'mindmap', 'url' => $mapurl));
+            //return System::getBaseUrl();
+            //$mapurl = ModUtil::apiFunc('wikula', 'user', 'mindmap');
+            //return ModUtil::apiFunc('wikula', 'user', 'Action', array('action' => 'mindmap', 'url' => 'index.php?module=wikula&ampfunc=mindmap&amp;tag='.$tag.'&amp;mapcounter='.$maptemp));
+            //return ModUtil::apiFunc('wikula', 'user', 'Action', array('action' => 'mindmap', 'url' => $mapurl));
             //SessionUtil::setVar('wikula_map', base64_encode($thing));
             //return 'tada !';
-            //return pnModAPIFunc('wikula', 'user', 'Action', array('action' => 'mindmap', 'url' => pnModUrl('wikula', 'user', 'mindmap')));
+            //return ModUtil::apiFunc('wikula', 'user', 'Action', array('action' => 'mindmap', 'url' => ModUtil::url('wikula', 'user', 'mindmap')));
             return 'Instant Map coming soon!';
 
         } elseif ($thing[0] == '&') {

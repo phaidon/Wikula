@@ -93,7 +93,6 @@ class Wikka_HookHandler_Lml extends Zikula_Hook_AbstractHandler
                 'modname' => $hook->getCaller())
             );
         }
-                
         $hook->setData($text);
     }
     
