@@ -21,7 +21,6 @@ src/modules/Wikula -> /path/to/zikula/modules/
 3. Install one of the engine modules: Wikka or LuMicuLa
 https://github.com/phaidon/Wikula/tree/master/src/modules/Wikka
 https://github.com/phaidon/LuMicuLa
-
 LuMicuLa is newer, has more configuration possiblities and support several lightweight markup languages (Wikka, Creole, BBCode).
 Wikka is the orignal engine from the WikkaWiki. It assures a full backward compatibilty to Wikula 1.x.  
 
