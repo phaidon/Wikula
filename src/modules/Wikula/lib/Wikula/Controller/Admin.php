@@ -34,7 +34,6 @@ class Wikula_Controller_Admin extends Zikula_AbstractController
     {
         $url = ModUtil::url($this->name, 'admin', 'modifyconfig');
         return System::redirect($url);
-
     }
     
     
@@ -93,6 +92,18 @@ class Wikula_Controller_Admin extends Zikula_AbstractController
         $form = FormUtil::newForm($this->name, $this);
         return $form->execute('admin/modifyconfig.tpl', new Wikula_Handler_ModifyConfig());
     }
+    
+    /**
+     * This functions returns the modifiy config hander.
+     * 
+     * @return string HTML string containing the rendered template.
+     */  
+    public function engine()
+    {
+        $form = FormUtil::newForm($this->name, $this);
+        return $form->execute('admin/engine.tpl', new Wikula_Handler_Engine());
+    }
+
 
     /**
      * This functions returns the delete hander.
@@ -132,6 +143,11 @@ class Wikula_Controller_Admin extends Zikula_AbstractController
         }
         
         $pages = ModUtil::apiFunc($this->name, 'user', 'LoadAllPages');
+        
+        
+                    
+
+        
         foreach ($pages as $page) {
             $hook = new Zikula_FilterHook(
                 'wikula.filter_hooks.body.filter', 
@@ -141,8 +157,7 @@ class Wikula_Controller_Admin extends Zikula_AbstractController
             $data = ServiceUtil::getManager()->getService('zikula.hookmanager')
                                             ->notify($hook)->getData(); 
             $pagelinks      = $data['links'];
-            $pagecategories = $data['categories'];
-
+            $pagecategories = $data['categories'];            
             
             foreach ($pagelinks as $pagelink) {
                 $link = array(

@@ -63,40 +63,6 @@ class Wikula_Handler_ModifyConfig  extends Zikula_Form_AbstractHandler
         $view->assign('editors', $editors);
         
         
-        // get engines
-        $engine = 'none';
-        $engineHook = HookUtil::getBindingsFor('subscriber.wikula.filter_hooks.body');
-        foreach ($engineHook as $value) {
-            if ($value['areaname'] == 'provider.lumicula.filter_hooks.lml') {
-                $engine = 'LuMicuLa';
-                break;
-            } else if ($value['areaname'] == 'provider.wikka.filter_hooks.lml') {
-                $engine = 'Wikka';
-                break;
-            }
-        }
-        $engines = array();
-        $engines[] = array(
-            'text' => 'None',
-            'value' => 'none'
-        );
-        if (ModUtil::available('LuMicuLa')) {
-            $engines[] = array(
-                'text' => 'LuMicuLa',
-                'value' => 'LuMicuLa'
-            );
-        }
-        if (ModUtil::available('Wikka')) {
-            $engines[] = array(
-                'text' => 'Wikka',
-                'value' => 'Wikka'
-            );
-        }
-        $view->assign('engine',  $engine);
-        $view->assign('engines', $engines);
-        
-        
-        
         // get discussion modules
         $discussionModule = 'none';
         $discussionHook = HookUtil::getBindingsFor('subscriber.wikula.ui_hooks.discuss');
@@ -168,24 +134,6 @@ class Wikula_Handler_ModifyConfig  extends Zikula_Form_AbstractHandler
         unset($data['editor']);
 
         
-        // set engine
-        $hookManager = ServiceUtil::getService('zikula.hookmanager');        
-        switch ($data['engine']) {
-            case 'none':
-                $hookManager->unbindSubscriber('subscriber.wikula.filter_hooks.body', 'provider.wikka.filter_hooks.lml');
-                $hookManager->unbindSubscriber('subscriber.wikula.filter_hooks.body', 'provider.lumicula.filter_hooks.lml');
-                break;
-            case 'Wikka':
-                $hookManager->bindSubscriber(  'subscriber.wikula.filter_hooks.body', 'provider.wikka.filter_hooks.lml');
-                $hookManager->unbindSubscriber('subscriber.wikula.filter_hooks.body', 'provider.lumicula.filter_hooks.lml');
-                break;
-            case 'LuMicuLa':
-                $hookManager->bindSubscriber(   'subscriber.wikula.filter_hooks.body', 'provider.lumicula.filter_hooks.lml');
-                $hookManager->unbindSubscriber( 'subscriber.wikula.filter_hooks.body', 'provider.wikka.filter_hooks.lml');
-                break;
-        }
-        unset($data['engine']);
-        
         
         // set discussion module
         $hookManager = ServiceUtil::getService('zikula.hookmanager');        
@@ -199,7 +147,7 @@ class Wikula_Handler_ModifyConfig  extends Zikula_Form_AbstractHandler
                 $this->setVar('discussion_is_available', true);
                 break;
         }
-        unset($data['engine']);
+        unset($data['discussionModule']);
         
         
         $this->setVars($data);

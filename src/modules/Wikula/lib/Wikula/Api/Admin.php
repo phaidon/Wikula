@@ -34,6 +34,11 @@ class Wikula_Api_Admin extends Zikula_AbstractApi
                 'text' => __('Settings'),
                 'class' => 'z-icon-es-config'
             );
+            $links[] = array(
+                'url' => ModUtil::url('Wikula', 'admin', 'engine'),
+                'text' => __('Engine'),
+                'class' => 'z-icon-es-gears'
+            );
         }
         return $links;
     }

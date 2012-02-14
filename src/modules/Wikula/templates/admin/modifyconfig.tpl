@@ -90,32 +90,6 @@
         </div>
     </div>
 </fieldset>
-
-{if $engine == 'none'}
-    <p class="z-errormsg">
-        {gt text="There is no engine set! Without engine Wikula is very limited!"}
-    </p>    
-{/if}
-            
-<fieldset>
-    <legend>{gt text='Engine'}</legend>
-    <div class="z-formrow">
-        {formlabel for="engine" __text="Engine"}
-        {formdropdownlist id="engine" items=$engines}
-        {if $engine != 'none'}
-            <em>
-                <a href="{modurl modname=$engine type="admin" func="main"}">
-                   {gt text="Engine settings"}
-                </a>
-            </em>
-        {/if}
-    </div>
-
-    <p class="z-formnote">
-        <a href="{modurl modname='Wikula' type='admin' func="rebuildLinksAndCategoriesTables"}">Rebuild links and categories tables.</a>
-    </p>
-
-</fieldset>
     
     
 <fieldset>
