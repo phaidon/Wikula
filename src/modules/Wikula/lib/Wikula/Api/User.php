@@ -752,7 +752,6 @@ class Wikula_Api_User extends Zikula_AbstractApi
         }
         
         
-        // ToDo: FullTextSearch
         $em = $this->getService('doctrine.entitymanager');
         $qb = $em->createQueryBuilder();
         $qb->select('p')
@@ -761,6 +760,9 @@ class Wikula_Api_User extends Zikula_AbstractApi
            ->where("p.latest = 'Y'" )
            ->setParameter('tag', '%'.$args['phrase'].'%');
         if (isset($args['fulltextsearch']) && $args['fulltextsearch']) {
+            if (!$this->getVar('fulltextsearch', true)) {
+                return LogUtil::registerError($this->__('Full text search is not enabled!'));
+            }
             $qb->andWhere(
                     $qb->expr()->orx(
                         $qb->expr()->like('p.body', ':tag'),

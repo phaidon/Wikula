@@ -14,11 +14,6 @@
         {formlabel for="root_page" __text='Root Page'}
         {formtextinput id="root_page" size="20" maxLength="64"}
     </div>
-    <div class="z-formrow">
-        {formlabel for="ajaxsearch" __text='Live search'}
-        {formcheckbox id="ajaxsearch"}
-        <em class="z-formnote z-sub">{gt text="Improve search experience, but needs more performance."}</em>
-    </div>
 
     <div class="z-formrow">
         {formlabel for="subscription" __text='Enable subscribtions'}
@@ -37,6 +32,25 @@
 
 </fieldset>
 
+<fieldset>
+    <legend>{gt text='Search'}</legend>
+    
+    <div class="z-formrow">
+        {formlabel for="ajaxsearch" __text='Enable live search'}
+        {formcheckbox id="ajaxsearch"}
+        <em class="z-formnote z-sub">{gt text="Improve search experience, but needs more performance."}</em>
+    </div>
+    
+    <div class="z-formrow">
+        {formlabel for="fulltextsearch" __text='Enable full text search'}
+        {formcheckbox id="fulltextsearch"}
+        <em class="z-formnote z-sub">{gt text="Improve search experience, but needs more performance."}</em>
+    </div>
+    
+</fieldset>
+
+        
+        
 {if $editor == 'none'}
     <p class="z-errormsg">
         {gt text="There is no editor set! Without editor Wikula is very limited!"}

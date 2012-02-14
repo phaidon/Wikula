@@ -4,10 +4,12 @@
         <fieldset>
             <label for="phrase">{gt text='Search for'}</label>
             <input id="phrase" name="phrase" size="35" value="{$phrase}" type="tex" />
-            <label for="fulltextsearch">{gt text='Full text search'}</label>
-            <input id="fulltextsearch" name="fulltextsearch" value="1" {if $fulltextsearch}checked="checked"{/if} type="checkbox" />
+            {if $modvars.Wikula.fulltextsearch}
+                <label for="fulltextsearch">{gt text='Full text search'}</label>
+                <input id="fulltextsearch" name="fulltextsearch" value="1" {if $fulltextsearch}checked="checked"{/if} type="checkbox" />
+            {/if}
             <span class="z-buttons">
-                <input class="z-bt-ok z-bt-small" type="submit" value="{gt text='Search'}" />
+            <input class="z-bt-ok z-bt-small" type="submit" value="{gt text='Search'}" />
             </span>
             <span class="z-buttons">
                 <a class="z-bt-small" id="defwindow" href="#defwindow_content" title="{gt text='Search Tips'}">

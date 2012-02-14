@@ -39,6 +39,7 @@ class Wikula_Util extends Zikula_AbstractVersion
             'mandatorycomment'        => false,
             'single_page_permissions' => false,
             'ajaxsearch'              => true,
+            'fulltextsearch'          => true,
             'discussion_is_available' => false,
         );
     
