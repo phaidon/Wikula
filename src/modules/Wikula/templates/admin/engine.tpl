@@ -21,9 +21,11 @@
     </p>
     <p>
         * {gt text='Wikka is the orignal engine from the WikkaWiki. It assures a full backward compatibilty to Wikula 1.x.'}
+        <a href='https://github.com/phaidon/Wikula/tree/master/src/modules/Wikka'>{gt text='Website'}</a>
     </p>
     <p>
         * {gt text='LuMicuLa is a newer engine. It supports several lightweight markup languages like Wikka, Creole and BBCode.'}
+        <a href='https://github.com/phaidon/LuMicuLa'>{gt text='Website'}</a>
     </p>
 </div>
 
