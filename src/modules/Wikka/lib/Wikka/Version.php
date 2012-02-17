@@ -17,13 +17,13 @@ class Wikka_Version extends Zikula_AbstractVersion
     public function getMetaData()
     {
         $meta = array();
-        $meta['description']    = __('Wikka markup language editor');
-        $meta['displayname']    = __('Wikka');
+        $meta['description']    = $this->__('Wikka markup language editor');
+        $meta['displayname']    = $this->__('Wikka');
         //!url must be different to displayname
-        $meta['url']            = __('wikka');
+        $meta['url']            = 'wikka';
         $meta['version']        = '0.1.0';
         $meta['author']         = 'Fabian Wuertz';
-        $meta['contact']        = 'fabian.wuertz.org';
+        $meta['contact']        = 'https://github.com/phaidon/Wikula';
         // recommended and required modules
         $meta['core_min'] = '1.3.0'; // requires minimum 1.3.0 or later
         $meta['dependencies'] = array();

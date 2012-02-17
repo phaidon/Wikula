@@ -3,92 +3,89 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Wikka\n"
+"Project-Id-Version: Zikula component\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-17 16:54+0100\n"
-"PO-Revision-Date: 2012-02-17 16:56+0100\n"
-"Last-Translator: Fabian Wuertz <dev@wuertz.org>\n"
-"Language-Team: Wikula development Team\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
-"X-Poedit-Language: German\n"
-"X-Poedit-Country: GERMANY\n"
 
 #: lib/Wikka/Api/Transform.php:120
 msgid "Category"
-msgstr "Kategorie"
+msgstr ""
 
 #: lib/Wikka/Api/Transform.php:122
 msgid "Categories"
-msgstr "Kategorien"
+msgstr ""
 
 #: lib/Wikka/Api/Transform.php:157
 msgid "hide"
-msgstr "verstecken"
+msgstr ""
 
 #: lib/Wikka/Api/Transform.php:1278
 msgid "Action argument missing!"
-msgstr "Aktionsargument fehlt!"
+msgstr ""
 
-#: lib/Wikka/Api/Transform.php:1306
-#: lib/Wikka/Api/Transform.php:1311
+#: lib/Wikka/Api/Transform.php:1306 lib/Wikka/Api/Transform.php:1311
 #, php-format
 msgid "Unknown action %s; the action name must not contain special characters"
-msgstr "Unbekannte Aktion %s; der Aktionsname darf keine Sonderzeichen enthalten"
+msgstr ""
 
 #: lib/Wikka/Handler/ModifyConfig.php:43
 msgid "None"
-msgstr "Kein"
+msgstr ""
 
 #: lib/Wikka/Handler/ModifyConfig.php:72
 msgid "Done! Configuration has been updated"
-msgstr "Erledigt. Konfiguration wurde aktualisert"
+msgstr ""
 
 #: lib/Wikka/Version.php:20
 msgid "Wikka markup language editor"
-msgstr "Wikka markup language editor"
+msgstr ""
 
 #: lib/Wikka/Version.php:21
 msgid "Wikka"
-msgstr "Wikka"
+msgstr ""
 
 #: lib/Wikka/Version.php:37
 msgid "Wikka editor"
-msgstr "Wikka-Editor"
+msgstr ""
 
 #: lib/Wikka/Version.php:42
 msgid "Wikka transform"
-msgstr "Wikka transform"
+msgstr ""
 
 #: templates/modifyconfig.tpl:4
 msgid "Modify configuration"
-msgstr "Einstellungen verändern"
+msgstr ""
 
 #: templates/modifyconfig.tpl:11
 msgid "Settings"
-msgstr "Einstellungen"
+msgstr ""
 
 #: templates/modifyconfig.tpl:14
 msgid "Editor"
-msgstr "Editor"
+msgstr ""
 
 #: templates/modifyconfig.tpl:19
 msgid "Show a index on wiki pages"
-msgstr "Inhaltsverzeichnis in Wikiseiten anzeigen"
+msgstr ""
 
 #: templates/modifyconfig.tpl:28
 msgid "Syntax highlighting"
-msgstr "Code-Syntax-Markierung"
+msgstr ""
 
 #: templates/modifyconfig.tpl:41
 msgid "Save"
-msgstr "Spreichern"
+msgstr ""
 
 #: templates/modifyconfig.tpl:42
 msgid "Cancel"
-msgstr "Abbrechen"
-
+msgstr ""

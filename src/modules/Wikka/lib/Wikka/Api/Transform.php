@@ -1254,7 +1254,7 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
         unset($args);
 
         if (!isset($name) || !isset($tag)) {
-            return LogUtil::registerError($this->__('Error! Invalid arguments.'));
+            return LogUtil::registerArgsError();
         }
 
         $interwiki = ModUtil::apiFunc('wikula', 'user', 'ReadInterWikiConfig');
