@@ -7,8 +7,6 @@ In this repository you can find the version 2.x.x. It is for Zikula >= 1.3.0. Th
 https://github.com/phaidon/Wikula/downloads or
 https://github.com/chrishildebrandt/wikula
 
-At the moment it's a RC, so please use it just for testing purposes.
-
 Installation
 ------------
 
