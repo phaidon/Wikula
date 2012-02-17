@@ -1,0 +1,1278 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: wikula\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-17 17:00+0100\n"
+"PO-Revision-Date: 2012-02-17 17:06+0100\n"
+"Last-Translator: Fabian Wuertz <dev@wuertz.org>\n"
+"Language-Team: phaidon\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+
+#: lib/Wikula/Api/Admin.php:29
+msgid "Wiki pages"
+msgstr "Wiki-Seiten"
+
+#: lib/Wikula/Api/Admin.php:34
+#: templates/block/menu.tpl:12
+#: templates/user/settings.tpl:8
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: lib/Wikula/Api/Admin.php:39
+#: templates/admin/engine.tpl:34
+msgid "Engine"
+msgstr ""
+
+#: lib/Wikula/Api/Admin.php:61
+msgid "Error! Get owners failed."
+msgstr ""
+
+#: lib/Wikula/Api/Admin.php:210
+msgid "Error! Count the revisions for this page failed."
+msgstr ""
+
+#: lib/Wikula/Api/Search.php:101
+msgid "Error! Could not load any articles."
+msgstr ""
+
+#: lib/Wikula/Api/SpecialPage.php:71
+msgid "Page_index"
+msgstr "Hauptseite"
+
+#: lib/Wikula/Api/SpecialPage.php:73
+#: templates/user/help.tpl:14
+msgid "index of the available pages on the wiki"
+msgstr ""
+
+#: lib/Wikula/Api/SpecialPage.php:75
+msgid "My_pages"
+msgstr "Meine_Seiten"
+
+#: lib/Wikula/Api/SpecialPage.php:77
+#: templates/user/help.tpl:57
+msgid "list of pages that you own on this wiki"
+msgstr ""
+
+#: lib/Wikula/Api/SpecialPage.php:79
+#, fuzzy
+msgid "Recent_changes"
+msgstr "Letzte Verängerungen"
+
+#: lib/Wikula/Api/SpecialPage.php:81
+#: templates/user/help.tpl:41
+msgid "check which pages that were changed recently"
+msgstr ""
+
+#: lib/Wikula/Api/SpecialPage.php:83
+msgid "High_scores"
+msgstr "Bestenliste"
+
+#: lib/Wikula/Api/SpecialPage.php:85
+#: templates/user/help.tpl:45
+msgid "check who had contributed more to the wiki"
+msgstr ""
+
+#: lib/Wikula/Api/SpecialPage.php:87
+#, fuzzy
+msgid "My_changes"
+msgstr "Seiten"
+
+#: lib/Wikula/Api/SpecialPage.php:89
+#: templates/user/help.tpl:53
+msgid "list of changes that you have done"
+msgstr ""
+
+#: lib/Wikula/Api/SpecialPage.php:91
+#: templates/action/search.tpl:3
+#: templates/action/search.tpl:12
+#: templates/admin/modifyconfig.tpl:36
+#: templates/block/search.tpl:1
+#: templates/user/footer.tpl:1
+#: templates/user/help.tpl:24
+#: templates/user/menu.tpl:23
+#: templates/user/menulight.tpl:10
+msgid "Search"
+msgstr "Suchen"
+
+#: lib/Wikula/Api/SpecialPage.php:93
+#: templates/user/help.tpl:25
+msgid "search something of your interest in the wiki"
+msgstr ""
+
+#: lib/Wikula/Api/SpecialPage.php:95
+#, fuzzy
+msgid "Wanted_pages"
+msgstr "Seitenwünsche"
+
+#: lib/Wikula/Api/SpecialPage.php:97
+#: templates/user/help.tpl:18
+msgid "check out the pages pending for creation"
+msgstr ""
+
+#: lib/Wikula/Api/SpecialPage.php:99
+#, fuzzy
+msgid "Orphaned_pages"
+msgstr "Seitenwünsche"
+
+#: lib/Wikula/Api/SpecialPage.php:101
+#: templates/user/help.tpl:21
+msgid "list of orphaned pages"
+msgstr ""
+
+#: lib/Wikula/Api/SpecialPage.php:103
+#: lib/Wikula/Api/SpecialPage.php:120
+#: templates/plugins/function.specialPageTitle.php:38
+#: templates/plugins/function.specialPageTitle.php:42
+#: templates/user/menu.tpl:18
+#: templates/user/menulight.tpl:7
+msgid "Special_pages"
+msgstr ""
+
+#: lib/Wikula/Api/SpecialPage.php:105
+msgid "list of special pages"
+msgstr ""
+
+#: lib/Wikula/Api/SpecialPage.php:137
+#: lib/Wikula/Api/SpecialPage.php:141
+#: templates/user/help.tpl:13
+msgid "PageIndex"
+msgstr ""
+
+#: lib/Wikula/Api/SpecialPage.php:154
+#: lib/Wikula/Api/SpecialPage.php:180
+msgid "No pages found!"
+msgstr "Keine Seite gefunden."
+
+#: lib/Wikula/Api/SpecialPage.php:171
+msgid "You are not logged in, the list of pages you own couldn't be retrieved."
+msgstr ""
+
+#: lib/Wikula/Api/SpecialPage.php:203
+#: lib/Wikula/Block/RecentChanges.php:75
+#: templates/action/recentchanges.tpl:24
+#: templates/block/recentchanges.tpl:21
+msgid "There are no recent changes"
+msgstr ""
+
+#: lib/Wikula/Api/SpecialPage.php:218
+#: lib/Wikula/Api/User.php:458
+#: lib/Wikula/Block/RecentChanges.php:87
+msgid "anonymous user"
+msgstr ""
+
+#: lib/Wikula/Api/SpecialPage.php:291
+msgid "You are not logged in, the list of pages you've edited couldn't be retrieved."
+msgstr ""
+
+#: lib/Wikula/Api/SpecialPage.php:330
+msgid "D, d M Y"
+msgstr ""
+
+#: lib/Wikula/Api/SpecialPage.php:382
+#: templates/ajax/search.tpl:7
+msgid "containing..."
+msgstr ""
+
+#: lib/Wikula/Api/SpecialPage.php:455
+#, php-format
+msgid "No pages linking to %s"
+msgstr ""
+
+#: lib/Wikula/Api/SpecialPage.php:461
+msgid "No wanted pages"
+msgstr ""
+
+#: lib/Wikula/Api/User.php:71
+#: lib/Wikula/Api/User.php:108
+msgid "No tag given!"
+msgstr ""
+
+#: lib/Wikula/Api/User.php:75
+#: lib/Wikula/Api/User.php:112
+msgid "You do not have the authorization to read this page!"
+msgstr ""
+
+#: lib/Wikula/Api/User.php:231
+msgid "Error! Getting the this page by id failed."
+msgstr ""
+
+#: lib/Wikula/Api/User.php:375
+msgid "Error! Getting the links for this page failed."
+msgstr ""
+
+#: lib/Wikula/Api/User.php:443
+msgid "Error! Getting revisions failed."
+msgstr ""
+
+#: lib/Wikula/Api/User.php:486
+msgid "Error! Getting all pages failed."
+msgstr ""
+
+#: lib/Wikula/Api/User.php:628
+msgid "Error! Getting all pages by user failed."
+msgstr ""
+
+#: lib/Wikula/Api/User.php:764
+msgid "Full text search is not enabled!"
+msgstr ""
+
+#: lib/Wikula/Api/User.php:886
+msgid "The content of the page to save is the same of the current revision. New page not saved."
+msgstr ""
+
+#: lib/Wikula/Api/User.php:926
+msgid "Saving revision failed!"
+msgstr ""
+
+#: lib/Wikula/Api/User.php:937
+msgid "New page created!"
+msgstr ""
+
+#: lib/Wikula/Api/User.php:940
+msgid "New revision saved!"
+msgstr "Veränderungen gespeichert!"
+
+#: lib/Wikula/Api/User.php:1043
+#: lib/Wikula/Api/User.php:1126
+msgid "Wiki update"
+msgstr ""
+
+#: lib/Wikula/Api/User.php:1264
+msgid "Action argument missing!"
+msgstr ""
+
+#: lib/Wikula/Api/User.php:1292
+#: lib/Wikula/Api/User.php:1297
+#, php-format
+msgid "Unknown action %s; the action name must not contain special characters"
+msgstr ""
+
+#: lib/Wikula/Block/Menu.php:38
+msgid "menu"
+msgstr ""
+
+#: lib/Wikula/Block/Menu.php:39
+msgid "Wikula Menu Page"
+msgstr ""
+
+#: lib/Wikula/Block/Menu.php:67
+#: lib/Wikula/Block/Menu.php:98
+#: lib/Wikula/Installer.php:238
+#: lib/Wikula/Util.php:29
+msgid "HomePage"
+msgstr "Startseite"
+
+#: lib/Wikula/Block/Random.php:36
+msgid "random"
+msgstr ""
+
+#: lib/Wikula/Block/Random.php:37
+#, fuzzy
+msgid "Wikula Random Page"
+msgstr "Seitenwünsche"
+
+#: lib/Wikula/Block/RecentChanges.php:36
+#, fuzzy
+msgid "recentchanges"
+msgstr "Letzte Verängerungen"
+
+#: lib/Wikula/Block/RecentChanges.php:37
+#, fuzzy
+msgid "Wikula Recent Changes"
+msgstr "Letzte Verängerungen"
+
+#: lib/Wikula/Block/Search.php:37
+msgid "search"
+msgstr "suchen"
+
+#: lib/Wikula/Block/Search.php:38
+msgid "Wikula Search Box"
+msgstr ""
+
+#: lib/Wikula/Controller/User.php:80
+#: templates/user/categories.tpl:7
+#: templates/user/category.tpl:7
+#: templates/user/menu.tpl:17
+#: templates/user/menulight.tpl:4
+msgid "Categories"
+msgstr ""
+
+#: lib/Wikula/Controller/User.php:113
+msgid "The page revision you requested doesn't exists"
+msgstr ""
+
+#: lib/Wikula/Controller/User.php:115
+msgid "The page does not exist yet! do you want to create it? Feel free to participate and be the first who creates content for this page!"
+msgstr ""
+
+#: lib/Wikula/Controller/User.php:247
+msgid "Error during element fetching !"
+msgstr ""
+
+#: lib/Wikula/Controller/User.php:353
+msgid "No category specified!"
+msgstr ""
+
+#: lib/Wikula/Handler/CloneTag.php:69
+#: lib/Wikula/Handler/RenameTag.php:66
+msgid "The page you requested doesn't exists"
+msgstr ""
+
+#: lib/Wikula/Handler/CloneTag.php:75
+#, php-format
+msgid "Cloned from %s"
+msgstr ""
+
+#: lib/Wikula/Handler/CloneTag.php:116
+#: lib/Wikula/Handler/RenameTag.php:111
+msgid "That page name is not valid"
+msgstr ""
+
+#: lib/Wikula/Handler/CloneTag.php:121
+#: lib/Wikula/Handler/RenameTag.php:116
+msgid "This page does already exist"
+msgstr ""
+
+#: lib/Wikula/Handler/CloneTag.php:126
+#: lib/Wikula/Handler/RenameTag.php:121
+msgid "You do not have the authorization to edit this page!"
+msgstr ""
+
+#: lib/Wikula/Handler/CloneTag.php:143
+msgid "Clone created successfully"
+msgstr ""
+
+#: lib/Wikula/Handler/Delete.php:102
+msgid "Page deleted"
+msgstr ""
+
+#: lib/Wikula/Handler/Delete.php:114
+msgid "Revisions deleted"
+msgstr ""
+
+#: lib/Wikula/Handler/EditTag.php:71
+#: lib/Wikula/Installer.php:251
+msgid "Initial Insert"
+msgstr ""
+
+#: lib/Wikula/Handler/EditTag.php:156
+msgid "OVERWRITE ALERT: This page was modified by someone else while you were editing it.<br />Please copy your changes and re-edit this page."
+msgstr ""
+
+#: lib/Wikula/Handler/RenameTag.php:158
+msgid "Rename successfully"
+msgstr ""
+
+#: lib/Wikula/Installer.php:106
+msgid "WikiHelp"
+msgstr ""
+
+#: lib/Wikula/Installer.php:107
+msgid "ReleaseNotes"
+msgstr ""
+
+#: lib/Wikula/Installer.php:243
+msgid "Welcome to your Wiki!"
+msgstr ""
+
+#: lib/Wikula/Version.php:29
+msgid "Wikula"
+msgstr "Wikula"
+
+#: lib/Wikula/Version.php:31
+msgid "The Wikula module provides a wiki to your website."
+msgstr ""
+
+#: lib/Wikula/Version.php:32
+msgid "wikula"
+msgstr "wikula"
+
+#: lib/Wikula/Version.php:76
+msgid "Wikula bottom area"
+msgstr ""
+
+#: lib/Wikula/Version.php:84
+msgid "Wikula editor"
+msgstr "Wikula editor"
+
+#: lib/Wikula/Version.php:91
+#, fuzzy
+msgid "Wikula Filters"
+msgstr "Wikula"
+
+#: lib/Wikula/Version.php:99
+msgid "Wikula discussion area"
+msgstr ""
+
+#: templates/plugins/function.specialPageTitle.php:36
+#: templates/plugins/function.specialPageTitle.php:39
+#: templates/plugins/function.specialPageTitle.php:44
+#: templates/user/menu.tpl:18
+#: templates/user/menulight.tpl:7
+msgid "Special pages"
+msgstr ""
+
+#: templates/plugins/function.wikulaPageTitle.php:44
+#: templates/plugins/function.wikulaPageTitle.php:45
+msgid "history"
+msgstr "Versionsgeschichte"
+
+#: templates/plugins/function.wikulaPageTitle.php:47
+#: templates/plugins/function.wikulaPageTitle.php:48
+msgid "edit"
+msgstr "bearbeiten"
+
+#: templates/plugins/function.wikulaPageTitle.php:50
+#: templates/plugins/function.wikulaPageTitle.php:51
+msgid "backlinks"
+msgstr ""
+
+#: templates/action/highscores.tpl:5
+msgid "Rank"
+msgstr "Rang"
+
+#: templates/action/highscores.tpl:6
+msgid "User"
+msgstr "Benutzer"
+
+#: templates/action/highscores.tpl:7
+msgid "Revision count"
+msgstr ""
+
+#: templates/action/highscores.tpl:8
+#, fuzzy
+msgid "Page count"
+msgstr "Seitenanzahl"
+
+#: templates/action/lastedit.tpl:3
+msgid "Last edited by "
+msgstr ""
+
+#: templates/action/lastezcomments.tpl:10
+#, php-format
+msgid "Comment by %1$s on %2$s:"
+msgstr ""
+
+#: templates/action/lastezcomments.tpl:15
+msgid "No comments yet..."
+msgstr ""
+
+#: templates/action/mychanges.tpl:4
+#: templates/action/mychanges.tpl:6
+#: templates/action/mychanges.tpl:11
+#: templates/action/mypages.tpl:6
+msgid "This is a list of pages you"
+msgstr ""
+
+#: templates/action/mychanges.tpl:4
+msgid "Order by date"
+msgstr ""
+
+#: templates/action/mychanges.tpl:6
+msgid "Order alphabetically"
+msgstr ""
+
+#: templates/action/mychanges.tpl:23
+#: templates/action/recentchanges.tpl:14
+#: templates/admin/pageadmin.tpl:54
+msgid "Revisions"
+msgstr ""
+
+#: templates/action/mychanges.tpl:24
+#: templates/action/recentchanges.tpl:15
+#: templates/user/menu.tpl:14
+msgid "History"
+msgstr "Versionsgeschichte"
+
+#: templates/action/mypages.tpl:3
+#, php-format
+msgid "This is the list of pages you own. (%1$s on %2$s)"
+msgstr ""
+
+#: templates/action/orphanedpages.tpl:3
+msgid "The following list shows those pages held in the Wiki that are not linked to on any other pages."
+msgstr ""
+
+#: templates/action/orphanedpages.tpl:13
+msgid "No orphaned pages! Good!"
+msgstr ""
+
+#: templates/action/pageindex.tpl:4
+msgid "This is an alphabetical list of pages you can read on this server."
+msgstr ""
+
+#: templates/action/pageindex.tpl:6
+#: templates/admin/pages.tpl:35
+msgid "Items marked with a * indicate pages that you own."
+msgstr ""
+
+#: templates/action/recentchanges.tpl:2
+msgid "Recent Changes"
+msgstr "Letzte Verängerungen"
+
+#: templates/action/rss.tpl:15
+msgid "Name"
+msgstr "Name"
+
+#: templates/action/rss.tpl:18
+msgid "URL"
+msgstr "URL"
+
+#: templates/action/rss.tpl:31
+#, php-format
+msgid "Feeds by %s"
+msgstr ""
+
+#: templates/action/rss.tpl:36
+msgid "Read more"
+msgstr "Weiterlesen"
+
+#: templates/action/search.tpl:5
+#: templates/user/footer.tpl:10
+msgid "Search for"
+msgstr "Suchen nach"
+
+#: templates/action/search.tpl:8
+msgid "Full text search"
+msgstr ""
+
+#: templates/action/search.tpl:15
+#: templates/action/search.tpl:16
+msgid "Search Tips"
+msgstr "Suchtips"
+
+#: templates/action/search.tpl:21
+msgid "apple banana"
+msgstr ""
+
+#: templates/action/search.tpl:22
+msgid "Find pages that contain at least one of the two words."
+msgstr ""
+
+#: templates/action/search.tpl:23
+msgid "+apple +juice"
+msgstr ""
+
+#: templates/action/search.tpl:24
+msgid "Find pages that contain both words."
+msgstr ""
+
+#: templates/action/search.tpl:25
+msgid "+apple -macintosh"
+msgstr ""
+
+#: templates/action/search.tpl:26
+msgid "Find pages that contain the word <q>apple</q> but not <q>macintosh</q>."
+msgstr ""
+
+#: templates/action/search.tpl:27
+msgid "apple*"
+msgstr ""
+
+#: templates/action/search.tpl:28
+msgid "Find pages that contain words such as apple, apples, applesauce, or applet."
+msgstr ""
+
+#: templates/action/search.tpl:29
+msgid "&quot;some words&quot;"
+msgstr ""
+
+#: templates/action/search.tpl:30
+msgid "Find pages that contain the exact phrase <q>some words</q> (for example, pages that contain <q>some words of wisdom</q> but not <q>some noise words</q>). "
+msgstr ""
+
+#: templates/action/search.tpl:41
+#, php-format
+msgid "Search result: <strong>%1$s matches</strong> for <strong>%2$s</strong>"
+msgstr ""
+
+#: templates/action/search.tpl:57
+msgid "Search string not found."
+msgstr ""
+
+#: templates/action/search.tpl:61
+#, php-format
+msgid "Click here to create a new page named \"%s\""
+msgstr ""
+
+#: templates/action/wantedpages.tpl:7
+#, php-format
+msgid "Pages linking to: %s"
+msgstr ""
+
+#: templates/action/wantedpages.tpl:16
+msgid "Wanted Pages"
+msgstr "Seitenwünsche"
+
+#: templates/action/wantedpages.tpl:20
+msgid "Source page"
+msgstr "Quelltext"
+
+#: templates/action/wantedpages.tpl:22
+msgid "Targetted inexistent page"
+msgstr ""
+
+#: templates/admin/deletepages.tpl:5
+msgid "Delete selected revisions"
+msgstr ""
+
+#: templates/admin/deletepages.tpl:12
+#: templates/admin/pageadmin.tpl:45
+msgid "Page name"
+msgstr "Seitenname"
+
+#: templates/admin/deletepages.tpl:13
+#: templates/admin/pageadmin.tpl:47
+#: templates/user/footer.tpl:8
+msgid "Owner"
+msgstr "Besitzer"
+
+#: templates/admin/deletepages.tpl:14
+#: templates/admin/pageadmin.tpl:48
+msgid "Latest author"
+msgstr "Letzter Autor"
+
+#: templates/admin/deletepages.tpl:15
+#: templates/admin/pageadmin.tpl:49
+msgid "Last edit"
+msgstr "Letzte Veränderung"
+
+#: templates/admin/deletepages.tpl:16
+#: templates/admin/pageadmin.tpl:50
+#: templates/user/clone.tpl:20
+msgid "Note"
+msgstr "Notiz"
+
+#: templates/admin/deletepages.tpl:17
+#: templates/admin/pageadmin.tpl:67
+#: templates/user/history.tpl:30
+msgid "Actions"
+msgstr "Aktionen"
+
+#: templates/admin/deletepages.tpl:38
+msgid "Check all"
+msgstr ""
+
+#: templates/admin/deletepages.tpl:39
+msgid "Uncheck all"
+msgstr ""
+
+#: templates/admin/deletepages.tpl:46
+msgid "Confirmation prompt"
+msgstr ""
+
+#: templates/admin/deletepages.tpl:47
+msgid "Do you really want to delete the selected revisions?"
+msgstr ""
+
+#: templates/admin/deletepages.tpl:49
+msgid "Delete"
+msgstr "Lösche"
+
+#: templates/admin/deletepages.tpl:50
+#: templates/admin/engine.tpl:56
+#: templates/admin/modifyconfig.tpl:114
+#: templates/user/clone.tpl:30
+#: templates/user/edit.tpl:55
+#: templates/user/rename.tpl:22
+#: templates/user/settings.tpl:17
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: templates/admin/engine.tpl:5
+msgid "Select an engine"
+msgstr ""
+
+#: templates/admin/engine.tpl:14
+msgid "There is no engine set! Without engine Wikula is very limited!"
+msgstr ""
+
+#: templates/admin/engine.tpl:20
+msgid "The engine transforms the content of a wiki page from a lightweight markup language into html code. At the moment there are two engines available:"
+msgstr ""
+
+#: templates/admin/engine.tpl:23
+msgid "Wikka is the orignal engine from the WikkaWiki. It assures a full backward compatibilty to Wikula 1.x."
+msgstr ""
+
+#: templates/admin/engine.tpl:24
+#: templates/admin/engine.tpl:28
+msgid "Website"
+msgstr ""
+
+#: templates/admin/engine.tpl:27
+msgid "LuMicuLa is a newer engine. It supports several lightweight markup languages like Wikka, Creole and BBCode."
+msgstr ""
+
+#: templates/admin/engine.tpl:41
+msgid "Configure current engine"
+msgstr ""
+
+#: templates/admin/engine.tpl:48
+msgid "Rebuild links and categories tables"
+msgstr ""
+
+#: templates/admin/engine.tpl:55
+#: templates/admin/modifyconfig.tpl:113
+#: templates/user/clone.tpl:29
+#: templates/user/edit.tpl:51
+#: templates/user/rename.tpl:21
+#: templates/user/settings.tpl:16
+msgid "Save"
+msgstr "Speichern"
+
+#: templates/admin/main.tpl:4
+msgid "Statistics"
+msgstr ""
+
+#: templates/admin/main.tpl:8
+msgid "Pages"
+msgstr "Seiten"
+
+#: templates/admin/main.tpl:10
+msgid "Owners"
+msgstr "Besitzer"
+
+#: templates/admin/main.tpl:11
+msgid "Total"
+msgstr "Total"
+
+#: templates/admin/modifyconfig.tpl:5
+msgid "Modify configuration"
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:12
+msgid "General"
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:14
+msgid "Root Page"
+msgstr "Startseite"
+
+#: templates/admin/modifyconfig.tpl:19
+msgid "Enable subscribtions"
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:24
+#: templates/admin/pageadmin.tpl:15
+msgid "Items per page"
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:29
+msgid "Enable single page permissions"
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:39
+msgid "Enable live search"
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:41
+#: templates/admin/modifyconfig.tpl:47
+msgid "Improve search experience, but needs more performance."
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:45
+msgid "Enable full text search"
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:56
+msgid "There is no editor set! Without editor Wikula is very limited!"
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:61
+#: templates/admin/modifyconfig.tpl:63
+msgid "Editor"
+msgstr "Editor"
+
+#: templates/admin/modifyconfig.tpl:68
+#, fuzzy
+msgid "Editor settings"
+msgstr "Einstellungen"
+
+#: templates/admin/modifyconfig.tpl:75
+msgid "Page edit comments are mandatory"
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:80
+msgid "Show a (license) note"
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:96
+msgid "Discussion"
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:98
+msgid "Discussion module"
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:103
+msgid "Discussion module settings"
+msgstr ""
+
+#: templates/admin/pageadmin.tpl:4
+msgid "Page Administration"
+msgstr ""
+
+#: templates/admin/pageadmin.tpl:10
+msgid "Filter view"
+msgstr ""
+
+#: templates/admin/pageadmin.tpl:13
+msgid "Show"
+msgstr "Anzeigen"
+
+#: templates/admin/pageadmin.tpl:16
+msgid "Apply"
+msgstr "Anwenden"
+
+#: templates/admin/pageadmin.tpl:19
+msgid "Search page:"
+msgstr ""
+
+#: templates/admin/pageadmin.tpl:20
+msgid "Enter search string:"
+msgstr ""
+
+#: templates/admin/pageadmin.tpl:21
+msgid "Submit"
+msgstr ""
+
+#: templates/admin/pageadmin.tpl:32
+msgid "Records"
+msgstr ""
+
+#: templates/admin/pageadmin.tpl:33
+#, fuzzy
+msgid "Order by:"
+msgstr "Sortieren nach:"
+
+#: templates/admin/pageadmin.tpl:51
+msgid "Hits"
+msgstr ""
+
+#: templates/admin/pageadmin.tpl:59
+msgid "Comments"
+msgstr "Kommentare"
+
+#: templates/admin/pageadmin.tpl:64
+#: templates/user/menu.tpl:15
+msgid "Backlinks"
+msgstr ""
+
+#: templates/admin/pages.tpl:4
+msgid "Page Index"
+msgstr ""
+
+#: templates/admin/pages.tpl:9
+#: templates/plugins/letterList.tpl:25
+msgid "All"
+msgstr "Alle"
+
+#: templates/admin/pages.tpl:27
+msgid "Owner:"
+msgstr "Besitzer:"
+
+#: templates/admin/pages.tpl:37
+msgid "No page found"
+msgstr "Seite nicht gefunden"
+
+#: templates/block/menu_modify.tpl:5
+msgid "Menu pages"
+msgstr ""
+
+#: templates/block/random_modify.tpl:4
+msgid "Maximum Characters"
+msgstr ""
+
+#: templates/block/recentchanges.tpl:4
+msgid "RSS Feed"
+msgstr ""
+
+#: templates/block/recentchanges.tpl:14
+#, php-format
+msgid "by %s"
+msgstr ""
+
+#: templates/block/recentchanges_modify.tpl:3
+msgid "Number of items"
+msgstr ""
+
+#: templates/block/search.tpl:4
+#, fuzzy
+msgid "Search keywords"
+msgstr "Suchen nach"
+
+#: templates/notification/newPage.tpl:1
+#, php-format
+msgid "%1$s created the wiki article %2$s"
+msgstr ""
+
+#: templates/notification/newRevision.tpl:1
+#, php-format
+msgid "%1$s changed the wiki article %2$s"
+msgstr ""
+
+#: templates/search/options.tpl:3
+msgid "Wiki"
+msgstr "Wiki"
+
+#: templates/user/backlinks.tpl:5
+#, php-format
+msgid "Pages linking to <a href=\"%1$s\">%2$s</a>"
+msgstr ""
+
+#: templates/user/backlinks.tpl:13
+msgid "There are no backlinks to this page"
+msgstr ""
+
+#: templates/user/category.tpl:17
+msgid "Pages that belong to this category:"
+msgstr ""
+
+#: templates/user/clone.tpl:5
+msgid "Please fill in a valid target page name and an (optional) edit note."
+msgstr ""
+
+#: templates/user/clone.tpl:14
+#: templates/user/edit.tpl:52
+#, fuzzy
+msgid "Clone"
+msgstr "Weiter"
+
+#: templates/user/clone.tpl:16
+msgid "Clone as"
+msgstr ""
+
+#: templates/user/clone.tpl:24
+msgid "Edit after creation"
+msgstr ""
+
+#: templates/user/edit.tpl:17
+msgid "Go to the edit form"
+msgstr ""
+
+#: templates/user/edit.tpl:36
+msgid "Please add a note with details of your submission"
+msgstr "Bitte geben Sie einen Kommentar zu Ihrer Bearbeitung an"
+
+#: templates/user/edit.tpl:53
+#: templates/user/rename.tpl:14
+msgid "Rename"
+msgstr "Umbennen"
+
+#: templates/user/edit.tpl:54
+msgid "Preview"
+msgstr "Vorschau"
+
+#: templates/user/footer.tpl:3
+msgid "Page history"
+msgstr "Versionsgeschichte"
+
+#: templates/user/footer.tpl:5
+#, php-format
+msgid "Revisions of %s Feed"
+msgstr ""
+
+#: templates/user/help.tpl:1
+#, fuzzy
+msgid "Useful pages"
+msgstr "Seitenwünsche"
+
+#: templates/user/help.tpl:5
+msgid "FormattingRules"
+msgstr "Syntaxregeln"
+
+#: templates/user/help.tpl:6
+msgid "learn how to format the contents in this wiki"
+msgstr ""
+
+#: templates/user/help.tpl:9
+msgid "SandBox"
+msgstr ""
+
+#: templates/user/help.tpl:10
+msgid "play with your formatting skills"
+msgstr ""
+
+#: templates/user/help.tpl:17
+msgid "WantedPages"
+msgstr ""
+
+#: templates/user/help.tpl:20
+msgid "OrphanedPages"
+msgstr ""
+
+#: templates/user/help.tpl:28
+msgid "TexSearchExpanded"
+msgstr ""
+
+#: templates/user/help.tpl:29
+msgid "fine grained search if you haven't found anything in the normal search"
+msgstr ""
+
+#: templates/user/help.tpl:32
+msgid "WikiCategory"
+msgstr ""
+
+#: templates/user/help.tpl:33
+msgid "learn how works the categorization system of this wiki"
+msgstr ""
+
+#: templates/user/help.tpl:36
+msgid "CategoryWiki"
+msgstr ""
+
+#: templates/user/help.tpl:37
+msgid "list of pages related to the Wiki"
+msgstr ""
+
+#: templates/user/help.tpl:40
+msgid "RecentChanges"
+msgstr ""
+
+#: templates/user/help.tpl:44
+msgid "HighScores"
+msgstr "Bestenliste"
+
+#: templates/user/help.tpl:48
+msgid "OwnedPages"
+msgstr ""
+
+#: templates/user/help.tpl:49
+msgid "check out how many pages you own on the wiki"
+msgstr ""
+
+#: templates/user/help.tpl:52
+msgid "MyChanges"
+msgstr ""
+
+#: templates/user/help.tpl:56
+msgid "MyPages"
+msgstr ""
+
+#: templates/user/help.tpl:63
+#, php-format
+msgid "You will find more useful pages in the <a href=\"%s\">Page index</a>."
+msgstr ""
+
+#: templates/user/history.tpl:8
+msgid "Show feed of these changes"
+msgstr ""
+
+#: templates/user/history.tpl:13
+#, php-format
+msgid "The artice %s has so far %s revisions."
+msgstr ""
+
+#: templates/user/history.tpl:21
+msgid "Compare"
+msgstr "Vergleichen"
+
+#: templates/user/history.tpl:24
+#, fuzzy
+msgid "Creator"
+msgstr "Seitenersteller"
+
+#: templates/user/history.tpl:69
+msgid "Revision comparison"
+msgstr ""
+
+#: templates/user/menu.tpl:9
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: templates/user/menu.tpl:12
+msgid "Discuss"
+msgstr "Diskutieren"
+
+#: templates/user/menu.tpl:20
+msgid "Log in"
+msgstr "Einloggen"
+
+#: templates/user/rename.tpl:5
+msgid "Please fill in a valid target page name."
+msgstr ""
+
+#: templates/user/rename.tpl:16
+msgid "Rename as"
+msgstr ""
+
+#: templates/user/settings.tpl:1
+msgid "Wiki Setting"
+msgstr "Wiki Einstellungen"
+
+#: templates/user/settings.tpl:10
+msgid "Subscribe wiki"
+msgstr "Wiki abonnieren"
+
+#: templates/user/settings.tpl:22
+msgid "No settings available"
+msgstr ""
+
+#: templates/user/show.tpl:8
+#, php-format
+msgid "Revision [%s]"
+msgstr ""
+
+#: templates/user/show.tpl:10
+#, php-format
+msgid "This is a past revision of <a href=\"%2$s\">%1$s</a> made by %3$s on <a class=\"datetime\" href=\"%4$s\">%5$s</a>"
+msgstr ""
+
+#: templates/user/show.tpl:16
+msgid "Show Source"
+msgstr "Quelltext anzeigen"
+
+#: templates/user/show.tpl:23
+msgid "Edit Revision"
+msgstr "Revision bearbeiten"
+
+#: templates/xml/recentchanges.tpl:5
+#: templates/xml/revisions.tpl:5
+msgid "(No note added)"
+msgstr ""
+
+#: templates/xml/recentchanges.tpl:5
+#: templates/xml/revisions.tpl:5
+#, php-format
+msgid "\"%1$s\" by %2$s on %3$s"
+msgstr ""
+
+#: templates/xml/recentchanges.tpl:10
+#: templates/xml/revisions.tpl:10
+msgid "Error"
+msgstr ""
+
+#: templates/xml/recentchanges.tpl:12
+#: templates/xml/revisions.tpl:12
+msgid "No items available yet or you're not allowed to access this information"
+msgstr ""
+
+#~ msgid "Store"
+#~ msgstr "Speichern"
+
+#~ msgid "Author: "
+#~ msgstr "Author:"
+
+#~ msgid "Author"
+#~ msgstr "Author"
+
+#~ msgid "Help"
+#~ msgstr "Hilfe"
+
+#, fuzzy
+#~ msgid ""
+#~ "=====Welcome to your Wiki!=====\n"
+#~ "Thanks for install **[[http://code.zikula.org/wikula/ Wikula]]**! The "
+#~ "Wiki module for Zikula based on [[http://wikkawiki.org WikkaWiki]].\n"
+#~ "This site is running on version {{wikkaversion}}.\n"
+#~ "\n"
+#~ ">>==Contribute==\n"
+#~ "You can report bugs or file feature requests\n"
+#~ "on the [[http://code.zikula.org/wikula Wikula development website]]!\n"
+#~ ">>====Getting started====\n"
+#~ "If you are not sure how a wiki works, you can check out the [[WikiHelp "
+#~ "Help page]] to get started or click or the &quot;edit page&quot; link at "
+#~ "the bottom.\n"
+#~ "\n"
+#~ "====Some useful pages====\n"
+#~ "~-[[FormattingRules Formatting guide]]\n"
+#~ "~-[[WikiHelp Help page]]\n"
+#~ "~-[[RecentChanges Recently modified pages]]\n"
+#~ "\n"
+#~ "You will find more useful pages in the [[CategoryWiki Wiki category]] or "
+#~ "in the [[PageIndex Page index]].\n"
+#~ "\n"
+#~ "Enjoy!"
+#~ msgstr ""
+#~ "=====Willkommen im Wiki!=====\n"
+#~ "Danke für die Installtion**[[http://code.zikula.org/wikula/ Wikula]]**! "
+#~ "Das Wiki Modull für Zikula basiert aut [[http://wikkawiki.org "
+#~ "WikkaWiki]].\n"
+#~ "Das Wiki läuft unter Version {{wikkaversion}} (Veränderungen können in "
+#~ "den [[ReleaseNotes release notes]]eingesehen werden).\n"
+#~ "\n"
+#~ ">>==Contribute==\n"
+#~ "You can report bugs or file feature requests\n"
+#~ "on the [[http://code.zikula.org/wikula Wikula development website]]!\n"
+#~ ">>====Getting started====\n"
+#~ "If you are not sure how a wiki works, you can check out the [[WikiHelp "
+#~ "Help page]] to get started or click or the &quot;edit page&quot; link at "
+#~ "the bottom.\n"
+#~ "\n"
+#~ "====Some useful pages====\n"
+#~ "~-[[Syntaxregeln Formatting guide]]\n"
+#~ "~-[[WikiHelp Help page]]\n"
+#~ "~-[[RecentChanges Recently modified pages]]\n"
+#~ "\n"
+#~ "You will find more useful pages in the [[CategoryWiki Wiki category]] or "
+#~ "in the [[PageIndex Page index]].\n"
+#~ "\n"
+#~ "Enjoy!"
+
+#~ msgid "by"
+#~ msgstr "von"
+
+#~ msgid "No"
+#~ msgstr "Nein"
+
+#~ msgid "Yes"
+#~ msgstr "Ja"
+
+#~ msgid "Back"
+#~ msgstr "Zurück"
+
+#~ msgid "Recent changes Feed"
+#~ msgstr "Zuletzt geänderte Seiten"
+
+#~ msgid "Comment by"
+#~ msgstr "Kommentiert von"
+
+#~ msgid "Percentage"
+#~ msgstr "Prozent"
+
+#~ msgid "Filter"
+#~ msgstr "Filter"
+
+#~ msgid "at least"
+#~ msgstr "mindestens"
+
+#~ msgid "days"
+#~ msgstr "Tage"
+
+#~ msgid "Referrers"
+#~ msgstr "Referrer"
+
+#~ msgid "Edit page"
+#~ msgstr "Seite bearbeiten"
+
+#~ msgid "view"
+#~ msgstr "anzeigen"
+
+#~ msgid "Info"
+#~ msgstr "Info"
+
+#~ msgid "Page missing"
+#~ msgstr "Seite fehlt"
+
+#~ msgid "Contact"
+#~ msgstr "Kontakt"
+
+#~ msgid "E-mail address"
+#~ msgstr "E-Mail Adress"
+
+#~ msgid "Your comments"
+#~ msgstr "Ihre Kommentare"
+
+#~ msgid "Hello World"
+#~ msgstr "Hallo Welt"
