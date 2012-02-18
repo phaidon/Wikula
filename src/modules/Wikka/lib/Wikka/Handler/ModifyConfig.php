@@ -1,9 +1,8 @@
 <?php
-
 /**
  * Copyright Wikula Team 2011
  *
- * @license GNU/LGPLv3 (or at your option, any later version).
+ * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikka
  * @link http://code.zikula.org/Wikula
  *
@@ -11,9 +10,19 @@
  * information regarding copyright and licensing.
  */
 
+/**
+ * This class provides a handler to modify the module settings.
+ */
 class Wikka_Handler_ModifyConfig extends Zikula_Form_AbstractHandler
 {
 
+    /**
+     * Setup form.
+     *
+     * @param Zikula_Form_View $view Current Zikula_Form_View instance.
+     *
+     * @return boolean
+     */
     function initialize(Zikula_Form_View $view)
     {
         $view->caching = false;
@@ -50,7 +59,14 @@ class Wikka_Handler_ModifyConfig extends Zikula_Form_AbstractHandler
         return true;
     }
 
-
+    /**
+     * Handle form submission.
+     *
+     * @param Zikula_Form_View $view  Current Zikula_Form_View instance.
+     * @param array            &$args Args.
+     *
+     * @return boolean
+     */
     function handleCommand(Zikula_Form_View $view, &$args)
     {
         if ($args['commandName'] == 'cancel') {
@@ -63,7 +79,6 @@ class Wikka_Handler_ModifyConfig extends Zikula_Form_AbstractHandler
             return LogUtil::registerPermissionError();
         }
 
-        $ok = $view->isValid();
         $data = $view->getValues();
 
         $this->setVars($data);

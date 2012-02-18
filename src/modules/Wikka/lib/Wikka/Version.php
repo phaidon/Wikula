@@ -1,9 +1,8 @@
 <?php
-
 /**
  * Copyright Wikukla Team 2011
  *
- * @license GNU/LGPLv3 (or at your option, any later version).
+ * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikka
  * @link http://code.zikula.org/Wikula
  *
@@ -11,27 +10,42 @@
  * information regarding copyright and licensing.
  */
 
-
+/**
+ * Provides metadata for this module to the Extensions module.
+ */
 class Wikka_Version extends Zikula_AbstractVersion
 {
+    
+    /**
+     * Assemble and return module metadata.
+     *
+     * @return array Module metadata.
+     */
     public function getMetaData()
     {
-        $meta = array();
-        $meta['description']    = $this->__('Wikka markup language editor');
-        $meta['displayname']    = $this->__('Wikka');
-        //!url must be different to displayname
-        $meta['url']            = 'wikka';
-        $meta['version']        = '0.1.0';
-        $meta['author']         = 'Fabian Wuertz';
-        $meta['contact']        = 'https://github.com/phaidon/Wikula';
-        // recommended and required modules
-        $meta['core_min'] = '1.3.0'; // requires minimum 1.3.0 or later
-        $meta['dependencies'] = array();
-        $meta['capabilities'] = array(HookUtil::PROVIDER_CAPABLE => array('enabled' => true));
-
-        return $meta;
+        return array(
+            'description'    => $this->__('Wikka markup language editor'),
+            'displayname'    => $this->__('Wikka'),
+            //!url must be different to displayname
+            'url'            => 'wikka',
+            'version'        => '0.1.0',
+            'author'         => 'Fabian Wuertz',
+            'contact'        => 'https://github.com/phaidon/Wikula',
+            // recommended and required modules
+            'core_min'       => '1.3.0', // requires minimum 1.3.0 or later
+            'dependencies'   => array(),
+            'capabilities'   => array(
+                                    HookUtil::PROVIDER_CAPABLE => array('enabled' => true)
+                                )
+        );
     }
     
+    
+    /**
+     * Define the hook bundles supported by this module.
+     *
+     * @return void
+     */
     protected function setupHookBundles()
     {
         $bundle = new Zikula_HookManager_ProviderBundle($this->name, 'provider.wikka.ui_hooks.lml', 'ui_hooks', __('Wikka editor'));

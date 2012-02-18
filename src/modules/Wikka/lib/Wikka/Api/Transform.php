@@ -1,10 +1,8 @@
 <?php
-
-
 /**
  * Copyright Wikula Team 2011
  *
- * @license GNU/LGPLv3 (or at your option, any later version).
+ * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikka
  * @link http://code.zikula.org/Wikula
  *
@@ -12,14 +10,41 @@
  * information regarding copyright and licensing.
  */
 
+/**
+ * Transform api class.
+ */
 class Wikka_Api_Transform extends Zikula_AbstractApi 
 {
 
+    /**
+     * Categories collector
+     *
+     * @var array
+     */
     private $categories = array();
+    
+    /**
+     * Headings collector
+     *
+     * @var array
+     */
     private $headings = array();
+    
+    /**
+     * Codeblock collector
+     *
+     * @var array
+     */
     private $codeblocks = array();
     
     
+    /**
+     * Forward to Wikka formater
+     * 
+     * @param array $args Arguments.
+     * 
+     * @return Wikka formater output
+     */
     public function transform($args)
     {   
         PageUtil::addVar('stylesheet', 'modules/'.$this->name.'/style/transform.css');
@@ -29,13 +54,18 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
     
 
 
-   /**
-    * Wikka formater
-    *
-    * @param string $args['text'] text to wiki-format
-    * @param string $args['method'] (optional) legacy Wikka state
-    * @return wiki-formatted text
-    */
+    /**
+     * Wikka formater
+     *
+     * Parameters passed in the $args array:
+     * -------------------------------------
+     * string $args['text'] Text to wiki-format.
+     * string $args['method'] (Optional) Legacy Wikka state.
+     * 
+     * @param array $args Arguments. 
+     * 
+     * @return wiki-formatted text
+     */
     private function wikka($args)
     {
         global $mapcounter;
@@ -68,7 +98,7 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
 
         // remove hr
         $length = strlen($args['text']);
-        if( substr($args['text'], $length-4) == '----' ) {
+        if (substr($args['text'], $length-4) == '----' ) {
             $args['text'] = substr($args['text'], 0, $length-4);
         }
         
@@ -88,8 +118,8 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
             "(^|\n)([\t~]+|[ ]{2,})+(-(?!-)|&|\*(?!\*)|([0-9]+|[a-zA-Z]+)\))?|". // indents and lists
             "\|(?:[^\|])?\|(?:\(.*?\))?(?:\{[^\{\}]*?\})?(?:\n)?|".       // Simple Tables
             "\{\{.*?\}\}|".                                               // action
-                    "\b[A-ZÄÖÜ][A-Za-zÄÖÜßäöü]+[:](?![=_])\S*\b|".											# InterWiki link
-                    "\b([A-ZÄÖÜ]+[a-zßäöü]+[A-Z0-9ÄÖÜ][A-Za-z0-9ÄÖÜßäöü]*)\b|".								# CamelWords
+                    "\b[A-ZÄÖÜ][A-Za-zÄÖÜßäöü]+[:](?![=_])\S*\b|".											// InterWiki link
+                    "\b([A-ZÄÖÜ]+[a-zßäöü]+[A-Z0-9ÄÖÜ][A-Za-z0-9ÄÖÜßäöü]*)\b|".								// CamelWords
             '\\&([#a-zA-Z0-9]+;)?|'.                                      // ampersands! Track single ampersands or any htmlentity-like (&...;)
             "\n".                                                         // new line
             '/ms',
@@ -115,8 +145,8 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
 
         
         
-        if( count($this->categories) > 0) {
-            if( count($this->categories) == 1 ) {
+        if (count($this->categories) > 0) {
+            if (count($this->categories) == 1 ) {
                 $categories = $this->__('Category');
             } else {
                 $categories = $this->__('Categories');
@@ -135,11 +165,17 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
     }
     
     
-    
+    /**
+     * Add a index box to wiki page
+     *
+     * @param string $text Wiki text. 
+     * 
+     * @return wiki-formatted text with index box.
+     */
     private function indexBox($text) {
         
         
-        if(!$this->getVar('showIndex', false) ) {
+        if (!$this->getVar('showIndex', false) ) {
             return '';
         }
         
@@ -147,7 +183,7 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
         preg_match_all('/\<h(.*?)\<\/a\>/si', $text, $headings);
         
         
-        if( count($headings[1]) == 0 ) {
+        if (count($headings[1]) == 0 ) {
             return '';
         }
             
@@ -164,35 +200,35 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
         $h[5] = 1;
         $prelevel = 0;
 
-        foreach($headings[1] as $value) {
+        foreach ($headings[1] as $value) {
 
             $tmparray1 = explode(' ', $value);
             $tmparray2 = explode('>', $value);
             $level = $tmparray1[0];
             $title = $tmparray2[2];
 
-            if($level <= $prelevel ) {
+            if ($level <= $prelevel ) {
                 $h[$level]++;
 
-                if($level < 5 ) {
+                if ($level < 5 ) {
                     $h[5] = 1;
                 }
-                if($level < 4 ) {
+                if ($level < 4 ) {
                     $h[4] = 1;
                 }
-                if($level < 3 ) {
+                if ($level < 3 ) {
                     $h[3] = 1;
                 }
-                if($level < 2 ) {
+                if ($level < 2 ) {
                     $h[2] = 1;
                 }
 
             }
 
-            if($level != $prelevel) {
+            if ($level != $prelevel) {
                 $number = '';
                 $spaces = '';
-                for($i = 1; $i < $level; $i++ ) {
+                for ($i = 1; $i < $level; $i++) {
                     $number .= $h[$i].'.';
                     $spaces .= '&nbsp;&nbsp;&nbsp;&nbsp;';
                 }
@@ -212,11 +248,12 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
     
 
     /**
-    * Callback transform Wikka function
-    *
-    * @param string $things match with the patterns defined
-    * @return HTML transformation
-    */
+     * Callback transform Wikka function
+     *
+     * @param string $things Match with the patterns defined.
+     * 
+     * @return HTML transformation
+     */
     private function wikka2callback($things)
     {
         
@@ -253,19 +290,39 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
         if (!is_array($things) && $things == 'closetags') {
             $return = '';
             // close inline elements
-            if ($trigger_keys % 2) { $return .= '</kbd>'; }
-            if ($trigger_italic % 2) { $return .= '</em>'; }
-            if ($trigger_monospace % 2) { $return .= '</tt>'; }
-            if ($trigger_bold % 2) { $return .= '</strong>'; }
-            if ($trigger_strike % 2) { $return .= '</span>'; }
-            if ($trigger_notes % 2) { $return .= '</span>'; }
-            if ($trigger_inserted % 2) { $return .= '</span>'; }
-            if ($trigger_deleted % 2) { $return .= '</span>'; }
-            if ($trigger_underline % 2) { $return .= '</span>'; }
+            if ($trigger_keys % 2) {
+                $return .= '</kbd>';
+            }
+            if ($trigger_italic % 2) {
+                $return .= '</em>';
+            }
+            if ($trigger_monospace % 2) {
+                $return .= '</tt>';
+            }
+            if ($trigger_bold % 2) {
+                $return .= '</strong>';
+            }
+            if ($trigger_strike % 2) {
+                $return .= '</span>';
+            }
+            if ($trigger_notes % 2) {
+                $return .= '</span>';
+            }
+            if ($trigger_inserted % 2) {
+                $return .= '</span>';
+            }
+            if ($trigger_deleted % 2) {
+                $return .= '</span>';
+            }
+            if ($trigger_underline % 2) {
+                $return .= '</span>';
+            }
 
             // close headings
             for ($i = 1; $i<=5; $i ++) {
-                if ($trigger_l[$i] % 2) { $return .= "</h$i>"; }
+                if ($trigger_l[$i] % 2) {
+                    $return .= "</h$i>";
+                }
             }
 
             // close indents
@@ -276,18 +333,34 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
 
             // close tables
             // TODO check colgroup?
-            if (3 < $trigger_table){ $return .=  '</caption>'; }
-            elseif (2 < $trigger_table) { $return .=  '</th></tr>'; }
-            elseif (1 < $trigger_table) { $return .=  '</td></tr>'; }
-            if (2 < $trigger_rowgroup) { $return .=  '</tbody>'; }
-            elseif (1 < $trigger_rowgroup) { $return .=  '</tfoot>'; }
-            elseif (0 < $trigger_rowgroup) { $return .=  '</thead>'; }
-            if (0 < $trigger_table) { $return .=  '</table>'; }
+            if (3 < $trigger_table) {
+                $return .=  '</caption>';
+            } elseif (2 < $trigger_table) {
+                $return .=  '</th></tr>';
+            } elseif (1 < $trigger_table) {
+                $return .=  '</td></tr>';
+            }
+            if (2 < $trigger_rowgroup) {
+                $return .=  '</tbody>';
+            } elseif (1 < $trigger_rowgroup) {
+                $return .=  '</tfoot>';
+            } elseif (0 < $trigger_rowgroup) {
+                $return .=  '</thead>';
+            }
+            if (0 < $trigger_table) {
+                $return .=  '</table>';
+            }
 
             // close block elements
-            if ($trigger_floatl % 2) { $return .= '</div>'; }
-            if ($trigger_floatr % 2) { $return .= '</div>'; }
-            if ($trigger_center % 2) { $return .= '</div>'; }
+            if ($trigger_floatl % 2) {
+                $return .= '</div>';
+            }
+            if ($trigger_floatr % 2) {
+                $return .= '</div>';
+            }
+            if ($trigger_center % 2) {
+                $return .= '</div>';
+            }
 
             // reset the static vars
             $oldIndentLevel  = 0;
@@ -299,13 +372,15 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
 
             return $return;
 
-        // Ignore the closing delimiter if there is nothing to close.
+        
         } elseif (preg_match("/^\|\|\n$/", $thing, $matches) && $trigger_table == 1) {
+            // Ignore the closing delimiter if there is nothing to close.
             return '';
 
-        // Simple tables
-        // $matches[1] is element, $matches[2] is attributes, $matches[3] is styles and $matches[4] is linebreak
+        
         } elseif (preg_match("/^\|([^\|])?\|(\(.*?\))?(\{.*?\})?(\n)?$/", $thing, $matches)) {
+            // Simple tables
+            // $matches[1] is element, $matches[2] is attributes, $matches[3] is styles and $matches[4] is linebreak
             for ($i = 1; $i < 5; $i++) {
                 if (!isset($matches[$i])) $matches[$i] = '';
             }
@@ -328,10 +403,8 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
                 $close_part = '</th>';
             } elseif ($trigger_table == 2) {
                 $close_part = '</td>';
-            }
-
-            // If no cell, or we want to open a table; then there is nothing to close
-            elseif ($trigger_table == 1 || $matches[1] == '!') {
+            } elseif ($trigger_table == 1 || $matches[1] == '!') {
+                // If no cell, or we want to open a table; then there is nothing to close
                 $close_part = '';
             } else {
                 //This is actually opening the table (i.e. nothing at all to close). Go on to open a cell.
@@ -357,12 +430,14 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
                 $trigger_table = 1;
                 $open_part = '<table class="data"';
                 $linebreak_after_open = $cr;
-            // Open a caption.
+            
             } elseif ($matches[1] == '?') {
+                // Open a caption.
                 $trigger_table = 4;
                 $open_part = '<caption';
-            //Start a rowgroup.
+            
             } elseif ($matches[1] == '#' || $matches[1] == '[' || $matches[1] == ']') {
+                //Start a rowgroup.
                 //If we're here, we want to close any open rowgroup.
                 if (2 < $trigger_rowgroup) {
                     $close_part .= '</tbody>'.$cr;
@@ -385,8 +460,9 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
                 }
                 $linebreak_after_open = $cr;
 
-            // Here we want to add colgroup.
+            
             } elseif ($matches[1] == '_') {
+                // Here we want to add colgroup.
                 // close any open colgroup
                 if ($trigger_colgroup == 1) {
                     $close_part .= '</colgroup>'.$cr;
@@ -395,16 +471,18 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
                 $trigger_colgroup = 1;
                 $open_part .= '<colgroup';
 
-            // And col elements
+            
             } elseif ($matches[1] == '-') {
+                // And col elements
                 $open_part .= '<col';
                 $selfclose = ' /';
                 if ($matches[4]) {
                     $linebreak_after_open = $cr;
                 }
 
-            //Ok, then it is cells.
+            
             } else {
+                //Ok, then it is cells.
                 $open_part = '';
                 // Need a tbody if no other rowgroup open.
                 if ($trigger_rowgroup == 0) {
@@ -417,12 +495,13 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
                     $open_part .= '<tr>';
                 }
 
-                // Header cell.
+                
                 if ($matches[1] == '=') {
+                    // Header cell.
                     $trigger_table = 3;
                     $open_part .= '<th';
-                //Datacell
                 } else {
+                    ////Datacell
                     $trigger_table = 2;
                     $open_part .= '<td';
                 }
@@ -451,8 +530,9 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
             $open_part .= $selfclose.'>';
             return $close_part . $open_part . $linebreak_after_open;
 
-        // are in table, no cell - but not asked to open new: please close and parse again. ;)
+        
         } else if ($trigger_table == 1) {
+            // are in table, no cell - but not asked to open new: please close and parse again. ;)
             $close_part = '';
             if (2 < $trigger_rowgroup) {
                 $close_part .= '</tbody>'.$cr;
@@ -470,67 +550,82 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
             return $close_part.$this->wikka2callback($things);
         }
 
-        // convert HTML thingies
+        
         if ($thing == '<') {
+            // convert HTML thingies
             return '&lt;';
 
         } else if ($thing == '>') {
             return '&gt;';
 
-        // float box left
+        
         } else if ($thing == '<<') {
+            // float box left
             return (++$trigger_floatl % 2 ? '<div class="floatl">'.$cr : $cr.'</div>'.$cr);
 
-        // float box right
+        
         } else if ($thing == '>>') {
+            // float box right
             return (++$trigger_floatr % 2 ? '<div class="floatr">'.$cr : $cr.'</div>'.$cr);
 
-        // clear floated box
+        
         } else if ($thing == '::c::') {
+            // clear floated box
             return ('<div class="clear">&nbsp;</div>'.$cr);
 
-        // keyboard
+        
         } else if ($thing == '#%') {
+            // keyboard
             return (++$trigger_keys % 2 ? '<kbd class="keys">' : '</kbd>');
 
-        // bold
+        
         } else if ($thing == '**') {
+            // bold
             return (++$trigger_bold % 2 ? '<strong>' : '</strong>');
 
-        // italic
+        
         } else if ($thing == '//') {
+            // italic
             return (++$trigger_italic % 2 ? '<em>' : '</em>');
 
-        // underline
+        
         } else if ($thing == '__') {
+            // underline
             return (++$trigger_underline % 2 ? '<span class="underline">' : '</span>');
 
-        // monospace
+        
         } else if ($thing == '##') {
+            // monospace
             return (++$trigger_monospace % 2 ? '<tt>' : '</tt>');
 
-        // notes
+        
         } else if ($thing == "''") {
+            // notes
             return (++$trigger_notes % 2 ? '<span class="notes">' : '</span>');
 
-        // strikethrough
+        
         } else if ($thing == '++') {
+            // strikethrough
             return (++$trigger_strike % 2 ? '<span class="strikethrough">' : '</span>');
 
-        // additions
+        
         } else if ($thing == '&pound;&pound;') {
+            // additions
             return (++$trigger_inserted % 2 ? '<span class="additions">' : '</span>');
 
-        // deletions
+        
         } else if ($thing == '&yen;&yen;') {
+            // deletions
             return (++$trigger_deleted % 2 ? '<span class="deletions">' : '</span>');
 
-        // center
+        
         } else if ($thing == '@@') {
+            // center
             return (++$trigger_center % 2 ? '<div class="center">'.$cr : $cr.'</div>'.$cr);
 
-        // urls
+        
         } else if (preg_match('/^([a-z]+:\/\/\S+?)([^[:alnum:]^\/])?$/', $thing, $matches)) {
+            // urls
             $url = $matches[1];
             if (preg_match('/^(.*)\.(gif|jpg|jpeg|png)/si', $url)) {
                 return DataUtil::formatForDisplayHTML('<img src="'.$url.'" alt="image" />'.$matches[2]);
@@ -553,42 +648,46 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
                 }
             }
 
-        // header level 5
+        
         } else if ($thing == '==') {
+            // header level 5
             $br = false;
             return (++$trigger_l[5] % 2 ? '<h5>' : '</h5>'.$cr);
 
-        // header level 4
+        
         } else if ($thing == '===') {
+            // header level 4
             $br = false;
             return (++$trigger_l[4] % 2 ? '<h4>' : '</h4>'.$cr);
 
-        // header level 3
         } else if ($thing == '====') {
+            // header level 3
             $br = false;
             return (++$trigger_l[3] % 2 ? '<h3>' : '</h3>'.$cr);
 
-        // header level 2
         } else if ($thing == '=====') {
+            // header level 2
             $br = false;
             return (++$trigger_l[2] % 2 ? '<h2>' : '</h2>'.$cr);
 
-        // header level 1
+        
         } else if ($thing == '======') {
+            // header level 1
             $br = false;
             return (++$trigger_l[1] % 2 ? '<h1>' : '</h1>'.$cr);
 
-        // forced line breaks
+        
         } else if ($thing == '---') {
+            // forced line breaks
             return '<br />';
 
-        // escaped text
+        
         } else if (preg_match('/^""(.*)""$/s', $thing, $matches)) {
+            // escaped text
             $ddquotes_policy = $this->getVar('double_doublequote_html', 'safe');
             $embedded = $matches[1];
 
-            if ($ddquotes_policy == 'safe' || $ddquotes_policy == 'raw')
-            {
+            if ($ddquotes_policy == 'safe' || $ddquotes_policy == 'raw') {
                 // get tags with id attributes
                 // use backref to match both single and double quotes
                 $patTagWithId = '((<[a-z][^>]*)((?<=\\s)id=("|\')(.*?)\\4)(.*?>))';
@@ -599,8 +698,7 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
                 // step through code, replacing tags with ids with tags with new ('repaired') ids
                 $tmpembedded = $embedded;
                 $newembedded = '';
-                for ($i=0; $i < $tags2; $i++)
-                {
+                for ($i=0; $i < $tags2; $i++) {
                     // $attrid not needed, just for clarity
                     list( , $tag, $tagstart, $attrid, $quote, $id, $tagend) = $matches2[$i];
                     // split in two at matched tag
@@ -629,25 +727,29 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
             }
 
 
-        // Elided content (eliminates trailing ws)
-        } elseif(preg_match("/^\/\*(.*?)\*\/[\s]*$/s", $thing, $matches)){
+        
+        } elseif (preg_match("/^\/\*(.*?)\*\/[\s]*$/s", $thing, $matches)) {
+            // Elided content (eliminates trailing ws)
             return null;
 
-        // Elided content (preserves trailing ws)
-        } elseif(preg_match("/``(.*?)``/s", $thing, $matches)) {
+        
+        } elseif (preg_match("/``(.*?)``/s", $thing, $matches)) {
+            // Elided content (preserves trailing ws)
             return null;
 
-        // code text
         } else if (preg_match('/^%%(.*?)%%$/s', $thing, $matches)) {
+            // code text
+            
             /*
-            * Note: this routine is rewritten such that (new) language formatters
-            * will automatically be found, whether they are GeSHi language config files
-            * or "internal" Wikka formatters.
-            * Path to GeSHi language files and Wikka formatters MUST be defined in config.
-            * For line numbering (GeSHi only) a starting line can be specified after the language
-            * code, separated by a ; e.g., %%(php;27)....%%.
-            * Specifying >= 1 turns on line numbering if this is enabled in the configuration.
+                Note: This routine is rewritten such that (new) language formatters
+                will automatically be found, whether they are GeSHi language config files
+                or "internal" Wikka formatters.
+                Path to GeSHi language files and Wikka formatters MUST be defined in config.
+                For line numbering (GeSHi only) a starting line can be specified after the language
+                code, separated by a ; e.g., %%(php;27)....%%.
+                Specifying >= 1 turns on line numbering if this is enabled in the configuration.
             */
+            
             $code = $matches[1];
             // if configuration path isn't set, make sure we'll get an invalid path so we
             // don't match anything in the home directory
@@ -683,25 +785,13 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
                         'sourcecode' => $code,
                         'language'   => $language,
                       ));
-            
-            
-            
-
-            // display grab button if option is set in the config file
-            /*if ($this->getVar('grabcode_button', true)) {
-                // build form
-                $output .= '<form method="post" action="'.ModUtil::url($this->name, 'user', 'grabcode').'">
-                            <input type="submit" name="save" class="grabcode" value="'.$this->__('Grab code').'" title="'.$this->__('Grab code').'" />
-                            <input type="hidden" name="filename" value="'.urlencode($valid_filename).'" />
-                            <input type="hidden" name="code" value="'.urlencode(nl2br($code)).'" />
-                            </form>';
-            }*/
 
             return $output;
 
-        // recognize forced links across lines
-        // @@@ regex accepts NO non-whitespace before whitespace, surely not correct? [[  something]]
+       
         } elseif (preg_match('/^\[\[(\S*)(\s+(.+))?\]\]$/s', $thing, $matches) || preg_match('/^\(\((\S*)(\s+(.+))?\)\)$/s', $thing, $matches)) {
+            // recognize forced links across lines
+            // @@@ regex accepts NO non-whitespace before whitespace, surely not correct? [[  something]]
             // forced links
             // \S : any character that is not a whitespace character
             // \s : any whitespace character
@@ -710,11 +800,7 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
             if (isset($matches[1]) && !empty($matches[1])) {
                 $result = '';
                 $url = $matches[1];
-                /*if ($url != ($url=(preg_replace('/@@|&pound;&pound;|\[\[/', '', $url)))) {
-                    $result = '</span>';
-                }*/
                 $text = isset($matches[3]) ? $matches[3] : $url;
-                //$text = preg_replace('/@@|&pound;&pound;|\[\[/', '', $text);
                 $link = $this->Link(
                     array(
                         'tag'  => $url,
@@ -726,8 +812,8 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
                 return '';
             }
 
-        // indented text
         } elseif (preg_match("/(^|\n)([\t~]+|[ ]{2,})+(-(?!-)|&|\*(?!\*)|([0-9]+|[a-zA-Z]+)\))?(\n|$)/s", $thing, $matches)) {
+            // indented text
             // find out which indent type we want
             $newIndentType  = $matches[3];
             $newIndentLevel = (strpos($matches[2], ' ') === false) ? strlen($matches[2]) : strlen($matches[2])/2;
@@ -745,18 +831,23 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
                 $li = 1;
                 $br = true;
             } else {
-                if (preg_match('`[0-9]`', $newIndentType[0])) { $newIndentType = '1'; }
-                elseif (preg_match('`[IVX]`', $newIndentType[0])) { $newIndentType = 'I'; }
-                elseif (preg_match('`[ivx]`', $newIndentType[0])) { $newIndentType = 'i'; }
-                elseif (preg_match('`[A-Z]`', $newIndentType[0])) { $newIndentType = 'A'; }
-                elseif (preg_match('`[a-z]`', $newIndentType[0])) { $newIndentType = 'a'; }
+                if (preg_match('`[0-9]`', $newIndentType[0])) { 
+                    $newIndentType = '1';
+                } elseif (preg_match('`[IVX]`', $newIndentType[0])) {
+                    $newIndentType = 'I';
+                } elseif (preg_match('`[ivx]`', $newIndentType[0])) {
+                    $newIndentType = 'i';
+                } elseif (preg_match('`[A-Z]`', $newIndentType[0])) {
+                    $newIndentType = 'A';
+                } elseif (preg_match('`[a-z]`', $newIndentType[0])) {
+                    $newIndentType = 'a';
+                }
 
                 $li = 1;
             }
 
             if ($newIndentLevel < $oldIndentLevel) {
-                for (; $newIndentLevel < $oldIndentLevel; $oldIndentLevel--)
-                {
+                for (; $newIndentLevel < $oldIndentLevel; $oldIndentLevel--) {
                     $curIndentType = array_pop($indentClosers);
                     if ($oldIndentLevel > 1) {
                         $result .= str_repeat("\t", $oldIndentLevel -1);
@@ -774,8 +865,7 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
 
             if ($oldIndentLevel == $newIndentLevel) {
                 $curIndentType = array_pop($indentClosers);
-                if ($newIndentType != $curIndentType)
-                {
+                if ($newIndentType != $curIndentType) {
                     if ($oldIndentLevel > 1) {
                         $result .= str_repeat("\t", $oldIndentLevel -1);
                     }
@@ -795,8 +885,7 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
             }
 
             if ($newIndentLevel > $oldIndentLevel) {
-                for (; $newIndentLevel > $oldIndentLevel; $oldIndentLevel++)
-                {
+                for (; $newIndentLevel > $oldIndentLevel; $oldIndentLevel++) {
                     $result .= str_repeat("\t", $oldIndentLevel);
                     if ($newIndentType == '.') {
                         $result .= '<div class="indent">';
@@ -827,8 +916,9 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
             $curIndentType = $newIndentType;
             return $result;
 
-        // new lines
+        
         } elseif ($thing == $cr) {
+            // new lines
             // close lines in indents and list elements
             if ($li == 2) {
                 if ($curIndentType != '.') {
@@ -840,8 +930,7 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
                 $li = 0;
             }
             // if we got here, there was no tab in the next line; this means that we can close all open indents and lists.
-            for (; 0 < $oldIndentLevel; $oldIndentLevel--)
-            {
+            for (; 0 < $oldIndentLevel; $oldIndentLevel--) {
                 $curIndentType = array_pop($indentClosers);
                 if ($oldIndentLevel > 1) {
                     $result .= str_repeat("\t", $oldIndentLevel-1);
@@ -863,8 +952,9 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
 
             return $result;
 
-        // Actions
+        
         } else if (preg_match('/^\{\{(.*?)\}\}$/s', $thing, $matches)) {
+            // Actions
             if (isset($matches[1]) && !empty($matches[1])) {
                 return $this->Action(
                     array('action' => $matches[1])
@@ -873,16 +963,17 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
                 return '{{}}';
             }
 
-        // InterWiki links!
+        
         } else if (preg_match("/^[A-Z���][A-Za-z�������]+[:]\S*$/s", $thing)) {
+            // InterWiki links!
             
             return $this->Link(
                 array('tag' => $thing)
             );
 
-        // CamelWords unparsed
-        //} else if (preg_match("/^\!{0,1}[A-Z���]+[a-z����]+[A-Z0-9���][A-Za-z0-9�������]*$/s", $thing)) {
+        
         } else if (preg_match("/^\!?[A-Z0-9���]+[a-z����]+[A-Z0-9���][A-Za-z0-9�������]*$/s", $thing)) {
+            // CamelWords unparsed
             if ($thing[0] == '!') {
                 return DataUtil::formatForDisplay(substr($thing, 1));
             } else {
@@ -891,20 +982,23 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
                 );
             }
 
-        // wiki links!
+        
         } elseif (preg_match('/^[A-Z���]+[a-z����]+[A-Z0-9���][A-Za-z0-9�������]*$/s', $thing)) {
+            // wiki links!
             return $this->Link(
                 array('tag'  => $thing)
             );
 
-        // separators
+        
         } else if (preg_match('/-{4,}/', $thing, $matches)) {
+            // separators
             $br = false;
 
             return '<hr />'.$cr;
 
-        // Removing this until it's been worked out
+        
         } else if (preg_match('/^<map.*<\/map>$/s', $thing)) {
+            // Removing this until it's been worked out
             // mind map xml
             $maptemp = $mapcounter;
             $mapcounter++;
@@ -926,12 +1020,17 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
     }
 
 
-   /**
-    * htmlspecialchars to entities utility function
-    *
-    * @param string $args['text'] text to process
-    * @return formatted text
-    */
+    /**
+     * htmlspecialchars to entities utility function
+     *
+     * Parameters passed in the $args array:
+     * -------------------------------------
+     * string $args['text'] text to process..
+     * 
+     * @param array $args Arguments. 
+     * 
+     * @return formatted text
+     */
     private function htmlspecialchars_ent($args)
     {
         if (!isset($args['text']) || empty($args['text'])) {
@@ -943,10 +1042,10 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
         $charset     = 'UTF-8';
 
         // define patterns
-        $alpha      = '[a-z]+';               # character entity reference
-        $numdec     = '#[0-9]+';              # numeric character reference (decimal)
-        $numhex     = '#x[0-9a-f]+';          # numeric character reference (hexadecimal)
-        $terminator = ';|(?=($|[\n<]|&lt;))'; # semicolon; or end-of-string, newline or tag
+        $alpha      = '[a-z]+';               // character entity reference
+        $numdec     = '#[0-9]+';              // numeric character reference (decimal)
+        $numhex     = '#x[0-9a-f]+';          // numeric character reference (hexadecimal)
+        $terminator = ';|(?=($|[\n<]|&lt;))'; // semicolon; or end-of-string, newline or tag
 
         $entitystring   = $alpha.'|'.$numdec.'|'.$numhex;
         $escaped_entity = '&amp;('.$entitystring.')('.$terminator.')';
@@ -965,30 +1064,29 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
     
     
     /**
-    * "Afterburner" formatting: extra handling of already-generated XHTML code.
-    *
-    * Ensure every heading has an id, either specified or generated. (May be
-    * extended to generate section TOC data.)
-    * If an id is already specified, that is used without any modification.
-    * If no id is specified, it is generated on the basis of the heading context:
-    * - any image tag is replaced by its alt text (if specified)
-    * - all tags are stripped
-    * - all characters that are not valid in an ID are stripped (except whitespace)
-    * - the resulting string is then used by makedId() to generate an id out of it
-    *
-    * @access    private
-    *
-    * @param    array    $things    required: matches of the regex in the preg_replace_callback
-    * @return    string    heading with an id attribute
-    */
+     * "Afterburner" formatting: extra handling of already-generated XHTML code.
+     *
+     * Ensure every heading has an id, either specified or generated. (May be
+     * extended to generate section TOC data.)
+     * If an id is already specified, that is used without any modification.
+     * If no id is specified, it is generated on the basis of the heading context:
+     * - any image tag is replaced by its alt text (if specified)
+     * - all tags are stripped
+     * - all characters that are not valid in an ID are stripped (except whitespace)
+     * - the resulting string is then used by makedId() to generate an id out of it
+     *
+     * @param array $things Required: matches of the regex in the preg_replace_callback.
+     * 
+     * @return string heading with an id attribute
+     */
     private function wikka3callback($things)
     {
         
         $thing = $things[1];
 
         // heading
-        if (preg_match(PATTERN_MATCH_HEADINGS, $thing, $matches))
-        {
+        $matches = array();
+        if (preg_match(PATTERN_MATCH_HEADINGS, $thing, $matches)) {
             list($h_element, $h_tagname, $h_attribs, $h_heading) = $matches;
 
             if (preg_match(PATTERN_MATCH_ID_ATTRIBUTES, $h_attribs)) {
@@ -1021,7 +1119,13 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
         // other elements to be treated go here (tables, images, code sections...)
     }
     
-    
+    /**
+     * Category callback
+     *
+     * @param string $things Things.
+     * 
+     * @return void
+     */
     private function categoryCallback($things)
     {
         $things = explode(' ', $things[1]);
@@ -1038,7 +1142,15 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
     }
     
     
-    
+    /**
+     * Clean text node
+     *
+     * @param string  $textvalue                Text value.
+     * @param string  $pattern_prohibited_chars Pattern prohibited chars.
+     * @param boolean $decode_html_entities     Decode html entities.
+     * 
+     * @return string
+     */
     private function CleanTextNode($textvalue, $pattern_prohibited_chars = PATTERN_INVALID_ID_CHARS, $decode_html_entities = true)
     {
         $textvalue = trim($textvalue);
@@ -1074,7 +1186,12 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
     /**
      * Build an element ID
      *
-     * @param string $args['group'] group of the id to build
+     * Parameters passed in the $args array:
+     * -------------------------------------
+     * string $args['group'] Group of the id to build.
+     * 
+     * @param array $args Arguments.
+     * 
      * @return final id
      */
     private function makeId($args)
@@ -1145,11 +1262,18 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
     
     /**
      * Build a wiki link code
+     * 
+     * @param array $args Arguments.
+     * 
      * @todo needs rework
      * @todo can we index all the Links and check if exists in the DB once?
+     * 
+     * @return string
      */
     private function Link($args)
     {
+        
+        
         if (!isset($args['tag'])) {
             return false;
         }
@@ -1163,6 +1287,7 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
             $args['title'] = $args['tag'];
         }
 
+        $matches = array();
         // is this an interwiki link?
         if (preg_match('/^([A-Z][A-Z,a-z]+)[:]([A-Z,a-z,0-9]*)$/s', $args['tag'], $matches)) {
 
@@ -1248,6 +1373,14 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
         return !empty($args['tag']) ? '<a title="'.$args['text'].'" href="'.$args['tag'].'">'.$args['text'].'</a>'.$external_link_tail : $args['text']; //// ?????
     }
     
+    
+    /**
+     * Get inter wiki url
+     * 
+     * @param array $args Arguments.
+     * 
+     * @return string
+     */
     private function GetInterWikiUrl($args)
     {
         extract($args);
@@ -1271,7 +1404,13 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
 
     }
     
-    
+    /**
+     * Show a action
+     * 
+     * @param array $args Arguments.
+     * 
+     * @return string
+     */
     private function Action($args)
     {
         if (!isset($args['action'])) {
@@ -1317,13 +1456,19 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
         return ModUtil::apiFunc('Wikula', 'SpecialPage', strtolower($action), $vars);
     }
     
-    
+    /**
+     * Higlight code syntax
+     * 
+     * @param array $args Arguments.
+     * 
+     * @return string
+     */
     public function highlight($args)
     {
-        if(empty($args['language'])) {
+        if (empty($args['language'])) {
             $args['language'] = 'php';
         }
-        if(empty($args['sourcecode'])) {
+        if (empty($args['sourcecode'])) {
             return '';
         }
         $highlighter = $this->getVar('syntaxHighlighter');

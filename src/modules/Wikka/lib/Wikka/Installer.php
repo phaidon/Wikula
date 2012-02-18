@@ -1,9 +1,8 @@
 <?php
-
 /**
  * Copyright Wikula Team 2011
  *
- * @license GNU/LGPLv3 (or at your option, any later version).
+ * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikka
  * @link http://code.zikula.org/Wikula
  *
@@ -11,13 +10,21 @@
  * information regarding copyright and licensing.
  */
 
+/**
+ * Provides module installation and upgrade services for the Wikula module.
+ * 
+ */
 class Wikka_Installer extends Zikula_AbstractInstaller
 {
+    
     /**
-    * initialise the template module
-    * This function is only ever called once during the lifetime of a particular
-    * module instance
-    */
+     * Initialise the Wikula module.
+     *
+     * This function is only ever called once during the lifetime of a particular
+     * module instance.
+     * 
+     * @return boolean True on success, false otherwise.
+     */
     public function install()
     {        
         // create hook
@@ -29,14 +36,15 @@ class Wikka_Installer extends Zikula_AbstractInstaller
   
 
     /**
-    * Upgrade the errors module from an old version
-    *
-    * This function must consider all the released versions of the module!
-    * If the upgrade fails at some point, it returns the last upgraded version.
-    *
-    * @param        string   $oldVersion   version number string to upgrade from
-    * @return       mixed    true on success, last valid version string or false if fails
-    */
+     * Upgrade the users module from an older version.
+     *
+     * This function must consider all the released versions of the module!
+     * If the upgrade fails at some point, it returns the last upgraded version.
+     *
+     * @param string $oldversion Version number string to upgrade from.
+     *
+     * @return mixed True on success, last valid version string or false if fails.
+     */
     public function upgrade($oldversion)
     {
         // Update successful
@@ -44,15 +52,15 @@ class Wikka_Installer extends Zikula_AbstractInstaller
     }
 
     /**
-    * delete the errors module
-    * This function is only ever called once during the lifetime of a particular
-    * module instance
-    */
+     * Delete the users module.
+     *
+     * Since the users module should never be deleted we'all always return false here.
+     *
+     * @return bool false
+     */
     public function uninstall()
     {
         HookUtil::unregisterProviderBundles($this->version->getHookProviderBundles());
-
-        // Deletion successful
         return true;
 
     }

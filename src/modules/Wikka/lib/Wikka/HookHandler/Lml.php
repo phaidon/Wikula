@@ -1,9 +1,8 @@
 <?php
-
 /**
  * Copyright Wikula Team 2011
  *
- * @license GNU/LGPLv3 (or at your option, any later version).
+ * @license GNU/GPLv3 (or at your option, any later version).
  * @package Wikka
  * @link http://code.zikula.org/Wikula
  *
@@ -11,8 +10,13 @@
  * information regarding copyright and licensing.
  */
 
+/**
+ * Provides module hook handler.
+ * 
+ */
 class Wikka_HookHandler_Lml extends Zikula_Hook_AbstractHandler
 {
+    
     /**
      * Zikula_View instance
      *
@@ -38,27 +42,24 @@ class Wikka_HookHandler_Lml extends Zikula_Hook_AbstractHandler
      * args[id] is the id of the object.
      * args[caller] the module who notified of this event.
      *
-     * @param Zikula_Hook $hook
+     * @param Zikula_DisplayHook $hook Zikula display hook.
      *
      * @return void
      */
     public function ui_view(Zikula_DisplayHook $hook)
     {
-        $modname = $hook->getCaller();
         $textfieldname = $hook->getId();
         
-        if(empty($textfieldname)) {
-           $textfieldname = 'body';
+        if (empty($textfieldname)) {
+            $textfieldname = 'body';
         }
         
-        
-
         $this->view->assign('textfieldname', $textfieldname)
                    ->assign('baseurl',       System::getBaseUrl());
         
         $version = ModUtil::getVar('Wikka', 'editor', 'wikka100');
         
-        if($version == 'wikiedit') {
+        if ($version == 'wikiedit') {
             $this->view->assign('maAvailable', ModUtil::available('MediaAttach'));
         }
   
@@ -73,7 +74,7 @@ class Wikka_HookHandler_Lml extends Zikula_Hook_AbstractHandler
      * args[id] is the id of the object.
      * args[caller] the module who notified of this event.
      *
-     * @param Zikula_Hook $hook
+     * @param Zikula_FilterHook $hook Zikula filter hook.
      *
      * @return void
      */
@@ -82,7 +83,7 @@ class Wikka_HookHandler_Lml extends Zikula_Hook_AbstractHandler
         $text = $hook->getData();        
         
         
-        if($hook->getCaller() == 'WikulaSaver') {
+        if ($hook->getCaller() == 'WikulaSaver') {
             $data = array();
             $data['links']      = self::getPageLinks($text);
             $data['categories'] = self::getPageCategories($text);
@@ -96,15 +97,24 @@ class Wikka_HookHandler_Lml extends Zikula_Hook_AbstractHandler
         $hook->setData($text);
     }
     
-    private function getPageLinks($text) {
+    
+    /**
+     * This function extracts links from a given text
+     *
+     * @param string $text Text to check for links.
+     *
+     * @return array
+     */
+    private function getPageLinks($text)
+    {
         $links = array();
         $pagelinks = array();
         preg_match_all("/\[\[(.*?)\]\]/", $text, $links);
         $links = $links[1];
-        foreach($links as $link) {
+        foreach ($links as $link) {
             $link = explode(' ', $link);
             // check if link is a hyperlink
-            if( strstr($link[0], '://' ) or strstr($link[0], '@' ) ) {
+            if (strstr($link[0], '://' ) || strstr($link[0], '@' ) ) {
                 continue;
             }
             $pagelinks[] = $link[0];                 
@@ -112,8 +122,15 @@ class Wikka_HookHandler_Lml extends Zikula_Hook_AbstractHandler
         return array_unique($pagelinks);
     }
     
-    
-    private function getPageCategories($text) {
+    /**
+     * This function extracts categories from a given text
+     *
+     * @param string $text Text to check for categories.
+     *
+     * @return array
+     */
+    private function getPageCategories($text)
+    {
         $categories = array();        
         preg_match_all("/\n\[\[Category(.*?)\]\]/", $text, $categories);
         $categories = $categories[1];
@@ -122,13 +139,12 @@ class Wikka_HookHandler_Lml extends Zikula_Hook_AbstractHandler
         $categories2 = $categories2[1];
         $categories = array_merge($categories, $categories2);
         
-        foreach($categories as $key => $value) {
+        foreach ($categories as $key => $value) {
             $value = explode(' ', $value);
             $value = $value[0];
             $categories[$key] = $value;
         }
         return array_unique($categories);
     }
-
 
 }
