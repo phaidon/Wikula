@@ -28,7 +28,7 @@ class Wikka_Version extends Zikula_AbstractVersion
             'displayname'    => $this->__('Wikka'),
             //!url must be different to displayname
             'url'            => 'wikka',
-            'version'        => '0.1.0',
+            'version'        => '1.0.0',
             'author'         => 'Fabian Wuertz',
             'contact'        => 'https://github.com/phaidon/Wikula',
             // recommended and required modules
