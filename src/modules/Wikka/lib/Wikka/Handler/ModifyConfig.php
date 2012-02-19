@@ -2,9 +2,9 @@
 /**
  * Copyright Wikula Team 2011
  *
- * @license GNU/GPLv3 (or at your option, any later version).
+ * @license GNU/LGPLv3 (or at your option, any later version).
  * @package Wikka
- * @link http://code.zikula.org/Wikula
+ * @link https://github.com/phaidon/Wikula
  *
  * Please see the NOTICE file distributed with this source code for further
  * information regarding copyright and licensing.
@@ -29,22 +29,7 @@ class Wikka_Handler_ModifyConfig extends Zikula_Form_AbstractHandler
         
         $view->assign($this->getVars());
 
-        $editors = array(
-            0 => array(
-                    'value' => 'wikka100',
-                    'text'  => 'WikkaEdit v.1.0.0'
-                 ),
-            1 => array(
-                    'value' => 'wikka132',
-                    'text'  => 'WikkaEdit v.1.3.2'
-                 ),
-            2 =>  array(
-                    'value' => 'wikiedit',
-                    'text'  => 'WikiEdit (old version)'
-                 )
-        );
-        $view->assign('editors', $editors);
-        $view->assign('editor', $this->getVar('editor', 'wikka100'));
+        
         $view->assign('showIndex', $this->getVar('showIndex', false));
         
         

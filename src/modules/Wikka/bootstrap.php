@@ -1,12 +1,13 @@
 <?php
 /**
- * Wikula
+ * Copyright Wikula Team 2011
  *
- * @copyright  (c) Wikula Development Team
- * @link       http://code.zikula.org/wikula/
- * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
- * category    Zikula_3rdParty_Modules
- * @subpackage Wikka
+ * @license GNU/LGPLv3 (or at your option, any later version).
+ * @package Wikka
+ * @link https://github.com/phaidon/Wikula
+ *
+ * Please see the NOTICE file distributed with this source code for further
+ * information regarding copyright and licensing.
  */
 
 

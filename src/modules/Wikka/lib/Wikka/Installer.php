@@ -2,9 +2,9 @@
 /**
  * Copyright Wikula Team 2011
  *
- * @license GNU/GPLv3 (or at your option, any later version).
+ * @license GNU/LGPLv3 (or at your option, any later version).
  * @package Wikka
- * @link http://code.zikula.org/Wikula
+ * @link https://github.com/phaidon/Wikula
  *
  * Please see the NOTICE file distributed with this source code for further
  * information regarding copyright and licensing.

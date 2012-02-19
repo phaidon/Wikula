@@ -1,8 +1,8 @@
 <?php
 /**
- * Copyright Wikula Team 2011
+ * Copyright Wikula Team 2011/ Wikka Development Team
  *
- * @license GNU/GPLv3 (or at your option, any later version).
+ * @license GNU/LGPLv3 / GNU/GPLv3 (or at your option, any later version).
  * @package Wikka
  * @link http://code.zikula.org/Wikula
  *
@@ -71,9 +71,7 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
         global $mapcounter;
         $mapcounter = 1;
         
-        
-        
-        
+
         $args['text'] = str_replace("\r\n", "\n", $args['text']);
 
         // We'll see about that later

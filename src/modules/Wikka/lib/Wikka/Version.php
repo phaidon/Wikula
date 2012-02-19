@@ -2,7 +2,7 @@
 /**
  * Copyright Wikukla Team 2011
  *
- * @license GNU/GPLv3 (or at your option, any later version).
+ * @license GNU/LGPLv3 (or at your option, any later version).
  * @package Wikka
  * @link http://code.zikula.org/Wikula
  *

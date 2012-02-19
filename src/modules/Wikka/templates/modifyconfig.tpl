@@ -11,11 +11,6 @@
     <legend>{gt text='Settings'}</legend>
 
     <div class="z-formrow">
-        {formlabel for="editor" __text="Editor"}
-        {formdropdownlist id="editor" items=$editors}
-    </div>
-
-    <div class="z-formrow">
         {formlabel for="showIndex" __text='Show a index on wiki pages'}
         {formcheckbox id="showIndex"}
     </div>

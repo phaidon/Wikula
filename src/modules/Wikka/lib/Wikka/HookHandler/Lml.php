@@ -2,9 +2,9 @@
 /**
  * Copyright Wikula Team 2011
  *
- * @license GNU/GPLv3 (or at your option, any later version).
+ * @license GNU/LGPLv3 (or at your option, any later version).
  * @package Wikka
- * @link http://code.zikula.org/Wikula
+ * @link https://github.com/phaidon/Wikula
  *
  * Please see the NOTICE file distributed with this source code for further
  * information regarding copyright and licensing.
@@ -57,13 +57,12 @@ class Wikka_HookHandler_Lml extends Zikula_Hook_AbstractHandler
         $this->view->assign('textfieldname', $textfieldname)
                    ->assign('baseurl',       System::getBaseUrl());
         
-        $version = ModUtil::getVar('Wikka', 'editor', 'wikka100');
         
-        if ($version == 'wikiedit') {
-            $this->view->assign('maAvailable', ModUtil::available('MediaAttach'));
-        }
+        //if ($version == 'wikiedit') {
+        //    $this->view->assign('maAvailable', ModUtil::available('MediaAttach'));
+        //}
   
-        $response = new Zikula_Response_DisplayHook('provider_area.ui.wikka.lml', $this->view, $version.'.tpl');
+        $response = new Zikula_Response_DisplayHook('provider_area.ui.wikka.lml', $this->view, 'wikkaedit.tpl');
         $hook->setResponse($response);
     }
 
