@@ -23,3 +23,8 @@ LuMicuLa is newer, has more configuration possiblities and support several light
 Wikka is the orignal engine from the WikkaWiki. It assures a full backward compatibilty to Wikula 1.x.  
 
 4. Activate Wikula in the Extension settings.
+
+License
+-------
+
+GPL
