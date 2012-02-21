@@ -1,6 +1,6 @@
 Copyright: © 2012 Wikula development team
 
-License: GNU/LGPLv3 (or at your option, any later version).
+License: GNU/GPLv3 (or at your option, any later version).
 
 Authors:
     * Fabian Wuertz (main programmer)

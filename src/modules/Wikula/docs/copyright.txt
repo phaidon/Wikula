@@ -1,0 +1,37 @@
+Copyright: © 2012 Wikula development team
+License: GNU/GPLv3 (or at your option, any later version).
+Note: Wikula v2 is a complete rewritten version of Wikula v1. 
+
+
+Authors:
+    * Fabian Wuertz (main programmer)
+    * Carsten Volmer
+    * Mateo Tibaquira (Wikula v1)
+
+Wikula is based on Wikula v1 and WikkaWiki
+
+Wiklula v1
+Copyright: (c) Wikula Development Team
+License: GPL
+Homepage: https://github.com/chrishildebrandt/wikula
+
+WikkaWiki
+Copyright: (c) Wikka Development Team
+License: GPL
+Homepage: http://wikkawiki.org/HomePage
+
+
+The following 3 party programs are included:
+
+Chosen, a Select Box Enhancer for jQuery and Protoype
+Copyright: (c) 2011 Harvest
+License:   MIT
+Homepage:  http://getharvest.com
+    * javascript/chosen/*
+
+Text Diff
+Copyright: 2004 Geoffrey T. Dairiki <dairiki@dairiki.org>
+Copyright: 2004-2009 The Horde Project (http://www.horde.org/)
+License:   LGPL
+Homepage:  http://getharvest.com
+    * lib/vendor/Text_Diff/*

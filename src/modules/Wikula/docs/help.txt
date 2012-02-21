@@ -3,7 +3,7 @@
  *
  * @copyright  (c) Wikula Development Team
  * @link       https://github.com/phaidon/Wikula/
- * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
+ * @license    GNU/LGPL - http://www.gnu.org/copyleft/gpl.html
  */
 
 Upload the Wikula folder to your Zikula /modules folder.

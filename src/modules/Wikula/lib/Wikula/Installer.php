@@ -11,7 +11,7 @@
  */
 
 /**
- * Provides module installation and upgrade services for the Wikula module.
+ * Provides module installation and upgrade services.
  * 
  */
 class Wikula_Installer extends Zikula_AbstractInstaller
