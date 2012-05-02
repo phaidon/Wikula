@@ -22,8 +22,7 @@ class Wikula_Version extends Zikula_AbstractVersion
      * @return array Module metadata.
      */
     public function getMetaData()
-    {
-        
+    {        
         return array(
             'name'           => 'Wikula',
             'displayname'    => $this->__('Wikula'),

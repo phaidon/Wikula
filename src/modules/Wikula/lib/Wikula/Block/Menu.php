@@ -116,11 +116,7 @@ class Wikula_Block_Menu extends Zikula_Controller_AbstractBlock
      * @return $blockinfo The modified blockinfo structure.
      */
     public function update($blockinfo)
-    {
-        $test = FormUtil::getPassedValue('test');
-        $test = implode(",", $test);
-        LogUtil::registerStatus($test);
-        
+    {   
         // Get current content
         $vars = BlockUtil::varsFromContent($blockinfo['content']);
 

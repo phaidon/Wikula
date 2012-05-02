@@ -1333,6 +1333,63 @@ class Wikula_Api_User extends Zikula_AbstractApi
 
     }
     
+    
+        
+    /**
+     * decode a short url
+     */
+    public function decodeurl($args)
+    {
+        // check we actually have some vars to work with...
+        if (!isset($args['vars'])) {
+            return LogUtil::registerArgsError();
+        }
+        
+        
+        if (isset($args['vars'][2])) {
+            if ($args['vars'][2] == $this->__('Categories')) {
+                System::queryStringSetVar('func', 'categories');
+                return true;
+            }
+            
+            System::queryStringSetVar('tag', $args['vars'][2]);
+        }
+        if (isset($args['vars'][3])) {
+            System::queryStringSetVar('func', $args['vars'][3]);
+        } else {
+            System::queryStringSetVar('func', 'show');
+        }
+        
+        return true;
+
+    }
+    
+    
+    
+    /**
+     * encode an url into a shorturl
+     */
+    public function encodeurl($vars)
+    {
+        $shorturl = $vars['modname'];
+        
+        if ($vars['func'] == 'categories') {
+            return $shorturl.'/'.$this->__('Categories');
+        }
+        
+        
+        if (isset($vars['args']['tag'])) {
+            $shorturl .= '/'.$vars['args']['tag'];            
+        }
+        
+        if ($vars['func'] != 'main' && $vars['func'] != 'show') {
+            $shorturl .= '/'.$vars['func'];
+        }
+        
+        return $shorturl;
+    }
+
+    
 }
 
 
