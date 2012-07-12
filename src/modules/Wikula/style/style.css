@@ -515,36 +515,6 @@ border: 1px solid ButtonFace; padding: 1px;  margin: 0px; cursor: pointer; curso
 #wikula .edname { background-color:#CCCCFF; font-size: 18px; padding: 0 10px; }
 */
 
-#wikula h1,
-#wikula h2,
-#wikula h3,
-#wikula h4,
-#wikula h5 {
-    color: #000;
-    font-family: Georgia, "DejaVu Serif", Times, serif;
-    font-weight: normal;
-}
-
-#wikula h5 {
-    font-size: 12pt;
-}
-
-#wikula h4 {
-    font-size: 14pt;
-}
-
-#wikula h3 {
-    font-size: 16pt;
-}
-
-#wikula h2 {
-    font-size: 18pt;
-}
-
-#wikula h1 {
-    font-size: 20pt;
-}
-
 #wikula .page h1:hover:after,
 #wikula .page h2:hover:after,
 #wikula .page h3:hover:after,
