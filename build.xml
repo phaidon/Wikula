@@ -28,7 +28,7 @@
         
         <echo message="PHP_CodeSniffer..." />
         <exec executable="phpcs">
-            <arg line="--extensions=php --report=checkstyle --standard=Zikula --report-file=${logsdir}/phpcs.xml src" />
+            <arg line="--extensions=php --report=checkstyle --standard=Zikula --ignore=${ignorepaths} --report-file=${logsdir}/phpcs.xml src" />
         </exec>
         
         <echo message="csslint..." />
@@ -55,7 +55,7 @@
 
          <!-- PHP MD analysis -->
         <exec executable="phpmd" dir="${env.WORKSPACE}" failonerror="off">
-           <arg line="src xml codesize,unusedcode --reportfile '${logsdir}/pmd.xml'" />
+           <arg line="src xml codesize,unusedcode --reportfile '${logsdir}/pmd.xml' --ignore ${ignorepaths}" />
         </exec>
 
     
