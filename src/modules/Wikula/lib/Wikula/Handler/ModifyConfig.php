@@ -113,33 +113,39 @@ class Wikula_Handler_ModifyConfig  extends Zikula_Form_AbstractHandler
         }
         
         $data = $view->getValues();
-        
-        
+
         // set editor
         $hookManager = ServiceUtil::getService('zikula.hookmanager');        
         switch ($data['editor']) {
             case 'none':
-                $hookManager->unbindSubscriber('subscriber.wikula.ui_hooks.editor', 'provider.wikka.ui_hooks.lml');
-                $hookManager->unbindSubscriber('subscriber.wikula.ui_hooks.editor', 'provider.lumicula.ui_hooks.lml');
+                if (ModUtil::available('Wikka')) {
+                    $hookManager->unbindSubscriber('subscriber.wikula.ui_hooks.editor', 'provider.wikka.ui_hooks.lml');
+                }
+                if (ModUtil::available('LuMicuLa')) {
+                    $hookManager->unbindSubscriber('subscriber.wikula.ui_hooks.editor', 'provider.lumicula.ui_hooks.lml');
+                }
                 break;
             case 'Wikka':
-                $hookManager->bindSubscriber(  'subscriber.wikula.ui_hooks.editor', 'provider.wikka.ui_hooks.lml');
-                $hookManager->unbindSubscriber('subscriber.wikula.ui_hooks.editor', 'provider.lumicula.ui_hooks.lml');
+                $hookManager->bindSubscriber('subscriber.wikula.ui_hooks.editor', 'provider.wikka.ui_hooks.lml');
+                if (ModUtil::available('LuMicuLa')) {
+                    $hookManager->unbindSubscriber('subscriber.wikula.ui_hooks.editor', 'provider.lumicula.ui_hooks.lml');
+                }
                 break;
             case 'LuMicuLa':
-                $hookManager->bindSubscriber(   'subscriber.wikula.ui_hooks.editor', 'provider.lumicula.ui_hooks.lml');
-                $hookManager->unbindSubscriber( 'subscriber.wikula.ui_hooks.editor', 'provider.wikka.ui_hooks.lml');
+                $hookManager->bindSubscriber('subscriber.wikula.ui_hooks.editor', 'provider.lumicula.ui_hooks.lml');
+                if (ModUtil::available('Wikka')) {
+                    $hookManager->unbindSubscriber('subscriber.wikula.ui_hooks.editor', 'provider.wikka.ui_hooks.lml');
+                }
                 break;
         }
         unset($data['editor']);
 
-        
-        
         // set discussion module
-        $hookManager = ServiceUtil::getService('zikula.hookmanager');        
         switch ($data['discussionModule']) {
             case 'none':
-                $hookManager->unbindSubscriber('subscriber.wikula.ui_hooks.discuss', 'provider.ezcomments.ui_hooks.comments');
+                if (ModUtil::available('EZComments')) {
+                    $hookManager->unbindSubscriber('subscriber.wikula.ui_hooks.discuss', 'provider.ezcomments.ui_hooks.comments');
+                }
                 $this->setVar('discussion_is_available', false);
                 break;
             case 'EZComments':
