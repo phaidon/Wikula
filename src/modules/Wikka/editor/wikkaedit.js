@@ -38,8 +38,10 @@ WikkaEdit.prototype.init = function() {
 		this.initActions();
 	}
 
-	//var we_ta_container = this.we_ta;		// without textarea_container (old method)
-	var we_ta_container = document.getElementById("textarea_container");	// with textarea_container
+
+
+	var we_ta_container = this.we_ta;		// without textarea_container (old method)
+	//var we_ta_container = document.getElementById("textarea_container");	// with textarea_container
 
 	// add a toolbar before textarea
 	this.we_toolbar = document.createElement("div");
@@ -830,8 +832,3 @@ function SelRange(start, end) {
 	this.start = start;
 	this.end = (end == null ? start : end)
 }
-
-// ===== run wikkaedit =====
-var varWikkaEdit = new WikkaEdit(document.getElementById("body"));
-if (varWikkaEdit.browserSupported())
-	varWikkaEdit.init();

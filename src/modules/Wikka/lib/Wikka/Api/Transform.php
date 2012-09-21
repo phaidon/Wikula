@@ -50,8 +50,6 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
         PageUtil::addVar('stylesheet', 'modules/'.$this->name.'/style/transform.css');
         return $this->wikka($args);
     }
-    
-    
 
 
     /**
@@ -100,7 +98,6 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
             $args['text'] = substr($args['text'], 0, $length-4);
         }
         
-        
         $args['text'] = preg_replace_callback(
             '/'.
             '%%.*?%%|'.                                                   // code
@@ -141,8 +138,6 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
         // we're cutting the lasts <br />
         $args['text'] = preg_replace('/<br \/>$/', '', $args['text']);
 
-        
-        
         if (count($this->categories) > 0) {
             if (count($this->categories) == 1 ) {
                 $categories = $this->__('Category');
@@ -159,7 +154,7 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
         $indexBox = self::indexBox($args['text']);
 
         
-        return $indexBox.$args['text'].$categories;
+        return '<div id="wakka">'.$indexBox.$args['text'].$categories.'</div>';
     }
     
     
@@ -170,9 +165,8 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
      * 
      * @return wiki-formatted text with index box.
      */
-    private function indexBox($text) {
-        
-        
+    private function indexBox($text)
+    {
         if (!$this->getVar('showIndex', false) ) {
             return '';
         }
@@ -254,7 +248,6 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
      */
     private function wikka2callback($things)
     {
-        
         $cr     = "\n";
         $thing  = $things[0];
         $result = '';
@@ -591,7 +584,6 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
             // underline
             return (++$trigger_underline % 2 ? '<span class="underline">' : '</span>');
 
-        
         } else if ($thing == '##') {
             // monospace
             return (++$trigger_monospace % 2 ? '<tt>' : '</tt>');
@@ -954,6 +946,7 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
         } else if (preg_match('/^\{\{(.*?)\}\}$/s', $thing, $matches)) {
             // Actions
             if (isset($matches[1]) && !empty($matches[1])) {
+
                 return $this->Action(
                     array('action' => $matches[1])
                 );
@@ -1079,7 +1072,6 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
      */
     private function wikka3callback($things)
     {
-        
         $thing = $things[1];
 
         // heading
@@ -1254,10 +1246,8 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
 
         return $idOut;
     }
- 
-    
-    
-    
+
+
     /**
      * Build a wiki link code
      * 
@@ -1270,8 +1260,6 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
      */
     private function Link($args)
     {
-        
-        
         if (!isset($args['tag'])) {
             return false;
         }
@@ -1449,7 +1437,79 @@ class Wikka_Api_Transform extends Zikula_AbstractApi
         }
 
         $vars = array_merge($args, $vars);
-        
+
+        // image
+        if ($action == 'image') {
+            if (empty($vars['url'])) {
+                return '';
+            }
+            $params = ' ';
+            if (isset($vars['title'])) {
+                $params .= 'title="'.$vars['title'].'" ';
+            }
+            if (isset($vars['alt'])) {
+                $params .= 'alt="'.$vars['alt'].'" ';
+            }
+
+            return '<img src="'.$vars['url'].'"'.$params.'>';
+        }
+
+
+        // color
+        if ($action == 'color') {
+            if (empty($vars['text'])) {
+                return '';
+            }
+            $style = '';
+            if (!empty($vars['c'])) {
+                $style .= 'color:'.$vars['c'].';';
+            } else if (!empty($vars['hex'])) {
+                $style .= 'color:'.$vars['hex'].';';
+            } else {
+                if (!empty($vars['fg'])) {
+                    $style .= 'color:'.$vars['fg'].';';
+                }
+                if (!empty($vars['bg'])) {
+                    $style .= 'background-color:'.$vars['bg'].';';
+                }
+            }
+
+            return '<span style="'.$style.'">'.$vars['text'].'</span>';
+        }
+
+
+        // table
+        if ($action == 'table') {
+            if (empty($vars['columns']) || empty($vars['cells'])) {
+                return '';
+            }
+            if (empty($vars['cellpadding'])) {
+                $vars['cellpadding'] = 3;
+            }
+            if (empty($vars['cellspacing'])) {
+                $vars['cellspacing'] = 3;
+            }
+
+            $cells = explode(';',$vars['cells']);
+            $rows = count($cells)/$vars['columns'];
+
+            $table  = '<table cellpadding='.$vars['cellpadding'].' cellspacing='. $vars['cellspacing'].'>';
+            $i=0;
+            for ($j = 0; $j < $rows; $j++) {
+                $table .= '<tr>';
+                for ($k = 0; $k < $vars['columns']; $k++) {
+                    $table .= '<td>'.str_replace('###', '', $cells[$i]).'</td>';
+                    $i++;
+                }
+                $table .= '</tr>';
+            }
+            $table .= '</table>';
+            return $table;
+
+
+        }
+
+
         // return the Action result
         return ModUtil::apiFunc('Wikula', 'SpecialPage', strtolower($action), $vars);
     }

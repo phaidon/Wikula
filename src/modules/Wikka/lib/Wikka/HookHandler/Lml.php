@@ -47,21 +47,8 @@ class Wikka_HookHandler_Lml extends Zikula_Hook_AbstractHandler
      * @return void
      */
     public function ui_view(Zikula_DisplayHook $hook)
-    {
-        $textfieldname = $hook->getId();
-        
-        if (empty($textfieldname)) {
-            $textfieldname = 'body';
-        }
-        
-        $this->view->assign('textfieldname', $textfieldname)
-                   ->assign('baseurl',       System::getBaseUrl());
-        
-        
-        //if ($version == 'wikiedit') {
-        //    $this->view->assign('maAvailable', ModUtil::available('MediaAttach'));
-        //}
-  
+    {   
+        $this->view->assign('baseurl', System::getBaseUrl());
         $response = new Zikula_Response_DisplayHook('provider_area.ui.wikka.lml', $this->view, 'wikkaedit.tpl');
         $hook->setResponse($response);
     }
@@ -80,8 +67,7 @@ class Wikka_HookHandler_Lml extends Zikula_Hook_AbstractHandler
     public static function filter(Zikula_FilterHook $hook)
     {
         $text = $hook->getData();        
-        
-        
+
         if ($hook->getCaller() == 'WikulaSaver') {
             $data = array();
             $data['links']      = self::getPageLinks($text);
